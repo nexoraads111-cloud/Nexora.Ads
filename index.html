@@ -793,6 +793,42 @@
   font-size: 15px;
 }
 
+
+.website-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 30px;
+}
+
+.website-modal.active {
+  display: flex;
+}
+
+.website-modal img {
+  max-width: 95%;
+  max-height: 95vh;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  animation: zoomIn .35s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 </style>
 
 </head>
@@ -1020,7 +1056,7 @@
 
     <div class="grid md:grid-cols-3 gap-8">
 
-      <div class="website-card">
+      <div class="website-card" onclick="openWebsiteImage(this)">
         <img src="https://i.imgur.com/MyA1taJ.png" alt="">
         <div class="website-overlay">
           <h3>Gaming Store</h3>
@@ -1028,7 +1064,7 @@
         </div>
       </div>
 
-      <div class="website-card">
+      <div class="website-card" onclick="openWebsiteImage(this)">
         <img src="https://i.imgur.com/qxNV9u9.png" alt="">
         <div class="website-overlay">
           <h3>SMM Agency</h3>
@@ -1036,7 +1072,7 @@
         </div>
       </div>
 
-      <div class="website-card">
+      <div class="website-card" onclick="openWebsiteImage(this)">
         <img src="https://i.imgur.com/cccg75Y.png" alt="">
         <div class="website-overlay">
           <h3>Fashion Store</h3>
@@ -2184,6 +2220,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (discussModal) discussModal.addEventListener('click', (e) => { if (e.target.id === 'discussModal') closeDiscussModal(); });
 });
 
+</script>
+
+
+<div class="website-modal" id="websiteModal" onclick="closeWebsiteImage()">
+  <img id="websiteModalImg" src="">
+</div>
+
+
+<script>
+function openWebsiteImage(card) {
+  const img = card.querySelector("img");
+  document.getElementById("websiteModalImg").src = img.src;
+  document.getElementById("websiteModal").classList.add("active");
+}
+
+function closeWebsiteImage() {
+  document.getElementById("websiteModal").classList.remove("active");
+}
 </script>
 
 </body>
