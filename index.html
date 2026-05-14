@@ -734,6 +734,65 @@
   @media (max-width: 900px) { .hero-premium{grid-template-columns:1fr; gap:34px;} .hero-copy,.hero-copy .luxury-heading,.hero-copy p{text-align:center;margin-left:auto;margin-right:auto;} .hero-visual{min-height:auto;} .floating-card{position:static;margin-top:12px;} .trust-strip{grid-template-columns:repeat(2,1fr);} }
   @media (max-width: 768px) { header nav{display:none!important;} .luxury-heading{font-size:2.45rem!important;} section{padding-top:72px!important;padding-bottom:72px!important;} .sticky-mobile-cta{display:flex;} .chat-btn{bottom:76px;} .chat-window{bottom:146px!important;} .grid-cols-3{grid-template-columns:1fr!important;} }
 
+
+.website-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  cursor: pointer;
+  border: 1px solid rgba(96,165,250,.15);
+  transition: .4s ease;
+  background: rgba(255,255,255,.03);
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+
+.website-card img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  transition: .6s ease;
+}
+
+.website-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(.6);
+}
+
+.website-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 70px rgba(96,165,250,.25);
+  border-color: rgba(96,165,250,.4);
+}
+
+.website-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding: 35px;
+  background: linear-gradient(180deg, transparent, rgba(2,6,23,.92));
+  opacity: 0;
+  transition: .4s ease;
+}
+
+.website-card:hover .website-overlay {
+  opacity: 1;
+}
+
+.website-overlay h3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.website-overlay p {
+  color: rgba(255,255,255,.78);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
 </style>
 
 </head>
@@ -943,6 +1002,59 @@
     </div>
   </div>
 </section>
+
+
+<!-- WEBSITE PORTFOLIO -->
+<section class="py-32 px-6 border-t border-blue-400/10 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-3xl rounded-full"></div>
+  <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-3xl rounded-full"></div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="professional-badge">💻 WEBSITE DEVELOPMENT</span>
+      <h2 class="section-heading mt-5 text-4xl">Создаю сайты под ключ</h2>
+      <p class="text-blue-100/70 mt-5 max-w-2xl mx-auto text-lg">
+        Интернет-магазины, SMM сайты, лендинги и современные premium проекты для бизнеса.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="website-card">
+        <img src="https://i.imgur.com/MyA1taJ.png" alt="">
+        <div class="website-overlay">
+          <h3>Gaming Store</h3>
+          <p>Современный магазин игровых ПК с ценами в евро, анимациями и premium UI.</p>
+        </div>
+      </div>
+
+      <div class="website-card">
+        <img src="https://i.imgur.com/qxNV9u9.png" alt="">
+        <div class="website-overlay">
+          <h3>SMM Agency</h3>
+          <p>Стильный сайт агентства для рекламы, лидогенерации и продаж услуг.</p>
+        </div>
+      </div>
+
+      <div class="website-card">
+        <img src="https://i.imgur.com/cccg75Y.png" alt="">
+        <div class="website-overlay">
+          <h3>Fashion Store</h3>
+          <p>Магазин одежды с premium дизайном, каталогом и адаптацией под мобильные устройства.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-16">
+      <a href="https://t.me/NexoraAds_official" target="_blank" class="luxury-button btn-green text-lg px-10 py-4">
+        🚀 Заказать сайт
+      </a>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- SERVICES SECTION -->
 <section class="py-32 px-6 border-t border-blue-400/10" id="services">
