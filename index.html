@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexoraAds — Таргетированная реклама и AI-помощник</title>
+<meta name="description" content="NexoraAds — персональная настройка таргетированной рекламы Facebook, Instagram, TikTok и Google Ads. Владислав, начинающий таргетолог, честная коммуникация и понятные отчеты."/>
+<meta name="keywords" content="таргетолог, таргетированная реклама, Facebook Ads, Instagram Ads, TikTok Ads, Google Ads, NexoraAds, Владислав"/>
+<meta property="og:title" content="NexoraAds — таргетированная реклама"/>
+<meta property="og:description" content="Помогаю получать клиентов через честную и понятную таргетированную рекламу."/>
+<meta property="og:image" content="https://i.imgur.com/AUiHBKF.png"/>
+<meta property="og:type" content="website"/>
+<meta name="theme-color" content="#0f172e"/>
+<link rel="icon" href="https://i.imgur.com/AUiHBKF.png"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0f172e 0%, #1a1f4a 50%, #111b35 100%);
+    background-attachment: fixed;
+    color: #e0e7ff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
+  .animate-slideInDown { animation: slideInDown 0.8s ease-out; }
+  .animate-slideInUp { animation: slideInUp 0.8s ease-out forwards; }
+  .animate-slideInLeft { animation: slideInLeft 0.4s ease-out forwards; }
+  .animate-scaleIn { animation: scaleIn 0.4s ease-out; }
+
+  header {
+    background: linear-gradient(135deg, rgba(15, 23, 46, 0.9), rgba(26, 31, 74, 0.9));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+  }
+
+  .luxury-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .luxury-button {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(167, 139, 250, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 12px 32px;
+    border-radius: 8px;
+    color: #e0e7ff;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .luxury-button:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(167, 139, 250, 0.15));
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+  }
+
+  .luxury-button.primary {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(167, 139, 250, 0.15));
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+
+  .luxury-button.primary:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(167, 139, 250, 0.25));
+    border-color: rgba(59, 130, 246, 0.6);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-green {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.15));
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #86efac;
+  }
+
+  .btn-green:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.25));
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3);
+  }
+
+  .btn-red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.15));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+  }
+
+  .btn-red:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.25));
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.3);
+  }
+
+  .card-luxury {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(167, 139, 250, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    transition: all 0.5s ease;
+  }
+
+  .card-luxury:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(167, 139, 250, 0.08));
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+  }
+
+  input, textarea, select {
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: #e0e7ff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(59, 130, 246, 0.4);
+  }
+
+  .language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: linear-gradient(135deg, rgba(15, 23, 46, 0.95), rgba(26, 31, 74, 0.95));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    padding: 8px;
+    z-index: 50;
+    min-width: 120px;
+  }
+
+  .language-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    color: #e0e7ff;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .language-dropdown button:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+  }
+
+  .language-dropdown button.active {
+    background: rgba(59, 130, 246, 0.25);
+    color: #60a5fa;
+  }
+
+  .grid-cols-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+  }
+
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    color: #60a5fa;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 20px;
+  }
+
+  .social-icon:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+    transform: translateY(-3px) scale(1.1);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    color: #86efac;
+    font-size: 14px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInLeft 0.4s ease-out;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+  }
+
+  .toast.hidden {
+    display: none;
+  }
+
+  /* SLIDER */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .slide {
+    min-width: 100%;
+  }
+
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .slider-nav:hover {
+    background: rgba(59, 130, 246, 0.6);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .slider-nav.prev {
+    left: 20px;
+  }
+
+  .slider-nav.next {
+    right: 20px;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    background: #60a5fa;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* LIVE CHAT */
+  .chat-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    z-index: 999;
+    animation: bounce 2s infinite;
+    border: 2px solid rgba(16, 185, 129, 0.5);
+  }
+
+  .chat-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
+  }
+
+  .chat-btn i {
+    color: white;
+    font-size: 24px;
+  }
+
+  .chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 380px;
+    height: 500px;
+    background: linear-gradient(135deg, rgba(26, 31, 74, 0.95), rgba(15, 23, 46, 0.95));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+  }
+
+  .chat-window.active {
+    display: flex;
+  }
+
+  .chat-header {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 16px;
+    border-radius: 16px 16px 0 0;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chat-close {
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.8;
+  }
+
+  .chat-close:hover {
+    opacity: 1;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chat-message {
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 3px solid #60a5fa;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 90%;
+  }
+
+  .chat-message.bot {
+    background: rgba(16, 185, 129, 0.1);
+    border-left-color: #10b981;
+    color: #10b981;
+    align-self: flex-start;
+  }
+
+  .chat-message.user {
+    align-self: flex-end;
+  }
+
+  .chat-input-group {
+    padding: 12px;
+    border-top: 1px solid rgba(59, 130, 246, 0.1);
+    display: flex;
+    gap: 8px;
+  }
+
+  .chat-input-group input {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .chat-send {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .chat-send:hover {
+    transform: scale(1.05);
+  }
+
+  /* MODAL OVERLAY */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+  }
+
+  .modal-backdrop.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: linear-gradient(135deg, rgba(26, 31, 74, 0.95), rgba(15, 23, 46, 0.95));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .modal-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #e0e7ff;
+  }
+
+  .modal-close-btn {
+    background: none;
+    border: none;
+    color: #e0e7ff;
+    font-size: 28px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .modal-close-btn:hover {
+    opacity: 1;
+  }
+
+  .stars-rating {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .star {
+    font-size: 32px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .star:hover,
+  .star.active {
+    opacity: 1;
+  }
+
+  .load-more-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 24px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(167, 139, 250, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+    color: #60a5fa;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .load-more-btn:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(167, 139, 250, 0.15));
+    border-color: rgba(59, 130, 246, 0.5);
+  }
+
+  .photo-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+  }
+
+  .photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .photo-container:hover img {
+    transform: scale(1.05);
+  }
+
+  .photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .photo-container:hover .photo-overlay {
+    opacity: 1;
+  }
+
+  .photo-overlay span {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+
+
+  /* PROFESSIONAL UPGRADES */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 10%, rgba(96,165,250,.14), transparent 28%), radial-gradient(circle at 80% 0%, rgba(167,139,250,.12), transparent 30%);
+    z-index: -1;
+  }
+  header { box-shadow: 0 10px 40px rgba(2, 6, 23, .22); }
+  .professional-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.22);
+    color: #bfdbfe; font-size: 13px; font-weight: 600;
+  }
+  .about-layout {
+    display: grid; grid-template-columns: minmax(260px, 360px) 1fr;
+    gap: 48px; align-items: stretch;
+  }
+  .photo-card {
+    height: 100%; padding: 16px; border-radius: 28px;
+    background: linear-gradient(135deg, rgba(96,165,250,.14), rgba(167,139,250,.08));
+    border: 1px solid rgba(96,165,250,.24);
+    box-shadow: 0 24px 70px rgba(15,23,42,.38);
+  }
+  .photo-container { width: 100%; height: 420px; margin-bottom: 0; border-radius: 22px; }
+  .photo-overlay { background: linear-gradient(180deg, transparent, rgba(2,6,23,.86)); align-items: flex-end; padding-bottom: 30px; }
+  .photo-overlay span { padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); }
+  .focus-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 16px; border-radius: 18px; background: rgba(15,23,42,.28);
+    border: 1px solid rgba(96,165,250,.14);
+  }
+  .focus-pill {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 9px 12px; border-radius: 999px; background: rgba(96,165,250,.1);
+    border: 1px solid rgba(96,165,250,.18); color: #dbeafe; font-size: 13px;
+  }
+  .about-intro { font-size: 18px; line-height: 1.85; color: rgba(224,231,255,.88); }
+  .ai-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px; margin-left: 8px; border-radius: 999px;
+    background: rgba(16,185,129,.16); border: 1px solid rgba(16,185,129,.28);
+    font-size: 12px; font-weight: 700;
+  }
+  @media (max-width: 768px) {
+    .about-layout { grid-template-columns: 1fr; }
+    .photo-container { height: 360px; }
+    .focus-row { align-items: flex-start; }
+  }
+
+  @media (max-width: 768px) {
+    .chat-window {
+      width: calc(100% - 32px);
+      height: 400px;
+    }
+
+    .modal-content {
+      width: calc(100% - 32px);
+    }
+  }
+
+
+  /* PREMIUM WOW UPDATE */
+  :root { --bg1:#0f172e; --bg2:#1a1f4a; --txt:#e0e7ff; --card:rgba(59,130,246,.08); }
+  body.light-mode { background: linear-gradient(135deg, #f8fbff 0%, #eef4ff 55%, #f7f0ff 100%); color:#15203b; }
+  body.light-mode header, body.light-mode .chat-window, body.light-mode .modal-content { background: rgba(255,255,255,.86); color:#15203b; }
+  body.light-mode .card-luxury, body.light-mode .premium-panel, body.light-mode .faq-item { background: rgba(255,255,255,.72); border-color: rgba(37,99,235,.18); color:#15203b; box-shadow: 0 20px 45px rgba(37,99,235,.08); }
+  body.light-mode .text-blue-100, body.light-mode .text-blue-100\/70, body.light-mode .text-blue-100\/80 { color:#1f2d4d !important; }
+  body.light-mode .luxury-heading, body.light-mode .section-heading { background: linear-gradient(135deg,#0f172a,#2563eb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .theme-toggle { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; }
+  .hero-premium { max-width:1180px; display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center; }
+  .hero-copy { text-align:left; }
+  .hero-copy .luxury-heading, .hero-copy p { text-align:left; margin-left:0; }
+  .hero-visual { position:relative; min-height:430px; }
+  .premium-panel { position:relative; border-radius:28px; padding:28px; background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(167,139,250,.08)); border:1px solid rgba(96,165,250,.22); backdrop-filter:blur(22px); box-shadow:0 30px 80px rgba(0,0,0,.22); overflow:hidden; }
+  .hero-photo { width:100%; height:330px; object-fit:cover; border-radius:24px; filter:saturate(1.08) contrast(1.05); }
+  .floating-card { position:absolute; background:rgba(15,23,46,.76); border:1px solid rgba(96,165,250,.24); backdrop-filter:blur(14px); border-radius:18px; padding:16px 18px; box-shadow:0 18px 50px rgba(0,0,0,.22); animation: floaty 5s ease-in-out infinite; }
+  .floating-card.one { left:-18px; bottom:74px; }
+  .floating-card.two { right:-22px; top:68px; animation-delay:1.2s; }
+  .floating-card.three { right:32px; bottom:-18px; animation-delay:2s; }
+  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .trust-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:30px; }
+  .trust-mini { padding:18px; border-radius:18px; background:rgba(96,165,250,.08); border:1px solid rgba(96,165,250,.14); }
+  .reveal { opacity:0; transform:translateY(26px); transition: .75s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .faq-grid { display:grid; gap:16px; max-width:900px; margin:0 auto; }
+  .faq-item { border-radius:18px; border:1px solid rgba(96,165,250,.16); background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(167,139,250,.05)); overflow:hidden; }
+  .faq-question { width:100%; padding:22px 24px; display:flex; justify-content:space-between; align-items:center; color:#e0e7ff; font-weight:700; background:transparent; border:0; cursor:pointer; text-align:left; }
+  .faq-answer { max-height:0; overflow:hidden; transition:max-height .35s ease; padding:0 24px; color:rgba(224,231,255,.72); line-height:1.7; }
+  .faq-item.active .faq-answer { max-height:180px; padding:0 24px 22px; }
+  .quick-chips { display:flex; gap:8px; flex-wrap:wrap; padding:10px 12px 0; }
+  .quick-chip { border:1px solid rgba(16,185,129,.35); background:rgba(16,185,129,.1); color:#a7f3d0; padding:8px 10px; border-radius:999px; font-size:12px; cursor:pointer; }
+  .typing { opacity:.7; font-style:italic; }
+  .sticky-mobile-cta { display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:998; gap:10px; }
+  .sticky-mobile-cta a, .sticky-mobile-cta button { flex:1; text-align:center; padding:12px; border-radius:14px; font-weight:700; font-size:13px; }
+  @media (max-width: 900px) { .hero-premium{grid-template-columns:1fr; gap:34px;} .hero-copy,.hero-copy .luxury-heading,.hero-copy p{text-align:center;margin-left:auto;margin-right:auto;} .hero-visual{min-height:auto;} .floating-card{position:static;margin-top:12px;} .trust-strip{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width: 768px) { header nav{display:none!important;} .luxury-heading{font-size:2.45rem!important;} section{padding-top:72px!important;padding-bottom:72px!important;} .sticky-mobile-cta{display:flex;} .chat-btn{bottom:76px;} .chat-window{bottom:146px!important;} .grid-cols-3{grid-template-columns:1fr!important;} }
+
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fixed top-0 w-full z-50 animate-slideInDown">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+        <span class="text-white font-bold text-lg">N</span>
+      </div>
+      <div>
+        <h1 class="logo-text">NexoraAds</h1>
+        <p class="text-xs text-blue-300/50" data-i18n="header_subtitle">Управление рекламой</p>
+      </div>
+    </div>
+    
+    <nav class="hidden md:flex items-center gap-10">
+      <a href="#about" class="text-sm text-blue-100 hover:text-blue-300 transition-colors" data-i18n="nav_about">Обо мне</a>
+      <a href="#why" class="text-sm text-blue-100 hover:text-blue-300 transition-colors" data-i18n="nav_why">Почему я</a>
+      <a href="#services" class="text-sm text-blue-100 hover:text-blue-300 transition-colors" data-i18n="nav_services">Услуги</a>
+      <a href="#cases" class="text-sm text-blue-100 hover:text-blue-300 transition-colors" data-i18n="nav_cases">Кейсы</a>
+      <a href="#reviews" class="text-sm text-blue-100 hover:text-blue-300 transition-colors" data-i18n="nav_reviews">Отзывы</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <div class="hidden sm:flex gap-2">
+        <a href="https://www.instagram.com/manangernexora.official/" target="_blank" class="social-icon">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/380995228560" target="_blank" class="social-icon">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/NexoraAds_official" target="_blank" class="social-icon">
+          <i class="fab fa-telegram"></i>
+        </a>
+      </div>
+      
+      <button class="luxury-button theme-toggle" onclick="toggleTheme()" title="Theme">🌙</button>
+      <div class="relative">
+        <button class="lang-toggle-btn luxury-button text-sm" onclick="toggleLangDropdown()">
+          🌍 <span data-i18n="lang_select">РУ</span>
+        </button>
+        <div id="lang-dropdown" class="language-dropdown hidden">
+          <button onclick="changeLang('ru')" data-lang="ru" class="active">🇷🇺 Русский</button>
+          <button onclick="changeLang('en')" data-lang="en">🇬🇧 English</button>
+          <button onclick="changeLang('uk')" data-lang="uk">🇺🇦 Українська</button>
+          <button onclick="changeLang('sk')" data-lang="sk">🇸🇰 Slovenčina</button>
+        </div>
+      </div>
+      <a href="#contact" class="luxury-button primary text-sm" data-i18n="btn_contact">Связаться</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="pt-36 pb-24 px-6 relative overflow-hidden">
+  <div class="absolute top-12 right-0 w-[520px] h-[520px] bg-gradient-to-bl from-blue-500/25 to-purple-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 w-[460px] h-[460px] bg-gradient-to-tr from-purple-500/10 to-blue-500/20 rounded-full blur-3xl"></div>
+
+  <div class="hero-premium mx-auto relative z-10">
+    <div class="hero-copy animate-fadeIn">
+      <p class="text-sm text-blue-300 tracking-widest uppercase mb-6" data-i18n="hero_badge">✨ Таргетированная реклама нового уровня</p>
+      <h1 class="luxury-heading mb-7 text-5xl md:text-6xl" data-i18n="hero_title">Помогаю бизнесу получать клиентов через рекламу</h1>
+      <p class="text-xl text-blue-100/70 max-w-2xl mb-9 leading-relaxed" data-i18n="hero_subtitle">Честная стратегия, понятные отчёты, быстрые тесты и личная работа с каждым проектом.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-start hero-actions">
+        <a href="https://t.me/NexoraAds_official" target="_blank" class="luxury-button btn-green" data-i18n="btn_telegram">💬 Написать в Telegram</a>
+        <button onclick="openDiscussModal()" class="luxury-button btn-red" data-i18n="btn_discuss">💌 Обсудить проект</button>
+      </div>
+      <div class="trust-strip">
+        <div class="trust-mini"><p class="text-2xl font-bold text-blue-300">24/7</p><p class="text-xs text-blue-300/60" data-i18n="trust_1">Связь</p></div>
+        <div class="trust-mini"><p class="text-2xl font-bold text-blue-300">4</p><p class="text-xs text-blue-300/60" data-i18n="trust_2">Платформы</p></div>
+        <div class="trust-mini"><p class="text-2xl font-bold text-blue-300">100%</p><p class="text-xs text-blue-300/60" data-i18n="trust_3">Лично</p></div>
+        <div class="trust-mini"><p class="text-2xl font-bold text-blue-300">AI</p><p class="text-xs text-blue-300/60" data-i18n="trust_4">Помощник</p></div>
+      </div>
+    </div>
+
+    <div class="hero-visual animate-scaleIn">
+      <div class="premium-panel">
+        <img class="hero-photo" src="https://i.imgur.com/AUiHBKF.png" alt="Владислав NexoraAds" loading="lazy">
+        <div class="mt-5 flex items-center justify-between gap-4">
+          <div><p class="font-bold text-blue-100" data-i18n="hero_card_name">Владислав • NexoraAds</p><p class="text-sm text-blue-300/60" data-i18n="hero_card_role">Начинающий таргетолог</p></div>
+          <span class="professional-badge">Meta • TikTok • Google</span>
+        </div>
+      </div>
+      <div class="floating-card one"><p class="text-sm text-blue-300/70" data-i18n="float_1">CTR / CPL / ROAS</p><p class="font-bold text-blue-100" data-i18n="float_1b">Контроль метрик</p></div>
+      <div class="floating-card two"><p class="text-sm text-green-300/80" data-i18n="float_2">Запуск без хаоса</p><p class="font-bold text-blue-100" data-i18n="float_2b">План → тест → рост</p></div>
+      <div class="floating-card three"><p class="text-sm text-purple-300/80" data-i18n="float_3">AI assistant</p><p class="font-bold text-blue-100" data-i18n="float_3b">Быстрые ответы</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10" id="about">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="professional-badge" data-i18n="about_badge">Персональный подход к рекламе</span>
+      <h2 class="section-heading mt-5 text-4xl" data-i18n="about_title">Обо мне</h2>
+    </div>
+
+    <div class="about-layout">
+      <div class="photo-card animate-scaleIn">
+        <div class="photo-container" onclick="window.open('https://i.imgur.com/AUiHBKF.png', '_blank')">
+          <img src="https://i.imgur.com/AUiHBKF.png" alt="Фото Владислава" loading="lazy">
+          <div class="photo-overlay">
+            <span data-i18n="photo_more">Показать еще</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-luxury p-10 md:p-12 h-full">
+        <div class="space-y-7">
+          <div>
+            <p class="text-blue-300/70 text-sm uppercase tracking-widest mb-3" data-i18n="about_kicker">Начинающий таргетолог</p>
+            <p class="about-intro" data-i18n="about_para_1">
+              Меня зовут Владислав, мне 15 лет. Я начинающий таргетолог и развиваю NexoraAds, чтобы помогать бизнесам получать клиентов через честную, понятную и аккуратно настроенную рекламу.
+            </p>
+          </div>
+
+          <div class="focus-row">
+            <h3 class="text-lg font-semibold text-blue-200 mr-2" data-i18n="about_focus">Мой фокус:</h3>
+            <span class="focus-pill"><span>🎯</span><span data-i18n="about_item_1">Facebook & Instagram</span></span>
+            <span class="focus-pill"><span>📱</span><span data-i18n="about_item_2">TikTok & Google Ads</span></span>
+            <span class="focus-pill"><span>⚙️</span><span data-i18n="about_item_3">Оптимизация</span></span>
+          </div>
+
+          <div class="border-t border-blue-400/10 pt-7 space-y-5">
+            <p class="text-base text-blue-100/80 leading-relaxed" data-i18n="about_para_2">
+              Каждый проект я веду лично: изучаю нишу, аудиторию, конкурентов и только потом предлагаю рекламную стратегию.
+            </p>
+            <p class="text-base text-blue-100/80 leading-relaxed" data-i18n="about_para_3">
+              Я не обещаю “x5 за неделю”. Мой подход — честная коммуникация, тесты, аналитика и постепенное улучшение результата.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5" id="why">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading mb-16 text-4xl text-center" data-i18n="why_title">Почему выбирают меня</h2>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">👤</span>
+          <span data-i18n="why_personal">Личная работа</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_personal_text">
+          Вы работаете со мной лично, не с командой. Я знаю ваш проект от начала до конца.
+        </p>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">⚡</span>
+          <span data-i18n="why_available">Всегда на связи</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_available_text">
+          Быстро отвечаю на вопросы. Срочные изменения в кампании занимают часы, не дни.
+        </p>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">💬</span>
+          <span data-i18n="why_honest">Честная коммуникация</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_honest_text">
+          Скажу вам прямо, работает ли кампания. Не буду скрывать неудачи красивыми словами.
+        </p>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">🎯</span>
+          <span data-i18n="why_long">На долгосрок</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_long_text">
+          Мне важны ваши результаты. Это долгосрочное сотрудничество, не одноразовый проект.
+        </p>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">🔍</span>
+          <span data-i18n="why_deep">Глубокое погружение</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_deep_text">
+          Я изучу ваш бизнес, аудиторию, конкурентов. Только потом запущу кампанию.
+        </p>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-lg font-semibold text-blue-100 mb-4 flex items-center gap-3">
+          <span class="text-2xl">📊</span>
+          <span data-i18n="why_reports">Регулярные отчеты</span>
+        </h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed" data-i18n="why_reports_text">
+          Вы видите что происходит с вашей рекламой. Все цифры открыты, никаких секретов.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10" id="services">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading mb-16 text-4xl text-center" data-i18n="services_title">Услуги</h2>
+
+    <div class="grid-cols-auto">
+      <div class="card-luxury p-10">
+        <h3 class="text-xl font-semibold text-blue-100 mb-4" data-i18n="service_1_title">Настройка кампаний</h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed mb-6" data-i18n="service_1_desc">
+          Нет опыта или текущие кампании не работают? Я помогу. Полная подготовка: анализ, выбор платформы, материалы и запуск.
+        </p>
+        <ul class="space-y-3">
+          <li class="flex gap-3 text-sm text-blue-200/70">
+            <span class="text-blue-400 flex-shrink-0">→</span>
+            <span data-i18n="service_1_item_1">Анализ вашего проекта</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-xl font-semibold text-blue-100 mb-4" data-i18n="service_2_title">Ведение и оптимизация</h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed mb-6" data-i18n="service_2_desc">
+          Кампания запущена, но результаты не те? Я проан��лизирую и оптимизирую. Ежедневный контроль, тестирование, развитие.
+        </p>
+        <ul class="space-y-3">
+          <li class="flex gap-3 text-sm text-blue-200/70">
+            <span class="text-blue-400 flex-shrink-0">→</span>
+            <span data-i18n="service_2_item_1">Контроль метрик</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-luxury p-10">
+        <h3 class="text-xl font-semibold text-blue-100 mb-4" data-i18n="service_3_title">Аудит кампаний</h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed mb-6" data-i18n="service_3_desc">
+          Работаете с кем-то или сами настраиваете рекламу? Посмотрю что можно улучшить и где теряются деньги.
+        </p>
+        <ul class="space-y-3">
+          <li class="flex gap-3 text-sm text-blue-200/70">
+            <span class="text-blue-400 flex-shrink-0">→</span>
+            <span data-i18n="service_3_item_1">Анализ текущих кампаний</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES SLIDER SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5" id="cases">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading mb-8 text-4xl text-center" data-i18n="cases_title">Примеры работ</h2>
+    <p class="text-blue-100/70 mb-16 text-center" data-i18n="cases_note">
+      Результаты варьируются. Каждый проект уникален — зависит от ниши, продукта и бюджета.
+    </p>
+
+    <div class="slider-container">
+      <div class="slides" id="casesSlider">
+        <div class="slide">
+          <div class="card-luxury p-10 border-l-4 border-blue-400/50">
+            <h3 class="text-lg font-semibold text-blue-100 mb-2 text-center">🛍️ e-Commerce</h3>
+            <p class="text-sm text-blue-300/50 mb-6 text-center">Интернет-м��газин одежды</p>
+            <div class="space-y-4">
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-blue-300 mb-1">+150% рост заказов</p>
+                <p class="text-xs text-blue-300/50">за 3 месяца</p>
+              </div>
+              <p class="text-sm text-blue-100/70 leading-relaxed text-center">
+                Начали с тестирования аудиторий и креативов. Нашли что работает, масштабировали. Постепенно автоматизировали процесс.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="card-luxury p-10 border-l-4 border-purple-400/50">
+            <h3 class="text-lg font-semibold text-blue-100 mb-2 text-center">💼 B2B услуги</h3>
+            <p class="text-sm text-blue-300/50 mb-6 text-center">Консалтинговое агентство</p>
+            <div class="space-y-4">
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-blue-300 mb-1">+95 качественных лидов</p>
+                <p class="text-xs text-blue-300/50">первые 3 месяца</p>
+              </div>
+              <p class="text-sm text-blue-100/70 leading-relaxed text-center">
+                Узкая аудитория, высокая стоимость клиента. Работали с Facebook и LinkedIn. Ставка на качество лидов, не количество.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="card-luxury p-10 border-l-4 border-blue-400/50">
+            <h3 class="text-lg font-semibold text-blue-100 mb-2 text-center">📚 Образовательный проект</h3>
+            <p class="text-sm text-blue-300/50 mb-6 text-center">Онлайн-курс</p>
+            <div class="space-y-4">
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-blue-300 mb-1">+120 студентов</p>
+                <p class="text-xs text-blue-300/50">и 18% конверсия</p>
+              </div>
+              <p class="text-sm text-blue-100/70 leading-relaxed text-center">
+                TikTok + Facebook. Ключ — объяснение ценности курса. После запуска постоянно оптимизировали сообщение.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="slider-nav prev" onclick="prevSlide()">❮</button>
+      <button class="slider-nav next" onclick="nextSlide()">❯</button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10" id="reviews">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading mb-4 text-4xl text-center" data-i18n="reviews_title">Отзывы</h2>
+    <p class="text-blue-100/70 mb-16 text-center" data-i18n="reviews_subtitle">
+      Что говорят мои клиенты <span class="text-blue-300/50">(<span id="review-count">0</span>)</span>
+    </p>
+
+    <div class="grid-cols-auto mb-12" id="reviews-container">
+    </div>
+
+    <div class="text-center" id="load-more-container">
+      <button class="load-more-btn" onclick="loadMoreReviews()" id="load-more-btn" style="display: none;">
+        ➕ <span data-i18n="load_more">Показать еще</span>
+      </button>
+    </div>
+
+    <div class="text-center mt-16">
+      <button class="luxury-button btn-red" onclick="openReviewModal()" data-i18n="btn_leave_review">
+        ❤️ Оставить отзыв
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10" id="faq">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="professional-badge" data-i18n="faq_badge">Вопросы клиентов</span>
+      <h2 class="section-heading mt-5 text-4xl" data-i18n="faq_title">FAQ — частые вопросы</h2>
+      <p class="text-blue-100/70 mt-4" data-i18n="faq_subtitle">Коротко и честно о рекламе, бюджете и результате.</p>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq-item active"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq_q1">С каким бюджетом можно стартовать?</span><span>+</span></button><div class="faq-answer" data-i18n="faq_a1">Можно стартовать с небольшого бюджета, но лучше сразу обсудить нишу и цель. Я подскажу, какой бюджет будет адекватным для теста.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq_q2">Есть ли гарантия результата?</span><span>+</span></button><div class="faq-answer" data-i18n="faq_a2">Гарантировать продажи нечестно: результат зависит от продукта, сайта, цены, аудитории и бюджета. Я гарантирую аккуратную работу, аналитику и честную коммуникацию.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq_q3">Какие платформы ты настраиваешь?</span><span>+</span></button><div class="faq-answer" data-i18n="faq_a3">Facebook, Instagram, TikTok и Google Ads. Платформу выбираю под вашу нишу и цель.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq_q4">Через сколько видны первые данные?</span><span>+</span></button><div class="faq-answer" data-i18n="faq_a4">Первые данные обычно видны после тестового запуска. Дальше мы смотрим цифры, отключаем слабое и усиливаем то, что работает.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="py-32 px-6 border-t border-blue-400/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5" id="contact">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading mb-4 text-4xl text-center" data-i18n="contact_title">Отправить заявку</h2>
+    <p class="text-blue-100/70 mb-16 text-center" data-i18n="contact_subtitle">
+      Стоимость обсуждается индивидуально. Зависит от объема работ и ваших задач.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8 mb-20">
+      <div class="text-center card-luxury p-10">
+        <p class="text-4xl mb-4">📞</p>
+        <h3 class="font-semibold text-blue-100 mb-4" data-i18n="contact_phone">Телефон</h3>
+        <a href="tel:+380995228560" class="text-blue-300 hover:text-blue-200 transition-colors text-sm">+380 99 522 8560</a>
+      </div>
+
+      <div class="text-center card-luxury p-10">
+        <p class="text-4xl mb-4">💬</p>
+        <h3 class="font-semibold text-blue-100 mb-4" data-i18n="contact_telegram">Telegram</h3>
+        <a href="https://t.me/NexoraAds_official" target="_blank" class="text-blue-300 hover:text-blue-200">@NexoraAds_official</a>
+      </div>
+
+      <div class="text-center card-luxury p-10">
+        <p class="text-4xl mb-4">✉️</p>
+        <h3 class="font-semibold text-blue-100 mb-4" data-i18n="contact_email">Email</h3>
+        <a href="mailto:nexora.ads111@gmail.com" class="text-blue-300 hover:text-blue-200">nexora.ads111@gmail.com</a>
+      </div>
+    </div>
+
+    <form class="max-w-2xl mx-auto" id="contact-form">
+      <div class="card-luxury p-12 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        
+        <div class="relative z-10">
+          <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/10 mb-6">
+              <span class="text-3xl">📝</span>
+            </div>
+            <h3 class="text-2xl font-semibold text-blue-100 mb-2" data-i18n="form_title">Отправить заявку</h3>
+            <p class="text-blue-100/70 text-sm" data-i18n="form_subtitle">Расскажите о вашем проекте</p>
+          </div>
+          
+          <div class="space-y-5">
+            <div class="relative">
+              <input type="text" id="form-name" placeholder="Ваше имя" data-i18n-placeholder="placeholder_name" required class="pl-12"/>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">👤</span>
+            </div>
+            
+            <div class="relative">
+              <input type="text" id="form-company" placeholder="Компания" data-i18n-placeholder="placeholder_company" required class="pl-12"/>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">🏢</span>
+            </div>
+            
+            <div class="relative">
+              <input type="text" id="form-contact" placeholder="Телефон" data-i18n-placeholder="placeholder_phone" required class="pl-12"/>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">📱</span>
+            </div>
+            
+            <div class="relative">
+              <textarea id="form-message" rows="5" placeholder="Сообщение..." data-i18n-placeholder="placeholder_message" required class="pl-12 pt-4"></textarea>
+              <span class="absolute left-4 top-4 text-blue-400">💬</span>
+            </div>
+            
+            <button type="submit" class="luxury-button btn-green w-full text-base py-4 text-lg font-medium" data-i18n="btn_send">
+              Отправить заявку
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- DISCUSS MODAL -->
+<div class="modal-backdrop" id="discussModal">
+  <div class="modal-content relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    
+    <div class="relative z-10">
+      <div class="modal-header">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/10 flex items-center justify-center">
+            <span class="text-2xl">💬</span>
+          </div>
+          <h2 data-i18n="discuss_title">Обсудить проект</h2>
+        </div>
+        <button class="modal-close-btn" onclick="closeDiscussModal()">✕</button>
+      </div>
+
+      <form id="discuss-form" onsubmit="submitDiscuss(event)">
+        <div class="mb-5 relative">
+          <input type="text" id="discuss-name" placeholder="Ваше имя" data-i18n-placeholder="placeholder_name" required class="pl-12"/>
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">👤</span>
+        </div>
+
+        <div class="mb-5 relative">
+          <input type="email" id="discuss-email" placeholder="Email" data-i18n-placeholder="placeholder_email" required class="pl-12"/>
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">✉️</span>
+        </div>
+
+        <div class="mb-5 relative">
+          <input type="text" id="discuss-phone" placeholder="Телефон" data-i18n-placeholder="placeholder_phone" required class="pl-12"/>
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-400">📱</span>
+        </div>
+
+        <div class="mb-6 relative">
+          <textarea id="discuss-message" rows="5" placeholder="Расскажите о вашем проекте..." data-i18n-placeholder="placeholder_message" required class="pl-12 pt-4"></textarea>
+          <span class="absolute left-4 top-4 text-blue-400">💬</span>
+        </div>
+
+        <button type="submit" class="luxury-button btn-green w-full text-base py-4 text-lg font-medium" data-i18n="btn_send">
+          Отправить
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-backdrop" id="reviewModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 data-i18n="review_modal_title">Оставить отзыв</h2>
+      <button class="modal-close-btn" onclick="closeReviewModal()">✕</button>
+    </div>
+
+    <form id="review-form" onsubmit="submitReview(event)">
+      <div class="mb-6">
+        <label class="text-blue-100 text-sm mb-4 block" data-i18n="review_rating_label">Оценка:</label>
+        <div class="stars-rating" id="starsContainer">
+          <span class="star" onclick="setRating(1)">⭐</span>
+          <span class="star" onclick="setRating(2)">⭐</span>
+          <span class="star" onclick="setRating(3)">⭐</span>
+          <span class="star" onclick="setRating(4)">⭐</span>
+          <span class="star" onclick="setRating(5)">⭐</span>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <input type="text" id="review-name" placeholder="Ваше имя" data-i18n-placeholder="placeholder_name" required/>
+      </div>
+
+      <div class="mb-6">
+        <input type="text" id="review-title" placeholder="Заголовок отзыва" data-i18n-placeholder="placeholder_review_title" required/>
+      </div>
+
+      <div class="mb-6">
+        <textarea id="review-text" rows="5" placeholder="Ваш отзыв..." data-i18n-placeholder="placeholder_message" required></textarea>
+      </div>
+
+      <button type="submit" class="luxury-button btn-green w-full text-base" data-i18n="btn_send_review">
+        Отправить отзыв
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast hidden" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toast-message">Отзыв отправлен!</span>
+</div>
+
+<!-- LIVE CHAT BUTTON -->
+<div class="chat-btn" onclick="toggleChat()">
+  <i class="fas fa-comments"></i>
+</div>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <span data-i18n="chat_title">💬 AI-помощник Nexora</span><span class="ai-label" data-i18n="chat_ai_badge">AI чат</span>
+    <span class="chat-close" onclick="toggleChat()">✕</span>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-message bot">
+      <span data-i18n="chat_welcome">Привет! 👋 Я AI-помощник. Спроси про услуги, цену, рекламу или контакты.</span>
+    </div>
+  </div>
+  <div class="chat-input-group">
+    <input type="text" id="chatInput" placeholder="Напишите..." data-i18n-placeholder="chat_placeholder" onkeypress="if(event.key==='Enter') sendChatMessage()"/>
+    <button class="chat-send" onclick="sendChatMessage()">→</button>
+  </div>
+</div>
+
+
+<div class="sticky-mobile-cta">
+  <a href="https://t.me/NexoraAds_official" target="_blank" class="btn-green" data-i18n="mobile_tg">Telegram</a>
+  <button onclick="toggleChat()" class="luxury-button primary" data-i18n="mobile_chat">AI чат</button>
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-blue-400/10 py-16 px-6">
+  <div class="max-w-5xl mx-auto text-center text-blue-300/50 text-sm">
+    <p data-i18n="footer_copyright">© 2026 NexoraAds • Управление рекламой</p>
+    <p class="mt-2" data-i18n="footer_text">Честная работа, реальные результаты</p>
+  </div>
+</footer>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWRUz2j9D7acq0BVW90JUArBksqDifS8I",
+    authDomain: "nexoraadskook.firebaseapp.com",
+    projectId: "nexoraadskook",
+    storageBucket: "nexoraadskook.firebasestorage.app",
+    messagingSenderId: "676424007745",
+    appId: "1:676424007745:web:81cb88572abfc3604186c0",
+    measurementId: "G-1EVBR5W1NC"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.firebase = { db, addDoc, collection, query, where, orderBy, onSnapshot, serverTimestamp };
+
+  // Load approved reviews from Firebase
+  window.allReviews = [];
+  window.visibleReviewsCount = 3;
+
+  function loadReviewsFromFirebase() {
+    const q = query(
+      collection(db, "reviews"),
+      where("approved", "==", true)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      const reviews = [];
+
+      snapshot.forEach((docSnap) => {
+        reviews.push({ ...docSnap.data(), id: docSnap.id });
+      });
+
+      reviews.sort((a, b) => {
+        const at = a.timestamp?.seconds || a.createdAt || 0;
+        const bt = b.timestamp?.seconds || b.createdAt || 0;
+        return bt - at;
+      });
+
+      window.allReviews = reviews;
+      window.visibleReviewsCount = Math.min(window.visibleReviewsCount || 3, reviews.length || 3);
+      renderVisibleReviews();
+
+      const reviewCount = document.getElementById('review-count');
+      if (reviewCount) reviewCount.textContent = reviews.length;
+    }, (error) => {
+      console.error('Firebase reviews error:', error);
+      const container = document.getElementById('reviews-container');
+      if (container) {
+        container.innerHTML = '<div class="card-luxury p-8 text-center text-red-300">Ошибка загрузки отзывов. Проверь Firebase rules и config.</div>';
+      }
+    });
+  }
+
+  function renderVisibleReviews() {
+    const reviews = window.allReviews || [];
+    const count = window.visibleReviewsCount || 3;
+    displayReviews(reviews.slice(0, count));
+
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display = reviews.length > count ? 'block' : 'none';
+    }
+  }
+
+  function displayReviews(reviews) {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (!reviews.length) {
+      container.innerHTML = '<div class="card-luxury p-8 text-center text-blue-100/70">Пока нет опубликованных отзывов.</div>';
+      return;
+    }
+
+    reviews.forEach(review => {
+      const rating = Math.max(1, Math.min(5, Number(review.rating) || 5));
+      const stars = '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+      const el = document.createElement('div');
+      el.className = 'card-luxury p-8';
+      el.innerHTML = `
+        <div style="text-align: center; font-size: 24px; margin-bottom: 16px; letter-spacing: 4px;">
+          ${stars}
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-3 text-center">"${review.title || "Отзыв"}"</h3>
+        <p class="text-blue-100/70 text-sm leading-relaxed mb-4 text-center">${review.text || ""}</p>
+        <p class="text-blue-300/50 text-sm text-center">— ${review.name || "Клиент"}</p>
+      `;
+      container.appendChild(el);
+    });
+  }
+
+  function loadMoreReviews() {
+    window.visibleReviewsCount = (window.visibleReviewsCount || 3) + 3;
+    renderVisibleReviews();
+  }
+
+  window.loadReviewsFromFirebase = loadReviewsFromFirebase;
+  window.displayReviews = displayReviews;
+  window.renderVisibleReviews = renderVisibleReviews;
+  window.loadMoreReviews = loadMoreReviews;
+  loadReviewsFromFirebase();
+</script>
+
+<!-- SCRIPT -->
+<script>
+const translations = {
+  "ru": {
+    "header_subtitle": "Управление рекламой",
+    "lang_select": "РУ",
+    "nav_about": "Обо мне",
+    "nav_why": "Почему я",
+    "nav_services": "Услуги",
+    "nav_cases": "Кейсы",
+    "nav_reviews": "Отзывы",
+    "btn_contact": "Связаться",
+    "btn_telegram": "💬 Написать в Telegram",
+    "btn_discuss": "💌 Обсудить проект",
+    "btn_leave_review": "❤️ Оставить отзыв",
+    "hero_badge": "✨ Таргетированная реклама",
+    "hero_title": "Помогаю получать клиентов через таргетированную рекламу",
+    "hero_subtitle": "Без пустых обещаний и сложных слов",
+    "stat_projects_text": "Проектов",
+    "stat_clients_text": "Клиентов",
+    "stat_rating": "Рейтинг",
+    "about_badge": "Персональный подход к рекламе",
+    "about_title": "Обо мне",
+    "about_kicker": "Начинающий таргетолог",
+    "photo_more": "Показать еще",
+    "about_para_1": "Меня зовут Владислав, мне 15 лет. Я начинающий таргетолог и развиваю NexoraAds, чтобы помогать бизнесам получать клиентов через честную, понятную и аккуратно настроенную рекламу.",
+    "about_para_2": "Каждый проект я веду лично: изучаю нишу, аудиторию, конкурентов и только потом предлагаю рекламную стратегию.",
+    "about_para_3": "Я не обещаю “x5 за неделю”. Мой подход — честная коммуникация, тесты, аналитика и постепенное улучшение результата.",
+    "about_focus": "Мой фокус:",
+    "about_item_1": "Facebook & Instagram",
+    "about_item_2": "TikTok & Google Ads",
+    "about_item_3": "Оптимизация",
+    "why_title": "Почему выбирают меня",
+    "why_personal": "Личная работа",
+    "why_personal_text": "Вы работаете со мной лично, не с командой. Я знаю ваш проект от начала до конца.",
+    "why_available": "Всегда на связи",
+    "why_available_text": "Быстро отвечаю на вопросы. Срочные изменения занимают часы, не дни.",
+    "why_honest": "Честная коммуникация",
+    "why_honest_text": "Скажу прямо, что работает, а что нужно улучшить.",
+    "why_long": "На долгосрок",
+    "why_long_text": "Мне важны ваши результаты и стабильное сотрудничество.",
+    "why_deep": "Глубокое погружение",
+    "why_deep_text": "Изучу ваш бизнес, аудиторию и конкурентов.",
+    "why_reports": "Регулярные отчеты",
+    "why_reports_text": "Вы видите, что происходит с рекламой. Все цифры открыты.",
+    "services_title": "Услуги",
+    "service_1_title": "Настройка кампаний",
+    "service_1_desc": "Полная подготовка: анализ, выбор платформы, материалы и запуск.",
+    "service_1_item_1": "Анализ вашего проекта",
+    "service_2_title": "Ведение и оптимизация",
+    "service_2_desc": "Ежедневный контроль, тестирование и улучшение рекламных кампаний.",
+    "service_2_item_1": "Контроль метрик",
+    "service_3_title": "Аудит кампаний",
+    "service_3_desc": "Проверю рекламу и покажу, где теряются деньги.",
+    "service_3_item_1": "Анализ текущих кампаний",
+    "cases_title": "Примеры работ",
+    "cases_note": "Результаты варьируются. Каждый проект уникален.",
+    "reviews_title": "Отзывы",
+    "reviews_subtitle": "Что говорят мои клиенты",
+    "contact_title": "Отправить заявку",
+    "contact_subtitle": "Стоимость обсуждается индивидуально. Зависит от объема работ и задач.",
+    "contact_phone": "Телефон",
+    "contact_telegram": "Telegram",
+    "contact_email": "Email",
+    "form_title": "Отправить заявку",
+    "form_subtitle": "Расскажите о вашем проекте",
+    "btn_send": "Отправить",
+    "footer_text": "Честная работа, реальные результаты",
+    "footer_copyright": "© 2026 NexoraAds • Управление рекламой",
+    "chat_title": "💬 AI-помощник Nexora",
+    "chat_ai_badge": "AI чат",
+    "chat_welcome": "Привет! 👋 Я AI-помощник. Спроси про услуги, цену, рекламу или контакты.",
+    "chat_placeholder": "Напишите вопрос...",
+    "discuss_title": "Обсудить проект",
+    "review_modal_title": "Оставить отзыв",
+    "review_rating_label": "Оценка:",
+    "btn_send_review": "Отправить отзыв",
+    "load_more": "Показать еще",
+    "placeholder_name": "Ваше имя",
+    "placeholder_company": "Компания",
+    "placeholder_phone": "Телефон",
+    "placeholder_message": "Сообщение...",
+    "placeholder_email": "Email",
+    "placeholder_review_title": "Заголовок отзыва"
+  },
+  "en": {
+    "header_subtitle": "Advertising management",
+    "lang_select": "EN",
+    "nav_about": "About me",
+    "nav_why": "Why me",
+    "nav_services": "Services",
+    "nav_cases": "Case studies",
+    "nav_reviews": "Reviews",
+    "btn_contact": "Contact",
+    "btn_telegram": "💬 Message on Telegram",
+    "btn_discuss": "💌 Discuss a project",
+    "btn_leave_review": "❤️ Leave a review",
+    "hero_badge": "✨ Targeted advertising",
+    "hero_title": "I help businesses get clients through targeted ads",
+    "hero_subtitle": "No empty promises or complicated words",
+    "stat_projects_text": "Projects",
+    "stat_clients_text": "Clients",
+    "stat_rating": "Rating",
+    "about_badge": "Personal approach to advertising",
+    "about_title": "About me",
+    "about_kicker": "Beginner targeting specialist",
+    "photo_more": "Show more",
+    "about_para_1": "My name is Vladislav, I am 15 years old. I am a beginner targeting specialist and I develop NexoraAds to help businesses get clients through honest, clear and carefully configured advertising.",
+    "about_para_2": "I manage every project personally: I study the niche, audience and competitors, and only then suggest an advertising strategy.",
+    "about_para_3": "I do not promise “x5 in a week”. My approach is honest communication, testing, analytics and gradual improvement.",
+    "about_focus": "My focus:",
+    "about_item_1": "Facebook & Instagram",
+    "about_item_2": "TikTok & Google Ads",
+    "about_item_3": "Optimization",
+    "why_title": "Why choose me",
+    "why_personal": "Personal work",
+    "why_personal_text": "You work with me directly, not with a team. I know your project from start to finish.",
+    "why_available": "Always available",
+    "why_available_text": "I answer quickly. Urgent campaign changes take hours, not days.",
+    "why_honest": "Honest communication",
+    "why_honest_text": "I say directly what works and what needs improvement.",
+    "why_long": "Long-term focus",
+    "why_long_text": "Your results and stable cooperation matter to me.",
+    "why_deep": "Deep research",
+    "why_deep_text": "I study your business, audience and competitors.",
+    "why_reports": "Regular reports",
+    "why_reports_text": "You see what happens with your ads. All numbers are open.",
+    "services_title": "Services",
+    "service_1_title": "Campaign setup",
+    "service_1_desc": "Full preparation: analysis, platform selection, materials and launch.",
+    "service_1_item_1": "Project analysis",
+    "service_2_title": "Management and optimization",
+    "service_2_desc": "Daily control, testing and improvement of campaigns.",
+    "service_2_item_1": "Metric tracking",
+    "service_3_title": "Campaign audit",
+    "service_3_desc": "I check your ads and show where money is being lost.",
+    "service_3_item_1": "Current campaign analysis",
+    "cases_title": "Work examples",
+    "cases_note": "Results vary. Every project is unique.",
+    "reviews_title": "Reviews",
+    "reviews_subtitle": "What my clients say",
+    "contact_title": "Send a request",
+    "contact_subtitle": "The price is discussed individually and depends on the work scope and tasks.",
+    "contact_phone": "Phone",
+    "contact_telegram": "Telegram",
+    "contact_email": "Email",
+    "form_title": "Send a request",
+    "form_subtitle": "Tell me about your project",
+    "btn_send": "Send",
+    "footer_text": "Honest work, real results",
+    "footer_copyright": "© 2026 NexoraAds • Advertising management",
+    "chat_title": "💬 Nexora AI assistant",
+    "chat_ai_badge": "AI chat",
+    "chat_welcome": "Hi! 👋 I am an AI assistant. Ask about services, pricing, ads or contacts.",
+    "chat_placeholder": "Type your question...",
+    "discuss_title": "Discuss a project",
+    "review_modal_title": "Leave a review",
+    "review_rating_label": "Rating:",
+    "btn_send_review": "Send review",
+    "load_more": "Show more",
+    "placeholder_name": "Your name",
+    "placeholder_company": "Company",
+    "placeholder_phone": "Phone",
+    "placeholder_message": "Message...",
+    "placeholder_email": "Email",
+    "placeholder_review_title": "Review title"
+  },
+  "uk": {
+    "header_subtitle": "Управління рекламою",
+    "lang_select": "УК",
+    "nav_about": "Про мене",
+    "nav_why": "Чому я",
+    "nav_services": "Послуги",
+    "nav_cases": "Кейси",
+    "nav_reviews": "Відгуки",
+    "btn_contact": "Зв’язатися",
+    "btn_telegram": "💬 Написать в Telegram",
+    "btn_discuss": "💌 Обсудить проект",
+    "btn_leave_review": "❤️ Оставить отзыв",
+    "hero_badge": "✨ Таргетированная реклама",
+    "hero_title": "Помогаю получать клиентов через таргетированную рекламу",
+    "hero_subtitle": "Без пустых обещаний и сложных слов",
+    "stat_projects_text": "Проектов",
+    "stat_clients_text": "Клиентов",
+    "stat_rating": "Рейтинг",
+    "about_badge": "Персональный подход к рекламе",
+    "about_title": "Про мене",
+    "about_kicker": "Начинающий таргетолог",
+    "photo_more": "Показати ще",
+    "about_para_1": "Меня зовут Владислав, мне 15 лет. Я начинающий таргетолог и развиваю NexoraAds, чтобы помогать бизнесам получать клиентов через честную, понятную и аккуратно настроенную рекламу.",
+    "about_para_2": "Каждый проект я веду лично: изучаю нишу, аудиторию, конкурентов и только потом предлагаю рекламную стратегию.",
+    "about_para_3": "Я не обещаю “x5 за неделю”. Мой подход — честная коммуникация, тесты, аналитика и постепенное улучшение результата.",
+    "about_focus": "Мій фокус:",
+    "about_item_1": "Facebook & Instagram",
+    "about_item_2": "TikTok & Google Ads",
+    "about_item_3": "Оптимизация",
+    "why_title": "Почему выбирают меня",
+    "why_personal": "Личная работа",
+    "why_personal_text": "Вы работаете со мной лично, не с командой. Я знаю ваш проект от начала до конца.",
+    "why_available": "Всегда на связи",
+    "why_available_text": "Быстро отвечаю на вопросы. Срочные изменения занимают часы, не дни.",
+    "why_honest": "Честная коммуникация",
+    "why_honest_text": "Скажу прямо, что работает, а что нужно улучшить.",
+    "why_long": "На долгосрок",
+    "why_long_text": "Мне важны ваши результаты и стабильное сотрудничество.",
+    "why_deep": "Глубокое погружение",
+    "why_deep_text": "Изучу ваш бизнес, аудиторию и конкурентов.",
+    "why_reports": "Регулярные отчеты",
+    "why_reports_text": "Вы видите, что происходит с рекламой. Все цифры открыты.",
+    "services_title": "Услуги",
+    "service_1_title": "Настройка кампаний",
+    "service_1_desc": "Полная подготовка: анализ, выбор платформы, материалы и запуск.",
+    "service_1_item_1": "Анализ вашего проекта",
+    "service_2_title": "Ведение и оптимизация",
+    "service_2_desc": "Ежедневный контроль, тестирование и улучшение рекламных кампаний.",
+    "service_2_item_1": "Контроль метрик",
+    "service_3_title": "Аудит кампаний",
+    "service_3_desc": "Проверю рекламу и покажу, где теряются деньги.",
+    "service_3_item_1": "Анализ текущих кампаний",
+    "cases_title": "Примеры работ",
+    "cases_note": "Результаты варьируются. Каждый проект уникален.",
+    "reviews_title": "Отзывы",
+    "reviews_subtitle": "Что говорят мои клиенты",
+    "contact_title": "Отправить заявку",
+    "contact_subtitle": "Стоимость обсуждается индивидуально. Зависит от объема работ и задач.",
+    "contact_phone": "Телефон",
+    "contact_telegram": "Telegram",
+    "contact_email": "Email",
+    "form_title": "Отправить заявку",
+    "form_subtitle": "Расскажите о вашем проекте",
+    "btn_send": "Отправить",
+    "footer_text": "Честная работа, реальные результаты",
+    "footer_copyright": "© 2026 NexoraAds • Управління рекламою",
+    "chat_title": "💬 AI-помічник Nexora",
+    "chat_ai_badge": "AI чат",
+    "chat_welcome": "Привіт! 👋 Я AI-помічник. Запитай про послуги, ціну, рекламу або контакти.",
+    "chat_placeholder": "Напишіть питання...",
+    "discuss_title": "Обсудить проект",
+    "review_modal_title": "Оставить отзыв",
+    "review_rating_label": "Оценка:",
+    "btn_send_review": "Отправить отзыв",
+    "load_more": "Показать еще",
+    "placeholder_name": "Ваше имя",
+    "placeholder_company": "Компания",
+    "placeholder_phone": "Телефон",
+    "placeholder_message": "Сообщение...",
+    "placeholder_email": "Email",
+    "placeholder_review_title": "Заголовок отзыва"
+  },
+  "sk": {
+    "header_subtitle": "Správa reklamy",
+    "lang_select": "SK",
+    "nav_about": "O mne",
+    "nav_why": "Prečo ja",
+    "nav_services": "Služby",
+    "nav_cases": "Príklady",
+    "nav_reviews": "Recenzie",
+    "btn_contact": "Kontakt",
+    "btn_telegram": "💬 Message on Telegram",
+    "btn_discuss": "💌 Discuss a project",
+    "btn_leave_review": "❤️ Leave a review",
+    "hero_badge": "✨ Targeted advertising",
+    "hero_title": "I help businesses get clients through targeted ads",
+    "hero_subtitle": "No empty promises or complicated words",
+    "stat_projects_text": "Projects",
+    "stat_clients_text": "Clients",
+    "stat_rating": "Rating",
+    "about_badge": "Personal approach to advertising",
+    "about_title": "O mne",
+    "about_kicker": "Beginner targeting specialist",
+    "photo_more": "Zobraziť viac",
+    "about_para_1": "My name is Vladislav, I am 15 years old. I am a beginner targeting specialist and I develop NexoraAds to help businesses get clients through honest, clear and carefully configured advertising.",
+    "about_para_2": "I manage every project personally: I study the niche, audience and competitors, and only then suggest an advertising strategy.",
+    "about_para_3": "I do not promise “x5 in a week”. My approach is honest communication, testing, analytics and gradual improvement.",
+    "about_focus": "Moje zameranie:",
+    "about_item_1": "Facebook & Instagram",
+    "about_item_2": "TikTok & Google Ads",
+    "about_item_3": "Optimization",
+    "why_title": "Why choose me",
+    "why_personal": "Personal work",
+    "why_personal_text": "You work with me directly, not with a team. I know your project from start to finish.",
+    "why_available": "Always available",
+    "why_available_text": "I answer quickly. Urgent campaign changes take hours, not days.",
+    "why_honest": "Honest communication",
+    "why_honest_text": "I say directly what works and what needs improvement.",
+    "why_long": "Long-term focus",
+    "why_long_text": "Your results and stable cooperation matter to me.",
+    "why_deep": "Deep research",
+    "why_deep_text": "I study your business, audience and competitors.",
+    "why_reports": "Regular reports",
+    "why_reports_text": "You see what happens with your ads. All numbers are open.",
+    "services_title": "Services",
+    "service_1_title": "Campaign setup",
+    "service_1_desc": "Full preparation: analysis, platform selection, materials and launch.",
+    "service_1_item_1": "Project analysis",
+    "service_2_title": "Management and optimization",
+    "service_2_desc": "Daily control, testing and improvement of campaigns.",
+    "service_2_item_1": "Metric tracking",
+    "service_3_title": "Campaign audit",
+    "service_3_desc": "I check your ads and show where money is being lost.",
+    "service_3_item_1": "Current campaign analysis",
+    "cases_title": "Work examples",
+    "cases_note": "Results vary. Every project is unique.",
+    "reviews_title": "Reviews",
+    "reviews_subtitle": "What my clients say",
+    "contact_title": "Send a request",
+    "contact_subtitle": "The price is discussed individually and depends on the work scope and tasks.",
+    "contact_phone": "Telefón",
+    "contact_telegram": "Telegram",
+    "contact_email": "Email",
+    "form_title": "Send a request",
+    "form_subtitle": "Tell me about your project",
+    "btn_send": "Send",
+    "footer_text": "Honest work, real results",
+    "footer_copyright": "© 2026 NexoraAds • Správa reklamy",
+    "chat_title": "💬 AI asistent Nexora",
+    "chat_ai_badge": "AI chat",
+    "chat_welcome": "Ahoj! 👋 Som AI asistent. Opýtaj sa na služby, cenu, reklamu alebo kontakty.",
+    "chat_placeholder": "Napíšte otázku...",
+    "discuss_title": "Discuss a project",
+    "review_modal_title": "Leave a review",
+    "review_rating_label": "Rating:",
+    "btn_send_review": "Send review",
+    "load_more": "Show more",
+    "placeholder_name": "Your name",
+    "placeholder_company": "Company",
+    "placeholder_phone": "Phone",
+    "placeholder_message": "Message...",
+    "placeholder_email": "Email",
+    "placeholder_review_title": "Review title"
+  }
+};
+
+
+Object.assign(translations.ru, {
+  trust_1:'Быстрая связь', trust_2:'Meta / TikTok / Google / Instagram', trust_3:'Работаю лично', trust_4:'Чат на сайте',
+  hero_card_name:'Владислав • NexoraAds', hero_card_role:'Начинающий таргетолог', float_1:'CTR / CPL / ROAS', float_1b:'Контроль метрик', float_2:'Запуск без хаоса', float_2b:'План → тест → рост', float_3:'AI assistant', float_3b:'Быстрые ответы',
+  faq_badge:'Вопросы клиентов', faq_title:'FAQ — частые вопросы', faq_subtitle:'Коротко и честно о рекламе, бюджете и результате.', faq_q1:'С каким бюджетом можно стартовать?', faq_a1:'Можно стартовать с небольшого бюджета, но лучше сначала обсудить нишу и цель. Я подскажу адекватный бюджет для теста.', faq_q2:'Есть ли гарантия результата?', faq_a2:'Гарантировать продажи нечестно: результат зависит от продукта, сайта, цены, аудитории и бюджета. Я гарантирую аккуратную работу, аналитику и честность.', faq_q3:'Какие платформы ты настраиваешь?', faq_a3:'Facebook, Instagram, TikTok и Google Ads. Платформу выбираю под вашу нишу и цель.', faq_q4:'Через сколько видны первые данные?', faq_a4:'Первые данные видны после тестового запуска. Дальше мы отключаем слабое и усиливаем то, что работает.',
+  chat_hello:'Привет! 👋 Я AI-помощник Nexora. Спросите про цену, услуги, сроки или контакты.', chip_price:'💰 Цена', chip_services:'🎯 Услуги', chip_contact:'📞 Контакт', mobile_tg:'Telegram', mobile_chat:'AI чат'
+});
+Object.assign(translations.en, {
+  trust_1:'Fast contact', trust_2:'Meta / TikTok / Google / Instagram', trust_3:'Personal work', trust_4:'Website chat',
+  hero_card_name:'Vladislav • NexoraAds', hero_card_role:'Beginner targeting specialist', float_1:'CTR / CPL / ROAS', float_1b:'Metric control', float_2:'Launch without chaos', float_2b:'Plan → test → grow', float_3:'AI assistant', float_3b:'Fast answers',
+  faq_badge:'Client questions', faq_title:'FAQ', faq_subtitle:'Short and honest answers about ads, budget and results.', faq_q1:'What budget can I start with?', faq_a1:'You can start with a small budget, but first we should discuss your niche and goal. I will suggest a realistic test budget.', faq_q2:'Do you guarantee results?', faq_a2:'Guaranteeing sales would be dishonest: results depend on product, website, price, audience and budget. I guarantee careful work, analytics and honesty.', faq_q3:'Which platforms do you set up?', faq_a3:'Facebook, Instagram, TikTok and Google Ads. I choose the platform based on your niche and goal.', faq_q4:'When will we see first data?', faq_a4:'First data appears after the test launch. Then we turn off weak ads and strengthen what works.',
+  chat_hello:'Hi! 👋 I am the Nexora AI assistant. Ask about price, services, timing or contacts.', chip_price:'💰 Price', chip_services:'🎯 Services', chip_contact:'📞 Contact', mobile_tg:'Telegram', mobile_chat:'AI chat'
+});
+Object.assign(translations.uk, {
+  trust_1:'Швидкий зв’язок', trust_2:'Meta / TikTok / Google / Instagram', trust_3:'Працюю особисто', trust_4:'Чат на сайті',
+  hero_card_name:'Владислав • NexoraAds', hero_card_role:'Початківець таргетолог', float_1:'CTR / CPL / ROAS', float_1b:'Контроль метрик', float_2:'Запуск без хаосу', float_2b:'План → тест → ріст', float_3:'AI assistant', float_3b:'Швидкі відповіді',
+  faq_badge:'Питання клієнтів', faq_title:'FAQ — часті питання', faq_subtitle:'Коротко і чесно про рекламу, бюджет і результат.', faq_q1:'З яким бюджетом можна стартувати?', faq_a1:'Можна стартувати з невеликого бюджету, але спочатку краще обговорити нішу і ціль.', faq_q2:'Чи є гарантія результату?', faq_a2:'Гарантувати продажі нечесно. Я гарантую акуратну роботу, аналітику і чесну комунікацію.', faq_q3:'Які платформи ти налаштовуєш?', faq_a3:'Facebook, Instagram, TikTok і Google Ads.', faq_q4:'Коли видно перші дані?', faq_a4:'Перші дані видно після тестового запуску. Далі посилюємо те, що працює.',
+  chat_hello:'Привіт! 👋 Я AI-помічник Nexora. Запитайте про ціну, послуги, терміни або контакти.', chip_price:'💰 Ціна', chip_services:'🎯 Послуги', chip_contact:'📞 Контакт', mobile_tg:'Telegram', mobile_chat:'AI чат'
+});
+Object.assign(translations.sk, {
+  trust_1:'Rýchly kontakt', trust_2:'Meta / TikTok / Google / Instagram', trust_3:'Osobná práca', trust_4:'Chat na webe',
+  hero_card_name:'Vladislav • NexoraAds', hero_card_role:'Začínajúci targetológ', float_1:'CTR / CPL / ROAS', float_1b:'Kontrola metrík', float_2:'Štart bez chaosu', float_2b:'Plán → test → rast', float_3:'AI assistant', float_3b:'Rýchle odpovede',
+  faq_badge:'Otázky klientov', faq_title:'FAQ', faq_subtitle:'Krátko a úprimne o reklame, rozpočte a výsledku.', faq_q1:'S akým rozpočtom začať?', faq_a1:'Dá sa začať s menším rozpočtom, ale najprv je dobré prebrať oblasť a cieľ.', faq_q2:'Garantuješ výsledok?', faq_a2:'Garantovať predaje nie je férové. Garantujem dôslednú prácu, analytiku a úprimnosť.', faq_q3:'Aké platformy nastavuješ?', faq_a3:'Facebook, Instagram, TikTok a Google Ads.', faq_q4:'Kedy uvidíme prvé dáta?', faq_a4:'Prvé dáta sú po testovacom spustení. Potom posilníme to, čo funguje.',
+  chat_hello:'Ahoj! 👋 Som AI asistent Nexora. Opýtajte sa na cenu, služby, termíny alebo kontakt.', chip_price:'💰 Cena', chip_services:'🎯 Služby', chip_contact:'📞 Kontakt', mobile_tg:'Telegram', mobile_chat:'AI chat'
+});
+
+let currentSlide = 0;
+let currentRating = 0;
+
+const API_BASE = 'https://ainexora.vercel.app/api';
+
+async function postToBackend(endpoint, payload) {
+  const response = await fetch(`${API_BASE}/${endpoint}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  let data = {};
+  try {
+    data = await response.json();
+  } catch (_) {}
+
+  if (!response.ok || data.error) {
+    console.error(`Backend error: ${endpoint}`, data);
+    throw new Error(data.error || 'Ошибка отправки');
+  }
+
+  return data;
+}
+
+function applyTranslations(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+  
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+function changeLang(lang) {
+  document.documentElement.lang = lang;
+  localStorage.setItem('selectedLang', lang);
+  applyTranslations(lang);
+  document.getElementById('lang-dropdown').classList.add('hidden');
+}
+
+function toggleLangDropdown() {
+  document.getElementById('lang-dropdown').classList.toggle('hidden');
+}
+
+function initSlider() {
+  const dotsContainer = document.getElementById('dots');
+  if (!dotsContainer || dotsContainer.children.length) return;
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = `dot ${i === 0 ? 'active' : ''}`;
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function nextSlide() {
+  const slides = document.querySelectorAll('.slide');
+  currentSlide = (currentSlide + 1) % slides.length;
+  updateSlider();
+}
+
+function prevSlide() {
+  const slides = document.querySelectorAll('.slide');
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  updateSlider();
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  updateSlider();
+}
+
+function updateSlider() {
+  const slider = document.getElementById('casesSlider');
+  if (!slider) return;
+  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+  document.querySelectorAll('.dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlide);
+  });
+}
+
+function toggleChat() {
+  document.getElementById('chatWindow').classList.toggle('active');
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  if (!message) return;
+
+  const messagesContainer = document.getElementById('chatMessages');
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-message user';
+  userMsg.textContent = message;
+  messagesContainer.appendChild(userMsg);
+
+  input.value = '';
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-message bot typing';
+  typing.textContent = 'Nexora AI печатает...';
+  messagesContainer.appendChild(typing);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  try {
+    const data = await postToBackend('chat', { message });
+    typing.classList.remove('typing');
+    typing.textContent = data.reply || getAIResponse(message);
+  } catch (error) {
+    console.error('AI chat error:', error);
+    typing.classList.remove('typing');
+    typing.textContent = getAIResponse(message);
+  }
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function getAIResponse(msg) {
+  const lang = localStorage.getItem('selectedLang') || 'ru';
+  const text = msg.toLowerCase();
+  const answers = {
+    ru: {
+      hello: '👋 Привет! Я AI-помощник Nexora. Могу подсказать по услугам, цене, рекламе и контактам.',
+      price: '💰 Стоимость зависит от объема работ, ниши и бюджета. Напишите в Telegram @NexoraAds_official — Владислав уточнит детали.',
+      services: '🎯 Я помогаю с настройкой рекламы, ведением кампаний, оптимизацией и аудитом Facebook, Instagram, TikTok и Google Ads.',
+      result: '📈 Результат зависит от продукта, аудитории и бюджета. Сначала делаем анализ, потом тесты и оптимизацию.',
+      contact: '📞 Связаться можно в Telegram: @NexoraAds_official, WhatsApp: +380995228560 или email: nexora.ads111@gmail.com.',
+      default: '🤖 Я понял вопрос. Лучше всего напишите Владиславу в Telegram @NexoraAds_official — он ответит подробнее.'
+    },
+    en: { hello: '👋 Hi! I am the Nexora AI assistant.', price: '💰 Price depends on scope, niche and budget.', services: '🎯 Services: Facebook, Instagram, TikTok and Google Ads.', result: '📈 Results depend on product, audience and budget.', contact: '📞 Telegram: @NexoraAds_official.', default: '🤖 I understood your question. Message @NexoraAds_official for details.' },
+    uk: { hello: '👋 Привіт! Я AI-помічник Nexora.', price: '💰 Вартість залежить від обсягу робіт, ніші та бюджету.', services: '🎯 Послуги: Facebook, Instagram, TikTok і Google Ads.', result: '📈 Результат залежить від продукту, аудиторії та бюджету.', contact: '📞 Telegram: @NexoraAds_official.', default: '🤖 Я зрозумів питання. Напишіть у Telegram @NexoraAds_official.' },
+    sk: { hello: '👋 Ahoj! Som AI asistent Nexora.', price: '💰 Cena závisí od rozsahu práce, oblasti a rozpočtu.', services: '🎯 Služby: Facebook, Instagram, TikTok a Google Ads.', result: '📈 Výsledok závisí od produktu, publika a rozpočtu.', contact: '📞 Telegram: @NexoraAds_official.', default: '🤖 Rozumiem otázke. Napíšte na Telegram @NexoraAds_official.' }
+  };
+  const a = answers[lang] || answers.ru;
+  if (/(привет|здрав|hello|hi|вітаю|привіт|ahoj)/i.test(text)) return a.hello;
+  if (/(цена|стоимость|price|cost|вартість|cena|koľko)/i.test(text)) return a.price;
+  if (/(услуг|service|послуг|služb|таргет|реклам|ads|google|tiktok|facebook|instagram)/i.test(text)) return a.services;
+  if (/(результ|result|когда|when|roi|прибыль|výsled|výsledok)/i.test(text)) return a.result;
+  if (/(контакт|связь|contact|telegram|телефон|phone|kontakt)/i.test(text)) return a.contact;
+  return a.default;
+}
+
+function openReviewModal() { document.getElementById('reviewModal').classList.add('active'); currentRating = 0; updateStars(); }
+function closeReviewModal() { document.getElementById('reviewModal').classList.remove('active'); document.getElementById('review-form').reset(); currentRating = 0; updateStars(); }
+function openDiscussModal() { document.getElementById('discussModal').classList.add('active'); }
+function closeDiscussModal() { document.getElementById('discussModal').classList.remove('active'); document.getElementById('discuss-form').reset(); }
+function setRating(rating) { currentRating = rating; updateStars(); }
+function updateStars() { document.querySelectorAll('.star').forEach((star, i) => star.classList.toggle('active', i < currentRating)); }
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-message').textContent = message;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+async function submitReview(e) {
+  e.preventDefault();
+  if (currentRating === 0) {
+    alert('Пожалуйста, поставьте оценку');
+    return;
+  }
+
+  const name = document.getElementById('review-name').value.trim();
+  const title = document.getElementById('review-title').value.trim();
+  const text = document.getElementById('review-text').value.trim();
+  const btn = e.target.querySelector('button[type="submit"]');
+
+  try {
+    if (btn) { btn.disabled = true; btn.textContent = 'Отправка...'; }
+
+    await postToBackend('send-review', {
+      name,
+      title,
+      text,
+      rating: currentRating
+    });
+
+    showToast('✅ Отзыв отправлен!');
+    closeReviewModal();
+  } catch (err) {
+    console.error(err);
+    alert('Ошибка при отправке отзыва. Проверь Vercel endpoint /api/send-review.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Отправить отзыв'; }
+  }
+}
+
+async function submitDiscuss(e) {
+  e.preventDefault();
+  const name = document.getElementById('discuss-name').value.trim();
+  const email = document.getElementById('discuss-email').value.trim();
+  const phone = document.getElementById('discuss-phone').value.trim();
+  const message = document.getElementById('discuss-message').value.trim();
+  const btn = e.target.querySelector('button[type="submit"]');
+
+  try {
+    if (btn) { btn.disabled = true; btn.textContent = 'Отправка...'; }
+    await postToBackend('send-application', {
+      name,
+      company: 'Обсуждение проекта',
+      contact: `${phone}${email ? ' / ' + email : ''}`,
+      message
+    });
+    showToast('✅ Сообщение отправлено!');
+    closeDiscussModal();
+  } catch (err) {
+    console.error(err);
+    alert('Ошибка при отправке заявки. Проверь Vercel endpoint /api/send-application.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Отправить'; }
+  }
+}
+
+function loadMoreReviews() {
+  window.visibleReviewsCount = (window.visibleReviewsCount || 3) + 3;
+  if (window.renderVisibleReviews) window.renderVisibleReviews();
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  localStorage.setItem('themeMode', isLight ? 'light' : 'dark');
+  const btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
+}
+
+function initTheme() {
+  if (localStorage.getItem('themeMode') === 'light') document.body.classList.add('light-mode');
+  const btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+}
+
+function initRevealAnimations() {
+  document.querySelectorAll('section .card-luxury, .faq-grid, .reveal').forEach(el => el.classList.add('reveal'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function toggleFaq(btn) { btn.closest('.faq-item').classList.toggle('active'); }
+function quickChat(text) { const input = document.getElementById('chatInput'); input.value = text; sendChatMessage(); }
+
+async function submitContactForm(e) {
+  e.preventDefault();
+  const name = document.getElementById('form-name').value.trim();
+  const company = document.getElementById('form-company').value.trim();
+  const contact = document.getElementById('form-contact').value.trim();
+  const message = document.getElementById('form-message').value.trim();
+  const btn = e.target.querySelector('button[type="submit"]');
+
+  try {
+    if (btn) { btn.disabled = true; btn.textContent = 'Отправка...'; }
+    await postToBackend('send-application', { name, company, contact, message });
+    showToast('✅ Заявка отправлена!');
+    document.getElementById('contact-form').reset();
+  } catch (err) {
+    console.error(err);
+    alert('Ошибка при отправке заявки. Проверь Vercel endpoint /api/send-application.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Отправить заявку'; }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initRevealAnimations();
+  const lang = localStorage.getItem('selectedLang') || 'ru';
+  applyTranslations(lang);
+  initSlider();
+
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) contactForm.addEventListener('submit', submitContactForm);
+
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('lang-dropdown');
+    const btn = document.querySelector('.lang-toggle-btn');
+    if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+
+  const reviewModal = document.getElementById('reviewModal');
+  if (reviewModal) reviewModal.addEventListener('click', (e) => { if (e.target.id === 'reviewModal') closeReviewModal(); });
+
+  const discussModal = document.getElementById('discussModal');
+  if (discussModal) discussModal.addEventListener('click', (e) => { if (e.target.id === 'discussModal') closeDiscussModal(); });
+});
+
+</script>
+
+</body>
+</html>
