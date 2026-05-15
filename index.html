@@ -1036,6 +1036,137 @@
   margin-top:6px;
 }
 
+
+/* MOBILE MENU IMPROVEMENTS */
+.mobile-menu-btn {
+  display: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(96,165,250,.25);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 340px;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(15,23,46,.98), rgba(26,31,74,.98));
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(96,165,250,.18);
+  z-index: 999999;
+  padding: 28px;
+  transition: .35s ease;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(4px);
+  z-index: 999998;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s ease;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(96,165,250,.1);
+  color: #e0e7ff;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.mobile-menu .mobile-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.mobile-menu .mobile-socials a {
+  border: none;
+  padding: 0;
+}
+
+.mobile-close {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(96,165,250,.2);
+  background: rgba(59,130,246,.1);
+  color: white;
+  font-size: 20px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .desktop-socials,
+  .desktop-contact-btn,
+  .lang-wrapper {
+    display: none !important;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+  }
+
+  .hero-actions a,
+  .hero-actions button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .website-card img {
+    height: 340px;
+  }
+
+  .floating-card {
+    display: none;
+  }
+
+  .trust-strip {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .section-heading {
+    font-size: 2rem !important;
+  }
+
+  .card-luxury,
+  .application-card {
+    padding: 24px !important;
+  }
+}
+
 </style>
 
 </head>
@@ -1063,7 +1194,11 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <div class="hidden sm:flex gap-2">
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+  <i class="fas fa-bars"></i>
+</button>
+
+      <div class="hidden sm:flex gap-2 desktop-socials">
         <a href="https://www.instagram.com/manangernexora.official/" target="_blank" class="social-icon">
           <i class="fab fa-instagram"></i>
         </a>
@@ -1076,7 +1211,7 @@
       </div>
       
       <button class="luxury-button theme-toggle" onclick="toggleTheme()" title="Theme">🌙</button>
-      <div class="relative">
+      <div class="relative lang-wrapper">
         <button class="lang-toggle-btn luxury-button text-sm" onclick="toggleLangDropdown()">
           🌍 <span data-i18n="lang_select">РУ</span>
         </button>
@@ -1087,7 +1222,7 @@
           <button onclick="changeLang('sk')" data-lang="sk">🇸🇰 Slovenčina</button>
         </div>
       </div>
-      <a href="#contact" class="luxury-button primary text-sm" data-i18n="btn_contact">Связаться</a>
+      <a href="#contact" class="luxury-button primary text-sm desktop-contact-btn" data-i18n="btn_contact">Связаться</a>
     </div>
   </div>
 </header>
@@ -2380,6 +2515,54 @@ function closeWebsiteImage() {
 
   setTimeout(() => window.changeLang(localStorage.getItem("nexora_lang") || "ru"), 300);
 })();
+</script>
+
+
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">
+    ✕
+  </button>
+
+  <div style="margin-top:30px;">
+    <a href="#team" onclick="toggleMobileMenu()">👥 О нас</a>
+    <a href="#why" onclick="toggleMobileMenu()">🔥 Почему мы</a>
+    <a href="#services" onclick="toggleMobileMenu()">💼 Услуги</a>
+    <a href="#cases" onclick="toggleMobileMenu()">🚀 Кейсы</a>
+    <a href="#reviews" onclick="toggleMobileMenu()">⭐ Отзывы</a>
+    <a href="#contact" onclick="toggleMobileMenu()">📩 Контакты</a>
+  </div>
+
+  <div style="margin-top:30px;">
+    <p style="color:#93c5fd;font-size:13px;margin-bottom:12px;">Язык сайта</p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <button onclick="changeLang('ru')" class="luxury-button">🇷🇺 RU</button>
+      <button onclick="changeLang('uk')" class="luxury-button">🇺🇦 UA</button>
+      <button onclick="changeLang('en')" class="luxury-button">🇬🇧 EN</button>
+      <button onclick="changeLang('sk')" class="luxury-button">🇸🇰 SK</button>
+    </div>
+  </div>
+
+  <div class="mobile-socials">
+    <a href="https://www.instagram.com/manangernexora.official/" target="_blank" class="social-icon">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://wa.me/380995228560" target="_blank" class="social-icon">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://t.me/NexoraAds_official" target="_blank" class="social-icon">
+      <i class="fab fa-telegram"></i>
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+  document.getElementById('mobileOverlay').classList.toggle('active');
+}
 </script>
 
 </body>
