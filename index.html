@@ -998,18 +998,45 @@
   }
 }
 
+
+.review-user {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin-top:18px;
+}
+
+.review-avatar {
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:800;
+  font-size:20px;
+  border:2px solid rgba(255,255,255,.15);
+  box-shadow:0 10px 25px rgba(96,165,250,.25);
+}
+
+.review-verified {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(16,185,129,.12);
+  border:1px solid rgba(16,185,129,.28);
+  color:#a7f3d0;
+  font-size:12px;
+  font-weight:700;
+  margin-top:6px;
+}
+
 </style>
-
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NN4CHW17SY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-NN4CHW17SY');
-</script>
 
 </head>
 <body>
@@ -1735,16 +1762,37 @@
     reviews.forEach(review => {
       const rating = Math.max(1, Math.min(5, Number(review.rating) || 5));
       const stars = '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+      const avatarLetter = (review.name || 'K').trim().charAt(0).toUpperCase();
+
       const el = document.createElement('div');
       el.className = 'card-luxury p-8';
+
       el.innerHTML = `
         <div style="text-align: center; font-size: 24px; margin-bottom: 16px; letter-spacing: 4px;">
           ${stars}
         </div>
-        <h3 class="text-lg font-semibold text-white mb-3 text-center">"${review.title || "Отзыв"}"</h3>
-        <p class="text-blue-100/70 text-sm leading-relaxed mb-4 text-center">${review.text || ""}</p>
-        <p class="text-blue-300/50 text-sm text-center">— ${review.name || "Клиент"}</p>
+
+        <div class="review-user">
+          <div class="review-avatar">${avatarLetter}</div>
+        </div>
+
+        <h3 class="text-lg font-semibold text-white mt-5 mb-3 text-center">"${review.title || "Отзыв"}"</h3>
+
+        <p class="text-blue-100/70 text-sm leading-relaxed mb-5 text-center">
+          ${review.text || ""}
+        </p>
+
+        <div class="text-center">
+          <p class="text-blue-100 font-semibold text-base">
+            ${review.name || "Клиент"}
+          </p>
+
+          <div class="review-verified">
+            ✅ Проверенный отзыв
+          </div>
+        </div>
       `;
+
       container.appendChild(el);
     });
   }
