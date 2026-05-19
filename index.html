@@ -1314,6 +1314,81 @@
 .contact-card-link strong { color:#93c5fd; font-size:15px; }
 @media (max-width:768px){ .contact-card-link { padding:13px 14px; } }
 
+
+
+/* MOBILE CLEAN BUYER FLOW — no button overload */
+.mobile-buyer-path { display: none; }
+@media (max-width: 768px) {
+  /* keep desktop unchanged, make mobile simpler */
+  .sticky-mobile-cta { display: none !important; }
+  .theme-toggle { display: none !important; }
+
+  header .max-w-7xl { padding-top: 10px !important; padding-bottom: 10px !important; }
+  header .w-10.h-10 { width: 34px !important; height: 34px !important; border-radius: 10px !important; }
+  header .logo-text { font-size: 23px !important; }
+  header [data-i18n="header_subtitle"] { display: none !important; }
+
+  .hero-actions { max-width: 340px; margin: 0 auto; }
+  .hero-actions a { display: none !important; }
+  .hero-actions button {
+    width: 100% !important;
+    border-radius: 18px !important;
+    padding: 15px 18px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, rgba(96,165,250,.28), rgba(167,139,250,.18)) !important;
+    border-color: rgba(96,165,250,.42) !important;
+    color: #eaf2ff !important;
+    box-shadow: 0 14px 34px rgba(59,130,246,.18) !important;
+  }
+  .hero-actions button::after { content: ' →'; }
+
+  .mobile-buyer-path {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-width: 340px;
+    margin: 16px auto 0;
+  }
+  .mobile-buyer-path div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: rgba(96,165,250,.08);
+    border: 1px solid rgba(96,165,250,.14);
+    color: rgba(224,231,255,.78);
+    font-size: 13px;
+    text-align: left;
+  }
+  .mobile-buyer-path strong {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(96,165,250,.18);
+    color: #bfdbfe;
+    font-size: 12px;
+  }
+
+  .chat-btn {
+    width: 52px !important;
+    height: 52px !important;
+    right: 16px !important;
+    bottom: 18px !important;
+    animation: none !important;
+    box-shadow: 0 10px 28px rgba(16,185,129,.28) !important;
+  }
+  .chat-window { bottom: 84px !important; }
+
+  .mobile-menu .mobile-socials { grid-template-columns: repeat(2, 1fr) !important; }
+  .mobile-menu .mobile-contact-card { border-radius: 16px; }
+}
+
 </style>
 
 </head>
@@ -1387,6 +1462,11 @@
       <div class="flex flex-col sm:flex-row gap-4 justify-start hero-actions">
         <a href="https://t.me/Manager_Zeykan" target="_blank" class="luxury-button btn-green" data-i18n="btn_telegram">💬 Написать в Telegram</a>
         <button onclick="openDiscussModal()" class="luxury-button btn-red" data-i18n="btn_discuss">💌 Обсудить проект</button>
+      </div>
+      <div class="mobile-buyer-path" aria-label="Быстрый путь заказа">
+        <div><strong>1</strong><span>Выбери: сайт или реклама</span></div>
+        <div><strong>2</strong><span>Оставь заявку</span></div>
+        <div><strong>3</strong><span>Получишь ответ в Telegram</span></div>
       </div>
       <div class="trust-strip">
         <div class="trust-mini"><p class="text-2xl font-bold text-blue-300">24/7</p><p class="text-xs text-blue-300/60" data-i18n="trust_1">Связь</p></div>
@@ -1977,11 +2057,6 @@
   </div>
 </div>
 
-
-<div class="sticky-mobile-cta">
-  <a href="https://t.me/Manager_Zeykan" target="_blank" class="btn-green" data-i18n="mobile_tg">Написать менеджеру</a>
-  <button onclick="toggleChat()" class="luxury-button primary" data-i18n="mobile_chat">AI чат</button>
-</div>
 
 <!-- FOOTER -->
 <footer class="border-t border-blue-400/10 py-16 px-6">
@@ -2729,9 +2804,6 @@ function closeWebsiteImage() {
     </a>
     <a href="https://instagram.com/vladislav.ads" target="_blank" class="social-icon">
       <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://t.me/Manager_Zeykan" target="_blank" class="social-icon">
-      <i class="fab fa-telegram"></i>
     </a>
   </div>
 </div>
