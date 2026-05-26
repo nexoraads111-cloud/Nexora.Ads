@@ -1871,8 +1871,8 @@
     <div class="ba-grid">
       <div class="ba-compare-card">
         <div class="ba-compare" data-before-after>
-          <img src="/Image/Сайт до.png" alt="Strop Look сайт до редизайна">
-          <img class="ba-after-img" src="/Image/Сайт Після.png" alt="Strop Look сайт после редизайна">
+          <img src="public/Image/Сайт до.png" data-paths="public/Image/Сайт до.png|/Image/Сайт до.png|./Image/Сайт до.png|Image/Сайт до.png" alt="Strop Look сайт до редизайна">
+          <img class="ba-after-img" src="public/Image/Сайт Після.png" data-paths="public/Image/Сайт Після.png|/Image/Сайт Після.png|./Image/Сайт Після.png|Image/Сайт Після.png" alt="Strop Look сайт после редизайна">
           <span class="ba-label before">ДО</span>
           <span class="ba-label after">ПОСЛЕ</span>
           <div class="ba-divider"></div>
@@ -1904,11 +1904,11 @@
 
     <div class="ba-thumbs">
       <div class="ba-thumb">
-        <img src="/Image/Сайт до1.png" alt="Старый сайт Strop Look нижняя часть">
+        <img src="public/Image/Сайт до1.png" data-paths="public/Image/Сайт до1.png|/Image/Сайт до1.png|./Image/Сайт до1.png|Image/Сайт до1.png" alt="Старый сайт Strop Look нижняя часть">
         <p>До: простая структура и слабый финальный блок</p>
       </div>
       <div class="ba-thumb">
-        <img src="/Image/Сайт після1.png" alt="Новый сайт Strop Look блок до после">
+        <img src="public/Image/Сайт після1.png" data-paths="public/Image/Сайт після1.png|/Image/Сайт після1.png|./Image/Сайт після1.png|Image/Сайт після1.png" alt="Новый сайт Strop Look блок до после">
         <p>После: отдельный продающий блок с визуальным сравнением работ</p>
       </div>
     </div>
@@ -3075,6 +3075,19 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+
+
+<script>
+  // Авто-поиск картинок: работает и локально (public/Image), и на хостинге (/Image)
+  document.querySelectorAll('img[data-paths]').forEach(function(img){
+    const paths = img.getAttribute('data-paths').split('|');
+    let index = 0;
+    img.onerror = function(){
+      index += 1;
+      if (index < paths.length) img.src = paths[index];
+    };
+  });
+</script>
 
 <script>
   // Premium before/after slider
