@@ -3107,5 +3107,99 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 </script>
 
+
+<section class="beforeafter-section py-24 px-6" id="before-after">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal visible">
+      <span class="ba-kicker">Before / After</span>
+      <h2 class="section-heading mt-6">Редизайн сайтов</h2>
+      <p class="text-blue-100/70 mt-5 max-w-2xl mx-auto">
+        Показываем реальную разницу до и после работы над сайтом клиента.
+      </p>
+    </div>
+
+    <div class="ba-grid">
+      <div class="ba-info-card">
+        <span class="professional-badge mb-5">
+          <i class="fas fa-wand-magic-sparkles"></i>
+          Stroplook.sk
+        </span>
+
+        <h3 class="text-4xl font-bold text-white mb-5">
+          Полное обновление дизайна
+        </h3>
+
+        <p class="text-blue-100/70 leading-8">
+          Мы полностью переработали структуру, визуальный стиль и мобильную версию сайта.
+          Новый дизайн стал современным, быстрым и намного более premium.
+        </p>
+
+        <div class="ba-stat-grid">
+          <div class="ba-stat">
+            <strong>+70%</strong>
+            <span>Modern UI</span>
+          </div>
+
+          <div class="ba-stat">
+            <strong>+55%</strong>
+            <span>Mobile UX</span>
+          </div>
+
+          <div class="ba-stat">
+            <strong>+80%</strong>
+            <span>Trust level</span>
+          </div>
+        </div>
+
+        <div class="ba-thumbs">
+          <div class="ba-thumb">
+            <img src="Public/Image/before1.png" alt="before">
+            <p>Старый дизайн сайта</p>
+          </div>
+
+          <div class="ba-thumb">
+            <img src="Public/Image/after1.png" alt="after">
+            <p>Новый premium дизайн</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ba-compare-card">
+        <div class="ba-compare">
+          <img src="Public/Image/before2.png" alt="before">
+
+          <img src="Public/Image/after2.png" alt="after" class="ba-after-img" id="afterImage">
+
+          <div class="ba-divider" id="divider"></div>
+
+          <div class="ba-handle" id="handle">
+            ⇆
+          </div>
+
+          <div class="ba-label before">DO</div>
+          <div class="ba-label after">PO</div>
+
+          <input type="range" min="0" max="100" value="50" class="ba-range" id="baSlider">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const slider = document.getElementById('baSlider');
+const afterImg = document.getElementById('afterImage');
+const divider = document.getElementById('divider');
+const handle = document.getElementById('handle');
+
+if(slider){
+slider.addEventListener('input', (e) => {
+  const value = e.target.value;
+  afterImg.style.clipPath = `inset(0 0 0 ${value}%)`;
+  divider.style.left = value + '%';
+  handle.style.left = value + '%';
+});
+}
+</script>
 </body>
 </html>
