@@ -1389,6 +1389,184 @@
   .mobile-menu .mobile-contact-card { border-radius: 16px; }
 }
 
+
+
+/* =========================
+   PREMIUM WEBSITE BEFORE / AFTER CASE
+   Added for NexoraAds portfolio
+   ========================= */
+.beforeafter-section {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(96,165,250,.10);
+  background:
+    radial-gradient(circle at 20% 5%, rgba(96,165,250,.16), transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(167,139,250,.12), transparent 34%),
+    linear-gradient(135deg, rgba(15,23,46,.68), rgba(26,31,74,.36));
+}
+.ba-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(96,165,250,.10);
+  border: 1px solid rgba(96,165,250,.22);
+  color: #bfdbfe;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 34px;
+  align-items: stretch;
+}
+.ba-info-card {
+  border-radius: 30px;
+  padding: 34px;
+  background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(167,139,250,.06));
+  border: 1px solid rgba(96,165,250,.20);
+  box-shadow: 0 26px 75px rgba(2,6,23,.26);
+  backdrop-filter: blur(20px);
+}
+.ba-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+.ba-stat {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(15,23,42,.36);
+  border: 1px solid rgba(96,165,250,.14);
+}
+.ba-stat strong {
+  display: block;
+  color: #93c5fd;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.ba-stat span {
+  color: rgba(224,231,255,.66);
+  font-size: 12px;
+}
+.ba-compare-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  min-height: 520px;
+  background: rgba(2,6,23,.4);
+  border: 1px solid rgba(96,165,250,.22);
+  box-shadow: 0 30px 90px rgba(2,6,23,.42);
+}
+.ba-compare {
+  position: relative;
+  height: 100%;
+  min-height: 520px;
+}
+.ba-compare img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.ba-after-img { clip-path: inset(0 0 0 50%); }
+.ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 0 22px rgba(147,197,253,.72), 0 0 44px rgba(167,139,250,.32);
+  z-index: 5;
+}
+.ba-handle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.94);
+  color: #0f172e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  box-shadow: 0 18px 45px rgba(0,0,0,.28);
+}
+.ba-label {
+  position: absolute;
+  top: 18px;
+  z-index: 7;
+  padding: 10px 13px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .06em;
+  background: rgba(2,6,23,.72);
+  color: white;
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(12px);
+}
+.ba-label.before { left: 18px; }
+.ba-label.after { right: 18px; background: rgba(96,165,250,.18); color: #dbeafe; }
+.ba-range {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+.ba-thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.ba-thumb {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(96,165,250,.18);
+  background: rgba(255,255,255,.03);
+}
+.ba-thumb img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.ba-thumb p {
+  padding: 14px 16px;
+  color: rgba(224,231,255,.78);
+  font-size: 13px;
+  font-weight: 700;
+}
+@media (max-width: 900px) {
+  .ba-grid { grid-template-columns: 1fr; }
+  .ba-compare-card, .ba-compare { min-height: 420px; }
+  .ba-stat-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .ba-info-card { padding: 22px; border-radius: 24px; }
+  .ba-compare-card, .ba-compare { min-height: 360px; border-radius: 24px; }
+  .ba-thumbs { grid-template-columns: 1fr; }
+  .ba-thumb img { height: 260px; }
+}
+
 </style>
 
 </head>
@@ -1676,6 +1854,64 @@
     </div>
 
 
+  </div>
+</section>
+
+<!-- PREMIUM BEFORE / AFTER WEBSITE CASE -->
+<section class="beforeafter-section py-32 px-6" id="website-before-after">
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-14">
+      <span class="ba-kicker">PREMIUM CASE</span>
+      <h2 class="section-heading mt-5 text-4xl">Сайт до / после</h2>
+      <p class="text-blue-100/70 mt-5 max-w-2xl mx-auto text-lg">
+        Показываем не просто красивую картинку, а реальную трансформацию сайта клиента: структура, дизайн, мобильность и доверие к бренду.
+      </p>
+    </div>
+
+    <div class="ba-grid">
+      <div class="ba-compare-card">
+        <div class="ba-compare" data-before-after>
+          <img src="assets/before-home.png" alt="Strop Look сайт до редизайна">
+          <img class="ba-after-img" src="assets/after-home.png" alt="Strop Look сайт после редизайна">
+          <span class="ba-label before">ДО</span>
+          <span class="ba-label after">ПОСЛЕ</span>
+          <div class="ba-divider"></div>
+          <div class="ba-handle">↔</div>
+          <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Сравнить сайт до и после">
+        </div>
+      </div>
+
+      <div class="ba-info-card">
+        <span class="professional-badge">🔥 Transformation</span>
+        <h3 class="text-3xl md:text-4xl font-extrabold text-blue-100 mt-5 mb-5">Strop Look — премиальный редизайн сайта</h3>
+        <p class="text-blue-100/70 leading-relaxed mb-6">
+          Старый сайт выглядел просто и не раскрывал уровень работ клиента. Мы сделали более дорогой визуал, сильный первый экран, понятную структуру, акцентные кнопки и блок “до/после”, который сразу показывает качество услуги.
+        </p>
+        <div class="space-y-3 text-blue-100/75 text-sm">
+          <p>✅ Новый premium UI с тёмной атмосферой и золотыми акцентами</p>
+          <p>✅ Удобная навигация: услуги, работы, заявка, отзывы и FAQ</p>
+          <p>✅ Сильный hero-блок с понятным оффером</p>
+          <p>✅ Адаптив под телефон и быстрый путь к заявке</p>
+        </div>
+        <div class="ba-stat-grid">
+          <div class="ba-stat"><strong>UX</strong><span>понятнее путь клиента</span></div>
+          <div class="ba-stat"><strong>UI</strong><span>дороже первое впечатление</span></div>
+          <div class="ba-stat"><strong>Lead</strong><span>кнопки и формы заявки</span></div>
+        </div>
+        <a href="#contact" class="luxury-button primary inline-flex mt-7">Хочу такой сайт →</a>
+      </div>
+    </div>
+
+    <div class="ba-thumbs">
+      <div class="ba-thumb">
+        <img src="assets/before-footer.png" alt="Старый сайт Strop Look нижняя часть">
+        <p>До: простая структура и слабый финальный блок</p>
+      </div>
+      <div class="ba-thumb">
+        <img src="assets/after-beforeafter.png" alt="Новый сайт Strop Look блок до после">
+        <p>После: отдельный продающий блок с визуальным сравнением работ</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2836,6 +3072,26 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === savedLang);
   });
 });
+</script>
+
+
+
+<script>
+  // Premium before/after slider
+  document.querySelectorAll('[data-before-after]').forEach(function(compare){
+    const range = compare.querySelector('.ba-range');
+    const afterImg = compare.querySelector('.ba-after-img');
+    const divider = compare.querySelector('.ba-divider');
+    const handle = compare.querySelector('.ba-handle');
+    function update(){
+      const value = range.value;
+      afterImg.style.clipPath = `inset(0 0 0 ${value}%)`;
+      divider.style.left = value + '%';
+      handle.style.left = value + '%';
+    }
+    range.addEventListener('input', update);
+    update();
+  });
 </script>
 
 </body>
