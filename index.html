@@ -1871,8 +1871,8 @@
     <div class="ba-grid">
       <div class="ba-compare-card">
         <div class="ba-compare" data-before-after>
-          <img src="public/Image/Сайт до.png" data-paths="public/Image/Сайт до.png|/Image/Сайт до.png|./Image/Сайт до.png|Image/Сайт до.png" alt="Strop Look сайт до редизайна">
-          <img class="ba-after-img" src="public/Image/Сайт Після.png" data-paths="public/Image/Сайт Після.png|/Image/Сайт Після.png|./Image/Сайт Після.png|Image/Сайт Після.png" alt="Strop Look сайт после редизайна">
+          <img src="Public/Image/before2.png" data-paths="Public/Image/before2.png|./Public/Image/before2.png|/Nexora.Ads/Public/Image/before2.png|/before2.png" alt="Strop Look сайт до редизайна">
+          <img class="ba-after-img" src="Public/Image/after2.png" data-paths="Public/Image/after2.png|./Public/Image/after2.png|/Nexora.Ads/Public/Image/after2.png|/after2.png" alt="Strop Look сайт после редизайна">
           <span class="ba-label before">ДО</span>
           <span class="ba-label after">ПОСЛЕ</span>
           <div class="ba-divider"></div>
@@ -1904,11 +1904,11 @@
 
     <div class="ba-thumbs">
       <div class="ba-thumb">
-        <img src="public/Image/Сайт до1.png" data-paths="public/Image/Сайт до1.png|/Image/Сайт до1.png|./Image/Сайт до1.png|Image/Сайт до1.png" alt="Старый сайт Strop Look нижняя часть">
+        <img src="Public/Image/before1.png" data-paths="Public/Image/before1.png|./Public/Image/before1.png|/Nexora.Ads/Public/Image/before1.png|/before1.png" alt="Старый сайт Strop Look нижняя часть">
         <p>До: простая структура и слабый финальный блок</p>
       </div>
       <div class="ba-thumb">
-        <img src="public/Image/Сайт після1.png" data-paths="public/Image/Сайт після1.png|/Image/Сайт після1.png|./Image/Сайт після1.png|Image/Сайт після1.png" alt="Новый сайт Strop Look блок до после">
+        <img src="Public/Image/after1.png" data-paths="Public/Image/after1.png|./Public/Image/after1.png|/Nexora.Ads/Public/Image/after1.png|/after1.png" alt="Новый сайт Strop Look блок до после">
         <p>После: отдельный продающий блок с визуальным сравнением работ</p>
       </div>
     </div>
@@ -3078,7 +3078,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-  // Авто-поиск картинок: работает и локально (public/Image), и на хостинге (/Image)
+  // Авто-поиск картинок: Public/Image + GitHub Pages fallback
   document.querySelectorAll('img[data-paths]').forEach(function(img){
     const paths = img.getAttribute('data-paths').split('|');
     let index = 0;
@@ -3107,99 +3107,5 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 </script>
 
-
-<section class="beforeafter-section py-24 px-6" id="before-after">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16 reveal visible">
-      <span class="ba-kicker">Before / After</span>
-      <h2 class="section-heading mt-6">Редизайн сайтов</h2>
-      <p class="text-blue-100/70 mt-5 max-w-2xl mx-auto">
-        Показываем реальную разницу до и после работы над сайтом клиента.
-      </p>
-    </div>
-
-    <div class="ba-grid">
-      <div class="ba-info-card">
-        <span class="professional-badge mb-5">
-          <i class="fas fa-wand-magic-sparkles"></i>
-          Stroplook.sk
-        </span>
-
-        <h3 class="text-4xl font-bold text-white mb-5">
-          Полное обновление дизайна
-        </h3>
-
-        <p class="text-blue-100/70 leading-8">
-          Мы полностью переработали структуру, визуальный стиль и мобильную версию сайта.
-          Новый дизайн стал современным, быстрым и намного более premium.
-        </p>
-
-        <div class="ba-stat-grid">
-          <div class="ba-stat">
-            <strong>+70%</strong>
-            <span>Modern UI</span>
-          </div>
-
-          <div class="ba-stat">
-            <strong>+55%</strong>
-            <span>Mobile UX</span>
-          </div>
-
-          <div class="ba-stat">
-            <strong>+80%</strong>
-            <span>Trust level</span>
-          </div>
-        </div>
-
-        <div class="ba-thumbs">
-          <div class="ba-thumb">
-            <img src="Public/Image/before1.png" alt="before">
-            <p>Старый дизайн сайта</p>
-          </div>
-
-          <div class="ba-thumb">
-            <img src="Public/Image/after1.png" alt="after">
-            <p>Новый premium дизайн</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="ba-compare-card">
-        <div class="ba-compare">
-          <img src="Public/Image/before2.png" alt="before">
-
-          <img src="Public/Image/after2.png" alt="after" class="ba-after-img" id="afterImage">
-
-          <div class="ba-divider" id="divider"></div>
-
-          <div class="ba-handle" id="handle">
-            ⇆
-          </div>
-
-          <div class="ba-label before">DO</div>
-          <div class="ba-label after">PO</div>
-
-          <input type="range" min="0" max="100" value="50" class="ba-range" id="baSlider">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-const slider = document.getElementById('baSlider');
-const afterImg = document.getElementById('afterImage');
-const divider = document.getElementById('divider');
-const handle = document.getElementById('handle');
-
-if(slider){
-slider.addEventListener('input', (e) => {
-  const value = e.target.value;
-  afterImg.style.clipPath = `inset(0 0 0 ${value}%)`;
-  divider.style.left = value + '%';
-  handle.style.left = value + '%';
-});
-}
-</script>
 </body>
 </html>
