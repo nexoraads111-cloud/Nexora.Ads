@@ -1589,6 +1589,16 @@
 .pricing-grid-pro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.price-card-pro{position:relative;overflow:hidden;border-radius:30px;padding:30px;background:linear-gradient(135deg,rgba(59,130,246,.10),rgba(167,139,250,.06));border:1px solid rgba(96,165,250,.20);box-shadow:0 26px 75px rgba(2,6,23,.28);transition:.35s ease}.price-card-pro:hover{transform:translateY(-8px);border-color:rgba(96,165,250,.42);box-shadow:0 34px 90px rgba(96,165,250,.18)}.price-card-pro.popular{border-color:rgba(16,185,129,.45);box-shadow:0 34px 95px rgba(16,185,129,.16)}.price-badge{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(96,165,250,.14);border:1px solid rgba(96,165,250,.25);color:#bfdbfe;font-size:12px;font-weight:900;margin-bottom:18px}.price-card-pro.popular .price-badge{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.32);color:#a7f3d0}.price-value{font-size:38px;font-weight:950;color:#93c5fd;margin:14px 0}.price-old{text-decoration:line-through;color:rgba(224,231,255,.38);font-size:16px;margin-left:8px}.price-list{display:grid;gap:10px;margin:20px 0 24px}.price-list span{display:flex;gap:9px;color:rgba(224,231,255,.76);font-size:14px}.price-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choose-step{position:relative}.choose-step:after{content:"→";position:absolute;right:-18px;top:34px;color:rgba(147,197,253,.55);font-size:22px;font-weight:900}.choose-step:last-child:after{display:none}.premium-gallery-item img,.premium-gallery-item video{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}.premium-gallery-item{min-height:280px}.gallery-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:34px}.gallery-filter-btn{padding:10px 16px;border-radius:999px;border:1px solid rgba(96,165,250,.22);background:rgba(96,165,250,.08);color:#dbeafe;font-weight:800;cursor:pointer;transition:.25s}.gallery-filter-btn.active,.gallery-filter-btn:hover{background:rgba(96,165,250,.22);border-color:rgba(96,165,250,.45)}.premium-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.premium-gallery-item{display:none;position:relative;overflow:hidden;border-radius:26px;border:1px solid rgba(96,165,250,.18);background:rgba(255,255,255,.04);box-shadow:0 24px 65px rgba(2,6,23,.28)}.premium-gallery-item.visible{display:block}.premium-gallery-item span{position:absolute;left:14px;top:14px;padding:8px 12px;border-radius:999px;background:rgba(2,6,23,.72);color:white;font-size:12px;font-weight:900;backdrop-filter:blur(10px)}
 @media(max-width:900px){.promo-grid,.pricing-grid-pro,.premium-gallery{grid-template-columns:1fr}.price-actions{grid-template-columns:1fr}.choose-step:after{display:none}.team-card-pro .photo-container{height:340px!important}.promo-price{font-size:32px}}
 
+
+/* === TARIFF FILTERS + SHOW MORE === */
+.tariff-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 28px}
+.tariff-filter button{padding:10px 16px;border-radius:999px;border:1px solid rgba(96,165,250,.24);background:rgba(96,165,250,.08);color:#dbeafe;font-weight:900;cursor:pointer;transition:.25s ease}
+.tariff-filter button.active,.tariff-filter button:hover{background:linear-gradient(135deg,rgba(96,165,250,.25),rgba(167,139,250,.16));border-color:rgba(96,165,250,.55);transform:translateY(-2px)}
+.portfolio-price-note{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:8px 11px;border-radius:999px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.24);color:#a7f3d0;font-size:12px;font-weight:900}
+.tariff-more-wrap{margin-top:34px;text-align:center}
+.tariff-card-hidden{display:none!important}
+.price-card-pro .tariff-type{position:absolute;right:18px;top:18px;font-size:11px;font-weight:900;color:rgba(224,231,255,.58);letter-spacing:.08em}
+
 </style>
 
 </head>
@@ -1839,15 +1849,15 @@
     <div class="text-center mb-12 reveal">
       <span class="professional-badge">💻 САЙТЫ ПОД КЛЮЧ</span>
       <h2 class="section-heading mt-5 text-4xl">Тарифы и форматы сайтов</h2>
-      <p class="text-blue-100/70 mt-5 max-w-3xl mx-auto">Больше вариантов под разные бизнесы: от простого лендинга до магазина. Для первых трёх клиентов действует акция.</p>
+      <p class="text-blue-100/70 mt-5 max-w-3xl mx-auto">Premium сайты сейчас дешевле, потому что я собираю сильное портфолио. Выбирай нишу через фильтр — и AI/менеджер подскажут лучший вариант.</p>
     </div>
 
     <div class="promo-banner reveal">
       <div class="promo-grid">
         <div>
           <span class="portfolio-note-badge">🔥 АКЦИЯ ДЛЯ ПЕРВЫХ 3 КЛИЕНТОВ</span>
-          <h3 class="text-3xl md:text-4xl font-black text-white mt-4 mb-3">Премиум сайт дешевле, пока собираю сильное портфолио</h3>
-          <p class="text-blue-100/75 leading-relaxed">Обычный сайт — за 300€, интернет-магазин — за 500€. После первых трёх проектов цена станет выше.</p>
+          <h3 class="text-3xl md:text-4xl font-black text-white mt-4 mb-3">Премиум сайт по цене старта портфолио</h3>
+          <p class="text-blue-100/75 leading-relaxed">Пока я собираю сильные кейсы, цена ниже рынка: обычный сайт — от 300€, интернет-магазин — от 500€. После первых трёх проектов цена поднимется.</p>
         </div>
         <div class="promo-price text-center md:text-right">
           300€ / 500€
@@ -1857,55 +1867,102 @@
       </div>
     </div>
 
-    <div class="pricing-grid-pro">
-      <div class="price-card-pro reveal">
-        <span class="price-badge">START</span>
-        <h3 class="text-2xl font-black text-white">Landing Page</h3>
-        <div class="price-value">300€ <span class="price-old">450€</span></div>
-        <p class="text-blue-100/70">Одностраничный сайт для услуги, эксперта, акции или быстрого запуска.</p>
-        <div class="price-list"><span>✅ Premium дизайн</span><span>✅ Мобильная версия</span><span>✅ Форма заявки</span><span>✅ Контакты и Telegram</span></div>
+    <div class="tariff-filter reveal" id="tariffFilter">
+      <button class="active" onclick="filterTariffs('all', this)">Все</button>
+      <button onclick="filterTariffs('business', this)">Бизнес</button>
+      <button onclick="filterTariffs('construction', this)">Стройка</button>
+      <button onclick="filterTariffs('shop', this)">Магазин</button>
+      <button onclick="filterTariffs('restaurant', this)">Ресторан</button>
+      <button onclick="filterTariffs('auto', this)">Авто</button>
+      <button onclick="filterTariffs('brand', this)">Личный бренд</button>
+    </div>
+
+    <div class="pricing-grid-pro" id="pricingGrid">
+      <div class="price-card-pro popular reveal tariff-card" data-tariff="business landing brand" data-default="1">
+        <span class="tariff-type">START PORTFOLIO</span>
+        <span class="price-badge">🔥 АКЦИЯ</span>
+        <h3 class="text-2xl font-black text-white">Обычный Premium сайт</h3>
+        <div class="price-value">300€ <span class="price-old">550€</span></div>
+        <p class="text-blue-100/70">Лендинг или сайт-визитка для услуги, эксперта, стройки, мастера или малого бизнеса.</p>
+        <span class="portfolio-price-note">💎 Цена ниже, пока собираю портфолио</span>
+        <div class="price-list"><span>✅ Premium дизайн</span><span>✅ 5–7 сильных блоков</span><span>✅ Мобильная версия</span><span>✅ Форма заявки + Telegram</span></div>
         <div class="price-actions"><button class="luxury-button primary" onclick="openDiscussModal()">Заказать</button><button class="luxury-button" onclick="openChat()">AI совет</button></div>
       </div>
-      <div class="price-card-pro popular reveal">
-        <span class="price-badge">BEST CHOICE</span>
-        <h3 class="text-2xl font-black text-white">Business Website</h3>
-        <div class="price-value">от 500€</div>
-        <p class="text-blue-100/70">Сайт для стройки, салона, ресторана, авто, услуг или локального бизнеса.</p>
-        <div class="price-list"><span>✅ 4–7 блоков</span><span>✅ Галерея / портфолио</span><span>✅ Отзывы и FAQ</span><span>✅ AI-помощник по сайту</span></div>
-        <div class="price-actions"><button class="luxury-button btn-green" onclick="openDiscussModal()">Обсудить</button><button class="luxury-button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Заявка</button></div>
-      </div>
-      <div class="price-card-pro reveal">
-        <span class="price-badge">SHOP</span>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="shop" data-default="1">
+        <span class="tariff-type">SHOP START</span>
+        <span class="price-badge">🛒 МАГАЗИН</span>
         <h3 class="text-2xl font-black text-white">Интернет-магазин</h3>
         <div class="price-value">500€ <span class="price-old">900€</span></div>
-        <p class="text-blue-100/70">Каталог, товары, категории, заявки/корзина и удобная мобильная версия.</p>
-        <div class="price-list"><span>✅ Каталог товаров</span><span>✅ Категории</span><span>✅ Карточки товара</span><span>✅ Быстрые заявки</span></div>
+        <p class="text-blue-100/70">Каталог товаров, категории, карточки, заявки/корзина и удобная мобильная версия.</p>
+        <span class="portfolio-price-note">🔥 Для первых 3 клиентов</span>
+        <div class="price-list"><span>✅ Каталог товаров</span><span>✅ Категории и фильтры</span><span>✅ Карточки товара</span><span>✅ Быстрые заявки</span></div>
         <div class="price-actions"><button class="luxury-button primary" onclick="openDiscussModal()">Выбрать</button><button class="luxury-button" onclick="openChat()">Спросить AI</button></div>
       </div>
-      <div class="price-card-pro reveal">
-        <span class="price-badge">NICHE</span>
-        <h3 class="text-2xl font-black text-white">Сайт для стройки</h3>
-        <div class="price-value">от 450€</div>
-        <p class="text-blue-100/70">Услуги, этапы работ, примеры, форма расчёта, WhatsApp/Telegram.</p>
-        <div class="price-list"><span>✅ Блок услуг</span><span>✅ Фото работ</span><span>✅ Расчёт проекта</span><span>✅ Быстрый контакт</span></div>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="construction business">
+        <span class="tariff-type">CONSTRUCTION</span>
+        <span class="price-badge">🏗️ СТРОЙКА</span>
+        <h3 class="text-2xl font-black text-white">Сайт для стройки / ремонта</h3>
+        <div class="price-value">от 300€</div>
+        <p class="text-blue-100/70">Для потолков, ремонта, монтажей, фасадов, окон, мебели и строительных услуг.</p>
+        <div class="price-list"><span>✅ Услуги и этапы работ</span><span>✅ Фото работ</span><span>✅ Кнопка расчёта проекта</span><span>✅ WhatsApp / Telegram</span></div>
         <button class="luxury-button primary w-full" onclick="openDiscussModal()">Хочу такой</button>
       </div>
-      <div class="price-card-pro reveal">
-        <span class="price-badge">BRAND</span>
-        <h3 class="text-2xl font-black text-white">Premium Portfolio</h3>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="restaurant business">
+        <span class="tariff-type">FOOD</span>
+        <span class="price-badge">🍽️ РЕСТОРАН</span>
+        <h3 class="text-2xl font-black text-white">Сайт для ресторана / кафе</h3>
+        <div class="price-value">от 320€</div>
+        <p class="text-blue-100/70">Красивое меню, бронь столика, Instagram стиль, карта и быстрый контакт.</p>
+        <div class="price-list"><span>✅ Меню и акции</span><span>✅ Бронирование</span><span>✅ Фото блюд</span><span>✅ Геолокация</span></div>
+        <button class="luxury-button primary w-full" onclick="openDiscussModal()">Обсудить</button>
+      </div>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="auto business">
+        <span class="tariff-type">AUTO</span>
+        <span class="price-badge">🚗 АВТО</span>
+        <h3 class="text-2xl font-black text-white">Сайт для авто-бизнеса</h3>
         <div class="price-value">от 350€</div>
+        <p class="text-blue-100/70">Для детейлинга, автосервиса, шиномонтажа, аренды авто или продажи машин.</p>
+        <div class="price-list"><span>✅ Услуги и цены</span><span>✅ Галерея работ</span><span>✅ Онлайн-заявка</span><span>✅ Быстрый звонок</span></div>
+        <button class="luxury-button primary w-full" onclick="openDiscussModal()">Заказать</button>
+      </div>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="brand business">
+        <span class="tariff-type">BRAND</span>
+        <span class="price-badge">💎 БРЕНД</span>
+        <h3 class="text-2xl font-black text-white">Premium Portfolio</h3>
+        <div class="price-value">от 300€</div>
         <p class="text-blue-100/70">Для эксперта, мастера, фотографа, дизайнера, студии или личного бренда.</p>
         <div class="price-list"><span>✅ Личный бренд</span><span>✅ Галерея</span><span>✅ Отзывы</span><span>✅ Красивый hero</span></div>
         <button class="luxury-button primary w-full" onclick="openDiscussModal()">Заказать</button>
       </div>
-      <div class="price-card-pro reveal">
-        <span class="price-badge">CUSTOM</span>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="business">
+        <span class="tariff-type">LOCAL BUSINESS</span>
+        <span class="price-badge">🏢 БИЗНЕС</span>
+        <h3 class="text-2xl font-black text-white">Business Website</h3>
+        <div class="price-value">от 380€</div>
+        <p class="text-blue-100/70">Сайт для салона, клиники, услуг, локального бизнеса или компании.</p>
+        <div class="price-list"><span>✅ 6–9 блоков</span><span>✅ FAQ и отзывы</span><span>✅ Галерея / портфолио</span><span>✅ AI-помощник по сайту</span></div>
+        <button class="luxury-button btn-green w-full" onclick="openDiscussModal()">Получить план</button>
+      </div>
+
+      <div class="price-card-pro reveal tariff-card" data-tariff="custom business shop">
+        <span class="tariff-type">CUSTOM</span>
+        <span class="price-badge">⚙️ CUSTOM</span>
         <h3 class="text-2xl font-black text-white">Индивидуальный проект</h3>
         <div class="price-value">по ТЗ</div>
-        <p class="text-blue-100/70">Когда нужен нестандартный сайт: калькулятор, сложные блоки, личный кабинет, интеграции.</p>
-        <div class="price-list"><span>✅ Анализ идеи</span><span>✅ Структура</span><span>✅ Дизайн под нишу</span><span>✅ План запуска</span></div>
+        <p class="text-blue-100/70">Когда нужен нестандартный сайт: калькулятор, сложные блоки, интеграции, личный кабинет.</p>
+        <div class="price-list"><span>✅ Анализ идеи</span><span>✅ Структура под нишу</span><span>✅ Дизайн под бренд</span><span>✅ План запуска</span></div>
         <button class="luxury-button btn-green w-full" onclick="openDiscussModal()">Обсудить</button>
       </div>
+    </div>
+
+    <div class="tariff-more-wrap reveal">
+      <button class="luxury-button primary" id="tariffMoreBtn" onclick="showMoreTariffs()">Показать ещё тарифы</button>
     </div>
   </div>
 </section>
@@ -3033,6 +3090,32 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   document.addEventListener('DOMContentLoaded',()=>window.changeLang(localStorage.getItem('nexora_lang')||'ru'));
 })();
+</script>
+
+<script>
+let currentTariffFilter = 'all';
+let tariffsExpanded = false;
+function applyTariffView(){
+  const cards = Array.from(document.querySelectorAll('.tariff-card'));
+  let visible = cards.filter(card => currentTariffFilter === 'all' || (card.dataset.tariff || '').split(' ').includes(currentTariffFilter));
+  cards.forEach(card => card.classList.add('tariff-card-hidden'));
+  visible.forEach((card, index) => {
+    if (currentTariffFilter !== 'all' || tariffsExpanded || index < 2) card.classList.remove('tariff-card-hidden');
+  });
+  const btn = document.getElementById('tariffMoreBtn');
+  if (btn) btn.style.display = (currentTariffFilter === 'all' && !tariffsExpanded && visible.length > 2) ? 'inline-flex' : 'none';
+}
+function filterTariffs(cat, btn){
+  currentTariffFilter = cat;
+  document.querySelectorAll('#tariffFilter button').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applyTariffView();
+}
+function showMoreTariffs(){
+  tariffsExpanded = true;
+  applyTariffView();
+}
+document.addEventListener('DOMContentLoaded', applyTariffView);
 </script>
 
 </body>
