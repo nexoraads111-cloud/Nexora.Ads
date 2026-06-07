@@ -96,6 +96,107 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
 @media(max-width:1020px){.hero-main-grid{grid-template-columns:1fr}.shop-monitor{max-width:690px;margin:0 auto}.hero-trust-strip{grid-template-columns:repeat(2,1fr)}.hero-bottom-cards{grid-template-columns:1fr}.hero-info-card{min-height:230px}.team-mini-row{max-width:520px}}
 @media(max-width:720px){.hero-premium-showcase{padding:18px 0 56px}.hero-stage{width:min(100% - 20px,450px);padding:18px 14px 18px;border-radius:26px}.hero-main-grid{gap:24px}.hero-copy .title{font-size:42px}.hero-copy .lead{font-size:15px;line-height:1.65}.hero-actions{display:grid;grid-template-columns:1fr}.shop-monitor{padding:0}.monitor-screen{border-radius:20px;padding:7px}.monitor-screen img{height:235px;border-radius:14px}.monitor-stand{display:none}.hero-trust-strip{grid-template-columns:1fr 1fr;padding:12px;gap:10px;margin:20px 0}.hero-trust-strip div{grid-template-columns:34px 1fr;column-gap:10px}.hero-trust-strip i{width:34px;height:34px;border-radius:12px;font-size:13px}.hero-trust-strip strong{font-size:13px}.hero-trust-strip span{font-size:11px}.hero-bottom-cards{gap:12px}.hero-info-card{border-radius:22px;padding:20px;min-height:205px}.hero-info-card h3{font-size:23px}.ui-preview-card,.telegram-preview{left:20px;right:20px;bottom:18px;height:105px}.team-mini-row{grid-template-columns:1fr;gap:13px;margin-top:20px}.member-avatar{width:78px;height:78px;flex-basis:78px}.hero-team-card{min-height:auto}.team-small-text{font-size:14px}.ui-card,.tg-card{display:none}}
 
+
+/* V11: wider premium bottom cards + team photos in cards */
+.hero-stage{width:min(1360px,calc(100vw - 36px));max-width:none;}
+.hero-bottom-wide{grid-template-columns:1fr 1fr 1.15fr;gap:22px;margin-top:26px;}
+.hero-bottom-wide .hero-info-card{min-height:300px;padding:30px;border-radius:30px;background:linear-gradient(145deg,rgba(12,20,38,.88),rgba(8,14,28,.72));box-shadow:0 28px 90px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.04)}
+.card-top-line{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;position:relative;z-index:3}
+.mini-photo-stack{display:flex;align-items:center;flex-direction:row-reverse;padding-left:12px}
+.mini-photo{position:relative;width:58px;height:58px;margin-left:-13px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#223d74,#6d5dfc);border:2px solid rgba(12,20,38,.95);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.mini-photo img,.manager-photo-bubble img{width:100%;height:100%;object-fit:cover;object-position:center top}.mini-photo:after,.manager-photo-bubble:after{content:attr(data-initials);position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:950;color:#fff}.mini-photo.no-img:after,.manager-photo-bubble.no-img:after{display:flex}
+.upgraded-ui-preview{height:140px;bottom:28px;left:30px;right:30px;background:radial-gradient(circle at 20% 0%,rgba(77,163,255,.28),transparent 38%),linear-gradient(145deg,rgba(35,58,105,.62),rgba(16,27,51,.58))}
+.upgraded-ui-preview em{position:absolute;right:16px;top:16px;font-style:normal;font-size:11px;font-weight:900;color:#cfe7ff;background:rgba(77,163,255,.12);border:1px solid rgba(77,163,255,.22);border-radius:999px;padding:7px 9px}
+.tg-round{width:58px;height:58px;border-radius:20px;background:linear-gradient(135deg,#2ca5e0,#1579bc);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 16px 34px rgba(44,165,224,.24);flex:0 0 58px}
+.upgraded-telegram-preview{height:140px;bottom:28px;left:30px;right:30px;background:radial-gradient(circle at 85% 10%,rgba(44,165,224,.22),transparent 35%),linear-gradient(145deg,rgba(22,38,70,.66),rgba(14,24,45,.58))}
+.chat-avatar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.upgraded-telegram-preview b{margin:0;width:48px;height:48px;flex:0 0 48px}.manager-photo-bubble{position:relative;width:48px;height:48px;border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,.13);background:linear-gradient(135deg,#223d74,#6d5dfc)}
+.premium-team-card .team-mini-row{gap:14px}.premium-team-row{grid-template-columns:1fr 1fr;margin:24px 0 18px}.big-member{width:86px;height:86px;flex-basis:86px;border-radius:24px}.premium-team-card .team-mini-person{gap:14px}.premium-team-card .team-mini-person strong{font-size:16px}.premium-team-card .team-mini-person span{font-size:13px}.premium-team-card .team-small-text{font-size:15px;max-width:440px;color:#b8c6dd!important}
+@media(max-width:1020px){.hero-stage{width:min(100% - 28px,760px)}.hero-bottom-wide{grid-template-columns:1fr}.hero-bottom-wide .hero-info-card{min-height:270px}.premium-team-row{max-width:none}}
+@media(max-width:720px){.hero-stage{width:min(100% - 18px,460px)}.hero-bottom-wide{display:grid!important;grid-template-columns:1fr!important;gap:12px;margin-top:18px}.hero-bottom-wide .ui-card,.hero-bottom-wide .tg-card{display:block!important}.hero-bottom-wide .hero-info-card{min-height:245px;padding:22px;border-radius:24px}.upgraded-ui-preview,.upgraded-telegram-preview{height:118px;left:20px;right:20px;bottom:18px}.mini-photo{width:50px;height:50px;border-radius:16px}.tg-round{width:50px;height:50px;border-radius:16px;font-size:22px}.premium-team-row{grid-template-columns:1fr!important;gap:12px}.big-member{width:76px;height:76px;flex-basis:76px}.premium-team-card .team-small-text{font-size:14px}}
+
+
+
+/* V12: selling feature buttons inside premium cards */
+.feature-tags{
+  position:relative;
+  z-index:5;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+  max-width:330px;
+}
+.feature-tags span,
+.feature-tags a{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 12px;
+  border-radius:999px;
+  background:rgba(77,163,255,.10);
+  border:1px solid rgba(77,163,255,.22);
+  color:#dbeafe;
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.01em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  transition:.25s ease;
+}
+.feature-tags span:hover,
+.feature-tags a:hover{
+  transform:translateY(-2px);
+  background:rgba(77,163,255,.18);
+  border-color:rgba(77,163,255,.38);
+  box-shadow:0 12px 28px rgba(77,163,255,.16);
+}
+.feature-tags.telegram span,
+.feature-tags.telegram a{
+  background:rgba(44,165,224,.11);
+  border-color:rgba(44,165,224,.25);
+}
+.feature-tags.telegram span:hover,
+.feature-tags.telegram a:hover{
+  background:rgba(44,165,224,.20);
+  border-color:rgba(44,165,224,.42);
+}
+.feature-tags.team span,
+.feature-tags.team a{
+  background:rgba(139,92,246,.11);
+  border-color:rgba(139,92,246,.24);
+}
+.feature-tags.team span:hover,
+.feature-tags.team a:hover{
+  background:rgba(139,92,246,.20);
+  border-color:rgba(139,92,246,.42);
+}
+.card-cta-mini{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:14px;
+  padding:11px 14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(77,163,255,.22),rgba(139,92,246,.14));
+  border:1px solid rgba(77,163,255,.30);
+  color:#fff;
+  font-size:13px;
+  font-weight:950;
+  transition:.25s ease;
+}
+.card-cta-mini:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(77,163,255,.18)}
+.premium-ui-card .upgraded-ui-preview,
+.premium-tg-card .upgraded-telegram-preview{bottom:20px;height:108px;opacity:.82}
+.premium-team-card .team-small-text{margin-top:12px!important}
+@media(max-width:720px){
+  .feature-tags{max-width:100%;gap:7px;margin-top:12px}
+  .feature-tags span,.feature-tags a{font-size:11px;padding:8px 10px}
+  .card-cta-mini{width:100%;margin-top:12px;font-size:12px;padding:10px 12px}
+  .premium-ui-card .upgraded-ui-preview,
+  .premium-tg-card .upgraded-telegram-preview{position:relative;left:auto;right:auto;bottom:auto;margin-top:14px;height:92px}
+}
+
 </style>
 </head>
 <body>
@@ -145,31 +246,68 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
           <div><i class="fa-regular fa-circle-check"></i><strong>Поддержка</strong><span data-i18n="stat_support">После запуска</span></div>
         </div>
 
-        <div class="hero-bottom-cards">
-          <article class="hero-info-card ui-card">
-            <h3>Premium UI</h3>
-            <p data-i18n="hero_badge_1">чистый современный стиль</p>
-            <div class="ui-preview-card"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="hero-bottom-cards hero-bottom-wide">
+          <article class="hero-info-card ui-card premium-ui-card">
+            <div class="card-top-line">
+              <div>
+                <h3>Premium UI</h3>
+                <p data-i18n="hero_badge_1">чистый современный стиль</p>
+                <div class="feature-tags" aria-label="Premium UI features">
+                  <span>🎨 Premium Design</span>
+                  <span>📱 Mobile First</span>
+                  <span>⚡ SEO Ready</span>
+                </div>
+                <a class="card-cta-mini" href="#projects">Смотреть стиль →</a>
+              </div>
+              <div class="mini-photo-stack" aria-label="team photos">
+                <div class="mini-photo" data-initials="ВП"><img src="Public/Image/Vladislav.png" data-fallbacks="Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
+                <div class="mini-photo" data-initials="ВЗ"><img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Менеджер" loading="eager"></div>
+              </div>
+            </div>
+            <div class="ui-preview-card upgraded-ui-preview"><span></span><span></span><span></span><span></span><span></span><em>Mobile first</em></div>
           </article>
-          <article class="hero-info-card tg-card">
-            <h3>Telegram</h3>
-            <p data-i18n="hero_badge_2">заявки сразу менеджеру</p>
-            <div class="telegram-preview"><b><i class="fab fa-telegram-plane"></i></b><span></span><span></span><span></span></div>
+          <article class="hero-info-card tg-card premium-tg-card">
+            <div class="card-top-line">
+              <div>
+                <h3>Telegram</h3>
+                <p data-i18n="hero_badge_2">заявки сразу менеджеру</p>
+                <div class="feature-tags telegram" aria-label="Telegram workflow features">
+                  <span>💬 Ответ до 15 мин</span>
+                  <span>📲 Всё в Telegram</span>
+                  <span>🚀 Быстрый старт</span>
+                </div>
+                <a class="card-cta-mini" href="https://t.me/Manager_Zeykan" target="_blank" rel="noopener">Написать менеджеру →</a>
+              </div>
+              <div class="tg-round"><i class="fab fa-telegram-plane"></i></div>
+            </div>
+            <div class="telegram-preview upgraded-telegram-preview">
+              <div class="chat-avatar-row">
+                <b><i class="fab fa-telegram-plane"></i></b>
+                <div class="manager-photo-bubble" data-initials="ВЗ"><img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Менеджер" loading="eager"></div>
+              </div>
+              <span></span><span></span><span></span>
+            </div>
           </article>
-          <article class="hero-info-card hero-team-card" id="team">
+          <article class="hero-info-card hero-team-card premium-team-card" id="team">
             <h3>Наша команда</h3>
             <p data-i18n="team_sub">мы всегда на связи</p>
-            <div class="team-mini-row">
+            <div class="team-mini-row premium-team-row">
               <div class="team-mini-person">
-                <div class="member-avatar" data-initials="ВП"><img src="Public/Image/Vladislav.png" data-fallbacks="Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
+                <div class="member-avatar big-member" data-initials="ВП"><img src="Public/Image/Vladislav.png" data-fallbacks="Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
                 <div><strong data-i18n="team_vlad_name">Владислав</strong><span>Web Specialist</span></div>
               </div>
               <div class="team-mini-person">
-                <div class="member-avatar" data-initials="ВЗ"><img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Вася Зейкан" loading="eager"></div>
+                <div class="member-avatar big-member" data-initials="ВЗ"><img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Вася Зейкан" loading="eager"></div>
                 <div><strong data-i18n="team_manager_name">Вася Зейкан</strong><span>Менеджер проекта</span></div>
               </div>
             </div>
-            <p class="team-small-text">Работаем вместе, чтобы ваш проект был успешным и без хаоса.</p>
+            <div class="feature-tags team" aria-label="Team benefits">
+              <span>👨‍💻 Разработка</span>
+              <span>🤝 Поддержка</span>
+              <span>⭐ После запуска</span>
+            </div>
+            <p class="team-small-text">От первой заявки до запуска сайта. Один менеджер, один разработчик, без посредников и лишней бюрократии.</p>
+            <button class="card-cta-mini" type="button" onclick="openOrderModal()">Начать проект →</button>
           </article>
         </div>
       </div>
