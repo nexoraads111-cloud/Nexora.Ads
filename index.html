@@ -23,7 +23,7 @@
       --bg:#070b14; --bg2:#0b1220; --panel:#0f172a; --panel2:#111c32;
       --text:#f3f7ff; --muted:#96a4bd; --soft:#c8d4e8;
       --line:rgba(148,163,184,.16); --blue:#4da3ff; --cyan:#22d3ee; --green:#22c55e;
-      --shadow:0 28px 90px rgba(0,0,0,.32); --r:28px;
+      --shadow:0 28px 90px rgba(0,0,0,.32); --r:28px; --accent:#4da3ff; --accent2:#8b5cf6;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;scroll-padding-top:92px}
@@ -57,6 +57,45 @@
 .team-premium{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:stretch}.team-people{display:grid;grid-template-columns:1fr;gap:14px}.team-person{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:16px;border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--line)}.team-avatar{width:96px;height:96px;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2));border:1px solid rgba(255,255,255,.14)}.team-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}.team-avatar.manager{display:flex;align-items:center;justify-content:center;font-weight:950;font-size:30px;color:white}.team-person h3{margin:0 0 6px;font-size:20px}.team-person p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}.workflow-card{padding:28px;border-radius:28px}.workflow-steps{display:grid;gap:12px;margin-top:22px}.workflow-step{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.workflow-step strong{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:13px;flex:0 0 30px}.workflow-step span{color:#eef6ff;font-weight:800}.workflow-step small{display:block;color:var(--muted);margin-top:4px;line-height:1.45}
 @media(max-width:720px){.site-mockup{min-height:360px;padding:12px;border-radius:22px}.mock-hero{padding:24px;min-height:150px}.mock-grid{grid-template-columns:1fr}.mock-card:nth-child(n+3){display:none}.mock-phone{position:relative;right:auto;bottom:auto;width:100%;height:145px;margin-top:14px;border-radius:22px}.mock-phone-screen{display:grid;align-content:center}.hero-badges{display:none}.team-premium{grid-template-columns:1fr}.team-person{grid-template-columns:78px 1fr;padding:14px;border-radius:22px}.team-avatar{width:78px;height:78px;border-radius:20px}.workflow-card{padding:22px}.workflow-step{padding:13px}.workflow-step small{font-size:12px}}
 
+
+
+/* V9: 10000€ premium visual update */
+:root{--accent:#4f8cff;--accent2:#7c3aed;--deep:#050812}
+body{background:#050812}
+body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),transparent 34%),radial-gradient(circle at 88% 8%,rgba(124,58,237,.16),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,211,238,.10),transparent 34%),linear-gradient(135deg,#050812,#07111f 55%,#050812)!important}
+.header,header{background:rgba(5,8,18,.78)!important}
+.title .grad, .gradient-text{background:linear-gradient(135deg,#6db4ff,#9f7aea 55%,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-card{padding:18px;border-radius:36px;background:linear-gradient(145deg,rgba(14,24,45,.92),rgba(8,14,28,.96));border:1px solid rgba(148,163,184,.18);box-shadow:0 38px 120px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.03) inset}
+.premium-screen{position:relative;z-index:1;min-height:468px;border-radius:28px;background:linear-gradient(145deg,#081222,#0d1930);border:1px solid rgba(148,163,184,.18);padding:18px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.premium-screen:before{content:"";position:absolute;inset:-40% -20% auto auto;width:360px;height:360px;border-radius:999px;background:radial-gradient(circle,rgba(79,140,255,.22),transparent 68%);pointer-events:none}
+.screen-top{height:38px;display:flex;align-items:center;gap:8px;color:rgba(226,232,240,.5);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.screen-top span{width:10px;height:10px;border-radius:50%;background:rgba(226,232,240,.35)}
+.screen-top b{margin-left:auto;margin-right:4px;color:rgba(226,232,240,.42);font-size:11px}
+.screen-frame{position:relative;border-radius:24px;overflow:hidden;background:#050812;border:1px solid rgba(148,163,184,.18);box-shadow:0 28px 80px rgba(0,0,0,.42)}
+.screen-frame:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,rgba(5,8,18,.34));pointer-events:none}
+.screen-frame img{width:100%;height:390px;object-fit:cover;object-position:top center;transform:scale(1.01)}
+.screen-glow-card{position:absolute;z-index:3;padding:14px 16px;border-radius:18px;background:rgba(5,8,18,.78);border:1px solid rgba(148,163,184,.18);box-shadow:0 18px 48px rgba(0,0,0,.34);backdrop-filter:blur(16px)}
+.screen-glow-card strong{display:block;color:#fff;font-size:16px;line-height:1.1}.screen-glow-card small{display:block;color:var(--muted);font-weight:800;margin-top:6px}.card-one{left:30px;bottom:24px}.card-two{right:26px;top:78px}
+.mini-team-head{max-width:760px;margin-bottom:28px}.mini-team-head .section-title{margin:16px 0 12px}
+.mini-team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.mini-person{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:center;padding:18px;border-radius:30px;background:linear-gradient(145deg,rgba(18,31,58,.88),rgba(10,18,35,.82));position:relative;overflow:hidden}.mini-person:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 10%,rgba(79,140,255,.18),transparent 42%);pointer-events:none}.mini-person>*{position:relative}
+.mini-person-photo{height:210px;border-radius:24px;overflow:hidden;background:#0b1220;border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.24)}
+.mini-person-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.mini-role{display:inline-flex;margin-bottom:10px;padding:7px 10px;border-radius:999px;background:rgba(79,140,255,.11);border:1px solid rgba(79,140,255,.22);color:#bfdbfe;font-size:12px;font-weight:900}.mini-person h3{font-size:28px;letter-spacing:-.04em;margin-bottom:8px}.mini-person p{color:var(--muted);font-weight:650;line-height:1.6}
+.workflow-line{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;padding:16px}.workflow-line div{padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.13)}.workflow-line strong{display:block;color:#93c5fd;font-size:13px;margin-bottom:10px}.workflow-line span{display:block;color:#fff;font-weight:900}.workflow-line small{display:block;color:var(--muted);margin-top:5px;line-height:1.45}
+@media(max-width:980px){.mini-team-grid{grid-template-columns:1fr}.premium-screen{min-height:auto}.screen-frame img{height:340px}}
+@media(max-width:720px){.hero-card{padding:10px;border-radius:28px}.premium-screen{padding:12px;border-radius:24px}.screen-top b{display:none}.screen-frame{border-radius:20px}.screen-frame img{height:260px}.screen-glow-card{position:static;margin-top:10px}.card-two{display:none}.mini-team-grid{gap:14px}.mini-person{grid-template-columns:110px 1fr;padding:14px;border-radius:24px;gap:14px}.mini-person-photo{height:132px;border-radius:20px}.mini-person h3{font-size:21px}.mini-person p{font-size:13px}.mini-role{font-size:11px;padding:6px 8px}.workflow-line{grid-template-columns:1fr;padding:12px}.stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px;border-radius:18px}.stat b{font-size:18px}.stat span{font-size:10px}}
+@media(max-width:380px){.title{font-size:38px}.screen-frame img{height:230px}.mini-person{grid-template-columns:92px 1fr}.mini-person-photo{height:116px}.stats{grid-template-columns:1fr 1fr}}
+
+
+
+/* V10: exact premium first screen inspired by reference */
+.hero-premium-showcase{padding:32px 0 84px}.hero-stage{position:relative;border-radius:34px;background:radial-gradient(circle at 55% 12%,rgba(77,163,255,.14),transparent 35%),linear-gradient(145deg,rgba(8,14,28,.98),rgba(7,11,20,.92));border:1px solid rgba(148,163,184,.18);box-shadow:0 34px 100px rgba(0,0,0,.40);padding:34px 42px 42px;overflow:hidden}.hero-stage:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 17% 33%,rgba(79,140,255,.16),transparent 30%),radial-gradient(circle at 92% 6%,rgba(139,92,246,.18),transparent 28%);pointer-events:none}.hero-stage>*{position:relative}.hero-main-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:54px;align-items:center}.hero-copy .title{max-width:560px;font-size:clamp(44px,5.2vw,68px);line-height:1.02;letter-spacing:-.055em}.hero-copy .title::first-line{color:#fff}.hero-copy .lead{max-width:555px;font-size:18px;line-height:1.75;color:#b8c5da}.hero-copy .title{background:linear-gradient(135deg,#ffffff 0%,#ffffff 38%,#51a7ff 55%,#a855f7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.shop-monitor{position:relative;padding:14px 14px 0}.monitor-screen{position:relative;border-radius:24px;padding:10px;background:linear-gradient(145deg,rgba(79,140,255,.2),rgba(139,92,246,.10));border:1px solid rgba(148,163,184,.22);box-shadow:0 30px 90px rgba(0,0,0,.36),0 0 70px rgba(79,140,255,.10);overflow:hidden}.monitor-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);animation:screenShine 5.5s ease-in-out infinite;z-index:2;pointer-events:none}.monitor-screen img{width:100%;height:390px;object-fit:cover;object-position:top center;border-radius:16px;filter:contrast(1.05) saturate(1.04)}.monitor-stand{width:145px;height:44px;margin:-1px auto 0;position:relative;background:linear-gradient(180deg,rgba(104,139,255,.38),rgba(42,61,106,.74));border:1px solid rgba(148,163,184,.20);border-top:0;border-radius:0 0 20px 20px;box-shadow:0 20px 50px rgba(79,140,255,.16)}.monitor-stand:after{content:"";position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);width:210px;height:14px;border-radius:999px;background:linear-gradient(90deg,rgba(77,163,255,.22),rgba(139,92,246,.28));border:1px solid rgba(148,163,184,.16)}@keyframes screenShine{0%,58%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.hero-trust-strip{margin:34px 0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px;border-radius:28px;background:linear-gradient(145deg,rgba(17,28,50,.72),rgba(11,18,32,.58));border:1px solid rgba(148,163,184,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}.hero-trust-strip div{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center}.hero-trust-strip i{grid-row:span 2;width:44px;height:44px;border-radius:16px;display:grid;place-items:center;color:#9ecbff;background:rgba(82,91,255,.12);border:1px solid rgba(139,92,246,.20)}.hero-trust-strip strong{font-size:16px}.hero-trust-strip span{font-size:13px;color:var(--muted)}
+.hero-bottom-cards{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:18px}.hero-info-card{min-height:260px;border-radius:26px;padding:26px;background:linear-gradient(145deg,rgba(15,23,42,.72),rgba(12,19,35,.56));border:1px solid rgba(148,163,184,.15);box-shadow:0 22px 70px rgba(0,0,0,.22);overflow:hidden;position:relative}.hero-info-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 20%,rgba(79,140,255,.14),transparent 38%);pointer-events:none}.hero-info-card>*{position:relative}.hero-info-card h3{font-size:26px;letter-spacing:-.045em;margin-bottom:6px}.hero-info-card p{color:var(--muted);font-weight:650}.ui-preview-card,.telegram-preview{position:absolute;left:30px;right:30px;bottom:24px;height:125px;border-radius:20px;background:linear-gradient(145deg,rgba(79,140,255,.18),rgba(31,41,80,.34));border:1px solid rgba(148,163,184,.14);overflow:hidden}.ui-preview-card span{position:absolute;border-radius:10px;background:rgba(93,132,255,.28)}.ui-preview-card span:nth-child(1){left:24px;top:22px;width:150px;height:44px;background:rgba(79,140,255,.35)}.ui-preview-card span:nth-child(2){left:190px;top:30px;width:70px;height:12px}.ui-preview-card span:nth-child(3){left:24px;top:82px;width:78%;height:12px}.ui-preview-card span:nth-child(4){left:24px;top:103px;width:130px;height:12px}.ui-preview-card span:nth-child(5){left:178px;top:103px;width:120px;height:12px;background:rgba(139,92,246,.45)}.telegram-preview{padding:22px 28px}.telegram-preview b{width:48px;height:48px;border-radius:50%;background:#2ca5e0;display:grid;place-items:center;color:white;font-size:24px;margin-bottom:12px}.telegram-preview span{display:block;height:12px;border-radius:20px;background:rgba(111,141,200,.30);margin:10px 0}.telegram-preview span:nth-child(2){width:54%;}.telegram-preview span:nth-child(3){width:82%;}.telegram-preview span:nth-child(4){width:64%;}.team-mini-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0 20px}.team-mini-person{display:flex;align-items:center;gap:12px}.member-avatar{position:relative;width:70px;height:70px;flex:0 0 70px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#223d74,#6d5dfc);border:1px solid rgba(255,255,255,.16);box-shadow:0 16px 36px rgba(0,0,0,.25)}.member-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}.member-avatar:after{content:attr(data-initials);position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:950;color:#fff;font-size:20px}.member-avatar.no-img:after{display:flex}.team-mini-person strong{display:block;font-size:15px;color:#fff}.team-mini-person span{display:block;color:var(--muted);font-size:13px;font-weight:700}.team-small-text{font-size:16px;line-height:1.65;color:#aebbd1!important;margin-top:8px}.hero-team-card{min-height:260px}
+@media(max-width:1020px){.hero-main-grid{grid-template-columns:1fr}.shop-monitor{max-width:690px;margin:0 auto}.hero-trust-strip{grid-template-columns:repeat(2,1fr)}.hero-bottom-cards{grid-template-columns:1fr}.hero-info-card{min-height:230px}.team-mini-row{max-width:520px}}
+@media(max-width:720px){.hero-premium-showcase{padding:18px 0 56px}.hero-stage{width:min(100% - 20px,450px);padding:18px 14px 18px;border-radius:26px}.hero-main-grid{gap:24px}.hero-copy .title{font-size:42px}.hero-copy .lead{font-size:15px;line-height:1.65}.hero-actions{display:grid;grid-template-columns:1fr}.shop-monitor{padding:0}.monitor-screen{border-radius:20px;padding:7px}.monitor-screen img{height:235px;border-radius:14px}.monitor-stand{display:none}.hero-trust-strip{grid-template-columns:1fr 1fr;padding:12px;gap:10px;margin:20px 0}.hero-trust-strip div{grid-template-columns:34px 1fr;column-gap:10px}.hero-trust-strip i{width:34px;height:34px;border-radius:12px;font-size:13px}.hero-trust-strip strong{font-size:13px}.hero-trust-strip span{font-size:11px}.hero-bottom-cards{gap:12px}.hero-info-card{border-radius:22px;padding:20px;min-height:205px}.hero-info-card h3{font-size:23px}.ui-preview-card,.telegram-preview{left:20px;right:20px;bottom:18px;height:105px}.team-mini-row{grid-template-columns:1fr;gap:13px;margin-top:20px}.member-avatar{width:78px;height:78px;flex-basis:78px}.hero-team-card{min-height:auto}.team-small-text{font-size:14px}.ui-card,.tg-card{display:none}}
+
 </style>
 </head>
 <body>
@@ -67,7 +106,7 @@
         <div class="logo">N</div><div><b>NexoraAds</b><span data-i18n="brand_sub">Premium Web Studio</span></div>
       </a>
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="#services" data-i18n="nav_services">Услуги</a><a href="#projects" data-i18n="nav_projects">Проекты</a><a href="#pricing" data-i18n="nav_pricing">Цены</a><a href="#reviews" data-i18n="nav_reviews">Отзывы</a><a href="#contact" data-i18n="nav_contact">Контакты</a>
+        <a href="#services" data-i18n="nav_services">Услуги</a><a href="#projects" data-i18n="nav_projects">Проекты</a><a href="#team" data-i18n="nav_team">Команда</a><a href="#pricing" data-i18n="nav_pricing">Цены</a><a href="#reviews" data-i18n="nav_reviews">Отзывы</a><a href="#contact" data-i18n="nav_contact">Контакты</a>
       </nav>
       <div class="nav-actions">
         <div class="lang"><button class="lang-btn" onclick="toggleLangMenu()">🌍</button><div class="lang-menu" id="langMenu"><button onclick="setLang('ru')">Русский</button><button onclick="setLang('uk')">Українська</button><button onclick="setLang('en')">English</button><button onclick="setLang('sk')">Slovenčina</button></div></div>
@@ -82,28 +121,56 @@
     <button class="btn primary" style="width:100%;margin-top:20px" onclick="closeMobileMenu();openOrderModal()" data-i18n="nav_cta">Заказать сайт</button>
   </aside>
   <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="eyebrow" data-i18n="hero_badge">Сайты для бизнеса • быстро • адаптивно</span>
-          <h1 class="title" data-i18n="hero_title">Создаём современные сайты, которые выглядят дорого и приводят заявки</h1>
-          <p class="lead" data-i18n="hero_text">Landing page, бизнес-сайты и интернет-магазины. Дизайн, мобильная версия, формы заявок в Telegram и поддержка после запуска.</p>
-          <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Подобрать сайт</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Посмотреть работы</a></div>
-          <div class="stats"><div class="stat"><b>3–10</b><span data-i18n="stat_days">дней запуск</span></div><div class="stat"><b>100%</b><span data-i18n="stat_mobile">mobile first</span></div><div class="stat"><b>30</b><span data-i18n="stat_support">дней поддержка</span></div></div>
-        </div>
-        <div class="hero-card">
-          <div class="site-mockup" aria-label="Premium website layout preview">
-            <div class="mock-browser"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
-            <div class="mock-hero"><div class="mock-kicker"></div><div class="mock-title"></div></div>
-            <div class="mock-grid">
-              <div class="mock-card"><b></b><span></span></div>
-              <div class="mock-card"><b></b><span></span></div>
-              <div class="mock-card"><b></b><span></span></div>
-              <div class="mock-card"><b></b><span></span></div>
-            </div>
-            <div class="mock-phone"><div class="mock-phone-screen"><div class="mock-phone-line"></div><div class="mock-phone-line"></div><div class="mock-phone-btn"></div></div></div>
+    <section class="hero hero-premium-showcase">
+      <div class="container hero-stage">
+        <div class="hero-main-grid">
+          <div class="hero-copy">
+            <span class="eyebrow" data-i18n="hero_badge">Премиум сайты под ключ</span>
+            <h1 class="title" data-i18n="hero_title">Создаём сайты, которые приносят клиентов</h1>
+            <p class="lead" data-i18n="hero_text">Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты, интернет-магазины и больше.</p>
+            <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Смотреть проекты</a></div>
           </div>
-          <div class="hero-badges"><div class="hero-badge"><strong>Premium UI</strong><span data-i18n="hero_badge_1">чистый современный стиль</span></div><div class="hero-badge"><strong>Telegram</strong><span data-i18n="hero_badge_2">заявки сразу менеджеру</span></div></div>
+          <div class="shop-monitor" aria-label="Shop website preview">
+            <div class="monitor-screen">
+              <img src="Public/Image/ShopPC.png" onerror="this.onerror=null;this.src='/Image/ShopPC.png'" alt="ShopPC website preview" loading="eager">
+            </div>
+            <div class="monitor-stand"></div>
+          </div>
+        </div>
+
+        <div class="hero-trust-strip" aria-label="advantages">
+          <div><i class="fa-regular fa-calendar-check"></i><strong>От 3 дней</strong><span data-i18n="stat_days">Срок разработки</span></div>
+          <div><i class="fa-solid fa-desktop"></i><strong>Адаптивно</strong><span data-i18n="stat_mobile">На всех устройствах</span></div>
+          <div><i class="fa-solid fa-gem"></i><strong>Под ключ</strong><span>От идеи до запуска</span></div>
+          <div><i class="fa-regular fa-circle-check"></i><strong>Поддержка</strong><span data-i18n="stat_support">После запуска</span></div>
+        </div>
+
+        <div class="hero-bottom-cards">
+          <article class="hero-info-card ui-card">
+            <h3>Premium UI</h3>
+            <p data-i18n="hero_badge_1">чистый современный стиль</p>
+            <div class="ui-preview-card"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
+          <article class="hero-info-card tg-card">
+            <h3>Telegram</h3>
+            <p data-i18n="hero_badge_2">заявки сразу менеджеру</p>
+            <div class="telegram-preview"><b><i class="fab fa-telegram-plane"></i></b><span></span><span></span><span></span></div>
+          </article>
+          <article class="hero-info-card hero-team-card" id="team">
+            <h3>Наша команда</h3>
+            <p data-i18n="team_sub">мы всегда на связи</p>
+            <div class="team-mini-row">
+              <div class="team-mini-person">
+                <div class="member-avatar" data-initials="ВП"><img src="Public/Image/Vladislav.png" data-fallbacks="Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
+                <div><strong data-i18n="team_vlad_name">Владислав</strong><span>Web Specialist</span></div>
+              </div>
+              <div class="team-mini-person">
+                <div class="member-avatar" data-initials="ВЗ"><img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Вася Зейкан" loading="eager"></div>
+                <div><strong data-i18n="team_manager_name">Вася Зейкан</strong><span>Менеджер проекта</span></div>
+              </div>
+            </div>
+            <p class="team-small-text">Работаем вместе, чтобы ваш проект был успешным и без хаоса.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -113,27 +180,39 @@
         <div class="cards"><div class="card"><div class="icon">🚀</div><h3 data-i18n="s1_title">Landing Page</h3><p data-i18n="s1_text">Для одной услуги, продукта или быстрого запуска рекламы.</p><div class="list"><span data-i18n="s1_l1">сильный первый экран</span><span data-i18n="s1_l2">форма заявки</span><span data-i18n="s1_l3">мобильная версия</span></div></div><div class="card"><div class="icon">🏢</div><h3 data-i18n="s2_title">Сайт для бизнеса</h3><p data-i18n="s2_text">Для компаний, услуг, строителей, ресторанов и локального бизнеса.</p><div class="list"><span data-i18n="s2_l1">услуги и преимущества</span><span data-i18n="s2_l2">портфолио и отзывы</span><span data-i18n="s2_l3">контакты и FAQ</span></div></div><div class="card"><div class="icon">🛒</div><h3 data-i18n="s3_title">Интернет-магазин</h3><p data-i18n="s3_text">Для продажи товаров онлайн с каталогом и быстрым контактом.</p><div class="list"><span data-i18n="s3_l1">каталог товаров</span><span data-i18n="s3_l2">карточки товара</span><span data-i18n="s3_l3">заявка или оплата</span></div></div></div>
       </div>
     </section>
-    <section class="section small" id="team">
-      <div class="container team-premium">
-        <div class="team-people">
-          <div class="team-person">
-            <div class="team-avatar"><img src="https://i.imgur.com/AUiHBKF.png" alt="Vladislav NexoraAds" loading="lazy"></div>
-            <div><h3 data-i18n="team_vlad_name">Владислав</h3><p data-i18n="team_vlad_text">Дизайн, структура, адаптив и запуск сайта.</p></div>
-          </div>
-          <div class="team-person">
-            <div class="team-avatar manager">M</div>
-            <div><h3 data-i18n="team_manager_name">Менеджер</h3><p data-i18n="team_manager_text">Принимает заявку, уточняет детали и передаёт проект в работу.</p></div>
-          </div>
-        </div>
-        <div class="card workflow-card">
+    <section class="section small" id="team-details" style="display:none">
+      <div class="container">
+        <div class="mini-team-head">
           <span class="eyebrow" data-i18n="team_badge">Команда проекта</span>
-          <h2 class="section-title" style="margin:16px 0" data-i18n="team_title">С вами работают два человека: разработчик и менеджер</h2>
-          <p class="lead" data-i18n="team_text">Так клиенту проще: менеджер быстро отвечает в Telegram, а я спокойно делаю сайт, дизайн и техническую часть.</p>
-          <div class="workflow-steps">
-            <div class="workflow-step"><strong>1</strong><div><span data-i18n="team_step1_title">Заявка</span><small data-i18n="team_step1_text">Вы выбираете формат сайта и оставляете контакт.</small></div></div>
-            <div class="workflow-step"><strong>2</strong><div><span data-i18n="team_step2_title">Уточнение</span><small data-i18n="team_step2_text">Менеджер задаёт короткие вопросы и собирает материалы.</small></div></div>
-            <div class="workflow-step"><strong>3</strong><div><span data-i18n="team_step3_title">Разработка</span><small data-i18n="team_step3_text">Я собираю сайт, проверяю мобильную версию и формы.</small></div></div>
-          </div>
+          <h2 class="section-title" data-i18n="team_title">Над сайтом работают дизайнер-разработчик и менеджер</h2>
+          <p class="lead" data-i18n="team_text">Менеджер быстро принимает заявку и уточняет детали, а разработчик делает структуру, дизайн, адаптив, формы и запуск.</p>
+        </div>
+        <div class="mini-team-grid">
+          <article class="mini-person card">
+            <div class="mini-person-photo">
+              <img src="Public/Image/Vladislav.png" data-fallbacks="Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав Порохнавец" loading="lazy">
+            </div>
+            <div class="mini-person-body">
+              <div class="mini-role">Web specialist</div>
+              <h3 data-i18n="team_vlad_name">Владислав</h3>
+              <p data-i18n="team_vlad_text">Дизайн, структура, адаптив и запуск сайта.</p>
+            </div>
+          </article>
+          <article class="mini-person card">
+            <div class="mini-person-photo">
+              <img src="Public/Image/Manager.png" data-fallbacks="Public/Image/Manager.jpg,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Вася.png" alt="Менеджер проекта" loading="lazy">
+            </div>
+            <div class="mini-person-body">
+              <div class="mini-role">Project manager</div>
+              <h3 data-i18n="team_manager_name">Менеджер</h3>
+              <p data-i18n="team_manager_text">Принимает заявку, уточняет детали и передаёт проект в работу.</p>
+            </div>
+          </article>
+        </div>
+        <div class="workflow-line card">
+          <div><strong>01</strong><span data-i18n="team_step1_title">Заявка</span><small data-i18n="team_step1_text">Вы выбираете формат сайта и оставляете контакт.</small></div>
+          <div><strong>02</strong><span data-i18n="team_step2_title">Уточнение</span><small data-i18n="team_step2_text">Менеджер задаёт короткие вопросы и собирает материалы.</small></div>
+          <div><strong>03</strong><span data-i18n="team_step3_title">Разработка</span><small data-i18n="team_step3_text">Я собираю сайт, проверяю мобильную версию и формы.</small></div>
         </div>
       </div>
     </section>
@@ -210,6 +289,17 @@ function esc(s){return String(s).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;',
 function toggleChat(){document.getElementById('chat').classList.toggle('active')}function quickChat(t){document.getElementById('chatInput').value=t;sendChatMessage()}async function sendChatMessage(){const inp=document.getElementById('chatInput');const text=inp.value.trim();if(!text)return;const box=document.getElementById('chatMessages');box.insertAdjacentHTML('beforeend',`<div class="msg user">${esc(text)}</div>`);inp.value='';const bot=document.createElement('div');bot.className='msg bot';bot.textContent='Nexora AI...';box.appendChild(bot);box.scrollTop=box.scrollHeight;try{const d=await postToBackend('chat',{message:text});bot.textContent=d.reply||aiAnswer(text)}catch(e){bot.textContent=aiAnswer(text)}box.scrollTop=box.scrollHeight}
 function aiAnswer(t){const l=localStorage.getItem('nexora_lang')||'ru';t=t.toLowerCase();const a={ru:{price:'💰 Ориентир: лендинг от 150€, сайт для бизнеса от 300€, интернет-магазин от 600€.',time:'⏱ Сроки: лендинг 2–5 дней, сайт для бизнеса 5–10 дней, магазин 10–20 дней.',build:'🏗 Для строительной компании лучше бизнес-сайт: услуги, фото работ, преимущества, отзывы, FAQ и форма заявки.',land:'🚀 Лендинг подходит для одной услуги и быстрых заявок.',def:'Напишите нишу бизнеса, цель сайта и желаемый срок — я подскажу формат.'},uk:{price:'💰 Орієнтир: лендінг від 150€, сайт для бізнесу від 300€, інтернет-магазин від 600€.',time:'⏱ Терміни: лендінг 2–5 днів, бізнес-сайт 5–10 днів, магазин 10–20 днів.',build:'🏗 Для будівельної компанії краще бізнес-сайт: послуги, фото робіт, переваги, відгуки, FAQ і форма заявки.',land:'🚀 Лендінг підходить для однієї послуги і швидких заявок.',def:'Напишіть нішу бізнесу, ціль сайту і бажаний термін — я підкажу формат.'},en:{price:'💰 Approx: landing from €150, business website from €300, store from €600.',time:'⏱ Timing: landing 2–5 days, business website 5–10 days, store 10–20 days.',build:'🏗 For construction, a business website works best: services, photos, benefits, reviews, FAQ and lead form.',land:'🚀 A landing page fits one service and fast leads.',def:'Write your niche, website goal and desired deadline — I will suggest the format.'},sk:{price:'💰 Orientačne: landing od 150€, firemný web od 300€, e-shop od 600€.',time:'⏱ Termíny: landing 2–5 dní, firemný web 5–10 dní, e-shop 10–20 dní.',build:'🏗 Pre stavebnú firmu je najlepší firemný web: služby, fotky, výhody, recenzie, FAQ a formulár.',land:'🚀 Landing page je vhodná pre jednu službu a rýchle dopyty.',def:'Napíšte oblasť, cieľ webu a termín — odporučím formát.'}}[l]||{};if(/цен|стоим|price|cena|ціна|сколько/.test(t))return a.price;if(/срок|дней|time|term|термін/.test(t))return a.time;if(/строй|буд|stav|construction/.test(t))return a.build;if(/ленд|landing/.test(t))return a.land;return a.def}
 document.addEventListener('DOMContentLoaded',()=>{setLang(localStorage.getItem('nexora_lang')||'ru')});
+</script>
+
+<script>
+document.addEventListener('error', function(e){
+  const img=e.target;
+  if(!img || img.tagName!=='IMG' || !img.dataset.fallbacks) return;
+  const list=img.dataset.fallbacks.split(',').map(s=>s.trim()).filter(Boolean);
+  const idx=Number(img.dataset.fallbackIndex||0);
+  if(idx < list.length){ img.dataset.fallbackIndex=String(idx+1); img.src=list[idx]; }
+  else { const box=img.closest('.member-avatar,.team-avatar,.mini-person-photo'); if(box){ box.classList.add('no-img'); } img.remove(); }
+}, true);
 </script>
 </body>
 </html>
