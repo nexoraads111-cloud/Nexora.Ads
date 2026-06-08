@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>NexoraAds — сайты для бизнеса под ключ</title>
-  <meta name="description" content="NexoraAds — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, с заявками в Telegram и поддержкой менеджера." />
+  <meta name="description" content="NexoraAds — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, с заявками." />
   <meta name="keywords" content="создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraAds, веб студия" />
   <meta property="og:title" content="NexoraAds — сайты для бизнеса под ключ" />
   <meta property="og:description" content="Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками." />
@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root{
       --bg:#070b14; --bg2:#0b1220; --panel:#0f172a; --panel2:#111c32;
@@ -29,281 +30,30 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;scroll-padding-top:92px}
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.55}
-    body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 15% 8%,rgba(77,163,255,.18),transparent 34%),radial-gradient(circle at 85% 12%,rgba(34,211,238,.10),transparent 30%),linear-gradient(135deg,#070b14,#0b1220 50%,#070b14)}
-    body:after{content:"";position:fixed;inset:0;z-index:-1;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:42px 42px;pointer-events:none}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 15% 8%,rgba(77,163,255,.18),transparent 34%),radial-gradient(circle at 85% 12%,rgba(34,211,238,.10),transparent 44%)}
+    body:after{content:"";position:fixed;inset:0;z-index:-1;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:80px 80px}
     a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button,input,textarea,select{font-family:inherit}
-    .container{width:min(1180px,calc(100% - 40px));margin:0 auto}.section{padding:110px 0}.section.small{padding:80px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(77,163,255,.08);color:#b9dcff;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.title{font-size:clamp(34px,5vw,72px);line-height:.98;letter-spacing:-.06em;font-weight:900}.section-title{font-size:clamp(28px,3.8vw,48px);line-height:1.05;letter-spacing:-.04em;font-weight:900}.muted{color:var(--muted)}.lead{font-size:18px;color:var(--soft);max-width:660px}.btn{border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 20px;border-radius:18px;font-weight:900;transition:.25s ease;min-height:52px}.btn.primary{background:linear-gradient(135deg,var(--blue),#2563eb);color:white;box-shadow:0 16px 42px rgba(77,163,255,.25)}.btn.primary:hover{transform:translateY(-2px);box-shadow:0 22px 54px rgba(77,163,255,.33)}.btn.ghost{background:rgba(255,255,255,.05);border:1px solid var(--line);color:#eaf2ff}.btn.ghost:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
-    header{position:sticky;top:0;z-index:100;background:rgba(7,11,20,.78);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--blue),#8b5cf6);display:grid;place-items:center;box-shadow:0 14px 34px rgba(77,163,255,.22);font-weight:900}.brand b{font-size:22px;letter-spacing:-.04em}.brand span{display:block;font-size:11px;color:var(--muted);margin-top:-2px}.nav-links{display:flex;gap:24px;color:#c7d4e8;font-size:14px;font-weight:700}.nav-links a:hover{color:white}.nav-actions{display:flex;align-items:center;gap:10px}.lang{position:relative}.lang-btn,.menu-btn{width:46px;height:46px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:white;cursor:pointer;font-weight:900}.lang-menu{position:absolute;right:0;top:56px;display:none;min-width:150px;padding:8px;border-radius:18px;background:rgba(15,23,42,.96);border:1px solid var(--line);box-shadow:var(--shadow)}.lang-menu.active{display:block}.lang-menu button{width:100%;border:0;background:transparent;color:#dbeafe;text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-weight:800}.lang-menu button:hover,.lang-menu button.active{background:rgba(77,163,255,.14);color:white}.menu-btn{display:none}.mobile-menu{position:fixed;inset:0 0 0 auto;width:min(390px,92vw);background:rgba(7,11,20,.98);backdrop-filter:blur(22px);border-left:1px solid var(--line);z-index:200;transform:translateX(110%);transition:.28s ease;padding:22px;overflow:auto}.mobile-menu.active{transform:translateX(0)}.mobile-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.mobile-menu a{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:18px;font-weight:850}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.56);z-index:180;opacity:0;pointer-events:none;transition:.25s}.overlay.active{opacity:1;pointer-events:auto}
-    .hero{padding:92px 0 70px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}.hero h1{margin:22px 0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.hero-card{position:relative;border-radius:34px;background:linear-gradient(145deg,rgba(15,23,42,.94),rgba(17,28,50,.78));border:1px solid var(--line);box-shadow:var(--shadow);padding:18px;overflow:hidden}.hero-card:before{content:"";position:absolute;inset:-1px;background:radial-gradient(circle at 25% 0%,rgba(77,163,255,.24),transparent 35%);pointer-events:none}.hero-preview{position:relative;z-index:1;border-radius:26px;overflow:hidden;background:#0b1220;border:1px solid var(--line)}.hero-preview img{width:100%;height:440px;object-fit:cover;object-position:top center}.hero-badges{position:absolute;z-index:2;left:34px;right:34px;bottom:34px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.hero-badge{border-radius:18px;background:rgba(7,11,20,.72);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(16px);padding:14px}.hero-badge strong{display:block;font-size:18px}.hero-badge span{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}.stat{padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.stat b{font-size:24px}.stat span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:4px}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{border-radius:var(--r);background:linear-gradient(145deg,rgba(15,23,42,.82),rgba(17,28,50,.56));border:1px solid var(--line);box-shadow:0 18px 60px rgba(0,0,0,.18);padding:26px}.card h3{font-size:22px;margin:14px 0 10px}.icon{width:54px;height:54px;border-radius:18px;background:rgba(77,163,255,.11);border:1px solid rgba(77,163,255,.20);display:grid;place-items:center;font-size:24px}.card p,.card li{color:var(--muted)}.list{display:grid;gap:10px;margin-top:18px}.list span{display:flex;gap:9px;color:#c7d4e8;font-size:14px}.list span:before{content:"✓";color:var(--green);font-weight:900}
-    .team-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:stretch}.person-card{padding:18px}.person-photo{border-radius:24px;overflow:hidden;height:420px;background:#0b1220;border:1px solid var(--line)}.person-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}.person-info{padding:26px}.role{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(34,197,94,.11);border:1px solid rgba(34,197,94,.22);color:#baf7c9;font-weight:850;font-size:12px;margin:14px 0}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chip{padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#dbeafe;font-size:13px;font-weight:800}
-    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project{overflow:hidden;padding:0}.project-img{height:330px;overflow:hidden;background:#0b1220}.project-img img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:.5s}.project:hover .project-img img{transform:scale(1.04)}.project-body{padding:22px}.project-body h3{font-size:22px;margin-bottom:8px}.project-actions{display:flex;gap:10px;margin-top:16px}.project-actions .btn{flex:1;padding:12px 14px;min-height:46px;border-radius:15px;font-size:13px}.notice{margin-top:18px;padding:18px;border-radius:24px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.16);color:#bdefff}
-    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.price{position:relative}.price.popular{border-color:rgba(34,197,94,.35);box-shadow:0 24px 80px rgba(34,197,94,.09)}.price-tag{position:absolute;top:18px;right:18px;padding:7px 10px;border-radius:999px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#bbf7d0;font-size:12px;font-weight:900}.price-value{font-size:42px;font-weight:950;letter-spacing:-.04em;margin:18px 0 6px}.price-time{display:inline-flex;margin-bottom:18px;padding:7px 10px;border-radius:999px;background:rgba(77,163,255,.09);color:#bddfff;font-size:13px;font-weight:850}.included{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}.included .card{padding:24px}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step b{display:grid;place-items:center;width:38px;height:38px;border-radius:14px;background:rgba(77,163,255,.12);color:#bde1ff;margin-bottom:14px}.step h3{font-size:18px}.step p{font-size:14px}
-    .reviews-top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.reviews-shell{position:relative}.reviews-carousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 2px 18px;-webkit-overflow-scrolling:touch}.reviews-carousel::-webkit-scrollbar{height:8px}.reviews-carousel::-webkit-scrollbar-thumb{background:rgba(77,163,255,.36);border-radius:99px}.review{flex:0 0 calc(33.333% - 12px);min-width:300px;scroll-snap-align:start}.review-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}.avatar{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--blue),#8b5cf6);display:grid;place-items:center;font-weight:900}.stars{color:#fbbf24;letter-spacing:2px;margin:10px 0}.review-type{display:inline-flex;margin-top:12px;padding:7px 10px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.18);color:#bbf7d0;font-size:12px;font-weight:850}.review-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}.arrow{width:48px;height:48px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:white;font-size:18px;cursor:pointer}.empty{padding:30px;border:1px dashed rgba(148,163,184,.25);border-radius:24px;text-align:center;color:var(--muted);width:100%}
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.form{display:grid;gap:12px}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:16px;color:white;padding:15px 16px;font-size:16px;outline:none}textarea{min-height:128px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:rgba(77,163,255,.5);box-shadow:0 0 0 4px rgba(77,163,255,.09)}select option{color:#0b1220}.contact-list{display:grid;gap:12px}.contact-card{display:flex;align-items:center;gap:14px;padding:16px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.contact-card i{width:42px;height:42px;border-radius:14px;background:rgba(77,163,255,.10);display:grid;place-items:center;color:#9fd1ff}.contact-card small{display:block;color:var(--muted);font-weight:700}.contact-card b{font-size:15px}.footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}.footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.footer-links{display:flex;gap:12px;flex-wrap:wrap}
-    .modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.62);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.modal.active{display:flex}.modal-box{width:min(540px,100%);max-height:90vh;overflow:auto;border-radius:28px;background:linear-gradient(145deg,#0f172a,#0b1220);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.modal-head h3{font-size:25px}.close{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:white;font-size:20px;cursor:pointer}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.choice{padding:14px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line);cursor:pointer}.choice.active{background:rgba(77,163,255,.13);border-color:rgba(77,163,255,.42)}.rating{display:flex;gap:8px;margin:8px 0 16px}.star{font-size:32px;color:#64748b;cursor:pointer}.star.active{color:#fbbf24}.toast{position:fixed;left:18px;bottom:18px;z-index:500;display:none;padding:14px 18px;border-radius:18px;background:rgba(15,23,42,.96);border:1px solid var(--line);box-shadow:var(--shadow);color:#dbeafe}.toast.active{display:block}
-    .chat-btn{position:fixed;right:22px;bottom:22px;z-index:120;width:62px;height:62px;border-radius:22px;border:1px solid rgba(77,163,255,.32);background:linear-gradient(135deg,var(--blue),#2563eb);color:white;box-shadow:0 20px 55px rgba(77,163,255,.25);cursor:pointer;font-size:24px}.chat{position:fixed;right:22px;bottom:96px;z-index:120;width:390px;max-width:calc(100vw - 28px);height:560px;max-height:calc(100vh - 120px);display:none;flex-direction:column;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#0f172a,#0b1220);border:1px solid var(--line);box-shadow:var(--shadow)}.chat.active{display:flex}.chat-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:rgba(77,163,255,.10);border-bottom:1px solid var(--line)}.chat-head b{display:block}.chat-head small{color:var(--muted)}.chat-messages{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px}.msg{max-width:86%;padding:13px 14px;border-radius:18px;font-size:14px}.msg.bot{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid var(--line)}.msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(77,163,255,.35),rgba(37,99,235,.35));border:1px solid rgba(77,163,255,.25)}.chat-chips{display:flex;gap:8px;overflow-x:auto;padding:0 14px 12px}.chat-chips button{white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#dbeafe;border-radius:999px;padding:9px 11px;font-weight:800;cursor:pointer;font-size:12px}.chat-input{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line)}.chat-input input{min-height:48px}.chat-input button{width:50px;border:0;border-radius:16px;background:var(--blue);color:white;font-weight:900;cursor:pointer}
-    @media(max-width:980px){.hero-grid,.team-grid,.contact-grid,.included{grid-template-columns:1fr}.cards,.projects,.pricing{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.hero-preview img{height:360px}.review{flex-basis:calc(50% - 10px)}}
-    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.brand b{font-size:20px}.brand span{display:none}.hero-grid{gap:26px}.title{font-size:44px}.lead{font-size:16px}.hero-actions{display:grid}.stats{grid-template-columns:1fr 1fr}.hero-card{padding:10px;border-radius:26px}.hero-preview{border-radius:20px}.hero-preview img{height:260px}.hero-badges{position:static;grid-template-columns:1fr;margin-top:10px}.cards,.projects,.pricing,.steps{grid-template-columns:1fr}.card{padding:22px;border-radius:24px}.person-photo{height:360px}.project-img{height:260px}.reviews-top{display:block}.review{flex-basis:88%;min-width:280px}.choices{grid-template-columns:1fr}.chat{right:12px;bottom:86px;width:calc(100vw - 24px);height:520px}.chat-btn{right:14px;bottom:14px}.footer-row{display:grid}.footer-links{display:grid;gap:8px}.project-actions{display:grid}.nav-actions .lang{display:block}.lang-menu{right:-58px}}
-  
-
-/* V8: Premium generated hero mockup + better team block */
-.site-mockup{position:relative;z-index:1;border-radius:26px;overflow:hidden;background:linear-gradient(145deg,#07111f,#0f1b31);border:1px solid var(--line);min-height:440px;padding:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.mock-browser{height:36px;display:flex;align-items:center;gap:7px;padding:0 4px 12px}.mock-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28)}
-.mock-hero{position:relative;border-radius:24px;padding:34px;min-height:185px;background:radial-gradient(circle at 18% 20%,rgba(125,92,255,.38),transparent 35%),linear-gradient(135deg,rgba(77,163,255,.28),rgba(139,92,246,.2));border:1px solid rgba(255,255,255,.12);overflow:hidden}.mock-hero:after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);filter:blur(2px)}
-.mock-kicker{width:118px;height:12px;border-radius:20px;background:rgba(255,255,255,.28);margin-bottom:18px}.mock-title{width:78%;height:18px;border-radius:20px;background:rgba(255,255,255,.86);box-shadow:0 26px 0 rgba(255,255,255,.42),0 52px 0 rgba(255,255,255,.26)}
-.mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.mock-card{min-height:96px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.1);padding:18px}.mock-card b{display:block;width:72%;height:12px;border-radius:20px;background:rgba(255,255,255,.58);margin-bottom:14px}.mock-card span{display:block;width:52%;height:10px;border-radius:20px;background:rgba(255,255,255,.22)}
-.mock-phone{position:absolute;right:24px;bottom:22px;width:118px;height:210px;border-radius:26px;background:#06101e;border:1px solid rgba(255,255,255,.18);box-shadow:0 24px 60px rgba(0,0,0,.38);padding:12px}.mock-phone-screen{height:100%;border-radius:18px;background:linear-gradient(180deg,rgba(77,163,255,.32),rgba(125,92,255,.18));padding:16px}.mock-phone-line{height:9px;border-radius:20px;background:rgba(255,255,255,.72);margin-bottom:10px}.mock-phone-line:nth-child(2){width:70%;background:rgba(255,255,255,.38)}.mock-phone-btn{height:28px;border-radius:12px;background:var(--accent);margin-top:20px}
-.team-premium{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:stretch}.team-people{display:grid;grid-template-columns:1fr;gap:14px}.team-person{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:16px;border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--line)}.team-avatar{width:96px;height:96px;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2));border:1px solid rgba(255,255,255,.14)}.team-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}.team-avatar.manager{display:flex;align-items:center;justify-content:center;font-weight:950;font-size:30px;color:white}.team-person h3{margin:0 0 6px;font-size:20px}.team-person p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}.workflow-card{padding:28px;border-radius:28px}.workflow-steps{display:grid;gap:12px;margin-top:22px}.workflow-step{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.workflow-step strong{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:13px;flex:0 0 30px}.workflow-step span{color:#eef6ff;font-weight:800}.workflow-step small{display:block;color:var(--muted);margin-top:4px;line-height:1.45}
-@media(max-width:720px){.site-mockup{min-height:360px;padding:12px;border-radius:22px}.mock-hero{padding:24px;min-height:150px}.mock-grid{grid-template-columns:1fr}.mock-card:nth-child(n+3){display:none}.mock-phone{position:relative;right:auto;bottom:auto;width:100%;height:145px;margin-top:14px;border-radius:22px}.mock-phone-screen{display:grid;align-content:center}.hero-badges{display:none}.team-premium{grid-template-columns:1fr}.team-person{grid-template-columns:78px 1fr;padding:14px;border-radius:22px}.team-avatar{width:78px;height:78px;border-radius:20px}.workflow-card{padding:22px}.workflow-step{padding:13px}.workflow-step small{font-size:12px}}
-
-
-
-/* V9: 10000€ premium visual update */
-:root{--accent:#4f8cff;--accent2:#7c3aed;--deep:#050812}
-body{background:#050812}
-body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),transparent 34%),radial-gradient(circle at 88% 8%,rgba(124,58,237,.16),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,211,238,.10),transparent 34%),linear-gradient(135deg,#050812,#07111f 55%,#050812)!important}
-.header,header{background:rgba(5,8,18,.78)!important}
-.title .grad, .gradient-text{background:linear-gradient(135deg,#6db4ff,#9f7aea 55%,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-card{padding:18px;border-radius:36px;background:linear-gradient(145deg,rgba(14,24,45,.92),rgba(8,14,28,.96));border:1px solid rgba(148,163,184,.18);box-shadow:0 38px 120px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.03) inset}
-.premium-screen{position:relative;z-index:1;min-height:468px;border-radius:28px;background:linear-gradient(145deg,#081222,#0d1930);border:1px solid rgba(148,163,184,.18);padding:18px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
-.premium-screen:before{content:"";position:absolute;inset:-40% -20% auto auto;width:360px;height:360px;border-radius:999px;background:radial-gradient(circle,rgba(79,140,255,.22),transparent 68%);pointer-events:none}
-.screen-top{height:38px;display:flex;align-items:center;gap:8px;color:rgba(226,232,240,.5);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
-.screen-top span{width:10px;height:10px;border-radius:50%;background:rgba(226,232,240,.35)}
-.screen-top b{margin-left:auto;margin-right:4px;color:rgba(226,232,240,.42);font-size:11px}
-.screen-frame{position:relative;border-radius:24px;overflow:hidden;background:#050812;border:1px solid rgba(148,163,184,.18);box-shadow:0 28px 80px rgba(0,0,0,.42)}
-.screen-frame:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,rgba(5,8,18,.34));pointer-events:none}
-.screen-frame img{width:100%;height:390px;object-fit:cover;object-position:top center;transform:scale(1.01)}
-.screen-glow-card{position:absolute;z-index:3;padding:14px 16px;border-radius:18px;background:rgba(5,8,18,.78);border:1px solid rgba(148,163,184,.18);box-shadow:0 18px 48px rgba(0,0,0,.34);backdrop-filter:blur(16px)}
-.screen-glow-card strong{display:block;color:#fff;font-size:16px;line-height:1.1}.screen-glow-card small{display:block;color:var(--muted);font-weight:800;margin-top:6px}.card-one{left:30px;bottom:24px}.card-two{right:26px;top:78px}
-.mini-team-head{max-width:760px;margin-bottom:28px}.mini-team-head .section-title{margin:16px 0 12px}
-.mini-team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.mini-person{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:center;padding:18px;border-radius:30px;background:linear-gradient(145deg,rgba(18,31,58,.88),rgba(10,18,35,.82));position:relative;overflow:hidden}.mini-person:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 10%,rgba(79,140,255,.18),transparent 42%);pointer-events:none}.mini-person>*{position:relative}
-.mini-person-photo{height:210px;border-radius:24px;overflow:hidden;background:#0b1220;border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.24)}
-.mini-person-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.mini-role{display:inline-flex;margin-bottom:10px;padding:7px 10px;border-radius:999px;background:rgba(79,140,255,.11);border:1px solid rgba(79,140,255,.22);color:#bfdbfe;font-size:12px;font-weight:900}.mini-person h3{font-size:28px;letter-spacing:-.04em;margin-bottom:8px}.mini-person p{color:var(--muted);font-weight:650;line-height:1.6}
-.workflow-line{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;padding:16px}.workflow-line div{padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.13)}.workflow-line strong{display:block;color:#93c5fd;font-size:13px;margin-bottom:10px}.workflow-line span{display:block;color:#fff;font-weight:900}.workflow-line small{display:block;color:var(--muted);margin-top:5px;line-height:1.45}
-@media(max-width:980px){.mini-team-grid{grid-template-columns:1fr}.premium-screen{min-height:auto}.screen-frame img{height:340px}}
-@media(max-width:720px){.hero-card{padding:10px;border-radius:28px}.premium-screen{padding:12px;border-radius:24px}.screen-top b{display:none}.screen-frame{border-radius:20px}.screen-frame img{height:260px}.screen-glow-card{position:static;margin-top:10px}.card-two{display:none}.mini-team-grid{gap:14px}.mini-person{grid-template-columns:110px 1fr;padding:14px;border-radius:24px;gap:14px}.mini-person-photo{height:132px;border-radius:20px}.mini-person h3{font-size:21px}.mini-person p{font-size:13px}.mini-role{font-size:11px;padding:6px 8px}.workflow-line{grid-template-columns:1fr;padding:12px}.stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px;border-radius:18px}.stat b{font-size:18px}.stat span{font-size:10px}}
-@media(max-width:380px){.title{font-size:38px}.screen-frame img{height:230px}.mini-person{grid-template-columns:92px 1fr}.mini-person-photo{height:116px}.stats{grid-template-columns:1fr 1fr}}
-
-
-
-/* V10: exact premium first screen inspired by reference */
-.hero-premium-showcase{padding:32px 0 84px}.hero-stage{position:relative;border-radius:34px;background:radial-gradient(circle at 55% 12%,rgba(77,163,255,.14),transparent 35%),linear-gradient(145deg,rgba(8,14,28,.98),rgba(7,11,20,.92));border:1px solid rgba(148,163,184,.18);box-shadow:0 34px 100px rgba(0,0,0,.40);padding:34px 42px 42px;overflow:hidden}.hero-stage:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 17% 33%,rgba(79,140,255,.16),transparent 30%),radial-gradient(circle at 92% 6%,rgba(139,92,246,.18),transparent 28%);pointer-events:none}.hero-stage>*{position:relative}.hero-main-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:54px;align-items:center}.hero-copy .title{max-width:560px;font-size:clamp(44px,5.2vw,68px);line-height:1.02;letter-spacing:-.055em}.hero-copy .title::first-line{color:#fff}.hero-copy .lead{max-width:555px;font-size:18px;line-height:1.75;color:#b8c5da}.hero-copy .title{background:linear-gradient(135deg,#ffffff 0%,#ffffff 38%,#51a7ff 55%,#a855f7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.shop-monitor{position:relative;padding:14px 14px 0}.monitor-screen{position:relative;border-radius:24px;padding:10px;background:linear-gradient(145deg,rgba(79,140,255,.2),rgba(139,92,246,.10));border:1px solid rgba(148,163,184,.22);box-shadow:0 30px 90px rgba(0,0,0,.36),0 0 70px rgba(79,140,255,.10);overflow:hidden}.monitor-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);animation:screenShine 5.5s ease-in-out infinite;z-index:2;pointer-events:none}.monitor-screen img{width:100%;height:390px;object-fit:cover;object-position:top center;border-radius:16px;filter:contrast(1.05) saturate(1.04)}.monitor-stand{width:145px;height:44px;margin:-1px auto 0;position:relative;background:linear-gradient(180deg,rgba(104,139,255,.38),rgba(42,61,106,.74));border:1px solid rgba(148,163,184,.20);border-top:0;border-radius:0 0 20px 20px;box-shadow:0 20px 50px rgba(79,140,255,.16)}.monitor-stand:after{content:"";position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);width:210px;height:14px;border-radius:999px;background:linear-gradient(90deg,rgba(77,163,255,.22),rgba(139,92,246,.28));border:1px solid rgba(148,163,184,.16)}@keyframes screenShine{0%,58%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
-.hero-trust-strip{margin:34px 0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px;border-radius:28px;background:linear-gradient(145deg,rgba(17,28,50,.72),rgba(11,18,32,.58));border:1px solid rgba(148,163,184,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}.hero-trust-strip div{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center}.hero-trust-strip i{grid-row:span 2;width:44px;height:44px;border-radius:16px;display:grid;place-items:center;color:#9ecbff;background:rgba(82,91,255,.12);border:1px solid rgba(139,92,246,.20)}.hero-trust-strip strong{font-size:16px}.hero-trust-strip span{font-size:13px;color:var(--muted)}
-.hero-bottom-cards{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:18px}.hero-info-card{min-height:260px;border-radius:26px;padding:26px;background:linear-gradient(145deg,rgba(15,23,42,.72),rgba(12,19,35,.56));border:1px solid rgba(148,163,184,.15);box-shadow:0 22px 70px rgba(0,0,0,.22);overflow:hidden;position:relative}.hero-info-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 20%,rgba(79,140,255,.14),transparent 38%);pointer-events:none}.hero-info-card>*{position:relative}.hero-info-card h3{font-size:26px;letter-spacing:-.045em;margin-bottom:6px}.hero-info-card p{color:var(--muted);font-weight:650}.ui-preview-card,.telegram-preview{position:absolute;left:30px;right:30px;bottom:24px;height:125px;border-radius:20px;background:linear-gradient(145deg,rgba(79,140,255,.18),rgba(31,41,80,.34));border:1px solid rgba(148,163,184,.14);overflow:hidden}.ui-preview-card span{position:absolute;border-radius:10px;background:rgba(93,132,255,.28)}.ui-preview-card span:nth-child(1){left:24px;top:22px;width:150px;height:44px;background:rgba(79,140,255,.35)}.ui-preview-card span:nth-child(2){left:190px;top:30px;width:70px;height:12px}.ui-preview-card span:nth-child(3){left:24px;top:82px;width:78%;height:12px}.ui-preview-card span:nth-child(4){left:24px;top:103px;width:130px;height:12px}.ui-preview-card span:nth-child(5){left:178px;top:103px;width:120px;height:12px;background:rgba(139,92,246,.45)}.telegram-preview{padding:22px 28px}.telegram-preview b{width:48px;height:48px;border-radius:50%;background:#2ca5e0;display:grid;place-items:center;color:white;font-size:24px;margin-bottom:12px}.telegram-preview span{display:block;height:12px;border-radius:20px;background:rgba(111,141,200,.30);margin:10px 0}.telegram-preview span:nth-child(2){width:54%;}.telegram-preview span:nth-child(3){width:82%;}.telegram-preview span:nth-child(4){width:64%;}.team-mini-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0 20px}.team-mini-person{display:flex;align-items:center;gap:12px}.member-avatar{position:relative;width:70px;height:70px;flex:0 0 70px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#223d74,#6d5dfc);border:1px solid rgba(255,255,255,.16);box-shadow:0 16px 36px rgba(0,0,0,.25)}.member-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}.member-avatar:after{content:attr(data-initials);position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:950;color:#fff;font-size:20px}.member-avatar.no-img:after{display:flex}.team-mini-person strong{display:block;font-size:15px;color:#fff}.team-mini-person span{display:block;color:var(--muted);font-size:13px;font-weight:700}.team-small-text{font-size:16px;line-height:1.65;color:#aebbd1!important;margin-top:8px}.hero-team-card{min-height:260px}
-@media(max-width:1020px){.hero-main-grid{grid-template-columns:1fr}.shop-monitor{max-width:690px;margin:0 auto}.hero-trust-strip{grid-template-columns:repeat(2,1fr)}.hero-bottom-cards{grid-template-columns:1fr}.hero-info-card{min-height:230px}.team-mini-row{max-width:520px}}
-@media(max-width:720px){.hero-premium-showcase{padding:18px 0 56px}.hero-stage{width:min(100% - 20px,450px);padding:18px 14px 18px;border-radius:26px}.hero-main-grid{gap:24px}.hero-copy .title{font-size:42px}.hero-copy .lead{font-size:15px;line-height:1.65}.hero-actions{display:grid;grid-template-columns:1fr}.shop-monitor{padding:0}.monitor-screen{border-radius:20px;padding:7px}.monitor-screen img{height:235px;border-radius:14px}.monitor-stand{display:none}.hero-trust-strip{grid-template-columns:1fr 1fr;padding:12px;gap:10px;margin:20px 0}.hero-trust-strip div{grid-template-columns:34px 1fr;column-gap:10px}.hero-trust-strip i{width:34px;height:34px;border-radius:12px;font-size:13px}.hero-trust-strip strong{font-size:13px}.hero-trust-strip span{font-size:11px}.hero-bottom-cards{gap:12px}.hero-info-card{border-radius:22px;padding:20px;min-height:205px}.hero-info-card h3{font-size:23px}.ui-preview-card,.telegram-preview{left:20px;right:20px;bottom:18px;height:105px}.team-mini-row{grid-template-columns:1fr;gap:13px;margin-top:20px}.member-avatar{width:78px;height:78px;flex-basis:78px}.hero-team-card{min-height:auto}.team-small-text{font-size:14px}.ui-card,.tg-card{display:none}}
-
-
-/* V11: wider premium bottom cards + team photos in cards */
-.hero-stage{width:min(1360px,calc(100vw - 36px));max-width:none;}
-.hero-bottom-wide{grid-template-columns:1fr 1fr 1.15fr;gap:22px;margin-top:26px;}
-.hero-bottom-wide .hero-info-card{min-height:300px;padding:30px;border-radius:30px;background:linear-gradient(145deg,rgba(12,20,38,.88),rgba(8,14,28,.72));box-shadow:0 28px 90px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.04)}
-.card-top-line{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;position:relative;z-index:3}
-.mini-photo-stack{display:flex;align-items:center;flex-direction:row-reverse;padding-left:12px}
-.mini-photo{position:relative;width:58px;height:58px;margin-left:-13px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#223d74,#6d5dfc);border:2px solid rgba(12,20,38,.95);box-shadow:0 14px 34px rgba(0,0,0,.28)}
-.mini-photo img,.manager-photo-bubble img{width:100%;height:100%;object-fit:cover;object-position:center top}.mini-photo:after,.manager-photo-bubble:after{content:attr(data-initials);position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:950;color:#fff}.mini-photo.no-img:after,.manager-photo-bubble.no-img:after{display:flex}
-.upgraded-ui-preview{height:140px;bottom:28px;left:30px;right:30px;background:radial-gradient(circle at 20% 0%,rgba(77,163,255,.28),transparent 38%),linear-gradient(145deg,rgba(35,58,105,.62),rgba(16,27,51,.58))}
-.upgraded-ui-preview em{position:absolute;right:16px;top:16px;font-style:normal;font-size:11px;font-weight:900;color:#cfe7ff;background:rgba(77,163,255,.12);border:1px solid rgba(77,163,255,.22);border-radius:999px;padding:7px 9px}
-.tg-round{width:58px;height:58px;border-radius:20px;background:linear-gradient(135deg,#2ca5e0,#1579bc);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 16px 34px rgba(44,165,224,.24);flex:0 0 58px}
-.upgraded-telegram-preview{height:140px;bottom:28px;left:30px;right:30px;background:radial-gradient(circle at 85% 10%,rgba(44,165,224,.22),transparent 35%),linear-gradient(145deg,rgba(22,38,70,.66),rgba(14,24,45,.58))}
-.chat-avatar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.upgraded-telegram-preview b{margin:0;width:48px;height:48px;flex:0 0 48px}.manager-photo-bubble{position:relative;width:48px;height:48px;border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,.13);background:linear-gradient(135deg,#223d74,#6d5dfc)}
-.premium-team-card .team-mini-row{gap:14px}.premium-team-row{grid-template-columns:1fr 1fr;margin:24px 0 18px}.big-member{width:86px;height:86px;flex-basis:86px;border-radius:24px}.premium-team-card .team-mini-person{gap:14px}.premium-team-card .team-mini-person strong{font-size:16px}.premium-team-card .team-mini-person span{font-size:13px}.premium-team-card .team-small-text{font-size:15px;max-width:440px;color:#b8c6dd!important}
-@media(max-width:1020px){.hero-stage{width:min(100% - 28px,760px)}.hero-bottom-wide{grid-template-columns:1fr}.hero-bottom-wide .hero-info-card{min-height:270px}.premium-team-row{max-width:none}}
-@media(max-width:720px){.hero-stage{width:min(100% - 18px,460px)}.hero-bottom-wide{display:grid!important;grid-template-columns:1fr!important;gap:12px;margin-top:18px}.hero-bottom-wide .ui-card,.hero-bottom-wide .tg-card{display:block!important}.hero-bottom-wide .hero-info-card{min-height:245px;padding:22px;border-radius:24px}.upgraded-ui-preview,.upgraded-telegram-preview{height:118px;left:20px;right:20px;bottom:18px}.mini-photo{width:50px;height:50px;border-radius:16px}.tg-round{width:50px;height:50px;border-radius:16px;font-size:22px}.premium-team-row{grid-template-columns:1fr!important;gap:12px}.big-member{width:76px;height:76px;flex-basis:76px}.premium-team-card .team-small-text{font-size:14px}}
-
-
-
-/* V12: selling feature buttons inside premium cards */
-.feature-tags{
-  position:relative;
-  z-index:5;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:16px;
-  max-width:330px;
-}
-.feature-tags span,
-.feature-tags a{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:9px 12px;
-  border-radius:999px;
-  background:rgba(77,163,255,.10);
-  border:1px solid rgba(77,163,255,.22);
-  color:#dbeafe;
-  font-size:12px;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:-.01em;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-  transition:.25s ease;
-}
-.feature-tags span:hover,
-.feature-tags a:hover{
-  transform:translateY(-2px);
-  background:rgba(77,163,255,.18);
-  border-color:rgba(77,163,255,.38);
-  box-shadow:0 12px 28px rgba(77,163,255,.16);
-}
-.feature-tags.telegram span,
-.feature-tags.telegram a{
-  background:rgba(44,165,224,.11);
-  border-color:rgba(44,165,224,.25);
-}
-.feature-tags.telegram span:hover,
-.feature-tags.telegram a:hover{
-  background:rgba(44,165,224,.20);
-  border-color:rgba(44,165,224,.42);
-}
-.feature-tags.team span,
-.feature-tags.team a{
-  background:rgba(139,92,246,.11);
-  border-color:rgba(139,92,246,.24);
-}
-.feature-tags.team span:hover,
-.feature-tags.team a:hover{
-  background:rgba(139,92,246,.20);
-  border-color:rgba(139,92,246,.42);
-}
-.card-cta-mini{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-top:14px;
-  padding:11px 14px;
-  border-radius:14px;
-  background:linear-gradient(135deg,rgba(77,163,255,.22),rgba(139,92,246,.14));
-  border:1px solid rgba(77,163,255,.30);
-  color:#fff;
-  font-size:13px;
-  font-weight:950;
-  transition:.25s ease;
-}
-.card-cta-mini:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(77,163,255,.18)}
-.premium-ui-card .upgraded-ui-preview,
-.premium-tg-card .upgraded-telegram-preview{bottom:20px;height:108px;opacity:.82}
-.premium-team-card .team-small-text{margin-top:12px!important}
-@media(max-width:720px){
-  .feature-tags{max-width:100%;gap:7px;margin-top:12px}
-  .feature-tags span,.feature-tags a{font-size:11px;padding:8px 10px}
-  .card-cta-mini{width:100%;margin-top:12px;font-size:12px;padding:10px 12px}
-  .premium-ui-card .upgraded-ui-preview,
-  .premium-tg-card .upgraded-telegram-preview{position:relative;left:auto;right:auto;bottom:auto;margin-top:14px;height:92px}
-}
-
-
-
-/* V13: real team names/photos, mobile polish, translated feature chips */
-.feature-tags span{white-space:nowrap}
-.card-cta-mini{position:relative;z-index:8;display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,rgba(77,163,255,.18),rgba(139,92,246,.14));border:1px solid rgba(125,170,255,.28);color:#eef6ff;font-size:12px;font-weight:900;box-shadow:0 12px 28px rgba(77,163,255,.10);transition:.25s ease}
-.card-cta-mini:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(77,163,255,.28),rgba(139,92,246,.22));box-shadow:0 16px 38px rgba(77,163,255,.18)}
-.mini-photo.no-img:after,.manager-photo-bubble.no-img:after,.member-avatar.no-img:after{display:flex}
-.premium-team-card .team-mini-person span{max-width:145px;line-height:1.35}
-.member-avatar img,.mini-photo img,.manager-photo-bubble img{filter:saturate(1.05) contrast(1.03)}
-@media(max-width:720px){
-  .hero-stage{padding:16px 12px 18px!important;border-radius:24px!important}
-  .hero-bottom-wide .hero-info-card{min-height:auto!important;padding:18px!important}
-  .card-top-line{align-items:flex-start;gap:10px}
-  .feature-tags{display:flex!important;overflow-x:auto;flex-wrap:nowrap!important;gap:7px;margin-top:11px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-  .feature-tags::-webkit-scrollbar{display:none}
-  .feature-tags span{font-size:11px!important;padding:7px 10px!important;flex:0 0 auto}
-  .card-cta-mini{width:100%;margin-top:10px;padding:11px 12px;font-size:12px}
-  .upgraded-ui-preview,.upgraded-telegram-preview{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin-top:14px;height:110px!important}
-  .mini-photo{width:48px!important;height:48px!important;border-radius:15px!important}
-  .tg-round{width:48px!important;height:48px!important}
-  .premium-team-row{margin:16px 0 10px!important}
-  .premium-team-card .team-mini-person{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
-  .big-member{width:72px!important;height:72px!important;flex-basis:72px!important;border-radius:20px!important}
-  .premium-team-card .team-mini-person strong{font-size:15px!important;line-height:1.15}
-  .premium-team-card .team-mini-person span{font-size:12px!important;max-width:none}
-  .team-small-text{font-size:13px!important;line-height:1.55!important}
-  .monitor-screen img{height:220px!important}
-}
-
-
-
-/* V14: Support / Donate modal */
-.donate-nav-btn{
-  min-height:46px;
-  padding:12px 16px;
-  border-radius:16px;
-  border:1px solid rgba(251,191,36,.26);
-  background:linear-gradient(135deg,rgba(251,191,36,.13),rgba(79,140,255,.08));
-  color:#fff4c7;
-  box-shadow:0 14px 34px rgba(251,191,36,.10);
-}
-.donate-nav-btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(251,191,36,.20),rgba(79,140,255,.12));}
-.donate-box{width:min(720px,100%);padding:0;overflow:hidden;border-radius:32px;background:radial-gradient(circle at 18% 0%,rgba(251,191,36,.16),transparent 34%),linear-gradient(145deg,#0f172a,#050812);}
-.donate-hero{padding:28px 28px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.02));}
-.donate-kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.22);color:#fde68a;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
-.donate-hero h3{font-size:34px;letter-spacing:-.05em;line-height:1.04;margin-bottom:10px}.donate-hero p{color:#b8c6dd;max-width:560px}.donate-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 28px 28px}.donate-card{position:relative;overflow:hidden;border-radius:26px;padding:22px;background:linear-gradient(145deg,rgba(15,23,42,.88),rgba(9,16,31,.76));border:1px solid rgba(148,163,184,.16);box-shadow:0 22px 70px rgba(0,0,0,.22)}.donate-card:before{content:"";position:absolute;inset:auto -70px -80px auto;width:180px;height:180px;border-radius:999px;background:radial-gradient(circle,rgba(79,140,255,.18),transparent 70%)}.donate-logo{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;margin-bottom:16px;background:linear-gradient(135deg,#111,#2b2b2b);border:1px solid rgba(255,255,255,.12);font-weight:950;font-size:18px;letter-spacing:-.04em}.donate-logo.mono{color:#fff}.donate-logo.sk{background:linear-gradient(135deg,#1e3a8a,#0ea5e9);color:#e0f2fe}.donate-card h4{font-size:22px;margin-bottom:6px}.donate-card p{color:var(--muted);font-size:14px;margin-bottom:18px}.donate-actions{display:grid;gap:10px}.donate-link,.copy-iban{width:100%;border:0;cursor:pointer;border-radius:16px;padding:14px 16px;font-weight:950;display:flex;align-items:center;justify-content:center;gap:10px;transition:.22s ease}.donate-link{background:linear-gradient(135deg,#facc15,#f59e0b);color:#111827;box-shadow:0 16px 38px rgba(250,204,21,.18)}.donate-link:hover,.copy-iban:hover{transform:translateY(-2px)}.copy-iban{background:rgba(77,163,255,.12);border:1px solid rgba(77,163,255,.24);color:#dbeafe}.iban-box{margin:12px 0 14px;padding:12px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid var(--line);font-size:13px;color:#e5eefc;word-break:break-all;font-weight:800}.donate-note{grid-column:1/-1;padding:14px 16px;border-radius:18px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.18);color:#bbf7d0;font-size:13px;line-height:1.55}.donate-pulse{position:relative}.donate-pulse:after{content:"";position:absolute;inset:-5px;border-radius:20px;border:1px solid rgba(251,191,36,.28);animation:donatePulse 1.8s ease-out infinite;pointer-events:none}@keyframes donatePulse{0%{opacity:.8;transform:scale(.98)}100%{opacity:0;transform:scale(1.08)}}
-@media(max-width:720px){.donate-nav-btn.desktop-donate{display:none}.donate-grid{grid-template-columns:1fr;padding:16px}.donate-hero{padding:22px 18px 16px}.donate-hero h3{font-size:28px}.donate-box{border-radius:26px}.donate-card{border-radius:22px;padding:18px}.mobile-donate-btn{display:flex!important;width:100%;margin-top:12px}.modal{padding:12px}}
-@media(min-width:721px){.mobile-donate-btn{display:none!important}}
-
-
-
-/* iPhone 17 3D hero replacement */
-.iphone-hero-3d{
-  position:relative;
-  min-height:460px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px;
-}
-.iphone-hero-3d:before{
-  content:"";
-  position:absolute;
-  inset:8% 5% 6%;
-  border-radius:40px;
-  background:radial-gradient(circle at 50% 45%,rgba(77,163,255,.26),transparent 52%),radial-gradient(circle at 62% 55%,rgba(139,92,246,.22),transparent 48%);
-  filter:blur(18px);
-  opacity:.9;
-  pointer-events:none;
-}
-.iphone-hero-3d model-viewer{
-  position:relative;
-  z-index:2;
-  width:min(100%,620px);
-  height:560px;
-  --poster-color:transparent;
-  background:transparent;
-  filter:drop-shadow(0 34px 70px rgba(0,0,0,.42));
-}
-.iphone-hero-note{
-  position:absolute;
-  z-index:3;
-  right:34px;
-  bottom:28px;
-  padding:12px 14px;
-  border-radius:999px;
-  background:rgba(5,8,18,.72);
-  border:1px solid rgba(148,163,184,.18);
-  color:#dbeafe;
-  font-size:12px;
-  font-weight:900;
-  backdrop-filter:blur(14px);
-  box-shadow:0 18px 44px rgba(0,0,0,.28);
-}
-@media(max-width:1020px){
-  .iphone-hero-3d{min-height:440px;max-width:700px;margin:0 auto}
-  .iphone-hero-3d model-viewer{height:520px}
-}
-@media(max-width:720px){
-  .iphone-hero-3d{min-height:330px;padding:0}
-  .iphone-hero-3d model-viewer{height:390px;width:100%}
-  .iphone-hero-note{display:none}
-}
-
-</style>
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    .container{width:min(1180px,calc(100% - 40px));margin:0 auto}.section{padding:110px 0}.section.small{padding:80px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:600;color:var(--blue);background:rgba(77,163,255,.08)}.section-title{font-size:clamp(24px,4vw,42px);font-weight:900;letter-spacing:-.02em}
+    header{position:sticky;top:0;z-index:100;background:rgba(7,11,20,.78);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between}.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;font-weight:900;color:var(--bg);font-size:20px}.brand{display:flex;align-items:center;gap:12px;font-weight:600}
+    .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500}.nav-links a{color:var(--muted);transition:color .3s}.nav-links a:hover{color:var(--text)}.nav-actions{display:flex;gap:12px;align-items:center}.lang{position:relative}.lang-btn{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);font-size:16px;cursor:pointer;transition:all .2s}.lang-btn:hover{background:rgba(77,163,255,.10)}.lang-menu{position:absolute;top:100%;right:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;margin-top:8px;min-width:120px;display:none;z-index:200}.lang-menu.active{display:grid}.lang-menu button{width:100%;padding:8px 12px;border:none;background:transparent;border-radius:8px;text-align:left;cursor:pointer;font-size:13px;color:var(--muted);transition:all .2s}.lang-menu button:hover{background:rgba(77,163,255,.12);color:var(--text)}.modal.active .lang-menu{display:none}
+    .btn{border:none;padding:10px 24px;border-radius:12px;font-weight:600;cursor:pointer;font-size:14px;transition:all .3s;display:inline-flex;align-items:center;gap:8px}.btn.primary{background:linear-gradient(135deg,var(--blue),#2563eb);color:white;box-shadow:0 8px 24px rgba(77,163,255,.32)}.btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(77,163,255,.48)}.btn.ghost{border:1px solid var(--line);color:var(--text);background:rgba(77,163,255,.06)}.btn.ghost:hover{background:rgba(77,163,255,.12);border-color:var(--blue)}.btn:disabled{opacity:.5;cursor:not-allowed}
+    .menu-btn{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text)}.mobile-menu{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:var(--panel);z-index:150;padding:16px;overflow-y:auto}.mobile-menu.active{display:flex;flex-direction:column}.mobile-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.close{background:none;border:none;font-size:32px;cursor:pointer;color:var(--text)}.mobile-menu a{padding:12px 0;display:block;color:var(--text);font-weight:500}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;z-index:125}.overlay.active{display:block}
+    .hero{padding:92px 0 70px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}.hero h1{margin:22px 0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}
+    #three-container{width:100%;height:600px;border-radius:32px;background:linear-gradient(145deg,#07111f,#0f1b31);border:1px solid var(--line);overflow:hidden;position:relative;box-shadow:0 34px 120px rgba(0,0,0,.48)}
+    .three-loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;background:linear-gradient(145deg,rgba(7,17,31,.95),rgba(15,27,49,.88));z-index:10}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{border-radius:var(--r);background:linear-gradient(145deg,rgba(15,23,42,.82),rgba(17,28,50,.56));border:1px solid var(--line);padding:24px;transition:all .3s}.card:hover{border-color:rgba(77,163,255,.32);transform:translateY(-4px)}.card .icon{font-size:32px;margin-bottom:12px}
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project{overflow:hidden;padding:0}.project-img{height:330px;overflow:hidden;background:#0b1220}.project-img img{width:100%;height:100%;object-fit:cover}
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .reviews-top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.reviews-shell{position:relative}.reviews-carousel{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:12px}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.form{display:grid;gap:12px}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:12px;color:var(--text);font-size:14px;transition:all .2s}input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue);background:rgba(77,163,255,.08)}
+    .modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.62);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.modal.active{display:flex}.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:32px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto}
+    .chat-btn{position:fixed;right:22px;bottom:22px;z-index:120;width:62px;height:62px;border-radius:22px;border:1px solid rgba(77,163,255,.32);background:linear-gradient(135deg,var(--blue),#2563eb);color:white;font-size:24px;cursor:pointer;box-shadow:0 8px 24px rgba(77,163,255,.32);transition:all .3s}.chat-btn:hover{transform:scale(1.1)}
+    .toast{position:fixed;bottom:22px;left:22px;background:rgba(0,0,0,.88);color:white;padding:12px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;z-index:400;transition:opacity .3s}.toast.active{opacity:1;pointer-events:auto}
+    .footer{padding:32px 0;border-top:1px solid var(--line);background:rgba(7,11,20,.52)}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:32px}.footer-links{display:flex;gap:18px;font-size:13px}.footer-links a{color:var(--muted);transition:color .2s}.footer-links a:hover{color:var(--text)}
+    .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}.chip{padding:10px 14px;border-radius:999px;background:rgba(77,163,255,.10);border:1px solid rgba(77,163,255,.22);color:#bfdbfe;font-size:12px}
+    @media(max-width:980px){.hero-grid,.contact-grid{grid-template-columns:1fr}.cards,.projects,.pricing{grid-template-columns:1fr 1fr}#three-container{height:500px}}
+    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.brand{font-size:13px}.cards,.projects,.pricing{grid-template-columns:1fr}#three-container{height:400px}}
+  </style>
 </head>
 <body>
   <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
@@ -313,294 +63,310 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
         <div class="logo">N</div><div><b>NexoraAds</b><span data-i18n="brand_sub">Premium Web Studio</span></div>
       </a>
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="#services" data-i18n="nav_services">Услуги</a><a href="#projects" data-i18n="nav_projects">Проекты</a><a href="#team" data-i18n="nav_team">Команда</a><a href="#pricing" data-i18n="nav_pricing">Цены</a><a href="#reviews" data-i18n="nav_reviews">Отзывы</a><a href="#contact" data-i18n="nav_contact">Контакты</a>
+        <a href="#services" data-i18n="nav_services">Услуги</a><a href="#projects" data-i18n="nav_projects">Проекты</a><a href="#team" data-i18n="nav_team">Команда</a><a href="#reviews" data-i18n="nav_reviews">Отзывы</a><a href="#contact" data-i18n="nav_contact">Контакты</a>
       </nav>
       <div class="nav-actions">
         <div class="lang"><button class="lang-btn" onclick="toggleLangMenu()">🌍</button><div class="lang-menu" id="langMenu"><button onclick="setLang('ru')">Русский</button><button onclick="setLang('uk')">Українська</button><button onclick="setLang('en')">English</button><button onclick="setLang('sk')">Slovenčina</button></div></div>
         <button class="btn primary desktop-cta" onclick="openOrderModal()" data-i18n="nav_cta">Заказать сайт</button>
-        <button class="btn donate-nav-btn desktop-donate donate-pulse" onclick="openDonateModal()" data-donate-i18n="support_btn">💛 Поддержать</button>
         <button class="menu-btn" onclick="openMobileMenu()" aria-label="Menu">☰</button>
       </div>
     </div>
   </header>
   <aside class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-head"><div class="brand"><div class="logo">N</div><div><b>NexoraAds</b></div></div><button class="close" onclick="closeMobileMenu()">×</button></div>
-    <a href="#services" onclick="closeMobileMenu()" data-i18n="nav_services">Услуги</a><a href="#projects" onclick="closeMobileMenu()" data-i18n="nav_projects">Проекты</a><a href="#pricing" onclick="closeMobileMenu()" data-i18n="nav_pricing">Цены</a><a href="#reviews" onclick="closeMobileMenu()" data-i18n="nav_reviews">Отзывы</a><a href="#team" onclick="closeMobileMenu()" data-i18n="nav_team">Команда</a><a href="#contact" onclick="closeMobileMenu()" data-i18n="nav_contact">Контакты</a>
+    <a href="#services" onclick="closeMobileMenu()" data-i18n="nav_services">Услуги</a><a href="#projects" onclick="closeMobileMenu()" data-i18n="nav_projects">Проекты</a><a href="#reviews" onclick="closeMobileMenu()" data-i18n="nav_reviews">Отзывы</a><a href="#contact" onclick="closeMobileMenu()" data-i18n="nav_contact">Контакты</a>
     <button class="btn primary" style="width:100%;margin-top:20px" onclick="closeMobileMenu();openOrderModal()" data-i18n="nav_cta">Заказать сайт</button>
-    <button class="btn donate-nav-btn mobile-donate-btn" onclick="closeMobileMenu();openDonateModal()" data-donate-i18n="support_btn">💛 Поддержать</button>
   </aside>
   <main id="top">
-    <section class="hero hero-premium-showcase">
-      <div class="container hero-stage">
-        <div class="hero-main-grid">
-          <div class="hero-copy">
-            <span class="eyebrow" data-i18n="hero_badge">Премиум сайты под ключ</span>
+    <section class="hero">
+      <div class="container">
+        <div style="margin-bottom:24px"><span class="eyebrow" data-i18n="hero_badge">Премиум сайты под ключ</span></div>
+        <div class="hero-grid">
+          <div>
             <h1 class="title" data-i18n="hero_title">Создаём сайты, которые приносят клиентов</h1>
-            <p class="lead" data-i18n="hero_text">Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты, интернет-магазины и больше.</p>
-            <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Смотреть проекты</a></div>
+            <p class="lead" data-i18n="hero_text">Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины.</p>
+            <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_portfolio">Смотреть работы</a></div>
           </div>
-          <div class="iphone-hero-3d" aria-label="iPhone 17 3D website preview">
-            <model-viewer
-              src="Public/Models/iPhone17_NexoraAds.glb"
-              alt="iPhone 17 with PlayStore website preview"
-              auto-rotate
-              camera-controls
-              interaction-prompt="none"
-              rotation-per-second="22deg"
-              shadow-intensity="1"
-              exposure="1.05"
-              camera-orbit="35deg 75deg 0.42m"
-              field-of-view="25deg"
-              min-camera-orbit="auto auto 0.25m"
-              max-camera-orbit="auto auto 1.2m">
-            </model-viewer>
-            <div class="iphone-hero-note">360° iPhone preview</div>
+          
+          <!-- 3D iPhone контейнер -->
+          <div id="three-container">
+            <div class="three-loading">⏳ Загружаю iPhone...</div>
           </div>
         </div>
 
-        <div class="hero-trust-strip" aria-label="advantages">
-          <div><i class="fa-regular fa-calendar-check"></i><strong data-i18n="trust_1">От 3 дней</strong><span data-i18n="stat_days">Срок разработки</span></div>
-          <div><i class="fa-solid fa-desktop"></i><strong data-i18n="trust_2">Адаптивно</strong><span data-i18n="stat_mobile">На всех устройствах</span></div>
-          <div><i class="fa-solid fa-gem"></i><strong data-i18n="trust_3">Под ключ</strong><span data-i18n="trust_3_sub">От идеи до запуска</span></div>
-          <div><i class="fa-regular fa-circle-check"></i><strong data-i18n="trust_4">Поддержка</strong><span data-i18n="stat_support">После запуска</span></div>
-        </div>
-
-        <div class="hero-bottom-cards hero-bottom-wide">
-          <article class="hero-info-card ui-card premium-ui-card">
-            <div class="card-top-line">
-              <div>
-                <h3>Premium UI</h3>
-                <p data-i18n="hero_badge_1">чистый современный стиль</p>
-                <div class="feature-tags" aria-label="Premium UI features">
-                  <span data-i18n="ui_tag1">🎨 Premium Design</span>
-                  <span data-i18n="ui_tag2">📱 Mobile First</span>
-                  <span data-i18n="ui_tag3">⚡ SEO Ready</span>
-                </div>
-                <a class="card-cta-mini" href="#projects" data-i18n="ui_cta">Смотреть стиль →</a>
-              </div>
-              <div class="mini-photo-stack" aria-label="team photos">
-                <div class="mini-photo" data-initials="ВП"><img src="Public/Image/VladislavPorokhnavets.png" data-fallbacks="Public/Image/VladislavPorokhnavets.png,Public/Image/Vladislav_Porokhnavets.png,Public/Image/Vladislav.png,Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vladislav.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
-                <div class="mini-photo" data-initials="ВЗ"><img src="Public/Image/VasyaZeykan.png" data-fallbacks="Public/Image/VasyaZeykan.png,Public/Image/Vasya_Zeykan.png,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Manager.png,Public/Image/Manager.jpg,Public/Image/manager.png,Public/Image/Вася.png" alt="Менеджер" loading="eager"></div>
-              </div>
-            </div>
-            <div class="ui-preview-card upgraded-ui-preview"><span></span><span></span><span></span><span></span><span></span><em>Mobile first</em></div>
-          </article>
-          <article class="hero-info-card tg-card premium-tg-card">
-            <div class="card-top-line">
-              <div>
-                <h3>Telegram</h3>
-                <p data-i18n="hero_badge_2">заявки сразу менеджеру</p>
-                <div class="feature-tags telegram" aria-label="Telegram workflow features">
-                  <span data-i18n="tg_tag1">💬 Ответ до 15 мин</span>
-                  <span data-i18n="tg_tag2">📲 Всё в Telegram</span>
-                  <span data-i18n="tg_tag3">🚀 Быстрый старт</span>
-                </div>
-                <a class="card-cta-mini" href="https://t.me/Manager_Zeykan" target="_blank" rel="noopener" data-i18n="tg_cta">Написать менеджеру →</a>
-              </div>
-              <div class="tg-round"><i class="fab fa-telegram-plane"></i></div>
-            </div>
-            <div class="telegram-preview upgraded-telegram-preview">
-              <div class="chat-avatar-row">
-                <b><i class="fab fa-telegram-plane"></i></b>
-                <div class="manager-photo-bubble" data-initials="ВЗ"><img src="Public/Image/VasyaZeykan.png" data-fallbacks="Public/Image/VasyaZeykan.png,Public/Image/Vasya_Zeykan.png,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Manager.png,Public/Image/Manager.jpg,Public/Image/manager.png,Public/Image/Вася.png" alt="Менеджер" loading="eager"></div>
-              </div>
-              <span></span><span></span><span></span>
-            </div>
-          </article>
-          <article class="hero-info-card hero-team-card premium-team-card" id="team">
-            <h3>Наша команда</h3>
-            <p data-i18n="team_sub">мы всегда на связи</p>
-            <div class="team-mini-row premium-team-row">
-              <div class="team-mini-person">
-                <div class="member-avatar big-member" data-initials="ВП"><img src="Public/Image/VladislavPorokhnavets.png" data-fallbacks="Public/Image/VladislavPorokhnavets.png,Public/Image/Vladislav_Porokhnavets.png,Public/Image/Vladislav.png,Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vladislav.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав" loading="eager"></div>
-                <div><strong data-i18n="team_vlad_name">Владислав Порохнавць</strong><span data-i18n="team_vlad_en">Vladislav Porokhnavets • Web Specialist</span></div>
-              </div>
-              <div class="team-mini-person">
-                <div class="member-avatar big-member" data-initials="ВЗ"><img src="Public/Image/VasyaZeykan.png" data-fallbacks="Public/Image/VasyaZeykan.png,Public/Image/Vasya_Zeykan.png,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Manager.png,Public/Image/Manager.jpg,Public/Image/manager.png,Public/Image/Вася.png" alt="Вася Зейкан" loading="eager"></div>
-                <div><strong data-i18n="team_manager_name">Вася Зейкан</strong><span data-i18n="team_manager_en">Vasya Zeykan • Project Manager</span></div>
-              </div>
-            </div>
-            <div class="feature-tags team" aria-label="Team benefits">
-              <span data-i18n="team_tag1">👨‍💻 Разработка</span>
-              <span data-i18n="team_tag2">🤝 Поддержка</span>
-              <span data-i18n="team_tag3">⭐ После запуска</span>
-            </div>
-            <p class="team-small-text" data-i18n="team_small_text">От первой заявки до запуска сайта. Один менеджер, один разработчик, без посредников и лишней бюрократии.</p>
-            <button class="card-cta-mini" type="button" onclick="openOrderModal()" data-i18n="team_cta">Начать проект →</button>
-          </article>
+        <div style="margin-top:42px;padding:20px;border-radius:28px;background:linear-gradient(145deg,rgba(17,28,50,.72),rgba(11,18,32,.50));border:1px solid var(--line);">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+            <div><i class="fa-regular fa-calendar-check" style="font-size:20px;margin-bottom:8px;color:var(--blue);"></i><strong data-i18n="trust_1">От 3 дней</strong><span style="font-size:13px;color:var(--muted);display:block;margin-top:4px" data-i18n="trust_1_sub">запуск сайта</span></div>
+            <div><i class="fa-solid fa-desktop" style="font-size:20px;margin-bottom:8px;color:var(--cyan);"></i><strong data-i18n="trust_2">Адаптивно</strong><span style="font-size:13px;color:var(--muted);display:block;margin-top:4px" data-i18n="trust_2_sub">на всех устройствах</span></div>
+            <div><i class="fa-solid fa-gem" style="font-size:20px;margin-bottom:8px;color:var(--accent2);"></i><strong data-i18n="trust_3">Под ключ</strong><span style="font-size:13px;color:var(--muted);display:block;margin-top:4px" data-i18n="trust_3_sub">полный сервис</span></div>
+            <div><i class="fa-regular fa-circle-check" style="font-size:20px;margin-bottom:8px;color:var(--green);"></i><strong data-i18n="trust_4">Поддержка</strong><span style="font-size:13px;color:var(--muted);display:block;margin-top:4px" data-i18n="trust_4_sub">24/7 для вас</span></div>
+          </div>
         </div>
       </div>
     </section>
+
     <section class="section small" id="services">
       <div class="container">
-        <span class="eyebrow" data-i18n="services_badge">Что делаем</span><h2 class="section-title" style="margin:16px 0 34px" data-i18n="services_title">Сайты без лишней воды — только то, что помогает клиенту оставить заявку</h2>
-        <div class="cards"><div class="card"><div class="icon">🚀</div><h3 data-i18n="s1_title">Landing Page</h3><p data-i18n="s1_text">Для одной услуги, продукта или быстрого запуска рекламы.</p><div class="list"><span data-i18n="s1_l1">сильный первый экран</span><span data-i18n="s1_l2">форма заявки</span><span data-i18n="s1_l3">мобильная версия</span></div></div><div class="card"><div class="icon">🏢</div><h3 data-i18n="s2_title">Сайт для бизнеса</h3><p data-i18n="s2_text">Для компаний, услуг, строителей, ресторанов и локального бизнеса.</p><div class="list"><span data-i18n="s2_l1">услуги и преимущества</span><span data-i18n="s2_l2">портфолио и отзывы</span><span data-i18n="s2_l3">контакты и FAQ</span></div></div><div class="card"><div class="icon">🛒</div><h3 data-i18n="s3_title">Интернет-магазин</h3><p data-i18n="s3_text">Для продажи товаров онлайн с каталогом и быстрым контактом.</p><div class="list"><span data-i18n="s3_l1">каталог товаров</span><span data-i18n="s3_l2">карточки товара</span><span data-i18n="s3_l3">заявка или оплата</span></div></div></div>
-      </div>
-    </section>
-    <section class="section small" id="team-details" style="display:none">
-      <div class="container">
-        <div class="mini-team-head">
-          <span class="eyebrow" data-i18n="team_badge">Команда проекта</span>
-          <h2 class="section-title" data-i18n="team_title">Над сайтом работают дизайнер-разработчик и менеджер</h2>
-          <p class="lead" data-i18n="team_text">Менеджер быстро принимает заявку и уточняет детали, а разработчик делает структуру, дизайн, адаптив, формы и запуск.</p>
-        </div>
-        <div class="mini-team-grid">
-          <article class="mini-person card">
-            <div class="mini-person-photo">
-              <img src="Public/Image/VladislavPorokhnavets.png" data-fallbacks="Public/Image/VladislavPorokhnavets.png,Public/Image/Vladislav_Porokhnavets.png,Public/Image/Vladislav.png,Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vladislav.png,Public/Image/vlad.png,Public/Image/Владислав.png" alt="Владислав Порохнавец" loading="lazy">
-            </div>
-            <div class="mini-person-body">
-              <div class="mini-role">Web specialist</div>
-              <h3 data-i18n="team_vlad_name">Владислав Порохнавць</h3>
-              <p data-i18n="team_vlad_text">Дизайн, структура, адаптив и запуск сайта.</p>
-            </div>
-          </article>
-          <article class="mini-person card">
-            <div class="mini-person-photo">
-              <img src="Public/Image/VasyaZeykan.png" data-fallbacks="Public/Image/VasyaZeykan.png,Public/Image/Vasya_Zeykan.png,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Manager.png,Public/Image/Manager.jpg,Public/Image/manager.png,Public/Image/Вася.png" alt="Менеджер проекта" loading="lazy">
-            </div>
-            <div class="mini-person-body">
-              <div class="mini-role">Project manager</div>
-              <h3 data-i18n="team_manager_name">Вася Зейкан</h3>
-              <p data-i18n="team_manager_text">Принимает заявку, уточняет детали и передаёт проект в работу.</p>
-            </div>
-          </article>
-        </div>
-        <div class="workflow-line card">
-          <div><strong>01</strong><span data-i18n="team_step1_title">Заявка</span><small data-i18n="team_step1_text">Вы выбираете формат сайта и оставляете контакт.</small></div>
-          <div><strong>02</strong><span data-i18n="team_step2_title">Уточнение</span><small data-i18n="team_step2_text">Менеджер задаёт короткие вопросы и собирает материалы.</small></div>
-          <div><strong>03</strong><span data-i18n="team_step3_title">Разработка</span><small data-i18n="team_step3_text">Я собираю сайт, проверяю мобильную версию и формы.</small></div>
+        <span class="eyebrow" data-i18n="services_badge">Что делаем</span><h2 class="section-title" style="margin:16px 0 34px" data-i18n="services_title">Сайты без лишней воды</h2>
+        <div class="cards">
+          <div class="card"><div class="icon">🚀</div><h3 data-i18n="s1_title">Landing Page</h3><p data-i18n="s1_text">Для одной услуги или продукта. Быстро приносит результат.</p></div>
+          <div class="card"><div class="icon">🏢</div><h3 data-i18n="s2_title">Бизнес-сайт</h3><p data-i18n="s2_text">Полная инфо о компании. Выглядит дорого и серьёзно.</p></div>
+          <div class="card"><div class="icon">🛍️</div><h3 data-i18n="s3_title">Интернет-магазин</h3><p data-i18n="s3_text">С каталогом, корзиной и платежами. Готово продавать.</p></div>
         </div>
       </div>
     </section>
-    <section class="section" id="projects">
+
+    <section class="section small" id="projects">
       <div class="container">
-        <div style="max-width:760px;margin-bottom:34px"><span class="eyebrow" data-i18n="projects_badge">Готовые сайты</span><h2 class="section-title" style="margin:16px 0" data-i18n="projects_title">Проекты, которые можно открыть и посмотреть</h2><p class="lead" data-i18n="projects_text">Не просто картинки — живые сайты и реальные примеры оформления для бизнеса.</p></div>
+        <span class="eyebrow" data-i18n="projects_badge">Портфолио</span><h2 class="section-title" style="margin:16px 0 34px" data-i18n="projects_title">Реальные проекты</h2>
         <div class="projects">
-          <article class="card project"><div class="project-img"><img src="Public/Image/Stroplooksk.png" onerror="this.onerror=null;this.src='/Image/Stroplooksk.png'" alt="Stroplook.sk preview" loading="lazy"></div><div class="project-body"><h3>Stroplook.sk</h3><p class="muted" data-i18n="p1_text">Сайт для строительной компании с фокусом на доверие и заявки.</p><div class="project-actions"><a class="btn ghost" href="https://stroplook.sk" target="_blank" rel="noopener" data-i18n="open_site">Открыть сайт</a></div></div></article>
-          <article class="card project"><div class="project-img"><img src="Public/Image/Ukstav.png" onerror="this.onerror=null;this.src='/Image/Ukstav.png'" alt="Ukstav.sk preview" loading="lazy"></div><div class="project-body"><h3>Ukstav.sk</h3><p class="muted" data-i18n="p2_text">Сайт для услуг в строительной сфере, удобный для телефона.</p><div class="project-actions"><a class="btn ghost" href="https://ukstav.sk" target="_blank" rel="noopener" data-i18n="open_site">Открыть сайт</a></div></div></article>
-          <article class="card project"><div class="project-img"><img src="Public/Image/NexoraAds.png" onerror="this.onerror=null;this.src='/Image/NexoraAds.png'" alt="NexoraAds preview" loading="lazy"></div><div class="project-body"><h3>NexoraAds.online</h3><p class="muted" data-i18n="p3_text">Сайт веб-студии, на котором вы сейчас находитесь.</p><div class="project-actions"><a class="btn ghost" href="https://nexoraads.online" target="_blank" rel="noopener" data-i18n="open_site">Открыть сайт</a></div></div></article>
+          <article class="card project"><div class="project-img"><img src="Public/Image/Stroplooksk.png" alt="Stroplook.sk" loading="lazy"></div><div style="padding:16px;"><h3 style="font-size:16px;margin-bottom:8px;">Stroplook.sk</h3><p style="font-size:13px;color:var(--muted);">Интернет-магазин</p></div></article>
+          <article class="card project"><div class="project-img"><img src="Public/Image/Ukstav.png" alt="Ukstav.sk" loading="lazy"></div><div style="padding:16px;"><h3 style="font-size:16px;margin-bottom:8px;">Ukstav.sk</h3><p style="font-size:13px;color:var(--muted);">Бизнес-сайт</p></div></article>
+          <article class="card project"><div class="project-img"><img src="Public/Image/NexoraAds.png" alt="NexoraAds" loading="lazy"></div><div style="padding:16px;"><h3 style="font-size:16px;margin-bottom:8px;">NexoraAds</h3><p style="font-size:13px;color:var(--muted);">Веб-студия</p></div></article>
         </div>
-        <div class="notice" data-i18n="projects_note">Фото берутся из папки <b>Public/Image/</b>. Если сайт на GitHub Pages показывает пусто — проверь, что файлы называются точно: Stroplooksk.png, Ukstav.png, NexoraAds.png.</div>
       </div>
     </section>
-    <section class="section small" id="pricing">
-      <div class="container">
-        <span class="eyebrow" data-i18n="pricing_badge">Форматы</span><h2 class="section-title" style="margin:16px 0 34px" data-i18n="pricing_title">Понятные цены и сроки</h2>
-        <div class="pricing"><div class="card price"><h3 data-i18n="price1_title">Landing Page</h3><p class="muted" data-i18n="price1_text">Для одной услуги или продукта.</p><div class="price-value">от 150€</div><span class="price-time" data-i18n="price1_time">2–5 дней</span><div class="list"><span data-i18n="price_l_mobile">мобильная версия</span><span data-i18n="price_l_form">форма заявки</span><span data-i18n="price_l_seo">базовое SEO</span></div></div><div class="card price popular"><span class="price-tag" data-i18n="popular">Популярно</span><h3 data-i18n="price2_title">Сайт для бизнеса</h3><p class="muted" data-i18n="price2_text">Для компании, услуг и портфолио.</p><div class="price-value">от 300€</div><span class="price-time" data-i18n="price2_time">5–10 дней</span><div class="list"><span data-i18n="price_l_pages">главные разделы</span><span data-i18n="price_l_reviews">отзывы и FAQ</span><span data-i18n="price_l_manager">заявки менеджеру</span></div></div><div class="card price"><h3 data-i18n="price3_title">Интернет-магазин</h3><p class="muted" data-i18n="price3_text">Для товаров, каталога и заявок.</p><div class="price-value">от 600€</div><span class="price-time" data-i18n="price3_time">10–20 дней</span><div class="list"><span data-i18n="price_l_catalog">каталог</span><span data-i18n="price_l_products">карточки товара</span><span data-i18n="price_l_order">заказ или оплата</span></div></div></div>
-        <div class="included"><div class="card"><h3 data-i18n="included_title">Что входит</h3><div class="chips"><span class="chip" data-i18n="inc_design">Дизайн</span><span class="chip" data-i18n="inc_mobile">Адаптив</span><span class="chip" data-i18n="inc_speed">Скорость</span><span class="chip" data-i18n="inc_forms">Формы</span><span class="chip" data-i18n="inc_seo">SEO</span><span class="chip" data-i18n="inc_support">Поддержка</span></div></div><div class="card"><h3 data-i18n="guarantee_title">Гарантия 30 дней</h3><p class="muted" data-i18n="guarantee_text">После запуска бесплатно исправляем технические ошибки и помогаем с базовыми настройками.</p></div></div>
-      </div>
-    </section>
-    <section class="section small">
-      <div class="container"><span class="eyebrow" data-i18n="steps_badge">Процесс</span><h2 class="section-title" style="margin:16px 0 34px" data-i18n="steps_title">Как проходит работа</h2><div class="steps"><div class="card step"><b>1</b><h3 data-i18n="st1_title">Заявка</h3><p data-i18n="st1_text">Вы выбираете тип сайта и пишете детали.</p></div><div class="card step"><b>2</b><h3 data-i18n="st2_title">Обсуждение</h3><p data-i18n="st2_text">Менеджер уточняет цель, сроки и бюджет.</p></div><div class="card step"><b>3</b><h3 data-i18n="st3_title">Разработка</h3><p data-i18n="st3_text">Делаем дизайн, адаптив и формы.</p></div><div class="card step"><b>4</b><h3 data-i18n="st4_title">Запуск</h3><p data-i18n="st4_text">Подключаем домен и проверяем сайт.</p></div></div></div>
-    </section>
-    <section class="section" id="reviews">
-      <div class="container">
-        <div class="reviews-top"><div><span class="eyebrow" data-i18n="reviews_badge">Реальные отзывы</span><h2 class="section-title" style="margin:16px 0 8px" data-i18n="reviews_title">Отзывы клиентов</h2><p class="muted"><span data-i18n="reviews_count_text">Показываются только после подтверждения менеджером</span> • <span id="review-count">0</span></p></div><button class="btn primary" onclick="openReviewModal()" data-i18n="review_cta">Оставить отзыв</button></div>
-        <div class="reviews-shell"><div class="reviews-carousel" id="reviews-container"><div class="empty" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div></div><div class="review-controls" id="review-slider-controls"><button class="arrow" onclick="scrollReviews(-1)">←</button><span class="muted" data-i18n="reviews_hint">листайте отзывы</span><button class="arrow" onclick="scrollReviews(1)">→</button></div></div>
-      </div>
-    </section>
-    <section class="section" id="contact">
+
+    <section class="section small" id="contact">
       <div class="container contact-grid">
-        <div class="card"><span class="eyebrow" data-i18n="contact_badge">Связь</span><h2 class="section-title" style="margin:16px 0" data-i18n="contact_title">Расскажите, какой сайт нужен</h2><p class="lead" data-i18n="contact_text">Заявка отправляется менеджеру в Telegram. После этого мы свяжемся и подскажем лучший формат.</p><form class="form" id="order-form" onsubmit="submitOrder(event)"><input id="order-name" required placeholder="Имя" data-i18n-placeholder="form_name"><input id="order-contact" required placeholder="Telegram / WhatsApp / телефон" data-i18n-placeholder="form_contact"><select id="order-type"><option>Landing Page</option><option>Сайт для бизнеса</option><option>Интернет-магазин</option><option>Нужна консультация</option></select><textarea id="order-message" placeholder="Коротко о проекте" data-i18n-placeholder="form_message"></textarea><button class="btn primary" type="submit" data-i18n="form_submit">Отправить менеджеру</button></form></div>
-        <div class="card"><h3 data-i18n="contacts_title">Контакты NexoraAds</h3><div class="contact-list" style="margin-top:18px"><a class="contact-card" href="https://t.me/Manager_Zeykan" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i><div><small>Telegram</small><b>@Manager_Zeykan</b></div></a><a class="contact-card" href="https://t.me/NexoraAds_official" target="_blank" rel="noopener"><i class="fab fa-telegram"></i><div><small data-i18n="tg_group">Группа Telegram</small><b>NexoraAds Official</b></div></a><a class="contact-card" href="https://instagram.com/vladislav.ads" target="_blank" rel="noopener"><i class="fab fa-instagram"></i><div><small>Instagram</small><b>vladislav.ads</b></div></a><a class="contact-card" href="tel:+380995228560"><i class="fas fa-phone"></i><div><small>Ukraine</small><b>+380 99 522 8560</b></div></a><a class="contact-card" href="tel:+421950761194"><i class="fas fa-phone"></i><div><small>Slovakia</small><b>+421 950 761 194</b></div></a><a class="contact-card" href="tel:+421944430788"><i class="fas fa-phone"></i><div><small>Slovakia</small><b>+421 944 430 788</b></div></a></div></div>
+        <div class="card"><span class="eyebrow" data-i18n="contact_badge">Заказ</span><h2 class="section-title" style="margin:16px 0" data-i18n="contact_title">Начнём работу?</h2><form onsubmit="submitOrder(event)" class="form"><input type="text" placeholder="Ваше имя" id="order-name" required><input type="email" placeholder="Email или номер" id="order-contact" required><textarea placeholder="Кратко об идее" id="order-message" style="resize:vertical;min-height:80px;"></textarea><button type="submit" class="btn primary" style="width:100%;margin-top:16px" data-i18n="contact_submit">Отправить заявку</button></form></div>
+        <div class="card"><h3 data-i18n="contacts_title">Контакты</h3><div style="margin-top:18px;display:flex;flex-direction:column;gap:12px;"><a href="https://t.me/Manager_Zeykan" target="_blank" style="padding:12px;border:1px solid var(--line);border-radius:12px;transition:all .2s;text-decoration:none;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='rgba(77,163,255,.06)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='transparent'"><strong>💬 Telegram</strong><span style="color:var(--muted);font-size:13px;display:block;margin-top:4px;">@Manager_Zeykan</span></a><a href="https://t.me/Zeykan777" target="_blank" style="padding:12px;border:1px solid var(--line);border-radius:12px;transition:all .2s;text-decoration:none;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='rgba(77,163,255,.06)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='transparent'"><strong>👤 Владислав</strong><span style="color:var(--muted);font-size:13px;display:block;margin-top:4px;">@Zeykan777</span></a><a href="mailto:zeykan@nexoraads.online" style="padding:12px;border:1px solid var(--line);border-radius:12px;transition:all .2s;text-decoration:none;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='rgba(77,163,255,.06)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='transparent'"><strong>📧 Email</strong><span style="color:var(--muted);font-size:13px;display:block;margin-top:4px;">zeykan@nexoraads.online</span></a></div></div>
       </div>
     </section>
   </main>
-  <footer class="footer"><div class="container footer-row"><div>© 2026 NexoraAds • Premium Web Studio</div><div class="footer-links"><a href="https://t.me/NexoraAds_official" target="_blank">Telegram Group</a><a href="https://instagram.com/vladislav.ads" target="_blank">Instagram</a><button onclick="openDonateModal()" style="background:none;border:0;color:inherit;cursor:pointer;font:inherit" data-donate-i18n="support_btn">💛 Поддержать</button><a href="#top">Top ↑</a></div></div></footer>
 
+  <footer class="footer"><div class="container footer-row"><div>© 2026 NexoraAds • Premium Web Studio</div><div class="footer-links"><a href="https://t.me/NexoraAds_official" target="_blank">Telegram</a><a href="https://github.com/nexoraads111-cloud" target="_blank">GitHub</a></div></div></footer>
 
-  <div class="modal" id="donateModal"><div class="modal-box donate-box"><div class="donate-hero"><div class="modal-head" style="margin-bottom:0"><div><span class="donate-kicker" data-donate-i18n="donate_kicker">Поддержать проект</span><h3 data-donate-i18n="donate_title">Спасибо за поддержку NexoraAds 💛</h3><p data-donate-i18n="donate_text">Если хочешь поддержать развитие сайта и новые проекты — выбери удобный способ ниже.</p></div><button class="close" onclick="closeDonateModal()">×</button></div></div><div class="donate-grid"><article class="donate-card"><div class="donate-logo mono">mono</div><h4>Monobank Україна</h4><p data-donate-i18n="mono_text">Пополнение через официальный QR/ссылку банка для Владислава П.</p><div class="donate-actions"><a class="donate-link donate-pulse" href="https://bank.gov.ua/qr/QkNECjAwMgoxClVDVAoK0J_QvtGA0L7RhdC90LDQstC10YbRjCDQktC70LDQtNC40YHQu9Cw0LIg0JDQvdCw0YLQvtC70ZbQudC-0LLQuNGHClVBMjkzMjIwMDEwMDAwMDI2MjA3Mzc2NTM0MjEzCgo0MDcxODAzMjU3CgoK0J_QvtC_0L7QstC90LXQvdC90Y8g0YDQsNGF0YPQvdC60YMKCg==" target="_blank" rel="noopener" data-donate-i18n="mono_btn">Відкрити Monobank →</a></div></article><article class="donate-card"><div class="donate-logo sk">SK</div><h4>Slovak Bank / SEPA</h4><p data-donate-i18n="sk_text">Для перевода на словацкий счёт скопируй IBAN.</p><div class="iban-box" id="ibanText">SK6002000000005025750257</div><div class="donate-actions"><button class="copy-iban" onclick="copyIban()" data-donate-i18n="copy_iban">Скопировать IBAN</button></div></article><div class="donate-note" data-donate-i18n="donate_note">Без лишних форм: Monobank открывается по кнопке, а IBAN можно скопировать одним кликом. Комиссия зависит от банка отправителя.</div></div></div></div>
-  <div class="modal" id="orderModal"><div class="modal-box"><div class="modal-head"><h3 data-i18n="modal_order_title">Подобрать сайт</h3><button class="close" onclick="closeOrderModal()">×</button></div><form class="form" onsubmit="submitModalOrder(event)"><div class="choices"><div class="choice active" onclick="chooseSiteType('Landing Page',this)">🚀 <b>Landing</b></div><div class="choice" onclick="chooseSiteType('Сайт для бизнеса',this)">🏢 <b data-i18n="choice_business">Бизнес сайт</b></div><div class="choice" onclick="chooseSiteType('Интернет-магазин',this)">🛒 <b data-i18n="choice_shop">Магазин</b></div><div class="choice" onclick="chooseSiteType('Консультация',this)">💬 <b data-i18n="choice_consult">Консультация</b></div></div><input type="hidden" id="modal-type" value="Landing Page"><input id="modal-name" required placeholder="Имя" data-i18n-placeholder="form_name"><input id="modal-contact" required placeholder="Telegram / WhatsApp / телефон" data-i18n-placeholder="form_contact"><textarea id="modal-message" placeholder="Что нужно сделать?" data-i18n-placeholder="modal_message"></textarea><button class="btn primary" type="submit" data-i18n="form_submit">Отправить менеджеру</button></form></div></div>
-  <div class="modal" id="reviewModal"><div class="modal-box"><div class="modal-head"><h3 data-i18n="modal_review_title">Оставить отзыв</h3><button class="close" onclick="closeReviewModal()">×</button></div><form class="form" id="review-form" onsubmit="submitReview(event)"><div class="choices"><div class="choice active" onclick="selectReviewType('Создание сайта',this)">🌐 <b data-i18n="rtype_site">Создание сайта</b></div><div class="choice" onclick="selectReviewType('Работа с менеджером',this)">🤝 <b data-i18n="rtype_manager">Работа с менеджером</b></div><div class="choice" onclick="selectReviewType('Поддержка',this)">🛠️ <b data-i18n="rtype_support">Поддержка</b></div><div class="choice" onclick="selectReviewType('Общее впечатление',this)">💎 <b data-i18n="rtype_total">Общее впечатление</b></div></div><input type="hidden" id="review-type" value="Создание сайта"><div class="rating" id="ratingStars"><span class="star active" onclick="setRating(1)">★</span><span class="star active" onclick="setRating(2)">★</span><span class="star active" onclick="setRating(3)">★</span><span class="star active" onclick="setRating(4)">★</span><span class="star active" onclick="setRating(5)">★</span></div><input id="review-name" required placeholder="Ваше имя" data-i18n-placeholder="review_name"><input id="review-title" required placeholder="Короткий заголовок" data-i18n-placeholder="review_title_ph"><textarea id="review-text" required placeholder="Ваш отзыв" data-i18n-placeholder="review_text_ph"></textarea><button class="btn primary" type="submit" data-i18n="review_submit">Отправить отзыв</button></form></div></div>
-  <button class="chat-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
-  <div class="chat" id="chat"><div class="chat-head"><div><b data-i18n="chat_title">Nexora AI</b><small data-i18n="chat_sub">помогает выбрать сайт</small></div><button class="close" onclick="toggleChat()">×</button></div><div class="chat-messages" id="chatMessages"><div class="msg bot" data-i18n="chat_hello">Привет! Я помогу выбрать сайт под ваш бизнес. Напишите нишу или нажмите быстрый вариант.</div></div><div class="chat-chips"><button onclick="quickChat('Нужен лендинг')" data-i18n="chip_landing">Лендинг</button><button onclick="quickChat('Сайт для строительной компании')" data-i18n="chip_build">Стройка</button><button onclick="quickChat('Сколько стоит сайт?')" data-i18n="chip_price">Цена</button><button onclick="quickChat('Сколько дней делается сайт?')" data-i18n="chip_time">Сроки</button></div><div class="chat-input"><input id="chatInput" placeholder="Напишите нишу бизнеса..." data-i18n-placeholder="chat_placeholder" onkeydown="if(event.key==='Enter')sendChatMessage()"><button onclick="sendChatMessage()">→</button></div></div>
+  <div class="modal" id="orderModal"><div class="modal-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"><h3 data-i18n="modal_order_title">Подобрать сайт</h3><button class="close" onclick="closeOrderModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)">×</button></div><form onsubmit="submitOrder(event)" class="form"><input type="text" placeholder="Ваше имя" id="modal-order-name" required><input type="email" placeholder="Email или номер" id="modal-order-contact" required><textarea placeholder="Кратко об идее" id="modal-order-message" style="resize:vertical;min-height:80px;"></textarea><label style="display:flex;gap:8px;align-items:center;margin:12px 0;font-size:14px;"><input type="radio" name="order-type" value="landing" checked> Landing Page</label><label style="display:flex;gap:8px;align-items:center;margin:12px 0;font-size:14px;"><input type="radio" name="order-type" value="business"> Бизнес-сайт</label><label style="display:flex;gap:8px;align-items:center;margin:12px 0;font-size:14px;"><input type="radio" name="order-type" value="shop"> Интернет-магазин</label><button type="submit" class="btn primary" style="width:100%;margin-top:16px">Отправить</button></form></div></div>
+
   <div class="toast" id="toast"></div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-  const firebaseConfig = { apiKey:"AIzaSyBWRUz2j9D7acq0BVW90JUArBksqDifS8I", authDomain:"nexoraadskook.firebaseapp.com", projectId:"nexoraadskook", storageBucket:"nexoraadskook.firebasestorage.app", messagingSenderId:"676424007745", appId:"1:676424007745:web:81cb88572abfc3604186c0", measurementId:"G-1EVBR5W1NC" };
-  const app = initializeApp(firebaseConfig); const db = getFirestore(app);
-  const q = query(collection(db,"reviews"), where("approved","==",true));
-  onSnapshot(q, snap=>{ const reviews=[]; snap.forEach(d=>reviews.push({...d.data(), id:d.id})); reviews.sort((a,b)=>(b.timestamp?.seconds||b.createdAt||0)-(a.timestamp?.seconds||a.createdAt||0)); window.renderReviews(reviews); }, err=>{ console.error(err); document.getElementById('reviews-container').innerHTML='<div class="empty">Отзывы временно не загрузились. Проверь Firebase rules.</div>'; });
-</script>
 <script>
-const API_BASE='https://ainexora.vercel.app/api'; let currentRating=5;
+const API_BASE='https://ainexora.vercel.app/api';
+
 const tr={
-ru:{brand_sub:'Premium Web Studio',nav_services:'Услуги',nav_projects:'Проекты',nav_pricing:'Цены',nav_reviews:'Отзывы',nav_contact:'Контакты',nav_team:'Команда',nav_cta:'Заказать сайт',hero_badge:'Сайты для бизнеса • быстро • адаптивно',hero_title:'Создаём современные сайты, которые выглядят дорого и приводят заявки',hero_text:'Landing page, бизнес-сайты и интернет-магазины. Дизайн, мобильная версия, формы заявок в Telegram и поддержка после запуска.',hero_cta:'Подобрать сайт',hero_secondary:'Посмотреть работы',stat_days:'дней запуск',stat_mobile:'mobile first',stat_support:'дней поддержка',hero_badge_1:'чистый современный стиль',hero_badge_2:'заявки сразу менеджеру',services_badge:'Что делаем',services_title:'Сайты без лишней воды — только то, что помогает клиенту оставить заявку',s1_title:'Landing Page',s1_text:'Для одной услуги, продукта или быстрого запуска рекламы.',s1_l1:'сильный первый экран',s1_l2:'форма заявки',s1_l3:'мобильная версия',s2_title:'Сайт для бизнеса',s2_text:'Для компаний, услуг, строителей, ресторанов и локального бизнеса.',s2_l1:'услуги и преимущества',s2_l2:'портфолио и отзывы',s2_l3:'контакты и FAQ',s3_title:'Интернет-магазин',s3_text:'Для продажи товаров онлайн с каталогом и быстрым контактом.',s3_l1:'каталог товаров',s3_l2:'карточки товара',s3_l3:'заявка или оплата',team_badge:'Команда проекта',team_title:'С вами работают два человека: разработчик и менеджер',team_text:'Так клиенту проще: менеджер быстро отвечает в Telegram, а я спокойно делаю сайт, дизайн и техническую часть.',team_role:'NexoraAds • Web Studio',team_vlad_name:'Владислав',team_vlad_text:'Дизайн, структура, адаптив и запуск сайта.',team_manager_name:'Менеджер',team_manager_text:'Принимает заявку, уточняет детали и передаёт проект в работу.',team_step1_title:'Заявка',team_step1_text:'Вы выбираете формат сайта и оставляете контакт.',team_step2_title:'Уточнение',team_step2_text:'Менеджер задаёт короткие вопросы и собирает материалы.',team_step3_title:'Разработка',team_step3_text:'Я собираю сайт, проверяю мобильную версию и формы.',projects_badge:'Готовые сайты',projects_title:'Проекты, которые можно открыть и посмотреть',projects_text:'Не просто картинки — живые сайты и реальные примеры оформления для бизнеса.',p1_text:'Сайт для строительной компании с фокусом на доверие и заявки.',p2_text:'Сайт для услуг в строительной сфере, удобный для телефона.',p3_text:'Сайт веб-студии, на котором вы сейчас находитесь.',open_site:'Открыть сайт',projects_note:'Фото берутся из папки <b>Public/Image/</b>. Если сайт на GitHub Pages показывает пусто — проверь, что файлы называются точно: Stroplooksk.png, Ukstav.png, NexoraAds.png.',pricing_badge:'Форматы',pricing_title:'Понятные цены и сроки',popular:'Популярно',price1_title:'Landing Page',price1_text:'Для одной услуги или продукта.',price1_time:'2–5 дней',price2_title:'Сайт для бизнеса',price2_text:'Для компании, услуг и портфолио.',price2_time:'5–10 дней',price3_title:'Интернет-магазин',price3_text:'Для товаров, каталога и заявок.',price3_time:'10–20 дней',price_l_mobile:'мобильная версия',price_l_form:'форма заявки',price_l_seo:'базовое SEO',price_l_pages:'главные разделы',price_l_reviews:'отзывы и FAQ',price_l_manager:'заявки менеджеру',price_l_catalog:'каталог',price_l_products:'карточки товара',price_l_order:'заказ или оплата',included_title:'Что входит',inc_design:'Дизайн',inc_mobile:'Адаптив',inc_speed:'Скорость',inc_forms:'Формы',inc_seo:'SEO',inc_support:'Поддержка',guarantee_title:'Гарантия 30 дней',guarantee_text:'После запуска бесплатно исправляем технические ошибки и помогаем с базовыми настройками.',steps_badge:'Процесс',steps_title:'Как проходит работа',st1_title:'Заявка',st1_text:'Вы выбираете тип сайта и пишете детали.',st2_title:'Обсуждение',st2_text:'Менеджер уточняет цель, сроки и бюджет.',st3_title:'Разработка',st3_text:'Делаем дизайн, адаптив и формы.',st4_title:'Запуск',st4_text:'Подключаем домен и проверяем сайт.',reviews_badge:'Реальные отзывы',reviews_title:'Отзывы клиентов',reviews_count_text:'Показываются только после подтверждения менеджером',review_cta:'Оставить отзыв',reviews_empty:'Пока отзывы загружаются или ожидают подтверждения.',reviews_hint:'листайте отзывы',contact_badge:'Связь',contact_title:'Расскажите, какой сайт нужен',contact_text:'Заявка отправляется менеджеру в Telegram. После этого мы свяжемся и подскажем лучший формат.',form_name:'Имя',form_contact:'Telegram / WhatsApp / телефон',form_message:'Коротко о проекте',form_submit:'Отправить менеджеру',contacts_title:'Контакты NexoraAds',tg_group:'Группа Telegram',modal_order_title:'Подобрать сайт',choice_business:'Бизнес сайт',choice_shop:'Магазин',choice_consult:'Консультация',modal_message:'Что нужно сделать?',modal_review_title:'Оставить отзыв',rtype_site:'Создание сайта',rtype_manager:'Работа с менеджером',rtype_support:'Поддержка',rtype_total:'Общее впечатление',review_name:'Ваше имя',review_title_ph:'Короткий заголовок',review_text_ph:'Ваш отзыв',review_submit:'Отправить отзыв',chat_title:'Nexora AI',chat_sub:'помогает выбрать сайт',chat_hello:'Привет! Я помогу выбрать сайт под ваш бизнес. Напишите нишу или нажмите быстрый вариант.',chip_landing:'Лендинг',chip_build:'Стройка',chip_price:'Цена',chip_time:'Сроки',chat_placeholder:'Напишите нишу бизнеса...'},
-uk:{brand_sub:'Premium Web Studio',nav_services:'Послуги',nav_projects:'Проєкти',nav_pricing:'Ціни',nav_reviews:'Відгуки',nav_contact:'Контакти',nav_team:'Команда',nav_cta:'Замовити сайт',hero_badge:'Сайти для бізнесу • швидко • адаптивно',hero_title:'Створюємо сучасні сайти, які виглядають дорого і приводять заявки',hero_text:'Landing page, бізнес-сайти та інтернет-магазини. Дизайн, мобільна версія, заявки в Telegram і підтримка після запуску.',hero_cta:'Підібрати сайт',hero_secondary:'Переглянути роботи',stat_days:'днів запуск',stat_mobile:'mobile first',stat_support:'днів підтримка',hero_badge_1:'чистий сучасний стиль',hero_badge_2:'заявки одразу менеджеру',services_badge:'Що робимо',services_title:'Сайти без зайвої води — тільки те, що допомагає клієнту залишити заявку',s1_title:'Landing Page',s1_text:'Для однієї послуги, продукту або швидкого запуску.',s1_l1:'сильний перший екран',s1_l2:'форма заявки',s1_l3:'мобільна версія',s2_title:'Сайт для бізнесу',s2_text:'Для компаній, послуг, будівельників, ресторанів і локального бізнесу.',s2_l1:'послуги та переваги',s2_l2:'портфоліо та відгуки',s2_l3:'контакти і FAQ',s3_title:'Інтернет-магазин',s3_text:'Для продажу товарів онлайн з каталогом і швидким контактом.',s3_l1:'каталог товарів',s3_l2:'картки товару',s3_l3:'заявка або оплата',team_badge:'Робота напряму',team_title:'Владислав + менеджер допомагають провести проєкт без хаосу',team_text:'Ви не губитеся в переписках: менеджер приймає заявку, уточнює деталі, а я збираю сайт під бізнес-задачу — коротко, зрозуміло і з фокусом на заявки.',team_role:'NexoraAds • Web Studio',projects_badge:'Готові сайти',projects_title:'Проєкти, які можна відкрити і подивитися',projects_text:'Не просто картинки — живі сайти та реальні приклади оформлення для бізнесу.',p1_text:'Сайт для будівельної компанії з фокусом на довіру і заявки.',p2_text:'Сайт для послуг у будівельній сфері, зручний для телефону.',p3_text:'Сайт веб-студії, на якому ви зараз знаходитеся.',open_site:'Відкрити сайт',projects_note:'Фото беруться з папки <b>Public/Image/</b>. Якщо GitHub Pages показує пусто — перевір назви файлів: Stroplooksk.png, Ukstav.png, NexoraAds.png.',pricing_badge:'Формати',pricing_title:'Зрозумілі ціни та терміни',popular:'Популярно',price1_title:'Landing Page',price1_text:'Для однієї послуги або продукту.',price1_time:'2–5 днів',price2_title:'Сайт для бізнесу',price2_text:'Для компанії, послуг і портфоліо.',price2_time:'5–10 днів',price3_title:'Інтернет-магазин',price3_text:'Для товарів, каталогу і заявок.',price3_time:'10–20 днів',price_l_mobile:'мобільна версія',price_l_form:'форма заявки',price_l_seo:'базове SEO',price_l_pages:'головні розділи',price_l_reviews:'відгуки і FAQ',price_l_manager:'заявки менеджеру',price_l_catalog:'каталог',price_l_products:'картки товару',price_l_order:'замовлення або оплата',included_title:'Що входить',inc_design:'Дизайн',inc_mobile:'Адаптив',inc_speed:'Швидкість',inc_forms:'Форми',inc_seo:'SEO',inc_support:'Підтримка',guarantee_title:'Гарантія 30 днів',guarantee_text:'Після запуску безкоштовно виправляємо технічні помилки і допомагаємо з базовими налаштуваннями.',steps_badge:'Процес',steps_title:'Як проходить робота',st1_title:'Заявка',st1_text:'Ви обираєте тип сайту і пишете деталі.',st2_title:'Обговорення',st2_text:'Менеджер уточнює ціль, терміни і бюджет.',st3_title:'Розробка',st3_text:'Робимо дизайн, адаптив і форми.',st4_title:'Запуск',st4_text:'Підключаємо домен і перевіряємо сайт.',reviews_badge:'Реальні відгуки',reviews_title:'Відгуки клієнтів',reviews_count_text:'Показуються тільки після підтвердження менеджером',review_cta:'Залишити відгук',reviews_empty:'Відгуки завантажуються або очікують підтвердження.',reviews_hint:'гортайте відгуки',contact_badge:'Зв’язок',contact_title:'Розкажіть, який сайт потрібен',contact_text:'Заявка відправляється менеджеру в Telegram. Після цього ми зв’яжемося і підкажемо найкращий формат.',form_name:'Ім’я',form_contact:'Telegram / WhatsApp / телефон',form_message:'Коротко про проєкт',form_submit:'Відправити менеджеру',contacts_title:'Контакти NexoraAds',tg_group:'Група Telegram',modal_order_title:'Підібрати сайт',choice_business:'Бізнес сайт',choice_shop:'Магазин',choice_consult:'Консультація',modal_message:'Що потрібно зробити?',modal_review_title:'Залишити відгук',rtype_site:'Створення сайту',rtype_manager:'Робота з менеджером',rtype_support:'Підтримка',rtype_total:'Загальне враження',review_name:'Ваше ім’я',review_title_ph:'Короткий заголовок',review_text_ph:'Ваш відгук',review_submit:'Відправити відгук',chat_title:'Nexora AI',chat_sub:'допомагає вибрати сайт',chat_hello:'Привіт! Я допоможу вибрати сайт під ваш бізнес. Напишіть нішу або натисніть швидкий варіант.',chip_landing:'Лендінг',chip_build:'Будівництво',chip_price:'Ціна',chip_time:'Терміни',chat_placeholder:'Напишіть нішу бізнесу...'},
-en:{brand_sub:'Premium Web Studio',nav_services:'Services',nav_projects:'Projects',nav_pricing:'Pricing',nav_reviews:'Reviews',nav_contact:'Contacts',nav_team:'Team',nav_cta:'Order website',hero_badge:'Business websites • fast • responsive',hero_title:'We build modern websites that look premium and bring leads',hero_text:'Landing pages, business websites and online stores. Design, mobile version, Telegram lead forms and post-launch support.',hero_cta:'Choose a website',hero_secondary:'View projects',stat_days:'days launch',stat_mobile:'mobile first',stat_support:'days support',hero_badge_1:'clean modern style',hero_badge_2:'leads straight to manager',services_badge:'What we do',services_title:'Websites without noise — only what helps visitors contact you',s1_title:'Landing Page',s1_text:'For one service, product or fast launch.',s1_l1:'strong hero section',s1_l2:'lead form',s1_l3:'mobile version',s2_title:'Business Website',s2_text:'For companies, services, construction, restaurants and local business.',s2_l1:'services and benefits',s2_l2:'portfolio and reviews',s2_l3:'contacts and FAQ',s3_title:'Online Store',s3_text:'For online product sales with catalog and fast contact.',s3_l1:'product catalog',s3_l2:'product cards',s3_l3:'order or payment',team_badge:'Project team',team_title:'Two people work with you: developer and manager',team_text:'This is easier for the client: the manager answers quickly in Telegram, while I build the website, design and technical part.',team_role:'NexoraAds • Web Studio',team_vlad_name:'Vladislav',team_vlad_text:'Design, structure, responsive layout and launch.',team_manager_name:'Manager',team_manager_text:'Receives the request, clarifies details and passes the project to work.',team_step1_title:'Request',team_step1_text:'You choose a website format and leave a contact.',team_step2_title:'Clarification',team_step2_text:'The manager asks short questions and collects materials.',team_step3_title:'Development',team_step3_text:'I build the website, check mobile version and forms.',projects_badge:'Live websites',projects_title:'Projects you can open and view',projects_text:'Not just pictures — live websites and real business examples.',p1_text:'Website for a construction company focused on trust and leads.',p2_text:'Website for construction services, convenient on mobile.',p3_text:'The web studio website you are viewing now.',open_site:'Open website',projects_note:'Images are loaded from <b>Public/Image/</b>. If GitHub Pages shows empty cards, check exact names: Stroplooksk.png, Ukstav.png, NexoraAds.png.',pricing_badge:'Formats',pricing_title:'Clear prices and timing',popular:'Popular',price1_title:'Landing Page',price1_text:'For one service or product.',price1_time:'2–5 days',price2_title:'Business Website',price2_text:'For a company, services and portfolio.',price2_time:'5–10 days',price3_title:'Online Store',price3_text:'For products, catalog and requests.',price3_time:'10–20 days',price_l_mobile:'mobile version',price_l_form:'lead form',price_l_seo:'basic SEO',price_l_pages:'main sections',price_l_reviews:'reviews and FAQ',price_l_manager:'leads to manager',price_l_catalog:'catalog',price_l_products:'product cards',price_l_order:'order or payment',included_title:'Included',inc_design:'Design',inc_mobile:'Responsive',inc_speed:'Speed',inc_forms:'Forms',inc_seo:'SEO',inc_support:'Support',guarantee_title:'30-day guarantee',guarantee_text:'After launch we fix technical issues for free and help with basic settings.',steps_badge:'Process',steps_title:'How we work',st1_title:'Request',st1_text:'You choose a website type and share details.',st2_title:'Discussion',st2_text:'Manager clarifies goal, timing and budget.',st3_title:'Development',st3_text:'We create design, responsive layout and forms.',st4_title:'Launch',st4_text:'We connect domain and test the website.',reviews_badge:'Real reviews',reviews_title:'Client reviews',reviews_count_text:'Shown only after manager approval',review_cta:'Leave a review',reviews_empty:'Reviews are loading or waiting for approval.',reviews_hint:'scroll reviews',contact_badge:'Contact',contact_title:'Tell us what website you need',contact_text:'The request goes to the Telegram manager. Then we contact you and suggest the best format.',form_name:'Name',form_contact:'Telegram / WhatsApp / phone',form_message:'Briefly about the project',form_submit:'Send to manager',contacts_title:'NexoraAds contacts',tg_group:'Telegram group',modal_order_title:'Choose a website',choice_business:'Business site',choice_shop:'Store',choice_consult:'Consultation',modal_message:'What should we build?',modal_review_title:'Leave a review',rtype_site:'Website creation',rtype_manager:'Work with manager',rtype_support:'Support',rtype_total:'Overall impression',review_name:'Your name',review_title_ph:'Short title',review_text_ph:'Your review',review_submit:'Send review',chat_title:'Nexora AI',chat_sub:'helps choose website',chat_hello:'Hi! I will help choose a website for your business. Write your niche or tap a quick option.',chip_landing:'Landing',chip_build:'Construction',chip_price:'Price',chip_time:'Timing',chat_placeholder:'Write your business niche...'},
-sk:{brand_sub:'Premium Web Studio',nav_services:'Služby',nav_projects:'Projekty',nav_pricing:'Ceny',nav_reviews:'Recenzie',nav_contact:'Kontakty',nav_team:'Tím',nav_cta:'Objednať web',hero_badge:'Weby pre biznis • rýchlo • responzívne',hero_title:'Tvoríme moderné weby, ktoré vyzerajú prémiovo a prinášajú dopyty',hero_text:'Landing page, firemné weby a e-shopy. Dizajn, mobilná verzia, formuláre do Telegramu a podpora po spustení.',hero_cta:'Vybrať web',hero_secondary:'Pozrieť práce',stat_days:'dní spustenie',stat_mobile:'mobile first',stat_support:'dní podpora',hero_badge_1:'čistý moderný štýl',hero_badge_2:'dopyty priamo manažérovi',services_badge:'Čo robíme',services_title:'Weby bez zbytočností — iba to, čo pomáha klientovi odoslať dopyt',s1_title:'Landing Page',s1_text:'Pre jednu službu, produkt alebo rýchly štart.',s1_l1:'silný úvod',s1_l2:'formulár dopytu',s1_l3:'mobilná verzia',s2_title:'Firemný web',s2_text:'Pre firmy, služby, stavebníctvo, reštaurácie a lokálny biznis.',s2_l1:'služby a výhody',s2_l2:'portfólio a recenzie',s2_l3:'kontakty a FAQ',s3_title:'E-shop',s3_text:'Pre online predaj produktov s katalógom a rýchlym kontaktom.',s3_l1:'katalóg produktov',s3_l2:'karty produktov',s3_l3:'objednávka alebo platba',team_badge:'Projektový tím',team_title:'Pracujú s vami dvaja ľudia: vývojár a manažér',team_text:'Pre klienta je to jednoduchšie: manažér rýchlo odpovie v Telegrame a ja pripravím web, dizajn a technickú časť.',team_role:'NexoraAds • Web Studio',team_vlad_name:'Vladislav',team_vlad_text:'Dizajn, štruktúra, responzívnosť a spustenie webu.',team_manager_name:'Manažér',team_manager_text:'Prijme dopyt, upresní detaily a odovzdá projekt do práce.',team_step1_title:'Dopyt',team_step1_text:'Vyberiete formát webu a necháte kontakt.',team_step2_title:'Upresnenie',team_step2_text:'Manažér položí krátke otázky a zozbiera materiály.',team_step3_title:'Vývoj',team_step3_text:'Postavím web, skontrolujem mobilnú verziu a formuláre.',projects_badge:'Hotové weby',projects_title:'Projekty, ktoré si môžete otvoriť',projects_text:'Nie sú to len obrázky — živé weby a reálne príklady pre biznis.',p1_text:'Web pre stavebnú firmu so zameraním na dôveru a dopyty.',p2_text:'Web pre stavebné služby, pohodlný na mobile.',p3_text:'Web štúdia, na ktorom sa práve nachádzate.',open_site:'Otvoriť web',projects_note:'Fotky sa načítavajú z <b>Public/Image/</b>. Ak GitHub Pages zobrazuje prázdno, skontrolujte presné názvy: Stroplooksk.png, Ukstav.png, NexoraAds.png.',pricing_badge:'Formáty',pricing_title:'Jasné ceny a termíny',popular:'Populárne',price1_title:'Landing Page',price1_text:'Pre jednu službu alebo produkt.',price1_time:'2–5 dní',price2_title:'Firemný web',price2_text:'Pre firmu, služby a portfólio.',price2_time:'5–10 dní',price3_title:'E-shop',price3_text:'Pre produkty, katalóg a dopyty.',price3_time:'10–20 dní',price_l_mobile:'mobilná verzia',price_l_form:'formulár dopytu',price_l_seo:'základné SEO',price_l_pages:'hlavné sekcie',price_l_reviews:'recenzie a FAQ',price_l_manager:'dopyty manažérovi',price_l_catalog:'katalóg',price_l_products:'karty produktov',price_l_order:'objednávka alebo platba',included_title:'Čo je v cene',inc_design:'Dizajn',inc_mobile:'Responzívne',inc_speed:'Rýchlosť',inc_forms:'Formuláre',inc_seo:'SEO',inc_support:'Podpora',guarantee_title:'30-dňová záruka',guarantee_text:'Po spustení bezplatne opravíme technické chyby a pomôžeme so základným nastavením.',steps_badge:'Proces',steps_title:'Ako prebieha práca',st1_title:'Dopyt',st1_text:'Vyberiete typ webu a napíšete detaily.',st2_title:'Diskusia',st2_text:'Manažér upresní cieľ, termín a rozpočet.',st3_title:'Vývoj',st3_text:'Spravíme dizajn, responzívnosť a formuláre.',st4_title:'Spustenie',st4_text:'Pripojíme doménu a otestujeme web.',reviews_badge:'Reálne recenzie',reviews_title:'Recenzie klientov',reviews_count_text:'Zobrazujú sa až po schválení manažérom',review_cta:'Pridať recenziu',reviews_empty:'Recenzie sa načítavajú alebo čakajú na schválenie.',reviews_hint:'posúvajte recenzie',contact_badge:'Kontakt',contact_title:'Napíšte, aký web potrebujete',contact_text:'Dopyt sa odošle manažérovi do Telegramu. Potom vás kontaktujeme a odporučíme najlepší formát.',form_name:'Meno',form_contact:'Telegram / WhatsApp / telefón',form_message:'Stručne o projekte',form_submit:'Odoslať manažérovi',contacts_title:'Kontakty NexoraAds',tg_group:'Telegram skupina',modal_order_title:'Vybrať web',choice_business:'Firemný web',choice_shop:'E-shop',choice_consult:'Konzultácia',modal_message:'Čo treba spraviť?',modal_review_title:'Pridať recenziu',rtype_site:'Tvorba webu',rtype_manager:'Práca s manažérom',rtype_support:'Podpora',rtype_total:'Celkový dojem',review_name:'Vaše meno',review_title_ph:'Krátky nadpis',review_text_ph:'Vaša recenzia',review_submit:'Odoslať recenziu',chat_title:'Nexora AI',chat_sub:'pomáha vybrať web',chat_hello:'Ahoj! Pomôžem vybrať web pre váš biznis. Napíšte oblasť alebo kliknite na rýchlu možnosť.',chip_landing:'Landing',chip_build:'Stavba',chip_price:'Cena',chip_time:'Termín',chat_placeholder:'Napíšte oblasť biznisu...'}
+  ru:{brand_sub:'Premium Web Studio',nav_services:'Услуги',nav_projects:'Проекты',nav_team:'Команда',nav_reviews:'Отзывы',nav_contact:'Контакты',nav_cta:'Заказать сайт',hero_badge:'Премиум сайты под ключ',hero_title:'Создаём сайты, которые приносят клиентов',hero_text:'Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины.',hero_cta:'Получить консультацию',hero_portfolio:'Смотреть работы',trust_1:'От 3 дней',trust_1_sub:'запуск сайта',trust_2:'Адаптивно',trust_2_sub:'на всех устройствах',trust_3:'Под ключ',trust_3_sub:'полный сервис',trust_4:'Поддержка',trust_4_sub:'24/7 для вас',services_badge:'Что делаем',services_title:'Сайты без лишней воды',s1_title:'Landing Page',s1_text:'Для одной услуги или продукта. Быстро приносит результат.',s2_title:'Бизнес-сайт',s2_text:'Полная инфо о компании. Выглядит дорого и серьёзно.',s3_title:'Интернет-магазин',s3_text:'С каталогом, корзиной и платежами. Готово продавать.',projects_badge:'Портфолио',projects_title:'Реальные проекты',contact_badge:'Заказ',contact_title:'Начнём работу?',contact_submit:'Отправить заявку',contacts_title:'Контакты',modal_order_title:'Подобрать сайт'},
+  uk:{brand_sub:'Premium Web Studio',nav_services:'Послуги',nav_projects:'Проєкти',nav_team:'Команда',nav_reviews:'Відгуки',nav_contact:'Контакти',nav_cta:'Замовити сайт'},
+  en:{brand_sub:'Premium Web Studio',nav_services:'Services',nav_projects:'Projects',nav_team:'Team',nav_reviews:'Reviews',nav_contact:'Contacts',nav_cta:'Order website'},
+  sk:{brand_sub:'Premium Web Studio',nav_services:'Služby',nav_projects:'Projekty',nav_team:'Tím',nav_reviews:'Recenzie',nav_contact:'Kontakty',nav_cta:'Objednať web'}
 };
-Object.assign(tr.ru,{
-  trust_1:'От 3 дней',trust_2:'Адаптивно',trust_3:'Под ключ',trust_3_sub:'От идеи до запуска',trust_4:'Поддержка',
-  team_sub:'мы всегда на связи',team_vlad_name:'Владислав Порохнавць',team_vlad_en:'Vladislav Porokhnavets • Web Specialist',team_manager_name:'Вася Зейкан',team_manager_en:'Vasya Zeykan • Project Manager',
-  ui_tag1:'🎨 Premium Design',ui_tag2:'📱 Mobile First',ui_tag3:'⚡ SEO Ready',ui_cta:'Смотреть стиль →',
-  tg_tag1:'💬 Ответ до 15 мин',tg_tag2:'📲 Всё в Telegram',tg_tag3:'🚀 Быстрый старт',tg_cta:'Написать менеджеру →',
-  team_tag1:'👨‍💻 Разработка',team_tag2:'🤝 Поддержка',team_tag3:'⭐ После запуска',team_small_text:'От первой заявки до запуска сайта. Один менеджер, один разработчик, без посредников и лишней бюрократии.',team_cta:'Начать проект →'
-});
-Object.assign(tr.uk,{
-  trust_1:'Від 3 днів',trust_2:'Адаптивно',trust_3:'Під ключ',trust_3_sub:'Від ідеї до запуску',trust_4:'Підтримка',
-  team_sub:'ми завжди на зв’язку',team_vlad_name:'Владислав Порохнавць',team_vlad_en:'Vladislav Porokhnavets • Web Specialist',team_manager_name:'Вася Зейкан',team_manager_en:'Vasya Zeykan • Project Manager',
-  ui_tag1:'🎨 Premium Design',ui_tag2:'📱 Mobile First',ui_tag3:'⚡ SEO Ready',ui_cta:'Дивитись стиль →',
-  tg_tag1:'💬 Відповідь до 15 хв',tg_tag2:'📲 Усе в Telegram',tg_tag3:'🚀 Швидкий старт',tg_cta:'Написати менеджеру →',
-  team_tag1:'👨‍💻 Розробка',team_tag2:'🤝 Підтримка',team_tag3:'⭐ Після запуску',team_small_text:'Від першої заявки до запуску сайту. Один менеджер, один розробник, без посередників і зайвої бюрократії.',team_cta:'Почати проєкт →'
-});
-Object.assign(tr.en,{
-  trust_1:'From 3 days',trust_2:'Responsive',trust_3:'Turnkey',trust_3_sub:'From idea to launch',trust_4:'Support',
-  team_sub:'we are always online',team_vlad_name:'Vladislav Porokhnavets',team_vlad_en:'Vladislav Porokhnavets • Web Specialist',team_manager_name:'Vasya Zeykan',team_manager_en:'Vasya Zeykan • Project Manager',
-  ui_tag1:'🎨 Premium Design',ui_tag2:'📱 Mobile First',ui_tag3:'⚡ SEO Ready',ui_cta:'View style →',
-  tg_tag1:'💬 Reply in 15 min',tg_tag2:'📲 All in Telegram',tg_tag3:'🚀 Fast start',tg_cta:'Message manager →',
-  team_tag1:'👨‍💻 Development',team_tag2:'🤝 Support',team_tag3:'⭐ After launch',team_small_text:'From first request to website launch. One manager, one developer, no middlemen and no unnecessary bureaucracy.',team_cta:'Start project →'
-});
-Object.assign(tr.sk,{
-  trust_1:'Od 3 dní',trust_2:'Responzívne',trust_3:'Na kľúč',trust_3_sub:'Od nápadu po spustenie',trust_4:'Podpora',
-  team_sub:'sme stále na spojení',team_vlad_name:'Vladislav Porokhnavets',team_vlad_en:'Vladislav Porokhnavets • Web Specialist',team_manager_name:'Vasya Zeykan',team_manager_en:'Vasya Zeykan • Project Manager',
-  ui_tag1:'🎨 Premium Design',ui_tag2:'📱 Mobile First',ui_tag3:'⚡ SEO Ready',ui_cta:'Pozrieť štýl →',
-  tg_tag1:'💬 Odpoveď do 15 min',tg_tag2:'📲 Všetko v Telegrame',tg_tag3:'🚀 Rýchly štart',tg_cta:'Napísať manažérovi →',
-  team_tag1:'👨‍💻 Vývoj',team_tag2:'🤝 Podpora',team_tag3:'⭐ Po spustení',team_small_text:'Od prvej požiadavky až po spustenie webu. Jeden manažér, jeden vývojár, bez sprostredkovateľov a zbytočnej byrokracie.',team_cta:'Začať projekt →'
-});
 
-function setLang(l){const dict=tr[l]||tr.ru;document.documentElement.lang=l;localStorage.setItem('nexora_lang',l);document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(dict[k])el.innerHTML=dict[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(dict[k])el.placeholder=dict[k]});document.querySelectorAll('.lang-menu button').forEach(b=>b.classList.remove('active'));const idx={ru:0,uk:1,en:2,sk:3}[l]||0;document.querySelectorAll('.lang-menu button')[idx]?.classList.add('active')}
-function toggleLangMenu(){document.getElementById('langMenu').classList.toggle('active')} document.addEventListener('click',e=>{if(!e.target.closest('.lang'))document.getElementById('langMenu')?.classList.remove('active')});
-function openMobileMenu(){document.getElementById('mobileMenu').classList.add('active');document.getElementById('overlay').classList.add('active');document.body.style.overflow='hidden'}function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('active');document.getElementById('overlay').classList.remove('active');document.body.style.overflow=''}
+function setLang(l){
+  const dict=tr[l]||tr.ru;
+  document.documentElement.lang=l;
+  localStorage.setItem('nexora_lang',l);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(dict[k]) el.innerHTML=dict[k];});
+}
+
+function toggleLangMenu(){document.getElementById('langMenu').classList.toggle('active')}
+document.addEventListener('click',e=>{if(!e.target.closest('.lang'))document.getElementById('langMenu')?.classList.remove('active')});
+function openMobileMenu(){document.getElementById('mobileMenu').classList.add('active');document.getElementById('overlay').classList.add('active');document.body.style.overflow='hidden'}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('active');document.getElementById('overlay').classList.remove('active');document.body.style.overflow='auto'}
 function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('active');setTimeout(()=>el.classList.remove('active'),3000)}
-async function postToBackend(endpoint,payload){const r=await fetch(`${API_BASE}/${endpoint}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});let d={};try{d=await r.json()}catch(e){} if(!r.ok||d.error)throw new Error(d.error||'Ошибка отправки');return d}
-function openOrderModal(){document.getElementById('orderModal').classList.add('active')}function closeOrderModal(){document.getElementById('orderModal').classList.remove('active')}function chooseSiteType(t,el){document.getElementById('modal-type').value=t;document.querySelectorAll('#orderModal .choice').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
-async function sendApplication(data,btn){const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent='...'}try{await postToBackend('send-application',data);showToast('✅ Заявка отправлена менеджеру')}catch(e){console.error(e);const text=`Новая заявка NexoraAds%0AИмя: ${encodeURIComponent(data.name)}%0AКонтакт: ${encodeURIComponent(data.contact)}%0AТип: ${encodeURIComponent(data.company)}%0AСообщение: ${encodeURIComponent(data.message||'')}`;window.open(`https://t.me/Manager_Zeykan?text=${text}`,'_blank');showToast('Открыл Telegram менеджера')}finally{if(btn){btn.disabled=false;btn.textContent=old}}}
-function submitOrder(e){e.preventDefault();sendApplication({name:orderName('order-name'),company:document.getElementById('order-type').value,contact:orderName('order-contact'),message:orderName('order-message')},e.target.querySelector('button'));e.target.reset()}function submitModalOrder(e){e.preventDefault();sendApplication({name:orderName('modal-name'),company:document.getElementById('modal-type').value,contact:orderName('modal-contact'),message:orderName('modal-message')},e.target.querySelector('button'));closeOrderModal();e.target.reset()}function orderName(id){return document.getElementById(id).value.trim()}
-function openReviewModal(){document.getElementById('reviewModal').classList.add('active');setRating(5)}function closeReviewModal(){document.getElementById('reviewModal').classList.remove('active');document.getElementById('review-form').reset();setRating(5)}function setRating(n){currentRating=n;document.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('active',i<n))}function selectReviewType(t,el){document.getElementById('review-type').value=t;document.querySelectorAll('#reviewModal .choice').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
-async function submitReview(e){e.preventDefault();const btn=e.target.querySelector('button');const old=btn.textContent;try{btn.disabled=true;btn.textContent='...';await postToBackend('send-review',{name:orderName('review-name'),title:orderName('review-title'),text:orderName('review-text'),type:document.getElementById('review-type').value,rating:currentRating});showToast('✅ Отзыв отправлен на проверку');closeReviewModal()}catch(err){console.error(err);showToast('Ошибка отправки отзыва. Проверь backend /api/send-review')}finally{btn.disabled=false;btn.textContent=old}}
-window.renderReviews=function(reviews){const c=document.getElementById('reviews-container');document.getElementById('review-count').textContent=reviews.length;if(!reviews.length){c.innerHTML='<div class="empty" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div>';setLang(localStorage.getItem('nexora_lang')||'ru');return}c.innerHTML=reviews.map(r=>{const name=esc(r.name||'Клиент'),title=esc(r.title||'Отзыв'),text=esc(r.text||''),type=esc(r.type||'Создание сайта'),rating=Math.max(1,Math.min(5,Number(r.rating)||5));return `<article class="card review"><div class="review-head"><div class="avatar">${name[0]||'N'}</div><div><b>${name}</b><div class="muted" style="font-size:13px">${title}</div></div></div><div class="stars">${'★'.repeat(rating)}${'☆'.repeat(5-rating)}</div><p>${text}</p><span class="review-type">${reviewIcon(type)} ${type}</span></article>`}).join('')}
-function esc(s){return String(s).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}function reviewIcon(t){t=String(t).toLowerCase();if(t.includes('менедж')||t.includes('manager')||t.includes('manaž'))return '🤝';if(t.includes('поддерж')||t.includes('support')||t.includes('podpor'))return '🛠️';if(t.includes('враж')||t.includes('impression')||t.includes('dojem'))return '💎';return '🌐'}function scrollReviews(d){document.getElementById('reviews-container').scrollBy({left:d*360,behavior:'smooth'})}
-function toggleChat(){document.getElementById('chat').classList.toggle('active')}function quickChat(t){document.getElementById('chatInput').value=t;sendChatMessage()}async function sendChatMessage(){const inp=document.getElementById('chatInput');const text=inp.value.trim();if(!text)return;const box=document.getElementById('chatMessages');box.insertAdjacentHTML('beforeend',`<div class="msg user">${esc(text)}</div>`);inp.value='';const bot=document.createElement('div');bot.className='msg bot';bot.textContent='Nexora AI...';box.appendChild(bot);box.scrollTop=box.scrollHeight;try{const d=await postToBackend('chat',{message:text});bot.textContent=d.reply||aiAnswer(text)}catch(e){bot.textContent=aiAnswer(text)}box.scrollTop=box.scrollHeight}
-function aiAnswer(t){const l=localStorage.getItem('nexora_lang')||'ru';t=t.toLowerCase();const a={ru:{price:'💰 Ориентир: лендинг от 150€, сайт для бизнеса от 300€, интернет-магазин от 600€.',time:'⏱ Сроки: лендинг 2–5 дней, сайт для бизнеса 5–10 дней, магазин 10–20 дней.',build:'🏗 Для строительной компании лучше бизнес-сайт: услуги, фото работ, преимущества, отзывы, FAQ и форма заявки.',land:'🚀 Лендинг подходит для одной услуги и быстрых заявок.',def:'Напишите нишу бизнеса, цель сайта и желаемый срок — я подскажу формат.'},uk:{price:'💰 Орієнтир: лендінг від 150€, сайт для бізнесу від 300€, інтернет-магазин від 600€.',time:'⏱ Терміни: лендінг 2–5 днів, бізнес-сайт 5–10 днів, магазин 10–20 днів.',build:'🏗 Для будівельної компанії краще бізнес-сайт: послуги, фото робіт, переваги, відгуки, FAQ і форма заявки.',land:'🚀 Лендінг підходить для однієї послуги і швидких заявок.',def:'Напишіть нішу бізнесу, ціль сайту і бажаний термін — я підкажу формат.'},en:{price:'💰 Approx: landing from €150, business website from €300, store from €600.',time:'⏱ Timing: landing 2–5 days, business website 5–10 days, store 10–20 days.',build:'🏗 For construction, a business website works best: services, photos, benefits, reviews, FAQ and lead form.',land:'🚀 A landing page fits one service and fast leads.',def:'Write your niche, website goal and desired deadline — I will suggest the format.'},sk:{price:'💰 Orientačne: landing od 150€, firemný web od 300€, e-shop od 600€.',time:'⏱ Termíny: landing 2–5 dní, firemný web 5–10 dní, e-shop 10–20 dní.',build:'🏗 Pre stavebnú firmu je najlepší firemný web: služby, fotky, výhody, recenzie, FAQ a formulár.',land:'🚀 Landing page je vhodná pre jednu službu a rýchle dopyty.',def:'Napíšte oblasť, cieľ webu a termín — odporučím formát.'}}[l]||{};if(/цен|стоим|price|cena|ціна|сколько/.test(t))return a.price;if(/срок|дней|time|term|термін/.test(t))return a.time;if(/строй|буд|stav|construction/.test(t))return a.build;if(/ленд|landing/.test(t))return a.land;return a.def}
+async function postToBackend(endpoint,payload){const r=await fetch(`${API_BASE}/${endpoint}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});let d={};try{d=await r.json()}catch(e){}return d;}
+function openOrderModal(){document.getElementById('orderModal').classList.add('active')}
+function closeOrderModal(){document.getElementById('orderModal').classList.remove('active')}
+async function submitOrder(e){e.preventDefault();const name=document.getElementById('order-name')?.value||document.getElementById('modal-order-name')?.value;const contact=document.getElementById('order-contact')?.value||document.getElementById('modal-order-contact')?.value;const message=document.getElementById('order-message')?.value||document.getElementById('modal-order-message')?.value;if(!name||!contact){showToast('❌ Заполните имя и контакт');return}const btn=e.target.querySelector('button');const old=btn.textContent;try{btn.disabled=true;btn.textContent='...';await postToBackend('send-application',{name,type:document.querySelector('input[name="order-type"]:checked')?.value||'landing',contact,message});showToast('✅ Заявка отправлена!');closeOrderModal();document.querySelectorAll('form').forEach(f=>f.reset());}catch(err){showToast('❌ Ошибка');}finally{btn.textContent=old;btn.disabled=false;}}
+document.addEventListener('DOMContentLoaded',()=>{setLang(localStorage.getItem('nexora_lang')||'ru');init3D();});
 
-function openDonateModal(){document.getElementById('donateModal')?.classList.add('active')}
-function closeDonateModal(){document.getElementById('donateModal')?.classList.remove('active')}
-async function copyIban(){const iban='SK6002000000005025750257';try{await navigator.clipboard.writeText(iban);showToast('✅ IBAN скопирован')}catch(e){const t=document.createElement('textarea');t.value=iban;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();showToast('✅ IBAN скопирован')}}
-const donateTr={
- ru:{support_btn:'💛 Поддержать',donate_kicker:'Поддержать проект',donate_title:'Спасибо за поддержку NexoraAds 💛',donate_text:'Если хочешь поддержать развитие сайта и новые проекты — выбери удобный способ ниже.',mono_text:'Пополнение через официальный QR/ссылку банка для Владислава П.',mono_btn:'Открыть Monobank →',sk_text:'Для перевода на словацкий счёт скопируй IBAN.',copy_iban:'Скопировать IBAN',donate_note:'Без лишних форм: Monobank открывается по кнопке, а IBAN можно скопировать одним кликом. Комиссия зависит от банка отправителя.'},
- uk:{support_btn:'💛 Підтримати',donate_kicker:'Підтримати проєкт',donate_title:'Дякую за підтримку NexoraAds 💛',donate_text:'Якщо хочеш підтримати розвиток сайту та нові проєкти — обери зручний спосіб нижче.',mono_text:'Поповнення через офіційний QR/посилання банку для Владислава П.',mono_btn:'Відкрити Monobank →',sk_text:'Для переказу на словацький рахунок скопіюй IBAN.',copy_iban:'Скопіювати IBAN',donate_note:'Без зайвих форм: Monobank відкривається кнопкою, а IBAN можна скопіювати одним кліком. Комісія залежить від банку відправника.'},
- en:{support_btn:'💛 Support',donate_kicker:'Support the project',donate_title:'Thanks for supporting NexoraAds 💛',donate_text:'Choose a convenient way to support the website and new projects.',mono_text:'Top up via official bank QR/link for Vladyslav P.',mono_btn:'Open Monobank →',sk_text:'For a Slovak bank transfer, copy the IBAN.',copy_iban:'Copy IBAN',donate_note:'No extra forms: Monobank opens by button, and IBAN copies in one click. Fees depend on the sender’s bank.'},
- sk:{support_btn:'💛 Podporiť',donate_kicker:'Podporiť projekt',donate_title:'Ďakujem za podporu NexoraAds 💛',donate_text:'Vyberte si pohodlný spôsob podpory webu a nových projektov.',mono_text:'Dobitie cez oficiálny QR/odkaz banky pre Vladyslava P.',mono_btn:'Otvoriť Monobank →',sk_text:'Pre prevod na slovenský účet skopírujte IBAN.',copy_iban:'Kopírovať IBAN',donate_note:'Bez zbytočných formulárov: Monobank sa otvorí tlačidlom a IBAN sa skopíruje jedným klikom. Poplatok závisí od banky odosielateľa.'}
-};
-function applyDonateLang(l){const d=donateTr[l]||donateTr.ru;document.querySelectorAll('[data-donate-i18n]').forEach(el=>{const k=el.dataset.donateI18n;if(d[k])el.innerHTML=d[k]})}
-const _oldSetLang=setLang; setLang=function(l){_oldSetLang(l);applyDonateLang(l)};
+// ============ 3D iPhone ============
+let scene, camera, renderer, phoneModel;
 
-document.addEventListener('DOMContentLoaded',()=>{setLang(localStorage.getItem('nexora_lang')||'ru')});
+function init3D(){
+  const container=document.getElementById('three-container');
+  const w=container.clientWidth;
+  const h=container.clientHeight;
+  
+  scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x070b14);
+  
+  camera=new THREE.PerspectiveCamera(45,w/h,0.1,1000);
+  camera.position.set(0,0,5);
+  
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setSize(w,h);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.shadowMap.enabled=true;
+  container.appendChild(renderer.domElement);
+  
+  // Свет
+  const light1=new THREE.DirectionalLight(0xffffff,1.5);light1.position.set(5,10,8);scene.add(light1);
+  const light2=new THREE.DirectionalLight(0x4da3ff,0.8);light2.position.set(-5,-5,5);scene.add(light2);
+  const ambient=new THREE.AmbientLight(0xffffff,0.6);scene.add(ambient);
+  
+  // Создаём iPhone
+  createDetailedIPhone();
+  
+  // Скрываем loading
+  const loading=document.querySelector('.three-loading');
+  if(loading) loading.style.display='none';
+  
+  animate();
+  window.addEventListener('resize',onWindowResize);
+}
+
+function createDetailedIPhone(){
+  const group=new THREE.Group();
+  
+  // Корпус iPhone
+  const bodyGeom=new THREE.RoundedBoxGeometry(0.85,1.9,0.1,8,8,8,0.1);
+  const bodyMat=new THREE.MeshStandardMaterial({color:0x1a1a1a,metalness:0.7,roughness:0.2});
+  const body=new THREE.Mesh(bodyGeom,bodyMat);
+  group.add(body);
+  
+  // Скрин (дисплей)
+  const screenGeom=new THREE.PlaneGeometry(0.77,1.78);
+  const screenCanvas=document.createElement('canvas');
+  screenCanvas.width=384;screenCanvas.height=890;
+  drawPhoneScreen(screenCanvas);
+  const screenTex=new THREE.CanvasTexture(screenCanvas);
+  const screenMat=new THREE.MeshStandardMaterial({map:screenTex,emissive:0x555555,emissiveIntensity:0.3});
+  const screen=new THREE.Mesh(screenGeom,screenMat);
+  screen.position.z=0.051;
+  group.add(screen);
+  
+  // Камера (сверху)
+  const camGeom=new THREE.CylinderGeometry(0.045,0.045,0.02,32);
+  const camMat=new THREE.MeshStandardMaterial({color:0x1a1a1a,metalness:0.9});
+  const camera_mesh=new THREE.Mesh(camGeom,camMat);
+  camera_mesh.position.set(-0.15,0.75,0.065);
+  group.add(camera_mesh);
+  
+  const lenGeom=new THREE.CylinderGeometry(0.04,0.04,0.015,32);
+  const lenMat=new THREE.MeshStandardMaterial({color:0x000000,metalness:1});
+  const lens=new THREE.Mesh(lenGeom,lenMat);
+  lens.position.set(-0.15,0.75,0.08);
+  group.add(lens);
+  
+  // Динамик (сверху)
+  const speakerGeom=new THREE.BoxGeometry(0.15,0.01,0.01);
+  const speakerMat=new THREE.MeshStandardMaterial({color:0x0a0a0a});
+  const speaker=new THREE.Mesh(speakerGeom,speakerMat);
+  speaker.position.set(0,0.88,0.065);
+  group.add(speaker);
+  
+  // Кнопка (справа)
+  const btnGeom=new THREE.BoxGeometry(0.05,0.15,0.03);
+  const btnMat=new THREE.MeshStandardMaterial({color:0x2a2a2a,metalness:0.5});
+  const button=new THREE.Mesh(btnGeom,btnMat);
+  button.position.set(0.44,0.2,0.08);
+  group.add(button);
+  
+  // Lightning port (снизу)
+  const portGeom=new THREE.BoxGeometry(0.2,0.02,0.01);
+  const portMat=new THREE.MeshStandardMaterial({color:0x111111});
+  const port=new THREE.Mesh(portGeom,portMat);
+  port.position.set(0,-0.9,0.065);
+  group.add(port);
+  
+  phoneModel=group;
+  scene.add(group);
+}
+
+function drawPhoneScreen(canvas){
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#1a1a2e';
+  ctx.fillRect(0,0,384,890);
+  
+  // Статус-бар
+  ctx.fillStyle='#0f0f1e';
+  ctx.fillRect(0,0,384,40);
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 14px Arial';
+  ctx.textAlign='left';ctx.fillText('12:30',15,28);
+  ctx.textAlign='right';ctx.fillText('📶 📡 🔋87%',370,28);
+  
+  // Хедер Play Store
+  ctx.fillStyle='#1a1a2e';
+  ctx.fillRect(0,40,384,100);
+  ctx.fillStyle='#6366f1';
+  ctx.fillRect(20,50,60,60);
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 18px Arial';
+  ctx.textAlign='left';ctx.fillText('PLAYSTORE',90,65);
+  ctx.font='12px Arial';ctx.fillStyle='#aaaaaa';
+  ctx.fillText('GAME STORE',90,82);
+  
+  // Поисковая строка
+  ctx.fillStyle='#252541';
+  ctx.fillRect(20,120,344,35);
+  ctx.fillStyle='#999999';
+  ctx.font='14px Arial';
+  ctx.textAlign='center';ctx.fillText('🔍 Поиск',200,142);
+  
+  // Grand Theft Auto
+  ctx.fillStyle='#5a4a6f';
+  ctx.fillRect(20,170,344,150);
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 24px Arial';
+  ctx.textAlign='left';ctx.fillText('Grand Theft Auto V',40,220);
+  ctx.font='14px Arial';ctx.fillText('Premium Edition',40,242);
+  ctx.fillStyle='#6366f1';
+  ctx.font='bold 28px Arial';
+  ctx.textAlign='right';ctx.fillText('29,99€',340,225);
+  
+  // Popular Games
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 16px Arial';
+  ctx.textAlign='left';ctx.fillText('Popular Games',20,345);
+  ctx.fillStyle='#6366f1';
+  ctx.font='12px Arial';
+  ctx.textAlign='right';ctx.fillText('View all >',360,347);
+  
+  // 4 игры в ряд
+  const games=[{title:'Forza Horizon 5',price:'59,99€',color:'#ff6b6b'},{title:'Red Dead 2',price:'49,99€',color:'#ff8c42'},{title:'Elden Ring',price:'59,99€',color:'#c77dff'},{title:'God of Ragnarok',price:'49,99€',color:'#4cc9f0'}];
+  games.forEach((game,i)=>{
+    const x=20+i*86;
+    ctx.fillStyle='#2a2a3e';
+    ctx.fillRect(x,365,80,120);
+    ctx.fillStyle=game.color;
+    ctx.fillRect(x,365,80,60);
+    ctx.fillStyle='#ffffff';
+    ctx.font='bold 10px Arial';
+    ctx.textAlign='center';
+    ctx.fillText(game.title.substr(0,12),x+40,420);
+    ctx.fillStyle='#6366f1';
+    ctx.font='bold 12px Arial';
+    ctx.fillText(game.price,x+40,450);
+  });
+  
+  // New Releases
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 16px Arial';
+  ctx.textAlign='left';ctx.fillText('New Releases',20,510);
+  
+  // Нижняя часть контента
+  ctx.fillStyle='#333366';
+  ctx.fillRect(20,535,344,320);
+  ctx.fillStyle='#ffffff';
+  ctx.font='14px Arial';
+  ctx.textAlign='center';ctx.fillText('✨ Лучшие новые игры ✨',200,620);
+  ctx.font='12px Arial';ctx.fillStyle='#aaaaaa';
+  ctx.fillText('Spider-Man 2 • Star Wars Jedi',200,645);
+  ctx.fillText('Resident Evil 4 • Assassins Creed',200,665);
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  if(phoneModel){
+    phoneModel.rotation.x=0.3;
+    phoneModel.rotation.y+=0.005;
+    phoneModel.rotation.z=0.1;
+  }
+  renderer.render(scene,camera);
+}
+
+function onWindowResize(){
+  const container=document.getElementById('three-container');
+  if(container){
+    const w=container.clientWidth;
+    const h=container.clientHeight;
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w,h);
+  }
+}
 </script>
 
-<script>
-document.addEventListener('error', function(e){
-  const img=e.target;
-  if(!img || img.tagName!=='IMG' || !img.dataset.fallbacks) return;
-  const list=img.dataset.fallbacks.split(',').map(s=>s.trim()).filter(Boolean);
-  const idx=Number(img.dataset.fallbackIndex||0);
-  if(idx < list.length){ img.dataset.fallbackIndex=String(idx+1); img.src=list[idx]; }
-  else { const box=img.closest('.member-avatar,.team-avatar,.mini-person-photo,.mini-photo,.manager-photo-bubble'); if(box){ box.classList.add('no-img'); } img.remove(); }
-}, true);
-</script>
 </body>
 </html>
