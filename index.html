@@ -19,6 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/GLTFLoader.js"></script>
   <style>
     :root{
       --bg:#070b14; --bg2:#0b1220; --panel:#0f172a; --panel2:#111c32;
@@ -42,184 +44,10 @@
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.form{display:grid;gap:12px}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:12px;color:var(--text);font-size:14px;transition:.25s ease}input:focus,textarea:focus{outline:none;border-color:rgba(77,163,255,.38);background:rgba(77,163,255,.08)}
     .modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.62);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.modal.active{display:flex}.modal-box{background:var(--panel);border-radius:24px;border:1px solid var(--line);max-width:520px;padding:28px;box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-head h3{font-size:22px;font-weight:950}.modal-head .close{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
     .chat-btn{position:fixed;right:22px;bottom:22px;z-index:120;width:62px;height:62px;border-radius:22px;border:1px solid rgba(77,163,255,.32);background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;font-size:24px;cursor:pointer;display:grid;place-items:center;transition:.25s ease;box-shadow:0 14px 34px rgba(77,163,255,.18)}.chat-btn:hover{transform:scale(1.08)}.chat{position:fixed;right:22px;bottom:96px;z-index:120;width:340px;background:var(--panel);border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow);display:none;flex-direction:column;max-height:500px}.chat.active{display:flex}.chat-head{padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.chat-head .close{background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}.chat-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.chat-input{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px}.chat-input input{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:10px;padding:10px;color:var(--text)}.chat-input button{padding:10px 14px;background:var(--blue);border:none;border-radius:10px;color:#fff;cursor:pointer;font-weight:900}
+    #three-container{width:100%;height:600px;border-radius:32px;background:linear-gradient(145deg,#07111f,#0f1b31);border:1px solid var(--line);overflow:hidden;position:relative;box-shadow:0 34px 110px rgba(0,0,0,.42)}
+    .three-loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;background:linear-gradient(145deg,rgba(7,17,31,.95),rgba(15,27,49,.88))}
     @media(max-width:980px){.hero-grid,.contact-grid{grid-template-columns:1fr}.cards,.projects,.pricing{grid-template-columns:1fr 1fr}}
-    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.mobile-menu{display:flex}.brand{font-size:16px}.title{font-size:32px}.section-title{font-size:26px}.cards,.projects,.pricing{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}.chat{width:calc(100% - 32px);right:16px}.chat-head b{font-size:14px}}
-
-    /* iPhone с CSS анимацией */
-    #iphone-showcase{
-      position:relative;
-      width:100%;
-      height:600px;
-      display:grid;
-      place-items:center;
-      perspective:1300px;
-      overflow:hidden;
-      border-radius:32px;
-      background:radial-gradient(circle at 50% 45%, rgba(77,163,255,.22), transparent 42%),radial-gradient(circle at 70% 30%, rgba(168,85,247,.20), transparent 36%),linear-gradient(145deg, rgba(3,7,18,.96), rgba(9,16,32,.88));
-      border:1px solid rgba(148,163,184,.18);
-      box-shadow:0 34px 110px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.04);
-    }
-    #iphone-showcase:before{
-      content:"";
-      position:absolute;
-      width:520px;
-      height:520px;
-      border-radius:50%;
-      background:conic-gradient(from 0deg,#2563eb,#22d3ee,#a855f7,#f472b6,#2563eb);
-      filter:blur(55px);
-      opacity:.24;
-      animation:rgbAura 6s linear infinite;
-    }
-    #iphone-showcase:after{
-      content:"";
-      position:absolute;
-      bottom:42px;
-      width:360px;
-      height:46px;
-      border-radius:50%;
-      background:radial-gradient(ellipse, rgba(77,163,255,.45), rgba(168,85,247,.18) 45%, transparent 72%);
-      filter:blur(6px);
-      animation:shadowPulse 3s ease-in-out infinite;
-    }
-    .phone-orbit{
-      position:relative;
-      z-index:2;
-      width:240px;
-      height:505px;
-      transform-style:preserve-3d;
-      animation:phoneSpin 11s linear infinite;
-    }
-    #iphone-showcase:hover .phone-orbit{animation-play-state:paused}
-    .phone-3d{
-      position:absolute;
-      inset:0;
-      transform-style:preserve-3d;
-      animation:phoneFloat 3.5s ease-in-out infinite;
-    }
-    .phone-front,.phone-back{
-      position:absolute;
-      inset:0;
-      border-radius:46px;
-      backface-visibility:hidden;
-      overflow:hidden;
-    }
-    .phone-front{
-      padding:11px;
-      background:linear-gradient(135deg, rgba(255,255,255,.38), transparent 18%, transparent 78%, rgba(255,255,255,.18)),linear-gradient(145deg,#1b2436,#050810 52%,#151b2c);
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 40px 90px rgba(0,0,0,.48),0 0 42px rgba(77,163,255,.20),inset 0 0 0 2px rgba(255,255,255,.04);
-      transform:translateZ(16px);
-    }
-    .phone-back{
-      background:radial-gradient(circle at 26% 16%, rgba(255,255,255,.18), transparent 18%),linear-gradient(145deg,#2d3344,#111827 55%,#050810);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:inset 0 0 0 2px rgba(255,255,255,.035);
-      transform:rotateY(180deg) translateZ(16px);
-    }
-    .phone-side{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:32px;
-      height:468px;
-      margin-left:-16px;
-      margin-top:-234px;
-      background:linear-gradient(90deg,#050810,#253044 50%,#050810);
-      border-radius:20px;
-      transform-style:preserve-3d;
-    }
-    .phone-side.left{transform:translateX(-120px) rotateY(90deg)}
-    .phone-side.right{transform:translateX(120px) rotateY(90deg)}
-    .phone-side.top{width:200px;height:32px;margin-left:-100px;margin-top:-16px;transform:translateY(-252px) rotateX(90deg)}
-    .phone-side.bottom{width:200px;height:32px;margin-left:-100px;margin-top:-16px;transform:translateY(252px) rotateX(90deg)}
-    .phone-screen{
-      position:relative;
-      width:100%;
-      height:100%;
-      border-radius:36px;
-      overflow:hidden;
-      background:#020617;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 0 40px rgba(77,163,255,.08);
-      background-image:url('Public/Image/зображення_2026-06-08_195213442.png');
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-    }
-    .dynamic-island{
-      position:absolute;
-      z-index:5;
-      top:12px;
-      left:50%;
-      transform:translateX(-50%);
-      width:82px;
-      height:24px;
-      border-radius:999px;
-      background:#050505;
-      box-shadow:0 2px 12px rgba(0,0,0,.65);
-    }
-    .camera-bump{
-      position:absolute;
-      left:18px;
-      top:18px;
-      width:92px;
-      height:92px;
-      border-radius:28px;
-      background:linear-gradient(145deg,#2e3748,#111827);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:0 16px 34px rgba(0,0,0,.28);
-    }
-    .lens{
-      position:absolute;
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      background:radial-gradient(circle at 50% 50%,#0b1220 0 34%,#111827 35% 48%,#5b6474 49% 58%,#06080d 60%);
-      box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);
-    }
-    .lens.l1{left:12px;top:12px}
-    .lens.l2{right:12px;top:23px}
-    .lens.l3{left:24px;bottom:12px}
-    .flash{
-      position:absolute;
-      right:15px;
-      bottom:17px;
-      width:14px;
-      height:14px;
-      border-radius:50%;
-      background:#fef3c7;
-      box-shadow:0 0 18px rgba(254,243,199,.45);
-    }
-    .phone-back-logo{
-      position:absolute;
-      left:50%;
-      top:52%;
-      transform:translate(-50%,-50%);
-      color:rgba(255,255,255,.72);
-      font-size:18px;
-      font-weight:950;
-      letter-spacing:-.05em;
-    }
-    @keyframes phoneSpin{0%{transform:rotateY(-28deg) rotateX(3deg)}100%{transform:rotateY(332deg) rotateX(3deg)}}
-    @keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
-    @keyframes rgbAura{to{filter:hue-rotate(360deg) blur(55px)}}
-    @keyframes shadowPulse{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:.95;transform:scale(1.08)}}
-    @media(max-width:720px){
-      #iphone-showcase{height:430px;border-radius:22px}
-      .phone-orbit{width:180px;height:378px}
-      .phone-front,.phone-back{border-radius:36px}
-      .phone-front{padding:8px;transform:translateZ(12px)}
-      .phone-back{transform:rotateY(180deg) translateZ(12px)}
-      .phone-side{width:24px;height:350px;margin-left:-12px;margin-top:-175px}
-      .phone-side.left{transform:translateX(-90px) rotateY(90deg)}
-      .phone-side.right{transform:translateX(90px) rotateY(90deg)}
-      .phone-side.top{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(-189px) rotateX(90deg)}
-      .phone-side.bottom{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(189px) rotateX(90deg)}
-      .phone-screen{border-radius:29px}
-      .dynamic-island{width:64px;height:18px;top:9px}
-      .camera-bump{width:72px;height:72px;border-radius:22px;left:14px;top:14px}
-      .lens{width:23px;height:23px}
-      .flash{width:10px;height:10px}
-    }
+    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.mobile-menu{display:flex}.brand{font-size:16px}.title{font-size:32px}.section-title{font-size:26px}.cards,.projects,.pricing{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}#three-container{height:430px}.chat{width:calc(100% - 32px);right:16px}}
 
     .footer{padding:32px 0;border-top:1px solid var(--line);background:rgba(7,11,20,.52)}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:32px}.footer-links{display:flex;gap:20px}.footer-links a{font-size:13px;color:var(--muted);transition:.25s ease}.footer-links a:hover{color:var(--text)}.notice{padding:16px;border-radius:12px;background:rgba(77,163,255,.08);border:1px solid rgba(77,163,255,.18);color:var(--soft);font-size:13px;margin-top:28px}
     .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}.chip{padding:10px 14px;border-radius:999px;background:rgba(77,163,255,.10);border:1px solid rgba(77,163,255,.22);color:#bfdbfe;font-size:12px;font-weight:900}
@@ -260,30 +88,9 @@
             <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Посмотреть работы</a></div>
           </div>
           
-          <!-- iPhone с CSS анимацией -->
-          <div id="iphone-showcase">
-            <div class="phone-orbit">
-              <div class="phone-3d">
-                <div class="phone-side left"></div>
-                <div class="phone-side right"></div>
-                <div class="phone-side top"></div>
-                <div class="phone-side bottom"></div>
-
-                <div class="phone-front">
-                  <div class="phone-screen"></div>
-                </div>
-
-                <div class="phone-back">
-                  <div class="camera-bump">
-                    <div class="lens l1"></div>
-                    <div class="lens l2"></div>
-                    <div class="lens l3"></div>
-                    <div class="flash"></div>
-                  </div>
-                  <div class="phone-back-logo">iPhone 17 Pro Max</div>
-                </div>
-              </div>
-            </div>
+          <!-- 3D iPhone модель -->
+          <div id="three-container">
+            <div class="three-loading">Загрузка 3D модели...</div>
           </div>
 
         </div>
@@ -554,6 +361,80 @@ const _oldSetLang=setLang;
 setLang=function(l){_oldSetLang(l);applyDonateLang(l)};
 
 document.addEventListener('DOMContentLoaded',()=>{setLang(localStorage.getItem('nexora_lang')||'ru')});
+
+// THREE.js 3D модель
+let scene, camera, renderer, model;
+function init3D(){
+  const container=document.getElementById('three-container');
+  const w=container.clientWidth;
+  const h=container.clientHeight;
+  
+  scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x070b14);
+  
+  camera=new THREE.PerspectiveCamera(50,w/h,0.1,1000);
+  camera.position.set(0,0,6);
+  
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setSize(w,h);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.shadowMap.enabled=true;
+  container.innerHTML='';
+  container.appendChild(renderer.domElement);
+  
+  // Освещение
+  const light1=new THREE.DirectionalLight(0xffffff,1.2);
+  light1.position.set(5,10,8);
+  light1.castShadow=true;
+  scene.add(light1);
+  
+  const light2=new THREE.DirectionalLight(0x4da3ff,0.6);
+  light2.position.set(-5,-5,5);
+  scene.add(light2);
+  
+  const ambientLight=new THREE.AmbientLight(0xffffff,0.4);
+  scene.add(ambientLight);
+  
+  // Загружаем GLB модель
+  const loader=new THREE.GLTFLoader();
+  loader.load('Phone 17 Pro Max Simple.glb',gltf=>{
+    model=gltf.scene;
+    model.scale.set(2.5,2.5,2.5);
+    model.position.set(0,-0.3,0);
+    model.rotation.x=0.1;
+    model.rotation.y=0.3;
+    scene.add(model);
+    document.querySelector('.three-loading').remove();
+    animate();
+  },undefined,err=>{
+    console.error('Ошибка загрузки модели:',err);
+    const errorDiv=document.querySelector('.three-loading');
+    if(errorDiv) errorDiv.textContent='Ошибка загрузки 3D модели';
+  });
+  
+  window.addEventListener('resize',onWindowResize);
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  if(model){
+    model.rotation.y+=0.005;
+  }
+  renderer.render(scene,camera);
+}
+
+function onWindowResize(){
+  const container=document.getElementById('three-container');
+  if(container){
+    const w=container.clientWidth;
+    const h=container.clientHeight;
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w,h);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',init3D);
 </script>
 
 </body>
