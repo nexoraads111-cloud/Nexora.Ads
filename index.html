@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>NexoraAds — сайты для бизнеса под ключ</title>
-  <meta name="description" content="NexoraAds — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, качественно, под ключ." />
+  <meta name="description" content="NexoraAds — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, быстро, адаптивно и с заявками." />
   <meta name="keywords" content="создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraAds, веб студия" />
   <meta property="og:title" content="NexoraAds — сайты для бизнеса под ключ" />
   <meta property="og:description" content="Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками." />
@@ -19,7 +19,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root{
       --bg:#070b14; --bg2:#0b1220; --panel:#0f172a; --panel2:#111c32;
@@ -37,37 +36,189 @@
     header{position:sticky;top:0;z-index:100;background:rgba(7,11,20,.78);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:950;font-size:18px}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#4da3ff,#22d3ee);display:grid;place-items:center;color:#fff;font-size:20px}.nav-links{display:flex;gap:28px;align-items:center}.nav-links a{font-size:14px;font-weight:600;color:var(--muted);transition:.25s ease}.nav-links a:hover{color:var(--text)}.nav-actions{display:flex;gap:14px;align-items:center}.btn{padding:12px 18px;border-radius:12px;border:1px solid rgba(77,163,255,.30);background:rgba(77,163,255,.10);color:#fff;font-weight:950;cursor:pointer;transition:.25s ease;font-size:14px}.btn:hover{background:rgba(77,163,255,.18);transform:translateY(-2px)}.btn.primary{background:linear-gradient(135deg,var(--blue),#2563eb);border:none}.lang{position:relative}.lang-btn{width:40px;height:40px;border-radius:10px;border:none;background:rgba(255,255,255,.08);cursor:pointer;font-size:18px}.lang-menu{position:absolute;top:50px;right:0;background:var(--panel);border-radius:12px;border:1px solid var(--line);display:none;flex-direction:column;z-index:200}.lang-menu.active{display:flex}.lang-menu button{padding:10px 16px;border:none;background:none;color:var(--text);cursor:pointer;font-size:13px}.lang-menu button:hover{background:rgba(77,163,255,.10)}.mobile-menu{position:fixed;left:-100%;top:0;width:100%;height:100%;background:var(--bg);z-index:150;flex-direction:column;gap:12px;padding:16px;transition:.3s ease;border-top:1px solid var(--line)}.mobile-menu.active{left:0}.mobile-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.mobile-menu .brand{font-size:16px}.mobile-menu .close{font-size:32px;border:none;background:none;color:var(--text);cursor:pointer}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:140;display:none}.overlay.active{display:block}.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
     .hero{padding:92px 0 70px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}.hero h1{margin:22px 0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}.title{font-size:58px;font-weight:950;line-height:1.08;letter-spacing:-.02em;margin-bottom:16px}.lead{font-size:18px;color:var(--soft);line-height:1.55;margin-bottom:18px}.section-title{font-size:42px;font-weight:950;line-height:1.1;letter-spacing:-.02em}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{border-radius:var(--r);background:linear-gradient(145deg,rgba(15,23,42,.82),rgba(17,28,50,.56));border:1px solid var(--line);padding:24px;transition:.25s ease}.card:hover{transform:translateY(-4px);border-color:rgba(77,163,255,.38)}.card .icon{font-size:32px;margin-bottom:12px}.card h3{font-size:18px;font-weight:900;margin-bottom:8px}
-    .team-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:stretch}.person-card{padding:18px}.person-photo{border-radius:24px;overflow:hidden;height:420px;background:#0b1220}.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project{overflow:hidden;padding:0}.project-img{height:330px;overflow:hidden;background:#0b1220}.project-img img{width:100%;height:100%;object-fit:cover}
-    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.price{position:relative}.price.popular{border-color:rgba(34,197,94,.35);box-shadow:0 24px 80px rgba(34,197,94,.09)}.price-table{padding:24px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step b{display:grid;place-items:center;width:38px;height:38px;border-radius:14px;background:rgba(77,163,255,.12);color:#bde1ff;font-size:14px}
-    .reviews-top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.reviews-shell{position:relative}.reviews-carousel{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.form{display:grid;gap:12px}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:12px;color:var(--text);font-size:14px;transition:.25s ease}input:focus,textarea:focus{outline:none;border-color:rgba(77,163,255,.38);background:rgba(77,163,255,.08)}
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project{overflow:hidden;padding:0}.project-img{height:330px;overflow:hidden;background:#0b1220}.project-img img{width:100%;height:100%;object-fit:cover}
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .reviews-top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.reviews-shell{position:relative}.reviews-carousel{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.form{display:grid;gap:12px}input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:12px;color:var(--text);font-size:14px;transition:.25s ease}input:focus,textarea:focus{outline:none;border-color:rgba(77,163,255,.38);background:rgba(77,163,255,.08)}
     .modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.62);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.modal.active{display:flex}.modal-box{background:var(--panel);border-radius:24px;border:1px solid var(--line);max-width:520px;padding:28px;box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-head h3{font-size:22px;font-weight:950}.modal-head .close{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
     .chat-btn{position:fixed;right:22px;bottom:22px;z-index:120;width:62px;height:62px;border-radius:22px;border:1px solid rgba(77,163,255,.32);background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;font-size:24px;cursor:pointer;display:grid;place-items:center;transition:.25s ease;box-shadow:0 14px 34px rgba(77,163,255,.18)}.chat-btn:hover{transform:scale(1.08)}.chat{position:fixed;right:22px;bottom:96px;z-index:120;width:340px;background:var(--panel);border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow);display:none;flex-direction:column;max-height:500px}.chat.active{display:flex}.chat-head{padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.chat-head .close{background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}.chat-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.chat-input{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px}.chat-input input{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:10px;padding:10px;color:var(--text)}.chat-input button{padding:10px 14px;background:var(--blue);border:none;border-radius:10px;color:#fff;cursor:pointer;font-weight:900}
-    @media(max-width:980px){.hero-grid,.team-grid,.contact-grid{grid-template-columns:1fr}.cards,.projects,.pricing{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.hero h1{font-size:42px}.title{font-size:42px}.section-title{font-size:32px}}
-    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.mobile-menu{display:flex}.brand{font-size:16px}.title{font-size:32px}.section-title{font-size:26px}.cards,.projects,.pricing{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}.chat{width:calc(100% - 32px);right:16px}.chat-head b{font-size:14px}.footer-links{display:none}}
+    @media(max-width:980px){.hero-grid,.contact-grid{grid-template-columns:1fr}.cards,.projects,.pricing{grid-template-columns:1fr 1fr}}
+    @media(max-width:720px){.container{width:min(100% - 28px,440px)}.section{padding:72px 0}.hero{padding:52px 0}.nav{height:68px}.nav-links,.desktop-cta{display:none}.menu-btn{display:block}.mobile-menu{display:flex}.brand{font-size:16px}.title{font-size:32px}.section-title{font-size:26px}.cards,.projects,.pricing{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}.chat{width:calc(100% - 32px);right:16px}.chat-head b{font-size:14px}}
 
-    /* 3D iPhone Container */
-    #iphone-container{
+    /* iPhone с CSS анимацией */
+    #iphone-showcase{
+      position:relative;
       width:100%;
       height:600px;
-      border-radius:32px;
-      background:linear-gradient(145deg,#07111f,#0f1b31);
-      border:1px solid var(--line);
-      overflow:hidden;
-      position:relative;
-      box-shadow:0 34px 110px rgba(0,0,0,.42);
-    }
-    .iphone-loading{
-      width:100%;
-      height:100%;
       display:grid;
       place-items:center;
-      color:var(--muted);
-      font-size:14px;
+      perspective:1300px;
+      overflow:hidden;
+      border-radius:32px;
+      background:radial-gradient(circle at 50% 45%, rgba(77,163,255,.22), transparent 42%),radial-gradient(circle at 70% 30%, rgba(168,85,247,.20), transparent 36%),linear-gradient(145deg, rgba(3,7,18,.96), rgba(9,16,32,.88));
+      border:1px solid rgba(148,163,184,.18);
+      box-shadow:0 34px 110px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.04);
     }
+    #iphone-showcase:before{
+      content:"";
+      position:absolute;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      background:conic-gradient(from 0deg,#2563eb,#22d3ee,#a855f7,#f472b6,#2563eb);
+      filter:blur(55px);
+      opacity:.24;
+      animation:rgbAura 6s linear infinite;
+    }
+    #iphone-showcase:after{
+      content:"";
+      position:absolute;
+      bottom:42px;
+      width:360px;
+      height:46px;
+      border-radius:50%;
+      background:radial-gradient(ellipse, rgba(77,163,255,.45), rgba(168,85,247,.18) 45%, transparent 72%);
+      filter:blur(6px);
+      animation:shadowPulse 3s ease-in-out infinite;
+    }
+    .phone-orbit{
+      position:relative;
+      z-index:2;
+      width:240px;
+      height:505px;
+      transform-style:preserve-3d;
+      animation:phoneSpin 11s linear infinite;
+    }
+    #iphone-showcase:hover .phone-orbit{animation-play-state:paused}
+    .phone-3d{
+      position:absolute;
+      inset:0;
+      transform-style:preserve-3d;
+      animation:phoneFloat 3.5s ease-in-out infinite;
+    }
+    .phone-front,.phone-back{
+      position:absolute;
+      inset:0;
+      border-radius:46px;
+      backface-visibility:hidden;
+      overflow:hidden;
+    }
+    .phone-front{
+      padding:11px;
+      background:linear-gradient(135deg, rgba(255,255,255,.38), transparent 18%, transparent 78%, rgba(255,255,255,.18)),linear-gradient(145deg,#1b2436,#050810 52%,#151b2c);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 40px 90px rgba(0,0,0,.48),0 0 42px rgba(77,163,255,.20),inset 0 0 0 2px rgba(255,255,255,.04);
+      transform:translateZ(16px);
+    }
+    .phone-back{
+      background:radial-gradient(circle at 26% 16%, rgba(255,255,255,.18), transparent 18%),linear-gradient(145deg,#2d3344,#111827 55%,#050810);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.035);
+      transform:rotateY(180deg) translateZ(16px);
+    }
+    .phone-side{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:32px;
+      height:468px;
+      margin-left:-16px;
+      margin-top:-234px;
+      background:linear-gradient(90deg,#050810,#253044 50%,#050810);
+      border-radius:20px;
+      transform-style:preserve-3d;
+    }
+    .phone-side.left{transform:translateX(-120px) rotateY(90deg)}
+    .phone-side.right{transform:translateX(120px) rotateY(90deg)}
+    .phone-side.top{width:200px;height:32px;margin-left:-100px;margin-top:-16px;transform:translateY(-252px) rotateX(90deg)}
+    .phone-side.bottom{width:200px;height:32px;margin-left:-100px;margin-top:-16px;transform:translateY(252px) rotateX(90deg)}
+    .phone-screen{
+      position:relative;
+      width:100%;
+      height:100%;
+      border-radius:36px;
+      overflow:hidden;
+      background:#020617;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 0 40px rgba(77,163,255,.08);
+      background-image:url('Public/Image/зображення_2026-06-08_195213442.png');
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+    .dynamic-island{
+      position:absolute;
+      z-index:5;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      width:82px;
+      height:24px;
+      border-radius:999px;
+      background:#050505;
+      box-shadow:0 2px 12px rgba(0,0,0,.65);
+    }
+    .camera-bump{
+      position:absolute;
+      left:18px;
+      top:18px;
+      width:92px;
+      height:92px;
+      border-radius:28px;
+      background:linear-gradient(145deg,#2e3748,#111827);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 16px 34px rgba(0,0,0,.28);
+    }
+    .lens{
+      position:absolute;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 50%,#0b1220 0 34%,#111827 35% 48%,#5b6474 49% 58%,#06080d 60%);
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);
+    }
+    .lens.l1{left:12px;top:12px}
+    .lens.l2{right:12px;top:23px}
+    .lens.l3{left:24px;bottom:12px}
+    .flash{
+      position:absolute;
+      right:15px;
+      bottom:17px;
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#fef3c7;
+      box-shadow:0 0 18px rgba(254,243,199,.45);
+    }
+    .phone-back-logo{
+      position:absolute;
+      left:50%;
+      top:52%;
+      transform:translate(-50%,-50%);
+      color:rgba(255,255,255,.72);
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:-.05em;
+    }
+    @keyframes phoneSpin{0%{transform:rotateY(-28deg) rotateX(3deg)}100%{transform:rotateY(332deg) rotateX(3deg)}}
+    @keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+    @keyframes rgbAura{to{filter:hue-rotate(360deg) blur(55px)}}
+    @keyframes shadowPulse{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:.95;transform:scale(1.08)}}
     @media(max-width:720px){
-      #iphone-container{
-        height:400px;
-      }
+      #iphone-showcase{height:430px;border-radius:22px}
+      .phone-orbit{width:180px;height:378px}
+      .phone-front,.phone-back{border-radius:36px}
+      .phone-front{padding:8px;transform:translateZ(12px)}
+      .phone-back{transform:rotateY(180deg) translateZ(12px)}
+      .phone-side{width:24px;height:350px;margin-left:-12px;margin-top:-175px}
+      .phone-side.left{transform:translateX(-90px) rotateY(90deg)}
+      .phone-side.right{transform:translateX(90px) rotateY(90deg)}
+      .phone-side.top{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(-189px) rotateX(90deg)}
+      .phone-side.bottom{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(189px) rotateX(90deg)}
+      .phone-screen{border-radius:29px}
+      .dynamic-island{width:64px;height:18px;top:9px}
+      .camera-bump{width:72px;height:72px;border-radius:22px;left:14px;top:14px}
+      .lens{width:23px;height:23px}
+      .flash{width:10px;height:10px}
     }
 
     .footer{padding:32px 0;border-top:1px solid var(--line);background:rgba(7,11,20,.52)}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:32px}.footer-links{display:flex;gap:20px}.footer-links a{font-size:13px;color:var(--muted);transition:.25s ease}.footer-links a:hover{color:var(--text)}.notice{padding:16px;border-radius:12px;background:rgba(77,163,255,.08);border:1px solid rgba(77,163,255,.18);color:var(--soft);font-size:13px;margin-top:28px}
@@ -108,12 +259,33 @@
             <p class="lead" data-i18n="hero_text">Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины — всё на самом высоком уровне качества.</p>
             <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Посмотреть работы</a></div>
           </div>
-          <div id="iphone-container" class="iphone-loading">
-            <div style="text-align:center;">
-              <div style="margin-bottom:12px;">📱 Загружаю модель...</div>
-              <div style="font-size:12px;opacity:.7;">iPhone 17 Pro Max 3D</div>
+          
+          <!-- iPhone с CSS анимацией -->
+          <div id="iphone-showcase">
+            <div class="phone-orbit">
+              <div class="phone-3d">
+                <div class="phone-side left"></div>
+                <div class="phone-side right"></div>
+                <div class="phone-side top"></div>
+                <div class="phone-side bottom"></div>
+
+                <div class="phone-front">
+                  <div class="phone-screen"></div>
+                </div>
+
+                <div class="phone-back">
+                  <div class="camera-bump">
+                    <div class="lens l1"></div>
+                    <div class="lens l2"></div>
+                    <div class="lens l3"></div>
+                    <div class="flash"></div>
+                  </div>
+                  <div class="phone-back-logo">iPhone 17 Pro Max</div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div style="margin-top:42px;padding:20px;border-radius:28px;background:linear-gradient(145deg,rgba(17,28,50,.72),rgba(11,18,32,.50));border:1px solid var(--line);" aria-label="advantages">
@@ -207,7 +379,6 @@
   </div></div></div>
 
 <script type="module">
-  // Firebase config для отзывов
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getFirestore, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
   
@@ -219,104 +390,11 @@
 </script>
 
 <script>
-// 3D iPhone с Three.js
-function init3DPhone() {
-  const container = document.getElementById('iphone-container');
-  if (!container) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setClearColor(0x050812, 0);
-  renderer.shadowMap.enabled = true;
-  container.innerHTML = '';
-  container.appendChild(renderer.domElement);
-
-  // Освещение
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-  directionalLight.position.set(10, 15, 10);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-  const pointLight = new THREE.PointLight(0x4da3ff, 0.8);
-  pointLight.position.set(-10, 5, 10);
-  scene.add(pointLight);
-
-  // Загружаем GLB модель
-  const loader = new THREE.GLTFLoader();
-  loader.load('https://raw.githubusercontent.com/nevinthekkan-create/3D/main/iphone_17_pro_max.glb', (gltf) => {
-    const model = gltf.scene;
-    model.scale.set(3, 3, 3);
-    model.position.set(0, 0, 0);
-    model.castShadow = true;
-    model.receiveShadow = true;
-    scene.add(model);
-
-    camera.position.z = 5;
-
-    // Загружаем изображение на экран
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('Public/Image/зображення_2026-06-08_195213442.png', (texture) => {
-      model.traverse((child) => {
-        if (child.isMesh) {
-          // Пытаемся найти экран и загрузить текстуру
-          if (child.name.toLowerCase().includes('screen') || child.name.toLowerCase().includes('display')) {
-            child.material.map = texture;
-            child.material.needsUpdate = true;
-          }
-        }
-      });
-    });
-
-    // Анимация
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      // Вращение по мыши
-      model.rotation.y += (mouseX - model.rotation.y) * 0.05;
-      model.rotation.x += (mouseY - model.rotation.x) * 0.05;
-      
-      // Легкое автоматическое вращение
-      model.rotation.y += 0.001;
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    // Обработка изменения размера
-    window.addEventListener('resize', () => {
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    });
-
-  }, undefined, (error) => {
-    console.error('Error loading model:', error);
-    container.innerHTML = '<div class="iphone-loading"><div style="color:#f3f7ff;">❌ Ошибка загрузки модели</div><div style="font-size:12px;opacity:.7;margin-top:8px;">Попробуйте обновить страницу</div></div>';
-  });
-}
-
-// Инициализируем 3D когда страница загружена
-document.addEventListener('DOMContentLoaded', init3DPhone);
-
-// Остальной функционал
 const API_BASE='https://ainexora.vercel.app/api';
 let currentRating=5;
 
 const tr={
-  ru:{brand_sub:'Premium Web Studio',nav_services:'Услуги',nav_projects:'Проекты',nav_reviews:'Отзывы',nav_contact:'Контакты',nav_team:'Команда',nav_cta:'Заказать сайт',hero_badge:'Премиум сайты под ключ',hero_title:'Создаём сайты, которые приносят клиентов',hero_text:'Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины — всё на самом высоком уровне качества.',hero_cta:'Получить консультацию',hero_secondary:'Посмотреть работы',trust_1:'От 3 дней',trust_2:'Адаптивно',trust_3:'Под ключ',trust_3_sub:'От идеи до запуска',trust_4:'Поддержка',stat_days:'Срок разработки',stat_mobile:'На всех устройствах',stat_support:'После запуска',services_badge:'Что делаем',services_title:'Сайты без лишней воды',s1_title:'Landing Page',s1_text:'Для одной услуги или продукта. Быстро продаёт.',s2_title:'Бизнес-сайт',s2_text:'Полная инфо о компании. Вызывает доверие.',s3_title:'Интернет-магазин',s3_text:'С каталогом, корзиной и платежами.',projects_badge:'Готовые сайты',projects_title:'Наши лучшие проекты',projects_note:'Сайты из портфолио были созданы для реальных клиентов.',pricing_badge:'Форматы',pricing_title:'Понятные цены и сроки',pricing_note:'💡 Все сайты включают: чистый код, документацию, SSL сертификат, хостинг на 1 год',price1_title:'Landing Page',price1_text:'Для одной услуги или продукта.',price2_title:'Бизнес-сайт',price2_text:'Полная информация о компании.',price3_title:'Интернет-магазин',price3_text:'С каталогом и платежами.',reviews_badge:'Реальные отзывы',reviews_title:'Что говорят клиенты',reviews_empty:'Пока отзывы загружаются или ожидают модерации...',contact_badge:'Связь',contact_title:'Расскажите, какой сайт вам нужен',contacts_title:'Контакты NexoraAds',form_name:'Ваше имя',form_contact:'Telegram, Viber, почта',form_message:'Описание проекта',form_send:'Отправить',modal_order_title:'Подобрать сайт',modal_review_title:'Оставить отзыв',chat_title:'Nexora AI',chat_sub:'помогает выбрать сайт'},
+  ru:{brand_sub:'Premium Web Studio',nav_services:'Услуги',nav_projects:'Проекты',nav_reviews:'Отзывы',nav_contact:'Контакты',nav_team:'Команда',nav_cta:'Заказать сайт',hero_badge:'Премиум сайты под ключ',hero_title:'Создаём сайты, которые приносят клиентов',hero_text:'Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины — всё на самом высоком уровне качества.',hero_cta:'Получить консультацию',hero_secondary:'Посмотреть работы',trust_1:'От 3 дней',trust_2:'Адаптивно',trust_3:'Под ключ',trust_3_sub:'От идеи до запуска',trust_4:'Поддержка',stat_days:'Срок разработки',stat_mobile:'На всех устройствах',stat_support:'После запуска',services_badge:'Что делаем',services_title:'Сайты без лишней воды',s1_title:'Landing Page',s1_text:'Для одной услуги или продукта. Быстро продаёт.',s2_title:'Бизнес-сайт',s2_text:'Полная инфо о компании. Вызывает доверие.',s3_title:'Интернет-магазин',s3_text:'С каталогом, корзиной и платежами.',projects_badge:'Готовые сайты',projects_title:'Наши лучшие проекты',pricing_badge:'Форматы',pricing_title:'Понятные цены и сроки',pricing_note:'💡 Все сайты включают: чистый код, документацию, SSL сертификат, хостинг на 1 год',price1_title:'Landing Page',price1_text:'Для одной услуги или продукта.',price2_title:'Бизнес-сайт',price2_text:'Полная информация о компании.',price3_title:'Интернет-магазин',price3_text:'С каталогом и платежами.',reviews_badge:'Реальные отзывы',reviews_title:'Что говорят клиенты',reviews_empty:'Пока отзывы загружаются или ожидают модерации...',contact_badge:'Связь',contact_title:'Расскажите, какой сайт вам нужен',contacts_title:'Контакты NexoraAds',form_name:'Ваше имя',form_contact:'Telegram, Viber, почта',form_message:'Описание проекта',form_send:'Отправить',modal_order_title:'Подобрать сайт',modal_review_title:'Оставить отзыв',chat_title:'Nexora AI',chat_sub:'помогает выбрать сайт'},
   uk:{brand_sub:'Premium Web Studio',nav_services:'Послуги',nav_projects:'Проєкти',nav_reviews:'Відгуки',nav_contact:'Контакти',nav_team:'Команда',nav_cta:'Замовити сайт'},
   en:{brand_sub:'Premium Web Studio',nav_services:'Services',nav_projects:'Projects',nav_reviews:'Reviews',nav_contact:'Contacts',nav_team:'Team',nav_cta:'Order website'},
   sk:{brand_sub:'Premium Web Studio',nav_services:'Služby',nav_projects:'Projekty',nav_reviews:'Recenzie',nav_contact:'Kontakty',nav_team:'Tím',nav_cta:'Objednať web'}
