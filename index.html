@@ -247,7 +247,63 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
 @media(max-width:720px){.donate-nav-btn.desktop-donate{display:none}.donate-grid{grid-template-columns:1fr;padding:16px}.donate-hero{padding:22px 18px 16px}.donate-hero h3{font-size:28px}.donate-box{border-radius:26px}.donate-card{border-radius:22px;padding:18px}.mobile-donate-btn{display:flex!important;width:100%;margin-top:12px}.modal{padding:12px}}
 @media(min-width:721px){.mobile-donate-btn{display:none!important}}
 
+
+
+/* iPhone 17 3D hero replacement */
+.iphone-hero-3d{
+  position:relative;
+  min-height:460px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+.iphone-hero-3d:before{
+  content:"";
+  position:absolute;
+  inset:8% 5% 6%;
+  border-radius:40px;
+  background:radial-gradient(circle at 50% 45%,rgba(77,163,255,.26),transparent 52%),radial-gradient(circle at 62% 55%,rgba(139,92,246,.22),transparent 48%);
+  filter:blur(18px);
+  opacity:.9;
+  pointer-events:none;
+}
+.iphone-hero-3d model-viewer{
+  position:relative;
+  z-index:2;
+  width:min(100%,560px);
+  height:520px;
+  --poster-color:transparent;
+  background:transparent;
+  filter:drop-shadow(0 34px 70px rgba(0,0,0,.42));
+}
+.iphone-hero-note{
+  position:absolute;
+  z-index:3;
+  right:34px;
+  bottom:28px;
+  padding:12px 14px;
+  border-radius:999px;
+  background:rgba(5,8,18,.72);
+  border:1px solid rgba(148,163,184,.18);
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:900;
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 44px rgba(0,0,0,.28);
+}
+@media(max-width:1020px){
+  .iphone-hero-3d{min-height:440px;max-width:700px;margin:0 auto}
+  .iphone-hero-3d model-viewer{height:500px}
+}
+@media(max-width:720px){
+  .iphone-hero-3d{min-height:330px;padding:0}
+  .iphone-hero-3d model-viewer{height:360px;width:100%}
+  .iphone-hero-note{display:none}
+}
+
 </style>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 <body>
   <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
@@ -283,11 +339,21 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
             <p class="lead" data-i18n="hero_text">Разрабатываем современные, быстрые и продающие сайты для бизнеса. Лендинги, корпоративные сайты, интернет-магазины и больше.</p>
             <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Смотреть проекты</a></div>
           </div>
-          <div class="shop-monitor" aria-label="Shop website preview">
-            <div class="monitor-screen">
-              <img src="Public/Image/ShopPC.png" onerror="this.onerror=null;this.src='/Image/ShopPC.png'" alt="ShopPC website preview" loading="eager">
-            </div>
-            <div class="monitor-stand"></div>
+          <div class="iphone-hero-3d" aria-label="iPhone 17 3D website preview">
+            <model-viewer
+              src="Public/Models/iPhone17_NexoraAds.glb"
+              alt="iPhone 17 with PlayStore website preview"
+              auto-rotate
+              camera-controls
+              interaction-prompt="none"
+              rotation-per-second="22deg"
+              shadow-intensity="1"
+              exposure="1.05"
+              camera-orbit="35deg 75deg 4.2m"
+              min-camera-orbit="auto auto 3.2m"
+              max-camera-orbit="auto auto 6m">
+            </model-viewer>
+            <div class="iphone-hero-note">360° iPhone preview</div>
           </div>
         </div>
 
