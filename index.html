@@ -248,78 +248,337 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
 @media(min-width:721px){.mobile-donate-btn{display:none!important}}
 
 
-/* PHONE 17 PRO MAX 3D SHOWCASE — inserted instead of monitor */
-.phone-showcase{
+/* SELF-CONTAINED 3D PHONE — NO GLB, NO THREE.JS, WORKS ON GITHUB AND BY DOUBLE CLICK */
+.phone-css-showcase{
   position:relative;
   width:100%;
   min-height:560px;
-  border-radius:30px;
+  display:grid;
+  place-items:center;
+  perspective:1300px;
   overflow:hidden;
+  border-radius:32px;
   background:
-    radial-gradient(circle at 50% 38%,rgba(77,163,255,.20),transparent 42%),
-    radial-gradient(circle at 72% 30%,rgba(168,85,247,.18),transparent 38%),
-    linear-gradient(145deg,rgba(3,7,18,.95),rgba(8,14,30,.86));
+    radial-gradient(circle at 50% 45%, rgba(77,163,255,.22), transparent 42%),
+    radial-gradient(circle at 70% 30%, rgba(168,85,247,.20), transparent 36%),
+    linear-gradient(145deg, rgba(3,7,18,.96), rgba(9,16,32,.88));
   border:1px solid rgba(148,163,184,.18);
   box-shadow:0 34px 110px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.04);
+  isolation:isolate;
 }
-.phone-showcase canvas{
+.phone-css-showcase:before{
+  content:"";
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,#2563eb,#22d3ee,#a855f7,#f472b6,#2563eb);
+  filter:blur(55px);
+  opacity:.24;
+  animation:rgbAura 6s linear infinite;
 }
-.phone-showcase-loader{
+.phone-css-showcase:after{
+  content:"";
   position:absolute;
-  inset:0;
-  z-index:5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#dbeafe;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.04em;
-  background:radial-gradient(circle at 50% 45%,rgba(77,163,255,.20),transparent 42%);
+  bottom:42px;
+  width:360px;
+  height:46px;
+  border-radius:50%;
+  background:radial-gradient(ellipse, rgba(77,163,255,.45), rgba(168,85,247,.18) 45%, transparent 72%);
+  filter:blur(6px);
+  animation:shadowPulse 3s ease-in-out infinite;
 }
-.phone-showcase-loader.hide{display:none}
-.phone-showcase-badge{
+.phone-css-badge{
   position:absolute;
-  z-index:4;
   left:18px;
   top:18px;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+  z-index:6;
   padding:12px 14px;
   border-radius:18px;
-  background:rgba(3,7,18,.48);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(3,7,18,.52);
+  border:1px solid rgba(255,255,255,.13);
   backdrop-filter:blur(16px);
   box-shadow:0 18px 50px rgba(0,0,0,.25);
 }
-.phone-showcase-badge strong{font-size:14px;color:#fff}
-.phone-showcase-badge span{font-size:11px;color:#9fb4d8;font-weight:800}
-.phone-showcase-hint{
+.phone-css-badge strong{display:block;color:#fff;font-size:14px}
+.phone-css-badge span{display:block;color:#9fb4d8;font-size:11px;font-weight:800;margin-top:3px}
+.phone-css-hint{
   position:absolute;
-  z-index:4;
   left:50%;
   bottom:16px;
   transform:translateX(-50%);
+  z-index:6;
   white-space:nowrap;
   padding:9px 12px;
   border-radius:999px;
+  color:#dbeafe;
   background:rgba(77,163,255,.12);
   border:1px solid rgba(77,163,255,.25);
-  color:#dbeafe;
   font-size:11px;
   font-weight:900;
   backdrop-filter:blur(12px);
 }
+.phone-orbit{
+  position:relative;
+  z-index:2;
+  width:240px;
+  height:505px;
+  transform-style:preserve-3d;
+  animation:phoneSpin 11s linear infinite;
+}
+.phone-css-showcase:hover .phone-orbit{animation-play-state:paused}
+.phone-3d{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  animation:phoneFloat 3.5s ease-in-out infinite;
+}
+.phone-front,.phone-back{
+  position:absolute;
+  inset:0;
+  border-radius:46px;
+  backface-visibility:hidden;
+  overflow:hidden;
+}
+.phone-front{
+  padding:11px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.38), transparent 18%, transparent 78%, rgba(255,255,255,.18)),
+    linear-gradient(145deg,#1b2436,#050810 52%,#151b2c);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 40px 90px rgba(0,0,0,.48),
+    0 0 42px rgba(77,163,255,.20),
+    inset 0 0 0 2px rgba(255,255,255,.04);
+  transform:translateZ(16px);
+}
+.phone-back{
+  background:
+    radial-gradient(circle at 26% 16%, rgba(255,255,255,.18), transparent 18%),
+    linear-gradient(145deg,#2d3344,#111827 55%,#050810);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.035);
+  transform:rotateY(180deg) translateZ(16px);
+}
+.phone-side{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:32px;
+  height:468px;
+  margin-left:-16px;
+  margin-top:-234px;
+  background:linear-gradient(90deg,#050810,#253044 50%,#050810);
+  border-radius:20px;
+  transform-style:preserve-3d;
+}
+.phone-side.left{transform:translateX(-120px) rotateY(90deg)}
+.phone-side.right{transform:translateX(120px) rotateY(90deg)}
+.phone-side.top{
+  width:200px;height:32px;margin-left:-100px;margin-top:-16px;
+  transform:translateY(-252px) rotateX(90deg);
+}
+.phone-side.bottom{
+  width:200px;height:32px;margin-left:-100px;margin-top:-16px;
+  transform:translateY(252px) rotateX(90deg);
+}
+.phone-screen{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:36px;
+  overflow:hidden;
+  background:#020617;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.10),
+    inset 0 0 40px rgba(77,163,255,.08);
+}
+.dynamic-island{
+  position:absolute;
+  z-index:5;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:82px;
+  height:24px;
+  border-radius:999px;
+  background:#050505;
+  box-shadow:0 2px 12px rgba(0,0,0,.65);
+}
+.store-ui{
+  position:absolute;
+  inset:0;
+  padding:48px 13px 14px;
+  background:
+    radial-gradient(circle at 20% 8%, rgba(37,99,235,.44), transparent 24%),
+    radial-gradient(circle at 88% 16%, rgba(168,85,247,.35), transparent 24%),
+    linear-gradient(180deg,#06112a,#070d1d 55%,#020617);
+  color:#fff;
+  font-family:Inter,Arial,sans-serif;
+}
+.store-logo{font-size:18px;font-weight:950;letter-spacing:-.04em}
+.store-sub{font-size:8px;color:#7db4ff;font-weight:900;margin-top:1px;letter-spacing:.08em}
+.store-hero{
+  margin-top:14px;
+  padding:15px;
+  border-radius:20px;
+  min-height:118px;
+  background:linear-gradient(135deg,rgba(59,130,246,.70),rgba(168,85,247,.55));
+  box-shadow:0 18px 35px rgba(37,99,235,.16);
+}
+.store-hero h3{font-size:20px;line-height:.98;margin:0 0 8px;font-weight:950;letter-spacing:-.06em}
+.store-hero p{font-size:8px;line-height:1.35;margin:0;color:#dbeafe;font-weight:800}
+.store-btn{
+  display:inline-flex;
+  margin-top:12px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#020617;
+  color:#fff;
+  font-size:8px;
+  font-weight:950;
+}
+.store-title{margin:16px 0 8px;font-size:14px;font-weight:950}
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.product-card{
+  min-height:96px;
+  padding:8px;
+  border-radius:15px;
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(148,163,184,.14);
+}
+.product-pic{
+  height:34px;
+  border-radius:11px;
+  margin-bottom:7px;
+  background:linear-gradient(135deg,var(--pc),rgba(2,6,23,.52));
+  position:relative;
+}
+.product-pic:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:28px;
+  height:18px;
+  border-radius:6px;
+  transform:translate(-50%,-50%);
+  background:rgba(2,6,23,.45);
+}
+.product-name{font-size:7px;line-height:1.25;font-weight:900;color:#fff}
+.product-meta{font-size:6px;color:#9fb0d0;font-weight:800;margin-top:2px}
+.product-price{font-size:10px;font-weight:950;margin-top:6px}
+.buy-mini{
+  margin-top:5px;
+  height:16px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:rgba(59,130,246,.33);
+  color:#dbeafe;
+  font-size:6px;
+  font-weight:950;
+}
+.phone-back-logo{
+  position:absolute;
+  left:50%;
+  top:52%;
+  transform:translate(-50%,-50%);
+  color:rgba(255,255,255,.72);
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:-.05em;
+}
+.camera-bump{
+  position:absolute;
+  left:18px;
+  top:18px;
+  width:92px;
+  height:92px;
+  border-radius:28px;
+  background:linear-gradient(145deg,#2e3748,#111827);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 16px 34px rgba(0,0,0,.28);
+}
+.lens{
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%,#0b1220 0 34%,#111827 35% 48%,#5b6474 49% 58%,#06080d 60%);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);
+}
+.lens.l1{left:12px;top:12px}
+.lens.l2{right:12px;top:23px}
+.lens.l3{left:24px;bottom:12px}
+.flash{
+  position:absolute;
+  right:15px;
+  bottom:17px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#fef3c7;
+  box-shadow:0 0 18px rgba(254,243,199,.45);
+}
+.rgb-outline{
+  position:absolute;
+  inset:-4px;
+  border-radius:50px;
+  background:conic-gradient(from 0deg,#2563eb,#22d3ee,#a855f7,#f472b6,#2563eb);
+  filter:blur(10px);
+  opacity:.32;
+  animation:rgbAura 4s linear infinite;
+  z-index:-1;
+}
+@keyframes phoneSpin{
+  0%{transform:rotateY(-28deg) rotateX(3deg)}
+  100%{transform:rotateY(332deg) rotateX(3deg)}
+}
+@keyframes phoneFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-16px)}
+}
+@keyframes rgbAura{
+  to{filter:hue-rotate(360deg) blur(55px)}
+}
+@keyframes shadowPulse{
+  0%,100%{opacity:.55;transform:scale(.92)}
+  50%{opacity:.95;transform:scale(1.08)}
+}
 @media(max-width:720px){
-  .phone-showcase{min-height:430px;border-radius:22px}
-  .phone-showcase-badge{left:12px;top:12px;padding:10px 11px}
-  .phone-showcase-hint{bottom:10px;font-size:10px;width:calc(100% - 24px);text-align:center}
+  .phone-css-showcase{min-height:430px;border-radius:22px}
+  .phone-orbit{width:180px;height:378px}
+  .phone-front,.phone-back{border-radius:36px}
+  .phone-front{padding:8px;transform:translateZ(12px)}
+  .phone-back{transform:rotateY(180deg) translateZ(12px)}
+  .phone-side{width:24px;height:350px;margin-left:-12px;margin-top:-175px}
+  .phone-side.left{transform:translateX(-90px) rotateY(90deg)}
+  .phone-side.right{transform:translateX(90px) rotateY(90deg)}
+  .phone-side.top{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(-189px) rotateX(90deg)}
+  .phone-side.bottom{width:150px;height:24px;margin-left:-75px;margin-top:-12px;transform:translateY(189px) rotateX(90deg)}
+  .phone-screen{border-radius:29px}
+  .dynamic-island{width:64px;height:18px;top:9px}
+  .store-ui{padding:36px 10px 10px}
+  .store-logo{font-size:14px}
+  .store-sub{font-size:6px}
+  .store-hero{margin-top:10px;padding:11px;min-height:86px;border-radius:16px}
+  .store-hero h3{font-size:15px}
+  .store-hero p{font-size:6px}
+  .store-btn{font-size:6px;padding:5px 9px;margin-top:8px}
+  .store-title{font-size:10px;margin:10px 0 6px}
+  .product-grid{gap:6px}
+  .product-card{min-height:72px;padding:6px;border-radius:12px}
+  .product-pic{height:25px;border-radius:8px;margin-bottom:5px}
+  .product-name{font-size:5px}
+  .product-meta{font-size:4.5px}
+  .product-price{font-size:7px;margin-top:4px}
+  .buy-mini{height:12px;font-size:4.5px}
+  .camera-bump{width:72px;height:72px;border-radius:22px;left:14px;top:14px}
+  .lens{width:23px;height:23px}
+  .flash{width:10px;height:10px}
+  .phone-css-hint{bottom:10px;font-size:10px;width:calc(100% - 24px);text-align:center}
 }
 
 </style>
@@ -359,14 +618,79 @@ body:before{background:radial-gradient(circle at 12% 10%,rgba(79,140,255,.22),tr
             <div class="hero-actions"><button class="btn primary" onclick="openOrderModal()" data-i18n="hero_cta">Получить консультацию</button><a class="btn ghost" href="#projects" data-i18n="hero_secondary">Смотреть проекты</a></div>
           </div>
           
-<div class="phone-showcase" id="phoneShowcase" aria-label="3D Phone 17 Pro Max website preview">
-  <div class="phone-showcase-loader" id="phoneShowcaseLoader">Загрузка 3D телефона...</div>
-  <div class="phone-showcase-badge">
+<div class="phone-css-showcase" aria-label="Phone 17 Pro Max 3D website preview">
+  <div class="phone-css-badge">
     <strong>GameForge PC Store</strong>
-    <span>3D phone • 360° • RGB</span>
+    <span>без модели • работает сразу</span>
   </div>
-  <div class="phone-showcase-hint">Крути мышкой или пальцем</div>
-  <canvas id="phoneCanvas"></canvas>
+  <div class="phone-orbit">
+    <div class="phone-3d">
+      <div class="rgb-outline"></div>
+      <div class="phone-side left"></div>
+      <div class="phone-side right"></div>
+      <div class="phone-side top"></div>
+      <div class="phone-side bottom"></div>
+
+      <div class="phone-front">
+        <div class="phone-screen">
+          <div class="dynamic-island"></div>
+          <div class="store-ui">
+            <div class="store-logo">GameForge</div>
+            <div class="store-sub">PC COMPONENTS STORE</div>
+
+            <div class="store-hero">
+              <h3>BUILD YOUR<br>DREAM PC</h3>
+              <p>RTX 5090 • Ryzen 9 • DDR5 RGB</p>
+              <div class="store-btn">SHOP NOW</div>
+            </div>
+
+            <div class="store-title">Popular hardware</div>
+            <div class="product-grid">
+              <div class="product-card">
+                <div class="product-pic" style="--pc:#60a5fa"></div>
+                <div class="product-name">RTX 5090 Gaming OC</div>
+                <div class="product-meta">24GB GDDR7</div>
+                <div class="product-price">€2499</div>
+                <div class="buy-mini">BUY</div>
+              </div>
+              <div class="product-card">
+                <div class="product-pic" style="--pc:#a78bfa"></div>
+                <div class="product-name">Ryzen 9 9950X3D</div>
+                <div class="product-meta">16-Core AM5</div>
+                <div class="product-price">€699</div>
+                <div class="buy-mini">BUY</div>
+              </div>
+              <div class="product-card">
+                <div class="product-pic" style="--pc:#22d3ee"></div>
+                <div class="product-name">ASUS ROG X870E</div>
+                <div class="product-meta">WiFi Gaming</div>
+                <div class="product-price">€549</div>
+                <div class="buy-mini">BUY</div>
+              </div>
+              <div class="product-card">
+                <div class="product-pic" style="--pc:#34d399"></div>
+                <div class="product-name">Corsair DDR5 RGB</div>
+                <div class="product-meta">64GB 7200MHz</div>
+                <div class="product-price">€299</div>
+                <div class="buy-mini">BUY</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-back">
+        <div class="camera-bump">
+          <div class="lens l1"></div>
+          <div class="lens l2"></div>
+          <div class="lens l3"></div>
+          <div class="flash"></div>
+        </div>
+        <div class="phone-back-logo">Phone 17 Pro Max</div>
+      </div>
+    </div>
+  </div>
+  <div class="phone-css-hint">360° анимация • наведи мышку чтобы остановить</div>
 </div>
 
         </div>
@@ -615,264 +939,5 @@ document.addEventListener('error', function(e){
   else { const box=img.closest('.member-avatar,.team-avatar,.mini-person-photo,.mini-photo,.manager-photo-bubble'); if(box){ box.classList.add('no-img'); } img.remove(); }
 }, true);
 </script>
-
-<script type="module">
-import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
-
-(() => {
-  const wrap = document.getElementById("phoneShowcase");
-  const canvas = document.getElementById("phoneCanvas");
-  if(!wrap || !canvas) return;
-
-  const loaderEl = document.getElementById("phoneShowcaseLoader");
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.25;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.001, 100);
-  camera.position.set(0, .08, 4.15);
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.enablePan = false;
-  controls.minDistance = 1.8;
-  controls.maxDistance = 6;
-  controls.target.set(0,0,0);
-
-  scene.add(new THREE.HemisphereLight(0xb6d7ff, 0x050816, 2.15));
-
-  const key = new THREE.DirectionalLight(0xffffff, 3.3);
-  key.position.set(3,4,4);
-  scene.add(key);
-
-  const light1 = new THREE.PointLight(0x38bdf8, 34, 8);
-  light1.position.set(-2.5,1.4,2.1);
-  scene.add(light1);
-
-  const light2 = new THREE.PointLight(0xd946ef, 32, 8);
-  light2.position.set(2.5,1.2,-1.8);
-  scene.add(light2);
-
-  const phoneGroup = new THREE.Group();
-  scene.add(phoneGroup);
-
-  const floor = new THREE.Mesh(
-    new THREE.CircleGeometry(2.45, 160),
-    new THREE.MeshPhysicalMaterial({color:0x07111f, roughness:.22, metalness:.35, transparent:true, opacity:.62})
-  );
-  floor.rotation.x = -Math.PI/2;
-  floor.position.y = -1.45;
-  scene.add(floor);
-
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(1.45, .024, 16, 220),
-    new THREE.MeshBasicMaterial({color:0x60a5fa})
-  );
-  ring.rotation.x = Math.PI/2;
-  ring.position.y = -1.41;
-  scene.add(ring);
-
-  function rr(ctx,x,y,w,h,r){
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-  }
-
-  function makeStoreTexture(){
-    const c = document.createElement("canvas");
-    c.width = 1290; c.height = 2796;
-    const ctx = c.getContext("2d");
-
-    const bg = ctx.createLinearGradient(0,0,0,c.height);
-    bg.addColorStop(0,"#06112a"); bg.addColorStop(.55,"#070d1d"); bg.addColorStop(1,"#020617");
-    ctx.fillStyle = bg; ctx.fillRect(0,0,c.width,c.height);
-
-    ctx.fillStyle="rgba(37,99,235,.30)"; ctx.beginPath(); ctx.arc(180,220,330,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle="rgba(168,85,247,.25)"; ctx.beginPath(); ctx.arc(1110,420,360,0,Math.PI*2); ctx.fill();
-
-    ctx.fillStyle="#fff"; ctx.font="900 78px Arial"; ctx.fillText("GameForge",70,130);
-    ctx.fillStyle="#7db4ff"; ctx.font="800 32px Arial"; ctx.fillText("PC COMPONENTS STORE",74,180);
-
-    ctx.fillStyle="rgba(255,255,255,.08)"; rr(ctx,70,230,1150,390,48); ctx.fill();
-    const hero = ctx.createLinearGradient(70,230,1220,620);
-    hero.addColorStop(0,"rgba(59,130,246,.75)"); hero.addColorStop(1,"rgba(168,85,247,.58)");
-    ctx.fillStyle=hero; rr(ctx,70,230,1150,390,48); ctx.fill();
-
-    ctx.fillStyle="#fff"; ctx.font="950 68px Arial"; ctx.fillText("BUILD YOUR",120,355); ctx.fillText("DREAM PC",120,432);
-    ctx.fillStyle="#dbeafe"; ctx.font="800 32px Arial"; ctx.fillText("RTX 5090 • Ryzen 9 • DDR5 RGB",122,490);
-    ctx.fillStyle="#020617"; rr(ctx,122,532,285,70,35); ctx.fill();
-    ctx.fillStyle="#fff"; ctx.font="900 30px Arial"; ctx.fillText("SHOP NOW",174,577);
-
-    ctx.strokeStyle="rgba(255,255,255,.35)"; ctx.lineWidth=5; rr(ctx,800,298,300,210,34); ctx.stroke();
-    ctx.fillStyle="rgba(255,255,255,.22)"; rr(ctx,835,340,215,30,15); ctx.fill(); rr(ctx,835,398,185,26,13); ctx.fill(); rr(ctx,835,455,145,26,13); ctx.fill();
-
-    ctx.fillStyle="#fff"; ctx.font="900 50px Arial"; ctx.fillText("Popular hardware",70,745);
-
-    const products=[
-      ["RTX 5090 Gaming OC","24GB GDDR7","€2499","#60a5fa"],
-      ["Ryzen 9 9950X3D","16-Core AM5","€699","#a78bfa"],
-      ["ASUS ROG X870E","WiFi Gaming","€549","#22d3ee"],
-      ["Corsair DDR5 RGB","64GB 7200MHz","€299","#34d399"],
-      ["Samsung 990 PRO","4TB NVMe","€339","#f472b6"],
-      ["Lian Li RGB Case","Tempered Glass","€219","#facc15"],
-      ["ROG Thor PSU","1200W Platinum","€399","#fb7185"],
-      ["Kraken Elite AIO","360mm LCD","€329","#38bdf8"]
-    ];
-
-    let y=795;
-    products.forEach((p,i)=>{
-      const x=i%2?665:70;
-      if(i>0 && i%2===0)y+=292;
-      ctx.fillStyle="rgba(255,255,255,.075)"; rr(ctx,x,y,555,252,36); ctx.fill();
-      ctx.strokeStyle="rgba(148,163,184,.15)"; ctx.lineWidth=2; rr(ctx,x,y,555,252,36); ctx.stroke();
-      ctx.fillStyle=p[3]; ctx.globalAlpha=.92; rr(ctx,x+28,y+28,142,142,28); ctx.fill(); ctx.globalAlpha=1;
-      ctx.fillStyle="rgba(2,6,23,.48)"; rr(ctx,x+58,y+66,82,60,16); ctx.fill();
-      ctx.fillStyle="#fff"; ctx.font="900 31px Arial"; ctx.fillText(p[0],x+28,y+202);
-      ctx.fillStyle="#9fb0d0"; ctx.font="800 24px Arial"; ctx.fillText(p[1],x+28,y+232);
-      ctx.fillStyle="#fff"; ctx.font="950 34px Arial"; ctx.fillText(p[2],x+360,y+75);
-      ctx.fillStyle="rgba(59,130,246,.28)"; rr(ctx,x+350,y+118,148,54,27); ctx.fill();
-      ctx.fillStyle="#dbeafe"; ctx.font="900 21px Arial"; ctx.fillText("BUY",x+403,y+152);
-    });
-
-    y += 330;
-    ctx.fillStyle="rgba(34,211,238,.10)"; rr(ctx,70,y,1150,260,42); ctx.fill();
-    ctx.strokeStyle="rgba(34,211,238,.23)"; ctx.lineWidth=3; rr(ctx,70,y,1150,260,42); ctx.stroke();
-    ctx.fillStyle="#fff"; ctx.font="950 48px Arial"; ctx.fillText("Free PC configurator",125,y+90);
-    ctx.fillStyle="#a8b7d2"; ctx.font="800 30px Arial"; ctx.fillText("Expert help, fast delivery, safe payment",125,y+142);
-    ctx.fillStyle="#22d3ee"; ctx.font="950 36px Arial"; ctx.fillText("START BUILD →",125,y+210);
-
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    tex.flipY = false;
-    return tex;
-  }
-
-  const storeMat = new THREE.MeshBasicMaterial({
-    map:makeStoreTexture(),
-    toneMapped:false,
-    side:THREE.DoubleSide
-  });
-
-  function fitModel(obj){
-    const box = new THREE.Box3().setFromObject(obj);
-    const center = box.getCenter(new THREE.Vector3());
-    obj.position.x -= center.x;
-    obj.position.y -= center.y;
-    obj.position.z -= center.z;
-
-    const box2 = new THREE.Box3().setFromObject(obj);
-    const size = box2.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    obj.scale.setScalar(2.78 / maxDim);
-
-    const box3 = new THREE.Box3().setFromObject(obj);
-    floor.position.y = box3.min.y - .12;
-    ring.position.y = box3.min.y - .08;
-  }
-
-  function makeFallbackPhone(){
-    phoneGroup.clear();
-    const g = new THREE.Group();
-    const body = new THREE.Mesh(
-      new THREE.BoxGeometry(1.25, 2.65, .16),
-      new THREE.MeshPhysicalMaterial({color:0x111827,roughness:.25,metalness:.72})
-    );
-    g.add(body);
-    const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.12, 2.42), storeMat);
-    screen.position.z = .086;
-    g.add(screen);
-    phoneGroup.add(g);
-    fitModel(phoneGroup);
-    if(loaderEl) loaderEl.classList.add("hide");
-  }
-
-  function loadModel(){
-    new GLTFLoader().load("Phone_17_Pro_Max_Simple.glb", gltf => {
-      phoneGroup.clear();
-      const model = gltf.scene;
-      let replaced = 0;
-
-      model.traverse(o => {
-        if(!o.isMesh) return;
-        const materials = Array.isArray(o.material) ? o.material : [o.material];
-        materials.forEach((m, i) => {
-          const n = (m?.name || "").toLowerCase();
-          if(n === "oled" || n.includes("oled")) {
-            if(Array.isArray(o.material)) o.material[i] = storeMat;
-            else o.material = storeMat;
-            replaced++;
-          } else if(m) {
-            m.envMapIntensity = 1.4;
-            if(n.includes("glass")) {
-              m.transparent = true;
-              m.opacity = Math.min(m.opacity ?? .65, .7);
-              m.roughness = .05;
-            }
-            if(n.includes("metal") || n.includes("anodized")) {
-              m.metalness = .85;
-              m.roughness = .28;
-            }
-          }
-        });
-      });
-
-      phoneGroup.add(model);
-      fitModel(phoneGroup);
-      phoneGroup.rotation.set(-.08, -.35, .035);
-      if(loaderEl) loaderEl.classList.add("hide");
-      console.log("Phone loaded. OLED materials replaced:", replaced);
-    }, undefined, err => {
-      console.error("Phone model not loaded:", err);
-      makeFallbackPhone();
-    });
-  }
-
-  function resize(){
-    const r = wrap.getBoundingClientRect();
-    const w = Math.max(1, r.width);
-    const h = Math.max(1, r.height);
-    renderer.setSize(w, h, false);
-    camera.aspect = w/h;
-    camera.updateProjectionMatrix();
-  }
-
-  const ro = new ResizeObserver(resize);
-  ro.observe(wrap);
-  resize();
-  loadModel();
-
-  let auto = true;
-  let last = 0;
-  controls.addEventListener("start", () => { auto = false; last = performance.now(); });
-  controls.addEventListener("end", () => { last = performance.now(); });
-
-  const clock = new THREE.Clock();
-  function animate(){
-    requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-
-    if(!auto && performance.now() - last > 2500) auto = true;
-    if(auto) phoneGroup.rotation.y += .007;
-
-    phoneGroup.position.y = Math.sin(t*1.4)*.035;
-    ring.material.color.setHSL((t*.12)%1, 1, .62);
-    light1.color.setHSL((t*.08+.52)%1, 1, .65);
-    light2.color.setHSL((t*.08+.78)%1, 1, .62);
-
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
-</script>
-
 </body>
 </html>
