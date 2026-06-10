@@ -1,0 +1,30 @@
+name: Notify new review issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  telegram-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          python3 - <<'PY'
+import os, subprocess
+text = '🆕 <b>Новый отзыв</b>\n\n' + os.environ['ISSUE_TITLE'] + '\n\n' + os.environ['ISSUE_BODY'] + '\n\n' + os.environ['ISSUE_URL']
+cmd = [
+    'curl', '-s', '-X', 'POST',
+    f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendMessage",
+    '-d', f"chat_id={os.environ['TELEGRAM_CHAT_ID']}",
+    '-d', 'parse_mode=HTML',
+    '-d', f"text={text}"
+]
+subprocess.run(cmd, check=True)
+PY
