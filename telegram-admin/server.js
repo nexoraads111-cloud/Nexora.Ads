@@ -36,14 +36,53 @@ function notifyAdmin(text, opts = {}) {
 }
 
 function statusKeyboard(orderId, current) {
+  if (current === 'ready') {
+    return {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '✅ Готов', callback_data: `status:${orderId}:ready` }],
+          [{ text: '🔗 Ссылка на сайт', callback_data: `seturl:${orderId}` }],
+        ],
+      },
+    };
+  }
   const idx = STATUSES.indexOf(current);
   const next = STATUSES[Math.min(idx + 1, STATUSES.length - 1)];
-  const buttons = [];
+  const row = [];
   if (idx < STATUSES.length - 1) {
-    buttons.push({ text: `→ ${STATUS_LABELS[next]}`, callback_data: `status:${orderId}:${next}` });
+    row.push({ text: `→ ${STATUS_LABELS[next]}`, callback_data: `status:${orderId}:${next}` });
   }
-  buttons.push({ text: '✅ Готов', callback_data: `status:${orderId}:ready` });
-  return { reply_markup: { inline_keyboard: [buttons] } };
+  row.push({ text: '✅ Готов', callback_data: `status:${orderId}:ready` });
+  return { reply_markup: { inline_keyboard: [row] } };
+}
+
+function formatAdminOrderMessage(order) {
+  const lines = [
+    formatOrderNotify(order),
+    order.siteUrl ? `\n🔗 Сайт: ${order.siteUrl}` : '',
+  ];
+  return lines.join('');
+}
+
+async function notifyClientStatus(order, status) {
+  if (!order.userId || !bot) return;
+  if (status === 'ready') {
+    const text = order.siteUrl
+      ? `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n${order.siteUrl}`
+      : `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n\nОткройте личный кабинет на сайте.`;
+    const buttons = [[{ text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html` }]];
+    if (order.siteUrl) {
+      buttons.unshift([{ text: '🌐 Открыть сайт', url: order.siteUrl }]);
+    }
+    await bot.sendMessage(order.userId, text, { reply_markup: { inline_keyboard: buttons } }).catch(() => {});
+    return;
+  }
+  await bot
+    .sendMessage(
+      order.userId,
+      `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}`
+    )
+    .catch(() => {});
 }
 
 function formatOrderNotify(order) {
@@ -61,6 +100,43 @@ function formatOrderNotify(order) {
 }
 
 const loginSessionsMem = new Map();
+const pendingSiteUrl = new Map();
+
+function normalizeContact(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^@/, '');
+}
+
+function contactMatchesUser(contact, user) {
+  const c = normalizeContact(contact);
+  if (!c || !user) return false;
+  const username = normalizeContact(user.username);
+  const phone = String(user.phone || user.contact || '').replace(/\D/g, '');
+  const contactDigits = String(contact || '').replace(/\D/g, '');
+  if (username && (c === username || c.includes(username))) return true;
+  if (phone && contactDigits && contactDigits.includes(phone.slice(-9))) return true;
+  return false;
+}
+
+async function resolveUserIdFromContact(contact) {
+  const users = await fb.listAllUsers();
+  const match = users.find((user) => contactMatchesUser(contact, user));
+  return match ? String(match.userId) : null;
+}
+
+async function linkOrdersToUser(userId, user) {
+  const orders = await fb.listAllOrders();
+  for (const order of orders) {
+    if (order.userId) continue;
+    if (contactMatchesUser(order.contact, user)) {
+      order.userId = String(userId);
+      order.updatedAt = Date.now();
+      await fb.saveOrder(order.id, order);
+    }
+  }
+}
 
 function newSessionId() {
   return crypto.randomBytes(8).toString('hex');
@@ -81,6 +157,7 @@ async function buildUserFromTelegram(from) {
   const merged = { ...(existing || {}), ...profile };
   if (!merged.phone) merged.phone = existing?.phone || (from.username ? `@${from.username}` : '');
   await fb.saveUser(userId, merged);
+  await linkOrdersToUser(userId, merged);
   const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
   return { token, user: merged };
 }
@@ -105,19 +182,24 @@ async function sendLoginSuccess(chatId, token, user) {
 
 async function createOrder(body, userId = null) {
   const id = `o_${Date.now()}`;
+  let resolvedUserId = userId ? String(userId) : body.userId ? String(body.userId) : null;
+  if (!resolvedUserId && body.contact) {
+    resolvedUserId = await resolveUserIdFromContact(body.contact);
+  }
   const order = {
     id,
-    userId: userId ? String(userId) : body.userId ? String(body.userId) : null,
+    userId: resolvedUserId,
     name: body.name || 'Клиент',
     contact: body.contact || '',
     plan: body.plan || body.company || 'Заявка',
     message: body.message || body.text || '',
     status: 'accepted',
+    siteUrl: body.siteUrl || '',
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
   await fb.saveOrder(id, order);
-  notifyAdmin(formatOrderNotify(order), statusKeyboard(id, order.status));
+  notifyAdmin(formatAdminOrderMessage(order), statusKeyboard(id, order.status));
   return order;
 }
 
@@ -173,31 +255,57 @@ if (bot) {
         return bot.answerCallbackQuery(cq.id, { text: 'Нет доступа' });
       }
       const [action, orderId, status] = (cq.data || '').split(':');
-      if (action !== 'status' || !orderId) return;
+      if (action === 'seturl' && orderId) {
+        pendingSiteUrl.set(ADMIN_ID, orderId);
+        await bot.answerCallbackQuery(cq.id, { text: 'Отправьте ссылку сообщением' });
+        await bot.sendMessage(ADMIN_ID, `🔗 Отправьте ссылку на готовый сайт для заказа ${orderId}:`);
+        return;
+      }
+      if (action !== 'status' || !orderId || !status) return;
 
       const order = await fb.getOrder(orderId);
       if (!order) return bot.answerCallbackQuery(cq.id, { text: 'Не найден' });
+      if (order.status === status && status === 'ready') {
+        return bot.answerCallbackQuery(cq.id, { text: '✅ Уже готов' });
+      }
 
       order.status = status;
       order.updatedAt = Date.now();
       await fb.saveOrder(orderId, order);
 
-      if (order.userId) {
-        bot.sendMessage(
-          order.userId,
-          `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}`
-        );
-      }
+      await notifyClientStatus(order, status);
 
-      bot.editMessageText(`✅ ${STATUS_LABELS[status]}: ${order.plan}`, {
+      await bot.editMessageText(formatAdminOrderMessage(order), {
         chat_id: cq.message.chat.id,
         message_id: cq.message.message_id,
+        reply_markup: statusKeyboard(orderId, status).reply_markup,
       });
-      bot.answerCallbackQuery(cq.id, { text: STATUS_LABELS[status] });
+      bot.answerCallbackQuery(cq.id, { text: STATUS_LABELS[status] || status });
     } catch (e) {
       console.error('callback', e);
       bot.answerCallbackQuery(cq.id, { text: 'Ошибка' });
     }
+  });
+
+  bot.on('message', async (msg) => {
+    if (String(msg.from?.id) !== ADMIN_ID) return;
+    if (msg.text?.startsWith('/')) return;
+    const orderId = pendingSiteUrl.get(ADMIN_ID);
+    if (!orderId) return;
+    const url = msg.text?.trim();
+    if (!url || !/^https?:\/\//i.test(url)) {
+      await bot.sendMessage(ADMIN_ID, '❌ Нужна ссылка, например https://example.com');
+      return;
+    }
+    pendingSiteUrl.delete(ADMIN_ID);
+    const order = await fb.getOrder(orderId);
+    if (!order) return;
+    order.siteUrl = url;
+    order.status = 'ready';
+    order.updatedAt = Date.now();
+    await fb.saveOrder(orderId, order);
+    await notifyClientStatus(order, 'ready');
+    await bot.sendMessage(ADMIN_ID, `✅ Ссылка сохранена для заказа ${orderId}`);
   });
 }
 
@@ -297,6 +405,8 @@ app.patch('/api/profile', authMiddleware, async (req, res) => {
 });
 
 app.get('/api/orders', authMiddleware, async (req, res) => {
+  const profile = await fb.getUser(req.userId);
+  if (profile) await linkOrdersToUser(req.userId, profile);
   const orders = await fb.listUserOrders(req.userId);
   res.json(orders);
 });

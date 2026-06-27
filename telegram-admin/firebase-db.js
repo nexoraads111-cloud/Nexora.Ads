@@ -108,6 +108,18 @@ async function listUserOrders(userId) {
     .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 }
 
+async function listAllOrders() {
+  const snap = await get('orders');
+  if (!snap || typeof snap !== 'object') return [];
+  return Object.values(snap).filter(Boolean);
+}
+
+async function listAllUsers() {
+  const snap = await get('users');
+  if (!snap || typeof snap !== 'object') return [];
+  return Object.values(snap).filter(Boolean);
+}
+
 async function getLoginSession(sessionId) {
   return get(`loginSessions/${sessionId}`);
 }
@@ -123,6 +135,8 @@ module.exports = {
   getOrder,
   saveOrder,
   listUserOrders,
+  listAllOrders,
+  listAllUsers,
   getLoginSession,
   saveLoginSession,
 };

@@ -10,6 +10,7 @@ const PENDING_SESSION_KEY = 'nexora_pending_login_session';
 
 let pollTimer = null;
 let activeSessionId = null;
+let ordersRefreshTimer = null;
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -92,19 +93,32 @@ function renderOrders(orders) {
     return;
   }
   box.innerHTML = orders
-    .map(
-      (o) => `
-    <article class="cabinet-order">
+    .map((o) => {
+      const readyBlock =
+        o.status === 'ready'
+          ? `<div class="cabinet-ready-box">
+        <strong>🎉 Ваш сайт готов!</strong>
+        <p>Заказ «${escapeHtml(o.plan || 'Заявка')}» выполнен.</p>
+        ${
+          o.siteUrl
+            ? `<a class="cabinet-site-link" href="${escapeHtml(o.siteUrl)}" target="_blank" rel="noopener">Открыть готовый сайт →</a>`
+            : '<span class="cabinet-ready-note">Ссылка появится после отправки менеджером.</span>'
+        }
+      </div>`
+          : '';
+      return `
+    <article class="cabinet-order ${o.status === 'ready' ? 'cabinet-order-ready' : ''}">
       <div class="cabinet-order-top">
         <h3>${escapeHtml(o.plan || 'Заявка')}</h3>
         <span class="cabinet-status status-${o.status}">${STATUS_LABELS[o.status] || o.status}</span>
       </div>
       ${renderSteps(o.status)}
+      ${readyBlock}
       <p>${escapeHtml(o.message || '—')}</p>
       <div class="cabinet-order-meta">${new Date(o.createdAt).toLocaleString('ru')} · ${escapeHtml(o.contact || '')}</div>
       <button class="cabinet-order-btn" data-repeat="${o.id}">Повторить заказ</button>
-    </article>`
-    )
+    </article>`;
+    })
     .join('');
 
   box.querySelectorAll('[data-repeat]').forEach((btn) => {
@@ -140,6 +154,15 @@ async function loadOrders() {
   renderOrders(orders);
 }
 
+function startOrdersRefresh() {
+  if (ordersRefreshTimer) clearInterval(ordersRefreshTimer);
+  ordersRefreshTimer = setInterval(() => {
+    if (document.visibilityState === 'visible' && getToken()) {
+      loadOrders().catch(() => {});
+    }
+  }, 20000);
+}
+
 function showApp(user) {
   if (pollTimer) clearInterval(pollTimer);
   pollTimer = null;
@@ -150,6 +173,7 @@ function showApp(user) {
   document.getElementById('cabinet-user-name').textContent = user?.name || 'Клиент';
   loadProfile().catch(console.error);
   loadOrders().catch(console.error);
+  startOrdersRefresh();
 }
 
 function loginWithToken(token, user) {
@@ -314,7 +338,10 @@ document.getElementById('cabinet-logout').addEventListener('click', () => {
 });
 
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') pollSessionNow();
+  if (document.visibilityState === 'visible') {
+    pollSessionNow();
+    if (getToken()) loadOrders().catch(() => {});
+  }
 });
 
 window.addEventListener('focus', () => pollSessionNow());
