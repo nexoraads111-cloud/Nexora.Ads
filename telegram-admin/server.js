@@ -94,17 +94,13 @@ async function completeLoginSession(sessionId, from) {
 }
 
 async function sendLoginSuccess(chatId, token, user) {
-  await bot.sendMessage(
-    chatId,
-    `✅ Вход выполнен, ${user.name}!\n\nВернитесь на вкладку с сайтом — кабинет откроется сам.\n\nИли нажмите кнопку ниже:`,
-    {
-      reply_markup: {
-        inline_keyboard: [[
-          { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
-        ]],
-      },
-    }
-  );
+  await bot.sendMessage(chatId, `✅ Вход выполнен, ${user.name}!`, {
+    reply_markup: {
+      inline_keyboard: [[
+        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
+      ]],
+    },
+  });
 }
 
 async function createOrder(body, userId = null) {
@@ -153,10 +149,7 @@ if (bot) {
       return;
     }
 
-    bot.sendMessage(
-      chatId,
-      `👋 NexoraWeb\n\n🔐 Войти в кабинет:\n${SITE_URL}/cabinet.html\n\n📋 /orders — мои заказы`
-    );
+    bot.sendMessage(chatId, `👋 NexoraWeb\n\n📋 /orders — мои заказы`);
   });
 
   bot.onText(/\/orders/, async (msg) => {
