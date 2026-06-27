@@ -138,7 +138,31 @@ function initTelegramWidget() {
   script.setAttribute('data-radius', '12');
   script.setAttribute('data-onauth', 'onTelegramAuth(user)');
   script.setAttribute('data-request-access', 'write');
+  script.onerror = () => showFallback();
   box.appendChild(script);
+  setTimeout(() => {
+    if (!box.querySelector('iframe')) showFallback();
+  }, 4000);
+}
+
+function showFallback() {
+  const fb = document.getElementById('telegram-fallback');
+  if (fb) fb.style.display = 'inline-block';
+}
+
+async function checkApi() {
+  const el = document.getElementById('api-status');
+  try {
+    const res = await fetch(`${NEXORA_API}/health`);
+    const data = await res.json();
+    if (data.ok) {
+      el.textContent = '✅ Сервер подключен';
+      el.style.color = '#86efac';
+    } else throw new Error('bad');
+  } catch {
+    el.textContent = '⚠️ Сервер просыпается (Free Render) — подождите 30 сек и обновите';
+    el.style.color = '#fcd34d';
+  }
 }
 
 document.getElementById('profile-form').addEventListener('submit', async (e) => {
@@ -163,6 +187,7 @@ document.getElementById('cabinet-logout').addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkApi();
   initTelegramWidget();
   const token = getToken();
   if (token) {
