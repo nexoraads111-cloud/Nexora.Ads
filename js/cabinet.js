@@ -6,8 +6,10 @@ const STATUS_LABELS = {
 
 const TOKEN_KEY = 'nexora_cabinet_token';
 const USER_KEY = 'nexora_cabinet_user';
+const PENDING_SESSION_KEY = 'nexora_pending_login_session';
 
 let pollTimer = null;
+let activeSessionId = null;
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -21,6 +23,33 @@ function setSession(token, user) {
 function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+}
+
+function savePendingSession(sessionId) {
+  localStorage.setItem(
+    PENDING_SESSION_KEY,
+    JSON.stringify({ sessionId, startedAt: Date.now() })
+  );
+}
+
+function loadPendingSession() {
+  try {
+    const raw = localStorage.getItem(PENDING_SESSION_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data?.sessionId) return null;
+    if (Date.now() - (data.startedAt || 0) > 10 * 60 * 1000) {
+      clearPendingSession();
+      return null;
+    }
+    return data.sessionId;
+  } catch {
+    return null;
+  }
+}
+
+function clearPendingSession() {
+  localStorage.removeItem(PENDING_SESSION_KEY);
 }
 
 function showToast(text) {
@@ -113,6 +142,9 @@ async function loadOrders() {
 
 function showApp(user) {
   if (pollTimer) clearInterval(pollTimer);
+  pollTimer = null;
+  activeSessionId = null;
+  clearPendingSession();
   document.getElementById('cabinet-login').style.display = 'none';
   document.getElementById('cabinet-app').style.display = 'block';
   document.getElementById('cabinet-user-name').textContent = user?.name || 'Клиент';
@@ -126,49 +158,82 @@ function loginWithToken(token, user) {
   showApp(user);
 }
 
-function pollSession(sessionId) {
-  const waitEl = document.getElementById('login-wait');
-  waitEl.style.display = 'block';
-
-  let tries = 0;
-  pollTimer = setInterval(async () => {
-    tries += 1;
-    try {
-      const res = await fetch(`${NEXORA_API}/auth/session/${sessionId}`);
-      const data = await res.json();
-      if (data.status === 'ok' && data.token) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-        loginWithToken(data.token, data.user);
-      } else if (data.status === 'expired' || tries > 90) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-        waitEl.textContent = '❌ Время истекло. Нажмите «Войти» снова.';
-      }
-    } catch (e) {
-      console.warn('poll', e);
-    }
-  }, 2000);
+async function checkSessionOnce(sessionId) {
+  const res = await fetch(`${NEXORA_API}/auth/session/${sessionId}`);
+  return res.json();
 }
 
-async function startTelegramLogin() {
+async function pollSessionNow() {
+  if (!activeSessionId) return false;
+  const waitEl = document.getElementById('login-wait');
+  try {
+    const data = await checkSessionOnce(activeSessionId);
+    if (data.status === 'ok' && data.token) {
+      loginWithToken(data.token, data.user);
+      return true;
+    }
+    if (data.status === 'expired') {
+      clearPendingSession();
+      activeSessionId = null;
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = null;
+      waitEl.textContent = '❌ Время истекло. Нажмите «Войти» снова.';
+      document.getElementById('btn-telegram-login').disabled = false;
+    }
+  } catch (e) {
+    console.warn('poll', e);
+  }
+  return false;
+}
+
+function pollSession(sessionId) {
+  activeSessionId = sessionId;
+  const waitEl = document.getElementById('login-wait');
   const btn = document.getElementById('btn-telegram-login');
-  btn.disabled = true;
+  waitEl.style.display = 'block';
+  waitEl.textContent = '⏳ Ждём подтверждения в Telegram... Вернитесь на эту вкладку после Start.';
+  if (btn) btn.disabled = true;
+
+  if (pollTimer) clearInterval(pollTimer);
+
+  let tries = 0;
+  const tick = async () => {
+    tries += 1;
+    const done = await pollSessionNow();
+    if (done) return;
+    if (tries > 120) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+      waitEl.textContent = '❌ Время истекло. Нажмите «Войти» снова.';
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  tick();
+  pollTimer = setInterval(tick, 2000);
+}
+
+function openTelegramBot(botUrl) {
+  const link = document.createElement('a');
+  link.href = botUrl;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+async function beginTelegramLogin() {
+  const btn = document.getElementById('btn-telegram-login');
+  if (btn) btn.disabled = true;
   try {
     const data = await api('auth/session', { method: 'POST', body: '{}' });
-    const botUrl = data.botUrl;
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile) {
-      location.href = botUrl;
-    } else {
-      const win = window.open(botUrl, '_blank');
-      if (!win) location.href = botUrl;
-    }
-    document.getElementById('login-wait').style.display = 'block';
+    savePendingSession(data.sessionId);
+    openTelegramBot(data.botUrl);
     pollSession(data.sessionId);
   } catch (e) {
     showToast('Ошибка: ' + e.message);
-    btn.disabled = false;
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -198,19 +263,33 @@ function tryTokenFromUrl() {
   return true;
 }
 
+function resumePendingLogin() {
+  const sessionId = loadPendingSession();
+  if (!sessionId || getToken()) return;
+  pollSession(sessionId);
+}
+
 function detectStalePage() {
   if (document.getElementById('telegram-login-container')) {
     const box = document.getElementById('cabinet-login');
     if (box) {
       box.insertAdjacentHTML(
         'beforeend',
-        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="cabinet.html?v=4" style="color:#38bdf8">Обновить кабинет</a></p>'
+        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="cabinet.html?v=5" style="color:#38bdf8">Обновить кабинет</a></p>'
       );
     }
   }
 }
 
-document.getElementById('btn-telegram-login').addEventListener('click', startTelegramLogin);
+document.getElementById('btn-telegram-login').addEventListener('click', beginTelegramLogin);
+
+const directBotLink = document.getElementById('telegram-direct-link');
+if (directBotLink) {
+  directBotLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    beginTelegramLogin();
+  });
+}
 
 document.getElementById('profile-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -230,7 +309,17 @@ document.getElementById('profile-form').addEventListener('submit', async (e) => 
 
 document.getElementById('cabinet-logout').addEventListener('click', () => {
   clearSession();
+  clearPendingSession();
   location.reload();
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') pollSessionNow();
+});
+
+window.addEventListener('focus', () => pollSessionNow());
+window.addEventListener('pageshow', () => {
+  if (!getToken()) resumePendingLogin();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -242,8 +331,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const user = JSON.parse(localStorage.getItem(USER_KEY) || '{}');
       showApp(user);
+      return;
     } catch {
       clearSession();
     }
   }
+  resumePendingLogin();
 });

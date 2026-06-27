@@ -96,7 +96,7 @@ async function completeLoginSession(sessionId, from) {
 async function sendLoginSuccess(chatId, token, user) {
   await bot.sendMessage(
     chatId,
-    `✅ Вход выполнен, ${user.name}!\n\nНажмите кнопку — откроется ваш кабинет:`,
+    `✅ Вход выполнен, ${user.name}!\n\nВернитесь на вкладку с сайтом — кабинет откроется сам.\n\nИли нажмите кнопку ниже:`,
     {
       reply_markup: {
         inline_keyboard: [[
@@ -236,13 +236,15 @@ app.post('/api/auth/session', async (req, res) => {
 app.get('/api/auth/session/:id', async (req, res) => {
   try {
     const sessionId = req.params.id;
-    let session = loginSessionsMem.get(sessionId);
-    if (!session) session = await fb.getLoginSession(sessionId);
+    const mem = loginSessionsMem.get(sessionId);
+    const remote = await fb.getLoginSession(sessionId).catch(() => null);
+    const session = [mem, remote].find((s) => s?.status === 'ok') || mem || remote;
     if (!session) return res.json({ status: 'pending' });
     if (session.expiresAt && Date.now() > session.expiresAt && session.status !== 'ok') {
       return res.json({ status: 'expired' });
     }
     if (session.status === 'ok') {
+      loginSessionsMem.set(sessionId, session);
       return res.json({ status: 'ok', token: session.token, user: session.user });
     }
     res.json({ status: 'pending' });
