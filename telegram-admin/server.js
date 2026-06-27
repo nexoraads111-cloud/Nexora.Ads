@@ -1,4 +1,5 @@
 require('dotenv').config();
+const crypto = require('crypto');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -59,6 +60,39 @@ function formatOrderNotify(order) {
   ].join('\n');
 }
 
+const loginSessionsMem = new Map();
+
+function newSessionId() {
+  return crypto.randomBytes(8).toString('hex');
+}
+
+async function buildUserFromTelegram(from) {
+  const userId = String(from.id);
+  const profile = {
+    userId,
+    telegramId: from.id,
+    firstName: from.first_name || '',
+    lastName: from.last_name || '',
+    username: from.username || '',
+    name: [from.first_name, from.last_name].filter(Boolean).join(' ') || from.username || 'Клиент',
+    createdAt: Date.now(),
+  };
+  const existing = await fb.getUser(userId);
+  const merged = { ...(existing || {}), ...profile };
+  if (!merged.phone) merged.phone = existing?.phone || (from.username ? `@${from.username}` : '');
+  await fb.saveUser(userId, merged);
+  const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
+  return { token, user: merged };
+}
+
+async function completeLoginSession(sessionId, from) {
+  const { token, user } = await buildUserFromTelegram(from);
+  const session = { status: 'ok', token, user, telegramId: from.id, completedAt: Date.now() };
+  loginSessionsMem.set(sessionId, session);
+  await fb.saveLoginSession(sessionId, session).catch(() => {});
+  return { token, user };
+}
+
 async function createOrder(body, userId = null) {
   const id = `o_${Date.now()}`;
   const order = {
@@ -78,10 +112,40 @@ async function createOrder(body, userId = null) {
 }
 
 if (bot) {
-  bot.onText(/\/start/, (msg) => {
+  bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
+    const payload = (match[1] || '').trim();
+    const chatId = msg.chat.id;
+
+    if (payload.startsWith('login_')) {
+      const sessionId = payload.slice(6);
+      try {
+        const mem = loginSessionsMem.get(sessionId);
+        const fbSess = mem || (await fb.getLoginSession(sessionId));
+        if (!fbSess || fbSess.status === 'expired') {
+          return bot.sendMessage(chatId, '❌ Сессия истекла. Вернитесь на сайт и нажмите «Войти» снова.');
+        }
+        const { token, user } = await completeLoginSession(sessionId, msg.from);
+        await bot.sendMessage(
+          chatId,
+          `✅ Вход выполнен, ${user.name}!\n\nВернитесь на сайт — кабинет откроется автоматически.\n\nИли нажмите кнопку ниже:`,
+          {
+            reply_markup: {
+              inline_keyboard: [[
+                { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
+              ]],
+            },
+          }
+        );
+      } catch (e) {
+        console.error('login session', e);
+        bot.sendMessage(chatId, '❌ Ошибка входа. Попробуйте снова с сайта.');
+      }
+      return;
+    }
+
     bot.sendMessage(
-      msg.chat.id,
-      `👋 NexoraWeb\n\nВойти в кабинет: ${SITE_URL}/cabinet.html\n\nКоманды:\n/orders — мои заказы\n/help — помощь`
+      chatId,
+      `👋 NexoraWeb\n\n🔐 Войти в кабинет:\n${SITE_URL}/cabinet.html\n\n📋 /orders — мои заказы`
     );
   });
 
@@ -141,6 +205,40 @@ app.get('/api/health', (req, res) => {
     firebase: fb.useRemote() ? 'cloud' : 'local',
     botUsername: BOT_USERNAME,
   });
+});
+
+app.post('/api/auth/session', async (req, res) => {
+  try {
+    const sessionId = newSessionId();
+    const session = { status: 'pending', createdAt: Date.now(), expiresAt: Date.now() + 10 * 60 * 1000 };
+    loginSessionsMem.set(sessionId, session);
+    await fb.saveLoginSession(sessionId, session).catch(() => {});
+    res.json({
+      ok: true,
+      sessionId,
+      botUrl: `https://t.me/${BOT_USERNAME}?start=login_${sessionId}`,
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/auth/session/:id', async (req, res) => {
+  try {
+    const sessionId = req.params.id;
+    let session = loginSessionsMem.get(sessionId);
+    if (!session) session = await fb.getLoginSession(sessionId);
+    if (!session) return res.json({ status: 'pending' });
+    if (session.expiresAt && Date.now() > session.expiresAt && session.status !== 'ok') {
+      return res.json({ status: 'expired' });
+    }
+    if (session.status === 'ok') {
+      return res.json({ status: 'ok', token: session.token, user: session.user });
+    }
+    res.json({ status: 'pending' });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 app.post('/api/auth/telegram', async (req, res) => {

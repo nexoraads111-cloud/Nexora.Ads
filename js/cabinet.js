@@ -7,6 +7,8 @@ const STATUS_LABELS = {
 const TOKEN_KEY = 'nexora_cabinet_token';
 const USER_KEY = 'nexora_cabinet_user';
 
+let pollTimer = null;
+
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -110,6 +112,7 @@ async function loadOrders() {
 }
 
 function showApp(user) {
+  if (pollTimer) clearInterval(pollTimer);
   document.getElementById('cabinet-login').style.display = 'none';
   document.getElementById('cabinet-app').style.display = 'block';
   document.getElementById('cabinet-user-name').textContent = user?.name || 'Клиент';
@@ -117,37 +120,49 @@ function showApp(user) {
   loadOrders().catch(console.error);
 }
 
-window.onTelegramAuth = async function onTelegramAuth(user) {
-  try {
-    const data = await api('auth/telegram', { method: 'POST', body: JSON.stringify(user) });
-    setSession(data.token, data.user);
-    showToast('✅ Вход выполнен');
-    showApp(data.user);
-  } catch (e) {
-    showToast('Ошибка входа: ' + e.message);
-  }
-};
-
-function initTelegramWidget() {
-  const box = document.getElementById('telegram-login-container');
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://telegram.org/js/telegram-widget.js?22';
-  script.setAttribute('data-telegram-login', NEXORA_BOT);
-  script.setAttribute('data-size', 'large');
-  script.setAttribute('data-radius', '12');
-  script.setAttribute('data-onauth', 'onTelegramAuth(user)');
-  script.setAttribute('data-request-access', 'write');
-  script.onerror = () => showFallback();
-  box.appendChild(script);
-  setTimeout(() => {
-    if (!box.querySelector('iframe')) showFallback();
-  }, 4000);
+function loginWithToken(token, user) {
+  setSession(token, user);
+  showToast('✅ Вход выполнен');
+  showApp(user);
 }
 
-function showFallback() {
-  const fb = document.getElementById('telegram-fallback');
-  if (fb) fb.style.display = 'inline-block';
+function pollSession(sessionId) {
+  const waitEl = document.getElementById('login-wait');
+  waitEl.style.display = 'block';
+
+  let tries = 0;
+  pollTimer = setInterval(async () => {
+    tries += 1;
+    try {
+      const res = await fetch(`${NEXORA_API}/auth/session/${sessionId}`);
+      const data = await res.json();
+      if (data.status === 'ok' && data.token) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+        loginWithToken(data.token, data.user);
+      } else if (data.status === 'expired' || tries > 90) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+        waitEl.textContent = '❌ Время истекло. Нажмите «Войти» снова.';
+      }
+    } catch (e) {
+      console.warn('poll', e);
+    }
+  }, 2000);
+}
+
+async function startTelegramLogin() {
+  const btn = document.getElementById('btn-telegram-login');
+  btn.disabled = true;
+  try {
+    const data = await api('auth/session', { method: 'POST', body: '{}' });
+    window.open(data.botUrl, '_blank');
+    document.getElementById('login-wait').style.display = 'block';
+    pollSession(data.sessionId);
+  } catch (e) {
+    showToast('Ошибка: ' + e.message);
+    btn.disabled = false;
+  }
 }
 
 async function checkApi() {
@@ -160,10 +175,22 @@ async function checkApi() {
       el.style.color = '#86efac';
     } else throw new Error('bad');
   } catch {
-    el.textContent = '⚠️ Сервер просыпается (Free Render) — подождите 30 сек и обновите';
+    el.textContent = '⚠️ Сервер просыпается — подождите 30 сек';
     el.style.color = '#fcd34d';
   }
 }
+
+function tryTokenFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  if (!token) return false;
+  setSession(token, { name: 'Клиент' });
+  history.replaceState({}, '', 'cabinet.html');
+  showApp({ name: 'Клиент' });
+  return true;
+}
+
+document.getElementById('btn-telegram-login').addEventListener('click', startTelegramLogin);
 
 document.getElementById('profile-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -188,7 +215,7 @@ document.getElementById('cabinet-logout').addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   checkApi();
-  initTelegramWidget();
+  if (tryTokenFromUrl()) return;
   const token = getToken();
   if (token) {
     try {

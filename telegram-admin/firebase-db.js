@@ -108,6 +108,14 @@ async function listUserOrders(userId) {
     .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 }
 
+async function getLoginSession(sessionId) {
+  return get(`loginSessions/${sessionId}`);
+}
+
+async function saveLoginSession(sessionId, data) {
+  return set(`loginSessions/${sessionId}`, data);
+}
+
 module.exports = {
   useRemote,
   getUser,
@@ -115,4 +123,6 @@ module.exports = {
   getOrder,
   saveOrder,
   listUserOrders,
+  getLoginSession,
+  saveLoginSession,
 };
