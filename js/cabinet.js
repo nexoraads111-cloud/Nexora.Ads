@@ -299,57 +299,51 @@ function detectStalePage() {
     if (box) {
       box.insertAdjacentHTML(
         'beforeend',
-        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="cabinet.html?v=5" style="color:#38bdf8">Обновить кабинет</a></p>'
+        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="/cabinet/?v=7" style="color:#38bdf8">Обновить кабинет</a></p>'
       );
     }
   }
 }
 
-document.getElementById('btn-telegram-login').addEventListener('click', beginTelegramLogin);
+function initCabinet() {
+  if (window.__cabinetReady) return;
+  window.__cabinetReady = true;
 
-const directBotLink = document.getElementById('telegram-direct-link');
-if (directBotLink) {
-  directBotLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    beginTelegramLogin();
-  });
-}
+  const loginBtn = document.getElementById('btn-telegram-login');
+  if (!loginBtn) return;
 
-document.getElementById('profile-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  try {
-    await api('profile', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        name: document.getElementById('profile-name').value.trim(),
-        phone: document.getElementById('profile-phone').value.trim(),
-      }),
+  loginBtn.addEventListener('click', beginTelegramLogin);
+
+  const directBotLink = document.getElementById('telegram-direct-link');
+  if (directBotLink) {
+    directBotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      beginTelegramLogin();
     });
-    showToast('✅ Сохранено');
-  } catch (err) {
-    showToast('Ошибка: ' + err.message);
   }
-});
 
-document.getElementById('cabinet-logout').addEventListener('click', () => {
-  clearSession();
-  clearPendingSession();
-  location.reload();
-});
+  document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      await api('profile', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          name: document.getElementById('profile-name').value.trim(),
+          phone: document.getElementById('profile-phone').value.trim(),
+        }),
+      });
+      showToast('✅ Сохранено');
+    } catch (err) {
+      showToast('Ошибка: ' + err.message);
+    }
+  });
 
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    pollSessionNow();
-    if (getToken()) loadOrders().catch(() => {});
-  }
-});
+  document.getElementById('cabinet-logout')?.addEventListener('click', () => {
+    clearSession();
+    clearPendingSession();
+    location.reload();
+  });
 
-window.addEventListener('focus', () => pollSessionNow());
-window.addEventListener('pageshow', () => {
-  if (!getToken()) resumePendingLogin();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
   detectStalePage();
   checkApi();
   if (tryTokenFromUrl()) return;
@@ -364,4 +358,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   resumePendingLogin();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    pollSessionNow();
+    if (getToken()) loadOrders().catch(() => {});
+  }
 });
+
+window.addEventListener('focus', () => pollSessionNow());
+window.addEventListener('pageshow', () => {
+  if (!getToken()) resumePendingLogin();
+});
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCabinet);
+} else {
+  initCabinet();
+}

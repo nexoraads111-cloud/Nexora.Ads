@@ -209,7 +209,7 @@ async function sendLoginSuccess(chatId, token, user) {
   await bot.sendMessage(chatId, `✅ Вход выполнен, ${user.name}!`, {
     reply_markup: {
       inline_keyboard: [[
-        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet?token=${encodeURIComponent(token)}` },
+        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet/?token=${encodeURIComponent(token)}` },
       ]],
     },
   });
