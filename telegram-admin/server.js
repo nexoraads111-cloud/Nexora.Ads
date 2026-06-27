@@ -64,27 +64,6 @@ function formatAdminOrderMessage(order) {
   return lines.join('');
 }
 
-async function notifyClientStatus(order, status) {
-  if (!order.userId || !bot) return;
-  if (status === 'ready') {
-    const text = order.siteUrl
-      ? `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n${order.siteUrl}`
-      : `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n\nОткройте личный кабинет на сайте.`;
-    const buttons = [[{ text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html` }]];
-    if (order.siteUrl) {
-      buttons.unshift([{ text: '🌐 Открыть сайт', url: order.siteUrl }]);
-    }
-    await bot.sendMessage(order.userId, text, { reply_markup: { inline_keyboard: buttons } }).catch(() => {});
-    return;
-  }
-  await bot
-    .sendMessage(
-      order.userId,
-      `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}`
-    )
-    .catch(() => {});
-}
-
 function formatOrderNotify(order) {
   return [
     '🆕 Новый заказ NexoraWeb',
@@ -96,11 +75,17 @@ function formatOrderNotify(order) {
     '',
     order.message || '—',
     order.userId ? `\nTG user: ${order.userId}` : '',
+    !order.userId ? '\n⚠️ Клиент не в боте — попросите нажать Start в @Nexora_loginbot' : '',
   ].join('\n');
 }
 
 const loginSessionsMem = new Map();
 const pendingSiteUrl = new Map();
+
+function extractTelegramUsername(contact) {
+  const m = String(contact || '').match(/@([a-zA-Z0-9_]{5,32})/i);
+  return m ? m[1].toLowerCase() : null;
+}
 
 function normalizeContact(value) {
   return String(value || '')
@@ -115,22 +100,72 @@ function contactMatchesUser(contact, user) {
   const username = normalizeContact(user.username);
   const phone = String(user.phone || user.contact || '').replace(/\D/g, '');
   const contactDigits = String(contact || '').replace(/\D/g, '');
+  const tgFromContact = extractTelegramUsername(contact);
+  if (tgFromContact && username && tgFromContact === username) return true;
   if (username && (c === username || c.includes(username))) return true;
   if (phone && contactDigits && contactDigits.includes(phone.slice(-9))) return true;
   return false;
 }
 
 async function resolveUserIdFromContact(contact) {
+  const tgUser = extractTelegramUsername(contact);
   const users = await fb.listAllUsers();
+  if (tgUser) {
+    const byUsername = users.find((user) => normalizeContact(user.username) === tgUser);
+    if (byUsername) return String(byUsername.userId);
+  }
   const match = users.find((user) => contactMatchesUser(contact, user));
   return match ? String(match.userId) : null;
+}
+
+async function ensureOrderTelegramId(order) {
+  if (order.userId) return String(order.userId);
+  const fromContact = await resolveUserIdFromContact(order.contact);
+  if (fromContact) {
+    order.userId = fromContact;
+    order.updatedAt = Date.now();
+    await fb.saveOrder(order.id, order);
+    return fromContact;
+  }
+  return null;
+}
+
+async function notifyClientStatus(order, status) {
+  if (!bot) return;
+  const chatId = await ensureOrderTelegramId(order);
+  if (!chatId) {
+    console.warn('notify skip: no telegram id', order.id, order.contact);
+    return;
+  }
+  const cabinetUrl = `${SITE_URL}/cabinet`;
+  if (status === 'ready') {
+    const text = order.siteUrl
+      ? `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n${order.siteUrl}`
+      : `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»`;
+    const buttons = [[{ text: '📂 Открыть кабинет', url: cabinetUrl }]];
+    if (order.siteUrl) {
+      buttons.unshift([{ text: '🌐 Открыть сайт', url: order.siteUrl }]);
+    }
+    await bot.sendMessage(chatId, text, { reply_markup: { inline_keyboard: buttons } }).catch((e) => {
+      console.warn('notify ready:', e.message);
+    });
+    return;
+  }
+  await bot
+    .sendMessage(chatId, `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}\n\n${cabinetUrl}`)
+    .catch((e) => console.warn('notify status:', e.message));
 }
 
 async function linkOrdersToUser(userId, user) {
   const orders = await fb.listAllOrders();
   for (const order of orders) {
     if (order.userId) continue;
-    if (contactMatchesUser(order.contact, user)) {
+    const byContact = contactMatchesUser(order.contact, user);
+    const byUsername =
+      order.contactUsername &&
+      user.username &&
+      order.contactUsername === normalizeContact(user.username);
+    if (byContact || byUsername) {
       order.userId = String(userId);
       order.updatedAt = Date.now();
       await fb.saveOrder(order.id, order);
@@ -174,7 +209,7 @@ async function sendLoginSuccess(chatId, token, user) {
   await bot.sendMessage(chatId, `✅ Вход выполнен, ${user.name}!`, {
     reply_markup: {
       inline_keyboard: [[
-        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
+        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet?token=${encodeURIComponent(token)}` },
       ]],
     },
   });
@@ -191,6 +226,7 @@ async function createOrder(body, userId = null) {
     userId: resolvedUserId,
     name: body.name || 'Клиент',
     contact: body.contact || '',
+    contactUsername: extractTelegramUsername(body.contact || ''),
     plan: body.plan || body.company || 'Заявка',
     message: body.message || body.text || '',
     status: 'accepted',
@@ -246,7 +282,7 @@ if (bot) {
           `• ${o.plan} — ${STATUS_LABELS[o.status] || o.status}\n  ${new Date(o.createdAt).toLocaleDateString('ru')}`
       )
       .join('\n\n');
-    bot.sendMessage(msg.chat.id, `📋 Ваши заказы:\n\n${text}\n\n${SITE_URL}/cabinet.html`);
+    bot.sendMessage(msg.chat.id, `📋 Ваши заказы:\n\n${text}\n\n${SITE_URL}/cabinet`);
   });
 
   bot.on('callback_query', async (cq) => {

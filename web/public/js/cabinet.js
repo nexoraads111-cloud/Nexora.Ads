@@ -299,7 +299,7 @@ function detectStalePage() {
     if (box) {
       box.insertAdjacentHTML(
         'beforeend',
-        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="cabinet.html?v=5" style="color:#38bdf8">Обновить кабинет</a></p>'
+        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="/cabinet/?v=7" style="color:#38bdf8">Обновить кабинет</a></p>'
       );
     }
   }

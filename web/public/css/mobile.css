@@ -1,0 +1,14 @@
+/* NexoraWeb premium mobile fixes */
+@media (max-width: 720px){
+  html, body{max-width:100%; overflow-x:hidden;}
+  .modal{align-items:flex-start!important; padding:12px!important; overflow-y:auto!important;}
+  .modal-box,.donate-box{width:100%!important; max-width:440px!important; max-height:calc(100vh - 24px)!important; overflow-y:auto!important; border-radius:24px!important;}
+  .donate-grid{grid-template-columns:1fr!important; padding:14px!important;}
+  .form{gap:10px!important;}
+  input,textarea,select{font-size:16px!important; min-height:48px!important;}
+  .btn{width:100%;}
+  .section{padding-left:0!important; padding-right:0!important;}
+  .nx-hero-grid,.hero-main-grid{grid-template-columns:1fr!important; min-height:auto!important;}
+  .nx-visual{min-height:380px!important;}
+  .nx-title,.title{font-size:clamp(34px,11vw,46px)!important;}
+}
