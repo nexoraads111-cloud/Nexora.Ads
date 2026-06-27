@@ -156,7 +156,14 @@ async function startTelegramLogin() {
   btn.disabled = true;
   try {
     const data = await api('auth/session', { method: 'POST', body: '{}' });
-    window.open(data.botUrl, '_blank');
+    const botUrl = data.botUrl;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+      location.href = botUrl;
+    } else {
+      const win = window.open(botUrl, '_blank');
+      if (!win) location.href = botUrl;
+    }
     document.getElementById('login-wait').style.display = 'block';
     pollSession(data.sessionId);
   } catch (e) {
@@ -187,7 +194,20 @@ function tryTokenFromUrl() {
   setSession(token, { name: 'Клиент' });
   history.replaceState({}, '', 'cabinet.html');
   showApp({ name: 'Клиент' });
+  loadProfile().catch(() => {});
   return true;
+}
+
+function detectStalePage() {
+  if (document.getElementById('telegram-login-container')) {
+    const box = document.getElementById('cabinet-login');
+    if (box) {
+      box.insertAdjacentHTML(
+        'beforeend',
+        '<p style="color:#fca5a5;font-size:14px;margin-top:12px">Устаревшая версия страницы. <a href="cabinet.html?v=4" style="color:#38bdf8">Обновить кабинет</a></p>'
+      );
+    }
+  }
 }
 
 document.getElementById('btn-telegram-login').addEventListener('click', startTelegramLogin);
@@ -214,6 +234,7 @@ document.getElementById('cabinet-logout').addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  detectStalePage();
   checkApi();
   if (tryTokenFromUrl()) return;
   const token = getToken();

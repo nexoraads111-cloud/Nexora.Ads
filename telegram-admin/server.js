@@ -93,6 +93,20 @@ async function completeLoginSession(sessionId, from) {
   return { token, user };
 }
 
+async function sendLoginSuccess(chatId, token, user) {
+  await bot.sendMessage(
+    chatId,
+    `✅ Вход выполнен, ${user.name}!\n\nНажмите кнопку — откроется ваш кабинет:`,
+    {
+      reply_markup: {
+        inline_keyboard: [[
+          { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
+        ]],
+      },
+    }
+  );
+}
+
 async function createOrder(body, userId = null) {
   const id = `o_${Date.now()}`;
   const order = {
@@ -119,26 +133,22 @@ if (bot) {
     if (payload.startsWith('login_')) {
       const sessionId = payload.slice(6);
       try {
-        const mem = loginSessionsMem.get(sessionId);
-        const fbSess = mem || (await fb.getLoginSession(sessionId));
-        if (!fbSess || fbSess.status === 'expired') {
-          return bot.sendMessage(chatId, '❌ Сессия истекла. Вернитесь на сайт и нажмите «Войти» снова.');
-        }
         const { token, user } = await completeLoginSession(sessionId, msg.from);
-        await bot.sendMessage(
-          chatId,
-          `✅ Вход выполнен, ${user.name}!\n\nВернитесь на сайт — кабинет откроется автоматически.\n\nИли нажмите кнопку ниже:`,
-          {
-            reply_markup: {
-              inline_keyboard: [[
-                { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet.html?token=${encodeURIComponent(token)}` },
-              ]],
-            },
-          }
-        );
+        await sendLoginSuccess(chatId, token, user);
       } catch (e) {
         console.error('login session', e);
-        bot.sendMessage(chatId, '❌ Ошибка входа. Попробуйте снова с сайта.');
+        bot.sendMessage(chatId, '❌ Ошибка входа. Нажмите /start cabinet на сайте снова.');
+      }
+      return;
+    }
+
+    if (payload === 'cabinet' || payload === 'login') {
+      try {
+        const { token, user } = await buildUserFromTelegram(msg.from);
+        await sendLoginSuccess(chatId, token, user);
+      } catch (e) {
+        console.error('cabinet login', e);
+        bot.sendMessage(chatId, '❌ Ошибка входа.');
       }
       return;
     }

@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <title>Личный кабинет — NexoraWeb</title>
 <link href="Public/Image/apple-touch-icon-57x57.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 <link href="css/mobile.css" rel="stylesheet"/>
-<link href="css/cabinet.css" rel="stylesheet"/>
+<link href="css/cabinet.css?v=4" rel="stylesheet"/>
 </head>
 <body>
 <div class="cabinet-page">
@@ -28,6 +29,8 @@
         Войти через Telegram
       </button>
       <p id="login-wait" class="cabinet-wait" style="display:none">⏳ Ждём подтверждения в Telegram... Не закрывайте эту страницу.</p>
+      <p style="font-size:13px;color:#64748b;margin-top:8px">Или откройте бота напрямую:</p>
+      <a href="https://t.me/Nexora_loginbot?start=cabinet" target="_blank" rel="noopener" class="cabinet-tg-link">@Nexora_loginbot → Start</a>
     </div>
 
     <div id="cabinet-app" style="display:none">
@@ -53,7 +56,7 @@
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<script src="js/nexora-config.js"></script>
-<script src="js/cabinet.js"></script>
+<script src="js/nexora-config.js?v=4"></script>
+<script src="js/cabinet.js?v=4"></script>
 </body>
 </html>

@@ -28,6 +28,8 @@
 .cabinet-steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .cabinet-step{font-size:11px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.05);color:#94a3b8}
 .cabinet-step.active{background:rgba(99,102,241,.2);color:#c7d2fe}
+.cabinet-tg-link{color:#38bdf8;text-decoration:none;font-weight:600}
+.cabinet-tg-link:hover{text-decoration:underline}
 .cabinet-tg-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border:0;border-radius:14px;background:#229ED9;color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:transform .15s,opacity .15s}
 .cabinet-tg-btn:hover{transform:translateY(-1px);opacity:.95}
 .cabinet-tg-btn:disabled{opacity:.6;cursor:wait}
