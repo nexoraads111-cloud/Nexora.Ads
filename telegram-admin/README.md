@@ -1,26 +1,44 @@
-# Nexora Telegram Admin (local)
+# Nexora Cabinet API
 
-Simple local admin app to receive reviews via Telegram bot and approve/reject them.
+Бэкенд для личного кабинета: Telegram-вход, заказы, Firebase.
 
-Setup:
-
-1. Create a Telegram bot with @BotFather and get its token.
-2. In `telegram-admin/.env` create:
-
-```
-BOT_TOKEN=123456:ABC-DEF
-```
-
-3. Install dependencies and run:
+## Быстрый старт
 
 ```bash
 cd telegram-admin
+cp .env.example .env   # заполните токены
 npm install
 npm start
 ```
 
-4. Open `http://localhost:3000` to see pending reviews. When a user sends a message to the bot, it appears here. Approve to add to `reviews.json` (the server will commit and try to push).
+## Настройка Telegram
 
-Notes:
-- The server uses simple-git to commit and push; ensure your repo has push access configured.
-- This app expects to run locally (polling bot). For production, consider webhooks and a hosted server.
+1. Бот: **@Nexora_loginbot**
+2. В @BotFather: `/setdomain` → `nexoraads.online` (для виджета входа на сайте)
+3. Напишите боту `/start` с **админ-аккаунта** (ID `6057196483`), чтобы получать уведомления
+
+## Firebase
+
+1. [console.firebase.google.com](https://console.firebase.google.com) → проект **nexorakabinetr**
+2. Realtime Database → **Rules** → вставьте `firebase/database.rules.dev.json` (для старта)
+3. В `.env`: `FIREBASE_DATABASE_URL=https://nexorakabinetr-default-rtdb.europe-west1.firebasedatabase.app`
+
+## Деплой (Render)
+
+Используйте `render.yaml` в корне репозитория. После деплоя URL будет в `js/nexora-config.js`.
+
+## API
+
+| Метод | Путь | Описание |
+|-------|------|----------|
+| POST | `/api/auth/telegram` | Вход через Telegram Widget |
+| GET | `/api/profile` | Профиль (Bearer token) |
+| PATCH | `/api/profile` | Сохранить имя/телефон |
+| GET | `/api/orders` | Мои заказы |
+| POST | `/api/orders` | Новая заявка |
+| POST | `/api/orders/repeat` | Повтор заказа |
+| POST | `/api/send-application` | Заявка с главной |
+
+## Статусы заказа
+
+`Принят` → `В работе` → `Готов` (кнопки в Telegram у админа)

@@ -1,172 +1,248 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
 const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
-const simpleGit = require('simple-git');
+const fb = require('./firebase-db');
+const {
+  STATUSES,
+  STATUS_LABELS,
+  signToken,
+  verifyTelegramLogin,
+  authMiddleware,
+} = require('./auth');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-const REVIEWS_FILE = path.join(__dirname, '..', 'reviews.json');
-const PENDING_FILE = path.join(__dirname, 'pending.json');
-
-function loadPending(){try{return JSON.parse(fs.readFileSync(PENDING_FILE));}catch(e){return []}}
-function savePending(data){fs.writeFileSync(PENDING_FILE, JSON.stringify(data,null,2))}
-function loadReviews(){try{return JSON.parse(fs.readFileSync(REVIEWS_FILE));}catch(e){return []}}
-function saveReviews(data){fs.writeFileSync(REVIEWS_FILE, JSON.stringify(data,null,2))}
-
-const BOT_TOKEN = process.env.BOT_TOKEN; // required
-const ADMIN_ID = process.env.ADMIN_ID; // admin who can approve via inline buttons
-const MANAGER_CHAT_ID = process.env.MANAGER_CHAT_ID; // optional manager chat
-if(!BOT_TOKEN){console.warn('BOT_TOKEN not set in .env — bot will not start polling')}
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const ADMIN_ID = String(process.env.ADMIN_ID || '6057196483');
+const BOT_USERNAME = process.env.BOT_USERNAME || 'Nexora_loginbot';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me-in-production';
+const SITE_URL = (process.env.SITE_URL || 'https://nexoraads.online').replace(/\/$/, '');
 
 let bot;
-if(BOT_TOKEN){
-  bot = new TelegramBot(BOT_TOKEN, {polling: true});
-  bot.on('message', msg =>{
-    const raw = (msg.text||'').trim();
-    let text = raw;
-    const pending = loadPending();
-    const fromName = `${msg.from.first_name||''} ${msg.from.last_name||''}`.trim();
-    // support deep link: /start <payload>
-    if(raw.startsWith('/start')){
-      const payload = raw.slice(6).trim();
-      try{
-        const decoded = decodeURIComponent(payload);
-        const obj = JSON.parse(decoded);
-        text = obj.text || obj.message || '';
-      }catch(e){
-        // fallback to raw
-      }
-    }
-    const entry = {
-      id: Date.now(),
-      fromId: msg.from.id,
-      name: fromName || msg.from.username || 'Клиент',
-      username: msg.from.username||'',
-      text,
-      createdAt: Date.now()
-    };
-    pending.unshift(entry);
-    savePending(pending);
-    bot.sendMessage(msg.chat.id, 'Спасибо! Ваш отзыв отправлен менеджеру и ожидает проверки.');
-    console.log('New pending review saved', entry.id);
-    // notify manager chat (with inline approve/reject) if configured
-    if(MANAGER_CHAT_ID){
-      const textNotify = `Новая заявка/отзыв от ${entry.name}\n\n${entry.text}`;
-      const opts = {
-        reply_markup: {
-          inline_keyboard: [[
-            {text:'✅ Approve', callback_data:`approve:${entry.id}`},
-            {text:'❌ Reject', callback_data:`reject:${entry.id}`}
-          ]]
-        }
-      };
-      try{bot.sendMessage(MANAGER_CHAT_ID, textNotify, opts);}catch(e){console.warn('notify manager failed',e.message)}
-    }
+if (BOT_TOKEN) {
+  bot = new TelegramBot(BOT_TOKEN, { polling: true });
+  console.log(`🤖 Bot @${BOT_USERNAME} started`);
+}
+
+function notifyAdmin(text, opts = {}) {
+  if (!bot) return;
+  bot.sendMessage(ADMIN_ID, text, opts).catch((e) => console.warn('notify:', e.message));
+}
+
+function statusKeyboard(orderId, current) {
+  const idx = STATUSES.indexOf(current);
+  const next = STATUSES[Math.min(idx + 1, STATUSES.length - 1)];
+  const buttons = [];
+  if (idx < STATUSES.length - 1) {
+    buttons.push({ text: `→ ${STATUS_LABELS[next]}`, callback_data: `status:${orderId}:${next}` });
+  }
+  buttons.push({ text: '✅ Готов', callback_data: `status:${orderId}:ready` });
+  return { reply_markup: { inline_keyboard: [buttons] } };
+}
+
+function formatOrderNotify(order) {
+  return [
+    '🆕 Новый заказ NexoraWeb',
+    `ID: ${order.id}`,
+    `Клиент: ${order.name || '—'}`,
+    `Контакт: ${order.contact || '—'}`,
+    `Тариф: ${order.plan || '—'}`,
+    `Статус: ${STATUS_LABELS[order.status] || order.status}`,
+    '',
+    order.message || '—',
+    order.userId ? `\nTG user: ${order.userId}` : '',
+  ].join('\n');
+}
+
+async function createOrder(body, userId = null) {
+  const id = `o_${Date.now()}`;
+  const order = {
+    id,
+    userId: userId ? String(userId) : body.userId ? String(body.userId) : null,
+    name: body.name || 'Клиент',
+    contact: body.contact || '',
+    plan: body.plan || body.company || 'Заявка',
+    message: body.message || body.text || '',
+    status: 'accepted',
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
+  await fb.saveOrder(id, order);
+  notifyAdmin(formatOrderNotify(order), statusKeyboard(id, order.status));
+  return order;
+}
+
+if (bot) {
+  bot.onText(/\/start/, (msg) => {
+    bot.sendMessage(
+      msg.chat.id,
+      `👋 NexoraWeb\n\nВойти в кабинет: ${SITE_URL}/cabinet.html\n\nКоманды:\n/orders — мои заказы\n/help — помощь`
+    );
   });
 
-  // handle approve/reject from inline buttons
+  bot.onText(/\/orders/, async (msg) => {
+    const orders = await fb.listUserOrders(msg.from.id);
+    if (!orders.length) {
+      return bot.sendMessage(msg.chat.id, 'Заказов пока нет. Оформите заявку на сайте.');
+    }
+    const text = orders
+      .slice(0, 5)
+      .map(
+        (o) =>
+          `• ${o.plan} — ${STATUS_LABELS[o.status] || o.status}\n  ${new Date(o.createdAt).toLocaleDateString('ru')}`
+      )
+      .join('\n\n');
+    bot.sendMessage(msg.chat.id, `📋 Ваши заказы:\n\n${text}\n\n${SITE_URL}/cabinet.html`);
+  });
+
   bot.on('callback_query', async (cq) => {
-    try{
-      const data = cq.data||'';
-      const fromId = cq.from?.id;
-      // only allow admin/manager
-      if(String(fromId)!==String(ADMIN_ID) && String(fromId)!==String(MANAGER_CHAT_ID)){
-        return bot.answerCallbackQuery(cq.id,{text:'Нет доступа'});
+    try {
+      if (String(cq.from?.id) !== ADMIN_ID) {
+        return bot.answerCallbackQuery(cq.id, { text: 'Нет доступа' });
       }
-      if(data.startsWith('approve:')){
-        const id = Number(data.split(':')[1]);
-        // call approve flow
-        const pending = loadPending();
-        const idx = pending.findIndex(p=>p.id==id);
-        if(idx===-1) return bot.answerCallbackQuery(cq.id,{text:'Заявка не найдена'});
-        const item = pending[idx];
-        const reviews = loadReviews();
-        const newId = (reviews.reduce((a,b)=>Math.max(a,b.id||0),0)||0)+1;
-        const review = {id:newId,name:item.name||'Клиент',title:`Отзыв от ${item.name||'клиент'}`,type:'Создание сайта',rating:5,text:item.text||'',createdAt:Date.now()};
-        reviews.push(review); saveReviews(reviews);
-        pending.splice(idx,1); savePending(pending);
-        const git = simpleGit(path.join(__dirname,'..'));
-        await git.add('reviews.json'); await git.commit(`Add approved review ${review.id} from Telegram`);
-        try{await git.push();}catch(e){console.warn('git push failed',e.message)}
-        if(item.fromId) bot.sendMessage(item.fromId,'Ваш отзыв опубликован. Спасибо!');
-        bot.editMessageText(`✅ Approved by ${cq.from.first_name||'admin'}`,{chat_id:cq.message.chat.id,message_id:cq.message.message_id});
-        bot.answerCallbackQuery(cq.id,{text:'Approved'});
-      }else if(data.startsWith('reject:')){
-        const id = Number(data.split(':')[1]);
-        let pending = loadPending();
-        const idx = pending.findIndex(p=>p.id==id);
-        if(idx===-1) return bot.answerCallbackQuery(cq.id,{text:'Заявка не найдена'});
-        const item = pending[idx]; pending.splice(idx,1); savePending(pending);
-        if(item.fromId) bot.sendMessage(item.fromId,'Ваш отзыв отклонён менеджером.');
-        bot.editMessageText(`❌ Rejected by ${cq.from.first_name||'admin'}`,{chat_id:cq.message.chat.id,message_id:cq.message.message_id});
-        bot.answerCallbackQuery(cq.id,{text:'Rejected'});
+      const [action, orderId, status] = (cq.data || '').split(':');
+      if (action !== 'status' || !orderId) return;
+
+      const order = await fb.getOrder(orderId);
+      if (!order) return bot.answerCallbackQuery(cq.id, { text: 'Не найден' });
+
+      order.status = status;
+      order.updatedAt = Date.now();
+      await fb.saveOrder(orderId, order);
+
+      if (order.userId) {
+        bot.sendMessage(
+          order.userId,
+          `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}`
+        );
       }
-    }catch(e){console.error('callback_query error',e);}
+
+      bot.editMessageText(`✅ ${STATUS_LABELS[status]}: ${order.plan}`, {
+        chat_id: cq.message.chat.id,
+        message_id: cq.message.message_id,
+      });
+      bot.answerCallbackQuery(cq.id, { text: STATUS_LABELS[status] });
+    } catch (e) {
+      console.error('callback', e);
+      bot.answerCallbackQuery(cq.id, { text: 'Ошибка' });
+    }
   });
 }
 
-app.get('/api/pending', (req,res)=>{res.json(loadPending())});
+app.get('/api/health', (req, res) => {
+  res.json({
+    ok: true,
+    bot: Boolean(BOT_TOKEN),
+    firebase: fb.useRemote() ? 'cloud' : 'local',
+    botUsername: BOT_USERNAME,
+  });
+});
 
-app.post('/api/approve', async (req,res)=>{
-  try{
-    const {id, title, rating, type} = req.body;
-    let pending = loadPending();
-    const idx = pending.findIndex(p=>p.id==id);
-    if(idx===-1) return res.status(404).json({error:'not found'});
-    const item = pending[idx];
-    // create review
-    const reviews = loadReviews();
-    const newId = (reviews.reduce((a,b)=>Math.max(a,b.id||0),0)||0)+1;
-    const review = {
-      id: newId,
-      name: item.name||'Клиент',
-      title: title||'Отзыв',
-      type: type||'Создание сайта',
-      rating: Number(rating)||5,
-      text: item.text||'',
-      createdAt: Date.now()
+app.post('/api/auth/telegram', async (req, res) => {
+  try {
+    const data = req.body || {};
+    if (!BOT_TOKEN || !verifyTelegramLogin(data, BOT_TOKEN)) {
+      return res.status(401).json({ error: 'invalid_telegram_auth' });
+    }
+
+    const userId = String(data.id);
+    const profile = {
+      userId,
+      telegramId: data.id,
+      firstName: data.first_name || '',
+      lastName: data.last_name || '',
+      username: data.username || '',
+      name: [data.first_name, data.last_name].filter(Boolean).join(' ') || data.username || 'Клиент',
+      photoUrl: data.photo_url || '',
+      createdAt: Date.now(),
     };
-    reviews.push(review);
-    saveReviews(reviews);
-    // remove pending
-    pending.splice(idx,1);
-    savePending(pending);
-    // git add/commit/push
-    const git = simpleGit(path.join(__dirname,'..'));
-    await git.add('reviews.json');
-    await git.commit(`Add approved review ${review.id} from Telegram`);
-    try{await git.push();}catch(e){console.warn('git push failed',e.message)}
-    // notify user if possible
-    if(bot && item.fromId){
-      bot.sendMessage(item.fromId, 'Ваш отзыв опубликован. Спасибо!');
-    }
-    res.json({ok:true,review});
-  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+
+    const existing = await fb.getUser(userId);
+    const merged = { ...(existing || {}), ...profile };
+    if (!merged.phone) merged.phone = existing?.phone || '';
+    await fb.saveUser(userId, merged);
+
+    const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
+    res.json({ ok: true, token, user: merged });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.post('/api/reject',(req,res)=>{
-  try{
-    const {id, reason} = req.body;
-    let pending = loadPending();
-    const idx = pending.findIndex(p=>p.id==id);
-    if(idx===-1) return res.status(404).json({error:'not found'});
-    const item = pending[idx];
-    pending.splice(idx,1);
-    savePending(pending);
-    if(bot && item.fromId){
-      const msg = reason?`Ваш отзыв отклонён: ${reason}`:'Ваш отзыв отклонён менеджером.';
-      bot.sendMessage(item.fromId, msg);
-    }
-    res.json({ok:true});
-  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+app.get('/api/profile', authMiddleware, async (req, res) => {
+  const profile = await fb.getUser(req.userId);
+  res.json(profile || { userId: req.userId });
 });
 
-const PORT = process.env.PORT||3000;
-app.listen(PORT,()=>console.log(`Telegram admin running on http://localhost:${PORT}`));
+app.patch('/api/profile', authMiddleware, async (req, res) => {
+  const existing = (await fb.getUser(req.userId)) || { userId: req.userId };
+  const updated = {
+    ...existing,
+    name: req.body.name ?? existing.name,
+    phone: req.body.phone ?? existing.phone,
+    contact: req.body.contact ?? existing.contact,
+    updatedAt: Date.now(),
+  };
+  await fb.saveUser(req.userId, updated);
+  res.json(updated);
+});
+
+app.get('/api/orders', authMiddleware, async (req, res) => {
+  const orders = await fb.listUserOrders(req.userId);
+  res.json(orders);
+});
+
+app.post('/api/orders', async (req, res) => {
+  try {
+    let userId = null;
+    const header = req.headers.authorization || '';
+    if (header.startsWith('Bearer ')) {
+      const { verifyToken } = require('./auth');
+      const payload = verifyToken(header.slice(7), SESSION_SECRET);
+      userId = payload?.userId || null;
+    }
+    const order = await createOrder(req.body, userId);
+    res.json({ ok: true, order });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/orders/repeat', authMiddleware, async (req, res) => {
+  try {
+    const original = await fb.getOrder(req.body.orderId);
+    if (!original || String(original.userId) !== req.userId) {
+      return res.status(404).json({ error: 'not_found' });
+    }
+    const order = await createOrder(
+      {
+        name: original.name,
+        contact: original.contact,
+        plan: original.plan,
+        message: `Повтор заказа: ${original.message || original.plan}`,
+      },
+      req.userId
+    );
+    res.json({ ok: true, order });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/send-application', (req, res) => {
+  createOrder(req.body)
+    .then((order) => res.json({ ok: true, order }))
+    .catch((e) => res.status(500).json({ error: e.message }));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Nexora API http://localhost:${PORT}`);
+  console.log(fb.useRemote() ? '🔥 Firebase cloud' : '📁 Local data/firebase-store.json');
+});

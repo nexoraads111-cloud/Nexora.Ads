@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Личный кабинет — NexoraWeb</title>
+<link href="Public/Image/apple-touch-icon-57x57.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/mobile.css" rel="stylesheet"/>
+<link href="css/cabinet.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="cabinet-page">
+  <div class="cabinet-wrap">
+    <a class="cabinet-toplink" href="index.html">← На главную</a>
+    <div class="cabinet-head">
+      <h1>Личный кабинет</h1>
+      <p>История заказов, статусы и повтор заявки в один клик</p>
+    </div>
+
+    <div id="cabinet-login" class="cabinet-card cabinet-login">
+      <h2>Вход через Telegram</h2>
+      <p>Нажмите кнопку ниже — войдёте через бота <b>@Nexora_loginbot</b>. Ваши заявки с сайта будут привязаны к аккаунту.</p>
+      <div id="telegram-login-container"></div>
+      <p style="font-size:12px;color:#64748b">В BotFather для бота должен быть домен: <b>nexoraads.online</b></p>
+    </div>
+
+    <div id="cabinet-app" style="display:none">
+      <div class="cabinet-userbar">
+        <div>👋 <span id="cabinet-user-name">Клиент</span></div>
+        <button class="cabinet-logout" id="cabinet-logout" type="button">Выйти</button>
+      </div>
+      <div class="cabinet-grid">
+        <div class="cabinet-card cabinet-profile">
+          <h2>Мои данные</h2>
+          <form id="profile-form">
+            <label>Имя<input id="profile-name" name="name" required/></label>
+            <label>Телефон / Telegram<input id="profile-phone" name="phone" placeholder="+380... или @username"/></label>
+            <button type="submit">Сохранить</button>
+          </form>
+        </div>
+        <div class="cabinet-card">
+          <h2>Мои заказы</h2>
+          <div id="orders-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="js/nexora-config.js"></script>
+<script src="js/cabinet.js"></script>
+</body>
+</html>

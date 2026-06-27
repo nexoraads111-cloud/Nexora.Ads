@@ -8,3 +8,22 @@ document.addEventListener('error', function(e){
   if(idx < list.length){ img.dataset.fallbackIndex=String(idx+1); img.src=list[idx]; }
   else { const box=img.closest('.member-avatar,.team-avatar,.mini-person-photo,.mini-photo,.manager-photo-bubble'); if(box){ box.classList.add('no-img'); } img.remove(); }
 }, true);
+
+document.addEventListener('DOMContentLoaded', function(){
+  const addLink = (nav, mobile) => {
+    if (!nav || nav.querySelector('a[href="cabinet.html"]')) return;
+    const a = document.createElement('a');
+    a.href = 'cabinet.html';
+    a.textContent = 'Кабинет';
+    a.setAttribute('data-i18n', 'nav_cabinet');
+    nav.insertBefore(a, nav.querySelector('a[href="#contact"]'));
+    if (mobile) {
+      const m = document.createElement('a');
+      m.href = 'cabinet.html';
+      m.textContent = 'Кабинет';
+      m.setAttribute('onclick', 'closeMobileMenu()');
+      mobile.insertBefore(m, mobile.querySelector('a[href="#contact"]'));
+    }
+  };
+  addLink(document.querySelector('header nav'), document.getElementById('mobileMenu'));
+});
