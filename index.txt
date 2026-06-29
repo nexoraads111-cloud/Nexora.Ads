@@ -1,0 +1,216 @@
+2:I[3542,["3","static/chunks/3-38b4a4f24dabc376.js","931","static/chunks/app/page-92eb792b6f53e9f2.js"],"default"]
+4:I[4707,[],""]
+5:I[6423,[],""]
+6:I[8003,["3","static/chunks/3-38b4a4f24dabc376.js","185","static/chunks/app/layout-5e3f7bd4530bb738.js"],""]
+3:T757e,
+<div aria-label="NexoraWeb loading screen" id="nxPreloader">
+<div class="nx-loader-core">
+<div class="nx-loader-logo"><img alt="NexoraWeb logo" src="/Public/Image/apple-touch-icon-57x57.png"/></div>
+<div class="nx-loader-brand">
+<div class="nx-loader-name"><span>NexoraWeb</span></div>
+<div class="nx-loader-line"></div>
+<div class="nx-loader-percent">loading creative website</div>
+</div>
+</div>
+</div>
+<div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+<header>
+<div class="container nav">
+<a aria-label="NexoraWeb" class="brand" href="#top">
+<div class="logo">N</div><div><b>NexoraWeb</b><span data-i18n="brand_sub">Premium Web Studio</span></div>
+</a>
+<nav aria-label="Main navigation" class="nav-links">
+<a data-i18n="nav_services" href="#services">Услуги</a><a data-i18n="nav_projects" href="#projects">Проекты</a><a data-i18n="nav_team" href="#team">Команда</a><a data-i18n="nav_pricing" href="#pricing">Цены</a><a data-i18n="nav_reviews" href="#reviews">Отзывы</a><a data-i18n="nav_contact" href="#contact">Контакты</a>
+</nav>
+<div class="nav-actions">
+<div class="lang"><button class="lang-btn" onclick="toggleLangMenu()">🌍</button><div class="lang-menu" id="langMenu"><button onclick="setLang('ru')">Русский</button><button onclick="setLang('uk')">Українська</button><button onclick="setLang('en')">English</button><button onclick="setLang('sk')">Slovenčina</button></div></div>
+<button class="btn primary desktop-cta" data-i18n="nav_cta" onclick="openOrderModal()">Заказать сайт</button>
+<button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛 Поддержать</button>
+<button aria-label="Menu" class="menu-btn" onclick="openMobileMenu()">☰</button>
+</div>
+</div>
+</header>
+<aside class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu-head"><div class="brand"><div class="logo">N</div><div><b>NexoraWeb</b></div></div><button class="close" onclick="closeMobileMenu()">×</button></div>
+<a data-i18n="nav_services" href="#services" onclick="closeMobileMenu()">Услуги</a><a data-i18n="nav_projects" href="#projects" onclick="closeMobileMenu()">Проекты</a><a data-i18n="nav_pricing" href="#pricing" onclick="closeMobileMenu()">Цены</a><a data-i18n="nav_reviews" href="#reviews" onclick="closeMobileMenu()">Отзывы</a><a data-i18n="nav_team" href="#team" onclick="closeMobileMenu()">Команда</a><a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
+<button class="btn primary" data-i18n="nav_cta" onclick="closeMobileMenu();openOrderModal()" style="width:100%;margin-top:20px">Заказать сайт</button>
+<button class="btn donate-nav-btn mobile-donate-btn" data-donate-i18n="support_btn" onclick="closeMobileMenu();openDonateModal()">💛 Поддержать</button>
+</aside>
+<main id="top">
+<section class="hero nx-hero-redesign">
+<div class="container nx-hero-shell">
+<div class="nx-hero-grid">
+<div class="nx-hero-copy">
+<span class="nx-pill" data-i18n="nx_pill"><i class="fa-solid fa-bolt"></i> ВЕБ-РАЗРАБОТКА</span>
+<h1 class="nx-title" data-i18n="nx_title">Создаём сайты,<br/>которые приносят <span>результат</span></h1>
+<p class="nx-lead" data-i18n="nx_lead">Разрабатываем современные веб‑сайты и веб‑сервисы, которые помогают бизнесу расти, выглядеть дороже и получать заявки.</p>
+<div class="nx-actions">
+<button class="btn primary" data-i18n="nx_cta" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+<a class="btn ghost" data-i18n="nx_cases" href="#projects">Смотреть кейсы <i class="fa-solid fa-play"></i></a>
+</div>
+<div class="nx-feature-bar">
+<div><i class="fa-solid fa-bolt"></i><b data-i18n="nx_feat1_title">Быстрый старт</b><span data-i18n="nx_feat1_text">запускаем проекты в короткие сроки</span></div>
+<div><i class="fa-solid fa-bullseye"></i><b data-i18n="nx_feat2_title">Фокус на бизнес</b><span data-i18n="nx_feat2_text">структура, которая ведёт к заявке</span></div>
+<div><i class="fa-solid fa-shield-halved"></i><b data-i18n="nx_feat3_title">Надёжность</b><span data-i18n="nx_feat3_text">безопасный код и поддержка</span></div>
+<div><i class="fa-solid fa-chart-line"></i><b data-i18n="nx_feat4_title">Рост и масштаб</b><span data-i18n="nx_feat4_text">сайты, которые растут вместе с вами</span></div>
+</div>
+</div>
+<div aria-label="Creative website phone preview" class="nx-visual">
+<div class="nx-orbit nx-orbit-1"></div>
+<div class="nx-orbit nx-orbit-2"></div>
+<div class="nx-rock nx-rock-1"></div>
+<div class="nx-rock nx-rock-2"></div>
+<div class="nx-phone">
+<div class="nx-phone-notch"></div>
+<div class="nx-phone-screen">
+<div class="nx-phone-top"><b data-i18n="nx_phone_brand">NexoraWeb</b><span>☰</span></div>
+<span class="nx-mini-pill" data-i18n="nx_phone_pill">Агентство цифровых решений</span>
+<h3 data-i18n="nx_phone_title">Делаем ваш бизнес <em>сильнее</em><br/>в цифровом мире</h3>
+<p data-i18n="nx_phone_text">Комплексный подход к разработке сайтов и веб‑сервисов с фокусом на результат.</p>
+<button data-i18n="nx_phone_cta" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+<div class="nx-phone-services">
+<div><i class="fa-solid fa-code"></i><span data-i18n="nx_phone_s1">Веб‑разработка</span></div>
+<div><i class="fa-solid fa-cart-shopping"></i><span data-i18n="nx_phone_s2">Интернет‑магазины</span></div>
+<div><i class="fa-solid fa-cube"></i><span data-i18n="nx_phone_s3">Веб‑приложения</span></div>
+<div><i class="fa-solid fa-rocket"></i><span data-i18n="nx_phone_s4">Дизайн и брендинг</span></div>
+</div>
+</div>
+</div>
+<div class="nx-side-stats">
+<div><i class="fa-solid fa-rocket"></i><b>150+</b><span data-i18n="nx_stat1">проектов выполнено</span></div>
+<div><i class="fa-solid fa-arrow-trend-up"></i><b>98%</b><span data-i18n="nx_stat2">довольных клиентов</span></div>
+<div><i class="fa-regular fa-clock"></i><b>2–4</b><span data-i18n="nx_stat3">недели средний срок</span></div>
+<div><i class="fa-solid fa-headset"></i><b>24/7</b><span data-i18n="nx_stat4">поддержка и сопровождение</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section small" id="services">
+<div class="container">
+<span class="eyebrow" data-i18n="services_badge">Что делаем</span><h2 class="section-title" data-i18n="services_title" style="margin:16px 0 34px">Сайты без лишней воды — только то, что помогает клиенту оставить заявку</h2>
+<div class="cards"><div class="card"><div class="icon">🚀</div><h3 data-i18n="s1_title">Landing Page</h3><p data-i18n="s1_text">Для одной услуги, продукта или быстрого запуска рекламы.</p><div class="list"><span data-i18n="s1_l1">сильный первый экран</span><span data-i18n="s1_l2">форма заявки</span><span data-i18n="s1_l3">мобильная версия</span></div></div><div class="card"><div class="icon">🏢</div><h3 data-i18n="s2_title">Сайт для бизнеса</h3><p data-i18n="s2_text">Для компаний, услуг, строителей, ресторанов и локального бизнеса.</p><div class="list"><span data-i18n="s2_l1">услуги и преимущества</span><span data-i18n="s2_l2">портфолио и отзывы</span><span data-i18n="s2_l3">контакты и FAQ</span></div></div><div class="card"><div class="icon">🛒</div><h3 data-i18n="s3_title">Интернет-магазин</h3><p data-i18n="s3_text">Для продажи товаров онлайн с каталогом и быстрым контактом.</p><div class="list"><span data-i18n="s3_l1">каталог товаров</span><span data-i18n="s3_l2">карточки товара</span><span data-i18n="s3_l3">заявка или оплата</span></div></div></div>
+</div>
+</section>
+<section class="section small" id="team-details" style="display:none">
+<div class="container">
+<div class="mini-team-head">
+<span class="eyebrow" data-i18n="team_badge">Команда проекта</span>
+<h2 class="section-title" data-i18n="team_title">Над сайтом работают дизайнер-разработчик и менеджер</h2>
+<p class="lead" data-i18n="team_text">Менеджер быстро принимает заявку и уточняет детали, а разработчик делает структуру, дизайн, адаптив, формы и запуск.</p>
+</div>
+<div class="mini-team-grid">
+<article class="mini-person card">
+<div class="mini-person-photo">
+<img alt="Владислав Порохнавец" data-fallbacks="Public/Image/VladislavPorokhnavets.png,Public/Image/Vladislav_Porokhnavets.png,Public/Image/Vladislav.png,Public/Image/Vladislav.jpg,Public/Image/Vlad.png,Public/Image/vladislav.png,Public/Image/vlad.png,Public/Image/Владислав.png" loading="lazy" src="Public/Image/VladislavPorokhnavets.png">
+</img></div>
+<div class="mini-person-body">
+<div class="mini-role">Web specialist</div>
+<h3 data-i18n="team_vlad_name">Владислав Порохнавць</h3>
+<p data-i18n="team_vlad_text">Дизайн, структура, адаптив и запуск сайта.</p>
+</div>
+</article>
+<article class="mini-person card">
+<div class="mini-person-photo">
+<img alt="Менеджер проекта" data-fallbacks="Public/Image/VasyaZeykan.png,Public/Image/Vasya_Zeykan.png,Public/Image/Vasya.png,Public/Image/Vasia.png,Public/Image/Vasya.jpg,Public/Image/Manager.png,Public/Image/Manager.jpg,Public/Image/manager.png,Public/Image/Вася.png" loading="lazy" src="Public/Image/VasyaZeykan.png"/>
+</div>
+<div class="mini-person-body">
+<div class="mini-role">Project manager</div>
+<h3 data-i18n="team_manager_name">Вася Зейкан</h3>
+<p data-i18n="team_manager_text">Принимает заявку, уточняет детали и передаёт проект в работу.</p>
+</div>
+</article>
+</div>
+<div class="workflow-line card">
+<div><strong>01</strong><span data-i18n="team_step1_title">Заявка</span><small data-i18n="team_step1_text">Вы выбираете формат сайта и оставляете контакт.</small></div>
+<div><strong>02</strong><span data-i18n="team_step2_title">Уточнение</span><small data-i18n="team_step2_text">Менеджер задаёт короткие вопросы и собирает материалы.</small></div>
+<div><strong>03</strong><span data-i18n="team_step3_title">Разработка</span><small data-i18n="team_step3_text">Я собираю сайт, проверяю мобильную версию и формы.</small></div>
+</div>
+</div>
+</section>
+<section class="section" id="projects">
+<div class="container">
+<div style="max-width:760px;margin-bottom:34px"><span class="eyebrow" data-i18n="projects_badge">Готовые сайты</span><h2 class="section-title" data-i18n="projects_title" style="margin:16px 0">Проекты, которые можно открыть и посмотреть</h2><p class="lead" data-i18n="projects_text">Не просто картинки — живые сайты и реальные примеры оформления для бизнеса.</p></div>
+<div class="projects">
+<article class="card project"><div class="project-img"><img alt="Stroplook.sk preview" loading="lazy" onerror="this.onerror=null;this.src='/Image/Stroplooksk.png'" src="Public/Image/Stroplooksk.png"/></div><div class="project-body"><h3>Stroplook.sk</h3><p class="muted" data-i18n="p1_text">Сайт для строительной компании с фокусом на доверие и заявки.</p><div class="project-actions"><a class="btn ghost" data-i18n="open_site" href="https://stroplook.sk" rel="noopener" target="_blank">Открыть сайт</a></div></div></article>
+<article class="card project"><div class="project-img"><img alt="Ukstav.sk preview" loading="lazy" onerror="this.onerror=null;this.src='/Image/Ukstav.png'" src="Public/Image/Ukstav.png"/></div><div class="project-body"><h3>Ukstav.sk</h3><p class="muted" data-i18n="p2_text">Сайт для услуг в строительной сфере, удобный для телефона.</p><div class="project-actions"><a class="btn ghost" data-i18n="open_site" href="https://ukstav.sk" rel="noopener" target="_blank">Открыть сайт</a></div></div></article>
+<article class="card project"><div class="project-img"><img alt="NexoraWeb preview" loading="lazy" onerror="this.onerror=null;this.src='/Image/NexoraWeb.png'" src="Public/Image/NexoraWeb.png"/></div><div class="project-body"><h3>NexoraWeb.online</h3><p class="muted" data-i18n="p3_text">Сайт веб-студии, на котором вы сейчас находитесь.</p><div class="project-actions"><a class="btn ghost" data-i18n="open_site" href="https://nexoraweb.online" rel="noopener" target="_blank">Открыть сайт</a></div></div></article>
+</div>
+<div class="notice" data-i18n="projects_note">Фото берутся из папки <b>Public/Image/</b>. Если сайт на GitHub Pages показывает пусто — проверь, что файлы называются точно: Stroplooksk.png, Ukstav.png, NexoraWeb.png.</div>
+</div>
+</section>
+<section class="section small" id="pricing">
+<div class="container">
+<span class="eyebrow" data-i18n="pricing_badge">Форматы</span><h2 class="section-title" data-i18n="pricing_title" style="margin:16px 0 34px">Понятные цены и сроки</h2>
+<div class="pricing"><div class="card price"><h3 data-i18n="price1_title">Landing Page</h3><p class="muted" data-i18n="price1_text">Для одной услуги или продукта.</p><div class="price-value">от 150€</div><span class="price-time" data-i18n="price1_time">2–5 дней</span><div class="list"><span data-i18n="price_l_mobile">мобильная версия</span><span data-i18n="price_l_form">форма заявки</span><span data-i18n="price_l_seo">базовое SEO</span></div></div><div class="card price popular"><span class="price-tag" data-i18n="popular">Популярно</span><h3 data-i18n="price2_title">Сайт для бизнеса</h3><p class="muted" data-i18n="price2_text">Для компании, услуг и портфолио.</p><div class="price-value">от 300€</div><span class="price-time" data-i18n="price2_time">5–10 дней</span><div class="list"><span data-i18n="price_l_pages">главные разделы</span><span data-i18n="price_l_reviews">отзывы и FAQ</span><span data-i18n="price_l_manager">заявки менеджеру</span></div></div><div class="card price"><h3 data-i18n="price3_title">Интернет-магазин</h3><p class="muted" data-i18n="price3_text">Для товаров, каталога и заявок.</p><div class="price-value">от 600€</div><span class="price-time" data-i18n="price3_time">10–20 дней</span><div class="list"><span data-i18n="price_l_catalog">каталог</span><span data-i18n="price_l_products">карточки товара</span><span data-i18n="price_l_order">заказ или оплата</span></div></div></div>
+<div class="included"><div class="card"><h3 data-i18n="included_title">Что входит</h3><div class="chips"><span class="chip" data-i18n="inc_design">Дизайн</span><span class="chip" data-i18n="inc_mobile">Адаптив</span><span class="chip" data-i18n="inc_speed">Скорость</span><span class="chip" data-i18n="inc_forms">Формы</span><span class="chip" data-i18n="inc_seo">SEO</span><span class="chip" data-i18n="inc_support">Поддержка</span></div></div><div class="card"><h3 data-i18n="guarantee_title">Гарантия 30 дней</h3><p class="muted" data-i18n="guarantee_text">После запуска бесплатно исправляем технические ошибки и помогаем с базовыми настройками.</p></div></div>
+</div>
+</section>
+<section class="section small">
+<div class="container"><span class="eyebrow" data-i18n="steps_badge">Процесс</span><h2 class="section-title" data-i18n="steps_title" style="margin:16px 0 34px">Как проходит работа</h2><div class="steps"><div class="card step"><b>1</b><h3 data-i18n="st1_title">Заявка</h3><p data-i18n="st1_text">Вы выбираете тип сайта и пишете детали.</p></div><div class="card step"><b>2</b><h3 data-i18n="st2_title">Обсуждение</h3><p data-i18n="st2_text">Менеджер уточняет цель, сроки и бюджет.</p></div><div class="card step"><b>3</b><h3 data-i18n="st3_title">Разработка</h3><p data-i18n="st3_text">Делаем дизайн, адаптив и формы.</p></div><div class="card step"><b>4</b><h3 data-i18n="st4_title">Запуск</h3><p data-i18n="st4_text">Подключаем домен и проверяем сайт.</p></div></div></div>
+</section>
+<section class="section" id="reviews">
+<div class="container">
+<div class="reviews-top"><div><span class="eyebrow" data-i18n="reviews_badge">Реальные отзывы</span><h2 class="section-title" data-i18n="reviews_title" style="margin:16px 0 8px">Отзывы клиентов</h2><p class="muted"><span data-i18n="reviews_count_text">Показываются только после подтверждения менеджером</span> • <span id="review-count">0</span></p></div><button class="btn primary" data-i18n="review_cta" onclick="openReviewModal()">Оставить отзыв</button></div>
+<div class="reviews-shell"><div class="reviews-carousel" id="reviews-container"><div class="empty" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div></div><div class="review-controls" id="review-slider-controls"><button class="arrow" onclick="scrollReviews(-1)">←</button><span class="muted" data-i18n="reviews_hint">листайте отзывы</span><button class="arrow" onclick="scrollReviews(1)">→</button></div></div>
+</div>
+</section>
+<section class="section" id="contact">
+<div class="container contact-grid">
+<div class="card"><span class="eyebrow" data-i18n="contact_badge">Связь</span><h2 class="section-title" data-i18n="contact_title" style="margin:16px 0">Расскажите, какой сайт нужен</h2><p class="lead" data-i18n="contact_text">Заявка отправляется на почту. Мы свяжемся с вами и подскажем лучший формат.</p><p class="contact-email-note" data-i18n="contact_email_note">📧 Заявка сразу приходит на почту — ответим в течение рабочего дня</p><form class="form" id="order-form" onsubmit="submitOrder(event)"><input data-i18n-placeholder="form_name" id="order-name" placeholder="Имя" required=""/><input data-i18n-placeholder="form_contact" id="order-contact" placeholder="Email / WhatsApp / телефон" required=""/><select id="order-type"><option>Landing Page</option><option>Сайт для бизнеса</option><option>Интернет-магазин</option><option>Нужна консультация</option></select><textarea data-i18n-placeholder="form_message" id="order-message" placeholder="Коротко о проекте"></textarea><button class="btn primary" data-i18n="form_submit" type="submit">Отправить заявку</button></form></div>
+<div class="card"><h3 data-i18n="contacts_title">Контакты NexoraWeb</h3><div class="contact-list" style="margin-top:18px"><a class="contact-card contact-card-primary" href="mailto:nexoraads111@gmail.com"><i class="fas fa-envelope"></i><div><small>Email</small><b>nexoraads111@gmail.com</b></div></a><a class="contact-card" href="https://instagram.com/vladislav.ads" rel="noopener" target="_blank"><i class="fab fa-instagram"></i><div><small>Instagram</small><b>vladislav.ads</b></div></a><a class="contact-card" href="tel:+380995228560"><i class="fas fa-phone"></i><div><small>Ukraine</small><b>+380 99 522 8560</b></div></a><a class="contact-card" href="tel:+421950761194"><i class="fas fa-phone"></i><div><small>Slovakia</small><b>+421 950 761 194</b></div></a><a class="contact-card" href="tel:+421944430788"><i class="fas fa-phone"></i><div><small>Slovakia</small><b>+421 944 430 788</b></div></a></div></div>
+</div>
+</section>
+</main>
+<footer class="footer"><div class="container footer-row"><div>© 2026 NexoraWeb • Premium Web Studio</div><div class="footer-links"><a href="mailto:nexoraads111@gmail.com">Email</a><a href="https://instagram.com/vladislav.ads" target="_blank">Instagram</a><button data-donate-i18n="support_btn" onclick="openDonateModal()" style="background:none;border:0;color:inherit;cursor:pointer;font:inherit">💛 Поддержать</button><a href="#top">Top ↑</a></div></div></footer>
+<div class="modal" id="donateModal"><div class="modal-box donate-box"><div class="donate-hero"><div class="modal-head" style="margin-bottom:0"><div><span class="donate-kicker" data-donate-i18n="donate_kicker">Поддержать проект</span><h3 data-donate-i18n="donate_title">Спасибо за поддержку NexoraWeb 💛</h3><p data-donate-i18n="donate_text">Если хочешь поддержать развитие сайта и новые проекты — выбери удобный способ ниже.</p></div><button class="close" onclick="closeDonateModal()">×</button></div></div><div class="donate-grid"><article class="donate-card"><div class="donate-logo mono">mono</div><h4>Monobank Україна</h4><p data-donate-i18n="mono_text">Пополнение через официальный QR/ссылку банка для Владислава П.</p><div class="donate-actions"><a class="donate-link donate-pulse" data-donate-i18n="mono_btn" href="https://bank.gov.ua/qr/QkNECjAwMgoxClVDVAoK0J_QvtGA0L7RhdC90LDQstC10YbRjCDQktC70LDQtNC40YHQu9Cw0LIg0JDQvdCw0YLQvtC70ZbQudC-0LLQuNGHClVBMjkzMjIwMDEwMDAwMDI2MjA3Mzc2NTM0MjEzCgo0MDcxODAzMjU3CgoK0J_QvtC_0L7QstC90LXQvdC90Y8g0YDQsNGF0YPQvdC60YMKCg==" rel="noopener" target="_blank">Відкрити Monobank →</a></div></article><article class="donate-card"><div class="donate-logo sk">SK</div><h4>Slovak Bank / SEPA</h4><p data-donate-i18n="sk_text">Для перевода на словацкий счёт скопируй IBAN.</p><div class="iban-box" id="ibanText">SK6002000000005025750257</div><div class="donate-actions"><button class="copy-iban" data-donate-i18n="copy_iban" onclick="copyIban()">Скопировать IBAN</button></div></article><div class="donate-note" data-donate-i18n="donate_note">Без лишних форм: Monobank открывается по кнопке, а IBAN можно скопировать одним кликом. Комиссия зависит от банка отправителя.</div></div></div></div>
+<div class="modal nx-sheet-modal" id="orderModal">
+<div class="modal-box nx-order-box">
+<div class="modal-head nx-order-head">
+<div>
+<span class="nx-form-kicker" data-i18n="order_kicker">Новая заявка</span>
+<h3 data-i18n="modal_order_title">Оставить заявку</h3>
+<p data-i18n="order_subtitle">Ответим по почте и подскажем лучший формат сайта.</p>
+</div>
+<button class="close" onclick="closeOrderModal()">×</button>
+</div>
+<form class="form nx-order-form" onsubmit="submitModalOrder(event)">
+<input id="modal-type" type="hidden" value="Landing Page"/>
+<div class="nx-choice-grid">
+<button class="nx-service-choice active" onclick="chooseSiteType('Landing Page',this)" type="button">
+<i class="fa-solid fa-rocket"></i><b data-i18n="choice_landing">Landing</b><span data-i18n="choice_landing_sub">для одной услуги</span>
+</button>
+<button class="nx-service-choice" onclick="chooseSiteType('Сайт для бизнеса',this)" type="button">
+<i class="fa-solid fa-building"></i><b data-i18n="choice_business">Бизнес сайт</b><span data-i18n="choice_business_sub">компания / услуги</span>
+</button>
+<button class="nx-service-choice" onclick="chooseSiteType('Интернет-магазин',this)" type="button">
+<i class="fa-solid fa-cart-shopping"></i><b data-i18n="choice_shop">Магазин</b><span data-i18n="choice_shop_sub">товары / каталог</span>
+</button>
+<button class="nx-service-choice" onclick="chooseSiteType('Консультация',this)" type="button">
+<i class="fa-solid fa-comments"></i><b data-i18n="choice_consult">Консультация</b><span data-i18n="choice_consult_sub">подобрать решение</span>
+</button>
+</div>
+<div class="nx-form-row">
+<label><span data-i18n="form_name_label">Имя</span><input data-i18n-placeholder="form_name" id="modal-name" placeholder="Имя" required=""/></label>
+<label><span data-i18n="form_contact_label">Контакт</span><input data-i18n-placeholder="form_contact" id="modal-contact" placeholder="Email / WhatsApp / телефон" required=""/></label>
+</div>
+<label><span data-i18n="form_message_label">Коротко о проекте</span><textarea data-i18n-placeholder="modal_message" id="modal-message" placeholder="Например: нужен сайт для строительной компании, 5 страниц, форма заявки"></textarea></label>
+<button class="btn primary nx-submit" data-i18n="form_submit" type="submit">Отправить заявку</button>
+<p class="nx-form-note" data-i18n="order_note">Заявка придёт на почту менеджера.</p>
+</form>
+</div>
+</div>
+<div class="modal" id="reviewModal"><div class="modal-box"><div class="modal-head"><h3 data-i18n="modal_review_title">Оставить отзыв</h3><button class="close" onclick="closeReviewModal()">×</button></div><form class="form" id="review-form" onsubmit="return submitReview(event)"><div class="choices"><div class="choice active" onclick="selectReviewType('Создание сайта',this)">🌐 <b data-i18n="rtype_site">Создание сайта</b></div><div class="choice" onclick="selectReviewType('Работа с менеджером',this)">🤝 <b data-i18n="rtype_manager">Работа с менеджером</b></div><div class="choice" onclick="selectReviewType('Поддержка',this)">🛠️ <b data-i18n="rtype_support">Поддержка</b></div><div class="choice" onclick="selectReviewType('Общее впечатление',this)">💎 <b data-i18n="rtype_total">Общее впечатление</b></div></div><input id="review-type" type="hidden" value="Создание сайта"/><div class="rating" id="ratingStars"><span class="star active" onclick="setRating(1)">★</span><span class="star active" onclick="setRating(2)">★</span><span class="star active" onclick="setRating(3)">★</span><span class="star active" onclick="setRating(4)">★</span><span class="star active" onclick="setRating(5)">★</span></div><input data-i18n-placeholder="review_name" id="review-name" placeholder="Ваше имя" required=""/><input data-i18n-placeholder="review_title_ph" id="review-title" placeholder="Короткий заголовок" required=""/><textarea data-i18n-placeholder="review_text_ph" id="review-text" placeholder="Ваш отзыв" required=""></textarea><button class="btn primary" data-i18n="review_submit" type="submit">Отправить отзыв</button></form></div></div>
+<button class="chat-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
+<div class="chat" id="chat"><div class="chat-head"><div><b data-i18n="chat_title">Nexora AI</b><small data-i18n="chat_sub">помогает выбрать сайт</small></div><button class="close" onclick="toggleChat()">×</button></div><div class="chat-messages" id="chatMessages"><div class="msg bot" data-i18n="chat_hello">Привет! Я помогу выбрать сайт под ваш бизнес. Напишите нишу или нажмите быстрый вариант.</div></div><div class="chat-chips"><button data-i18n="chip_landing" onclick="quickChat('Нужен лендинг')">Лендинг</button><button data-i18n="chip_build" onclick="quickChat('Сайт для строительной компании')">Стройка</button><button data-i18n="chip_price" onclick="quickChat('Сколько стоит сайт?')">Цена</button><button data-i18n="chip_time" onclick="quickChat('Сколько дней делается сайт?')">Сроки</button></div><div class="chat-input"><input data-i18n-placeholder="chat_placeholder" id="chatInput" onkeydown="if(event.key==='Enter')sendChatMessage()" placeholder="Напишите нишу бизнеса..."/><button onclick="sendChatMessage()">→</button></div></div>
+<div class="toast" id="toast"></div>
+<script src="/js/nexora-config.js?v=10"></script>
+<script src="/js/script-01.js?v=10" type="module"></script>
+<script src="/js/main.js?v=10"></script>
+<script src="/js/module-03.js?v=10"></script>
+<script src="/js/module-04.js?v=10"></script>
+<script src="/js/module-05.js?v=10"></script>
+<script src="/js/module-06.js?v=10"></script>
+0:["9jG0og61SGB6QR0-Th89H",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/style.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/mobile.css","rel":"stylesheet"}]]}],["$","body",null,{"children":[["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}],["$","$L6",null,{"src":"https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js","type":"module","strategy":"lazyOnload"}]]}]]}]],null],null],["$L7",null]]]]
+7:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","3",{"name":"description","content":"NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, заявки на почту и поддержка менеджера."}],["$","meta","4",{"name":"keywords","content":"создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия"}],["$","meta","5",{"name":"robots","content":"index, follow"}],["$","meta","6",{"property":"og:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","7",{"property":"og:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","8",{"property":"og:url","content":"https://nexoraads.online/"}],["$","meta","9",{"property":"og:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","meta","10",{"property":"og:type","content":"website"}],["$","meta","11",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","12",{"name":"twitter:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","13",{"name":"twitter:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","14",{"name":"twitter:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","link","15",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]]
+1:null
