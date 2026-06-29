@@ -3,32 +3,30 @@
 Сайт веб-студии NexoraWeb.
 
 - **Сайт:** https://nexoraads.online
-- **API:** https://nexora-cabinet-api.onrender.com
+- **Бэкенд:** Google Apps Script (заявки и отзывы на почту)
 
 ## Структура
 
 | Папка | Описание |
 |-------|----------|
-| `web/` | Next.js фронтенд (static export → GitHub Pages) |
-| `telegram-admin/` | API-прокси к Google Apps Script |
-| `google-apps-script/` | Отзывы и заявки → Google Sheets + Gmail |
+| `web/` | Next.js → GitHub Pages |
+| `google-apps-script/` | Таблица + Gmail + модерация отзывов |
 
 ## Как работает
 
-### Заявки
-1. Клиент заполняет форму на сайте
-2. API отправляет в Google Apps Script
-3. Вам на почту письмо с данными заявки
+1. **Заявка** — форма на сайте → Google Apps Script → письмо на почту
+2. **Отзыв** — форма → письмо с кнопками **Принять / Отклонить** → отзыв на сайте
 
-### Отзывы
-1. Клиент оставляет отзыв на сайте
-2. Вам на почту письмо с кнопками **Принять / Отклонить**
-3. После принятия отзыв появляется на сайте
+Сайт обращается к GAS **напрямую** (без Render). URL и секрет в `web/public/js/nexora-config.js`.
 
-## Деплой
+## Деплой сайта
 
-**Сайт:** push в `main` → GitHub Actions публикует `web/out`
+GitHub → Settings → Pages → Source: **GitHub Actions**
 
-**API:** Render (`render.yaml`) — нужны `GAS_WEB_APP_URL` и `GAS_SECRET`
+```bash
+cd web && npm install && npm run build
+```
 
-**Google Apps Script:** см. `google-apps-script/README.md`
+## Настройка Google Apps Script
+
+См. `google-apps-script/README.md`

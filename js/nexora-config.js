@@ -1,3 +1,3 @@
-const NEXORA_API=(location.hostname==='localhost'||location.hostname==='127.0.0.1')
-  ?'http://localhost:3000/api'
-  :'https://nexora-cabinet-api.onrender.com/api';
+// Google Apps Script — напрямую с сайта (без Render)
+const NEXORA_GAS_URL = 'https://script.google.com/macros/s/AKfycbxvE3e_uv8rYURscjC3YJxVmMmTLppuQvpQOzIRsRUI-Ngd5_88gniscbB-P4JlRfs4/exec';
+const NEXORA_GAS_SECRET = 'nexora-gas-secret-change-me';

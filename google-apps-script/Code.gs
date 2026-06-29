@@ -8,7 +8,7 @@
  * 4. Deploy → New deployment → Web app
  *    - Execute as: Me
  *    - Who has access: Anyone
- * 5. Скопируйте URL в Render: GAS_WEB_APP_URL=...
+ * 5. Скопируйте URL в web/public/js/nexora-config.js
  * 6. В Script Properties или ниже укажите ADMIN_EMAIL
  */
 

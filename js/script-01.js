@@ -1,13 +1,13 @@
-// NexoraWeb — load approved reviews from API (Google Sheets via Apps Script)
+// NexoraWeb — отзывы напрямую из Google Apps Script
 
-const REVIEWS_API = (typeof NEXORA_API !== 'undefined')
-  ? `${NEXORA_API}/reviews`
-  : 'https://nexora-cabinet-api.onrender.com/api/reviews';
+const GAS_REVIEWS_URL = (typeof NEXORA_GAS_URL !== 'undefined')
+  ? `${NEXORA_GAS_URL}?action=reviews`
+  : 'https://script.google.com/macros/s/AKfycbxvE3e_uv8rYURscjC3YJxVmMmTLppuQvpQOzIRsRUI-Ngd5_88gniscbB-P4JlRfs4/exec?action=reviews';
 
 async function loadReviews() {
   const box = document.getElementById('reviews-container');
   try {
-    const response = await fetch(REVIEWS_API, { cache: 'no-cache' });
+    const response = await fetch(GAS_REVIEWS_URL, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`Reviews ${response.status}`);
     const reviews = await response.json();
     if (!Array.isArray(reviews)) throw new Error('bad_format');
