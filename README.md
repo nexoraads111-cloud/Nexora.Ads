@@ -10,7 +10,7 @@
 | Папка | Описание |
 |-------|----------|
 | `web/` | Next.js фронтенд (React, static export) |
-| `telegram-admin/` | API + Telegram-бот для кабинета и заявок |
+| `telegram-admin/` | API + Telegram-бот для заявок и отзывов |
 | `css/`, `js/`, `index.html` | Старая статическая версия (резерв) |
 
 ## Деплой сайта (GitHub Pages)
@@ -24,12 +24,12 @@
 cd web && npm install && npm run build
 ```
 
-## Кабинет и уведомления
+## Заявки и уведомления
 
-1. Клиент указывает **@telegram** в заявке
-2. Нажимает **Start** в боте @Nexora_loginbot и входит в `/cabinet/`
+1. Клиент оставляет заявку на сайте с **@telegram** в контакте
+2. Нажимает **/start** в боте @Nexora_loginbot
 3. Админ меняет статус кнопками в Telegram
-4. Клиент видит статус в кабинете и получает сообщение в боте
+4. Клиент получает статус в боте (`/orders` — список заказов)
 
 ## API (Render)
 
@@ -37,6 +37,6 @@ cd web && npm install && npm run build
 cd telegram-admin && npm install && npm start
 ```
 
-Переменные: `BOT_TOKEN`, `ADMIN_ID`, `SESSION_SECRET`, `SITE_URL`, `GAS_WEB_APP_URL`, `GAS_SECRET`.
+Переменные: `BOT_TOKEN`, `ADMIN_ID`, `SITE_URL`, `GAS_WEB_APP_URL`, `GAS_SECRET`.
 
 Отзывы и email-заявки: **`google-apps-script/README.md`**

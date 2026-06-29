@@ -10,20 +10,5 @@ document.addEventListener('error', function(e){
 }, true);
 
 document.addEventListener('DOMContentLoaded', function(){
-  const addLink = (nav, mobile) => {
-    if (!nav || nav.querySelector('a[href="/cabinet/"]')) return;
-    const a = document.createElement('a');
-    a.href = '/cabinet/';
-    a.textContent = 'Кабинет';
-    a.setAttribute('data-i18n', 'nav_cabinet');
-    nav.insertBefore(a, nav.querySelector('a[href="#contact"]'));
-    if (mobile) {
-      const m = document.createElement('a');
-      m.href = '/cabinet/';
-      m.textContent = 'Кабинет';
-      m.setAttribute('onclick', 'closeMobileMenu()');
-      mobile.insertBefore(m, mobile.querySelector('a[href="#contact"]'));
-    }
-  };
-  addLink(document.querySelector('header nav'), document.getElementById('mobileMenu'));
+  // Image fallbacks only — cabinet nav removed
 });

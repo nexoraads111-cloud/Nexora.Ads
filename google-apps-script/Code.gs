@@ -194,7 +194,7 @@ function submitOrder_(data) {
       <p><b>Контакт:</b> ${escapeHtml_(row.contact)}</p>
       <p><b>Тариф:</b> ${escapeHtml_(row.plan)}</p>
       <p><b>Сообщение:</b><br>${escapeHtml_(row.message).replace(/\n/g, '<br>')}</p>
-      <p><a href="${CONFIG.SITE_URL}/cabinet/">Кабинет</a></p>
+      <p><a href="${CONFIG.SITE_URL}/">Сайт NexoraWeb</a></p>
     `,
   });
 

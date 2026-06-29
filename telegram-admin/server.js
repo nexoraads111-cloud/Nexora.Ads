@@ -1,18 +1,11 @@
 require('dotenv').config();
-const crypto = require('crypto');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
 const db = require('./local-db');
 const gas = require('./gas-client');
-const {
-  STATUSES,
-  STATUS_LABELS,
-  signToken,
-  verifyTelegramLogin,
-  authMiddleware,
-} = require('./auth');
+const { STATUSES, STATUS_LABELS } = require('./auth');
 
 const app = express();
 app.use(cors());
@@ -22,7 +15,6 @@ app.use(express.static('public'));
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const ADMIN_ID = String(process.env.ADMIN_ID || '6057196483');
 const BOT_USERNAME = process.env.BOT_USERNAME || 'Nexora_loginbot';
-const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me-in-production';
 const SITE_URL = (process.env.SITE_URL || 'https://nexoraads.online').replace(/\/$/, '');
 
 let bot;
@@ -76,11 +68,10 @@ function formatOrderNotify(order) {
     '',
     order.message || '—',
     order.userId ? `\nTG user: ${order.userId}` : '',
-    !order.userId ? '\n⚠️ Клиент не в боте — попросите нажать Start в @Nexora_loginbot' : '',
+    !order.userId ? '\n⚠️ Укажите @telegram в заявке и попросите клиента нажать /start в @Nexora_loginbot' : '',
   ].join('\n');
 }
 
-const loginSessionsMem = new Map();
 const pendingSiteUrl = new Map();
 
 function extractTelegramUsername(contact) {
@@ -138,22 +129,20 @@ async function notifyClientStatus(order, status) {
     console.warn('notify skip: no telegram id', order.id, order.contact);
     return;
   }
-  const cabinetUrl = `${SITE_URL}/cabinet`;
   if (status === 'ready') {
     const text = order.siteUrl
       ? `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»\n${order.siteUrl}`
       : `🎉 Ваш сайт готов!\n\nЗаказ: «${order.plan}»`;
-    const buttons = [[{ text: '📂 Открыть кабинет', url: cabinetUrl }]];
-    if (order.siteUrl) {
-      buttons.unshift([{ text: '🌐 Открыть сайт', url: order.siteUrl }]);
-    }
-    await bot.sendMessage(chatId, text, { reply_markup: { inline_keyboard: buttons } }).catch((e) => {
+    const buttons = order.siteUrl
+      ? [[{ text: '🌐 Открыть сайт', url: order.siteUrl }]]
+      : [];
+    await bot.sendMessage(chatId, text, buttons.length ? { reply_markup: { inline_keyboard: buttons } } : {}).catch((e) => {
       console.warn('notify ready:', e.message);
     });
     return;
   }
   await bot
-    .sendMessage(chatId, `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}\n\n${cabinetUrl}`)
+    .sendMessage(chatId, `📦 Заказ «${order.plan}»\nСтатус: ${STATUS_LABELS[status] || status}`)
     .catch((e) => console.warn('notify status:', e.message));
 }
 
@@ -174,11 +163,7 @@ async function linkOrdersToUser(userId, user) {
   }
 }
 
-function newSessionId() {
-  return crypto.randomBytes(8).toString('hex');
-}
-
-async function buildUserFromTelegram(from) {
+async function registerTelegramUser(from) {
   const userId = String(from.id);
   const profile = {
     userId,
@@ -194,31 +179,12 @@ async function buildUserFromTelegram(from) {
   if (!merged.phone) merged.phone = existing?.phone || (from.username ? `@${from.username}` : '');
   await db.saveUser(userId, merged);
   await linkOrdersToUser(userId, merged);
-  const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
-  return { token, user: merged };
+  return merged;
 }
 
-async function completeLoginSession(sessionId, from) {
-  const { token, user } = await buildUserFromTelegram(from);
-  const session = { status: 'ok', token, user, telegramId: from.id, completedAt: Date.now() };
-  loginSessionsMem.set(sessionId, session);
-  await db.saveLoginSession(sessionId, session).catch(() => {});
-  return { token, user };
-}
-
-async function sendLoginSuccess(chatId, token, user) {
-  await bot.sendMessage(chatId, `✅ Вход выполнен, ${user.name}!`, {
-    reply_markup: {
-      inline_keyboard: [[
-        { text: '📂 Открыть кабинет', url: `${SITE_URL}/cabinet/?token=${encodeURIComponent(token)}` },
-      ]],
-    },
-  });
-}
-
-async function createOrder(body, userId = null) {
+async function createOrder(body) {
   const id = `o_${Date.now()}`;
-  let resolvedUserId = userId ? String(userId) : body.userId ? String(body.userId) : null;
+  let resolvedUserId = body.userId ? String(body.userId) : null;
   if (!resolvedUserId && body.contact) {
     resolvedUserId = await resolveUserIdFromContact(body.contact);
   }
@@ -242,34 +208,18 @@ async function createOrder(body, userId = null) {
 }
 
 if (bot) {
-  bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
-    const payload = (match[1] || '').trim();
+  bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id;
-
-    if (payload.startsWith('login_')) {
-      const sessionId = payload.slice(6);
-      try {
-        const { token, user } = await completeLoginSession(sessionId, msg.from);
-        await sendLoginSuccess(chatId, token, user);
-      } catch (e) {
-        console.error('login session', e);
-        bot.sendMessage(chatId, '❌ Ошибка входа. Нажмите /start cabinet на сайте снова.');
-      }
-      return;
+    try {
+      await registerTelegramUser(msg.from);
+      await bot.sendMessage(
+        chatId,
+        `👋 NexoraWeb\n\nУкажите @telegram в заявке на сайте — статус заказа придёт сюда.\n\n📋 /orders — мои заказы`
+      );
+    } catch (e) {
+      console.error('start', e);
+      bot.sendMessage(chatId, '❌ Ошибка. Попробуйте позже.');
     }
-
-    if (payload === 'cabinet' || payload === 'login') {
-      try {
-        const { token, user } = await buildUserFromTelegram(msg.from);
-        await sendLoginSuccess(chatId, token, user);
-      } catch (e) {
-        console.error('cabinet login', e);
-        bot.sendMessage(chatId, '❌ Ошибка входа.');
-      }
-      return;
-    }
-
-    bot.sendMessage(chatId, `👋 NexoraWeb\n\n📋 /orders — мои заказы`);
   });
 
   bot.onText(/\/orders/, async (msg) => {
@@ -284,7 +234,7 @@ if (bot) {
           `• ${o.plan} — ${STATUS_LABELS[o.status] || o.status}\n  ${new Date(o.createdAt).toLocaleDateString('ru')}`
       )
       .join('\n\n');
-    bot.sendMessage(msg.chat.id, `📋 Ваши заказы:\n\n${text}\n\n${SITE_URL}/cabinet`);
+    bot.sendMessage(msg.chat.id, `📋 Ваши заказы:\n\n${text}`);
   });
 
   bot.on('callback_query', async (cq) => {
@@ -384,136 +334,6 @@ app.post('/api/reviews', async (req, res) => {
     res.json(result);
   } catch (e) {
     console.error('submit review', e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post('/api/auth/session', async (req, res) => {
-  try {
-    const sessionId = newSessionId();
-    const session = { status: 'pending', createdAt: Date.now(), expiresAt: Date.now() + 10 * 60 * 1000 };
-    loginSessionsMem.set(sessionId, session);
-    await db.saveLoginSession(sessionId, session).catch(() => {});
-    res.json({
-      ok: true,
-      sessionId,
-      botUrl: `https://t.me/${BOT_USERNAME}?start=login_${sessionId}`,
-    });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.get('/api/auth/session/:id', async (req, res) => {
-  try {
-    const sessionId = req.params.id;
-    const mem = loginSessionsMem.get(sessionId);
-    const remote = await db.getLoginSession(sessionId).catch(() => null);
-    const session = [mem, remote].find((s) => s?.status === 'ok') || mem || remote;
-    if (!session) return res.json({ status: 'pending' });
-    if (session.expiresAt && Date.now() > session.expiresAt && session.status !== 'ok') {
-      return res.json({ status: 'expired' });
-    }
-    if (session.status === 'ok') {
-      loginSessionsMem.set(sessionId, session);
-      return res.json({ status: 'ok', token: session.token, user: session.user });
-    }
-    res.json({ status: 'pending' });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post('/api/auth/telegram', async (req, res) => {
-  try {
-    const data = req.body || {};
-    if (!BOT_TOKEN || !verifyTelegramLogin(data, BOT_TOKEN)) {
-      return res.status(401).json({ error: 'invalid_telegram_auth' });
-    }
-
-    const userId = String(data.id);
-    const profile = {
-      userId,
-      telegramId: data.id,
-      firstName: data.first_name || '',
-      lastName: data.last_name || '',
-      username: data.username || '',
-      name: [data.first_name, data.last_name].filter(Boolean).join(' ') || data.username || 'Клиент',
-      photoUrl: data.photo_url || '',
-      createdAt: Date.now(),
-    };
-
-    const existing = await db.getUser(userId);
-    const merged = { ...(existing || {}), ...profile };
-    if (!merged.phone) merged.phone = existing?.phone || '';
-    await db.saveUser(userId, merged);
-
-    const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
-    res.json({ ok: true, token, user: merged });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.get('/api/profile', authMiddleware, async (req, res) => {
-  const profile = await db.getUser(req.userId);
-  res.json(profile || { userId: req.userId });
-});
-
-app.patch('/api/profile', authMiddleware, async (req, res) => {
-  const existing = (await db.getUser(req.userId)) || { userId: req.userId };
-  const updated = {
-    ...existing,
-    name: req.body.name ?? existing.name,
-    phone: req.body.phone ?? existing.phone,
-    contact: req.body.contact ?? existing.contact,
-    updatedAt: Date.now(),
-  };
-  await db.saveUser(req.userId, updated);
-  res.json(updated);
-});
-
-app.get('/api/orders', authMiddleware, async (req, res) => {
-  const profile = await db.getUser(req.userId);
-  if (profile) await linkOrdersToUser(req.userId, profile);
-  const orders = await db.listUserOrders(req.userId);
-  res.json(orders);
-});
-
-app.post('/api/orders', async (req, res) => {
-  try {
-    let userId = null;
-    const header = req.headers.authorization || '';
-    if (header.startsWith('Bearer ')) {
-      const { verifyToken } = require('./auth');
-      const payload = verifyToken(header.slice(7), SESSION_SECRET);
-      userId = payload?.userId || null;
-    }
-    const order = await createOrder(req.body, userId);
-    res.json({ ok: true, order });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post('/api/orders/repeat', authMiddleware, async (req, res) => {
-  try {
-    const original = await db.getOrder(req.body.orderId);
-    if (!original || String(original.userId) !== req.userId) {
-      return res.status(404).json({ error: 'not_found' });
-    }
-    const order = await createOrder(
-      {
-        name: original.name,
-        contact: original.contact,
-        plan: original.plan,
-        message: `Повтор заказа: ${original.message || original.plan}`,
-      },
-      req.userId
-    );
-    res.json({ ok: true, order });
-  } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
