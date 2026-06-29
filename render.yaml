@@ -7,14 +7,6 @@ services:
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
-      - key: BOT_TOKEN
-        sync: false
-      - key: BOT_USERNAME
-        value: Nexora_loginbot
-      - key: ADMIN_ID
-        value: "6057196483"
-      - key: SITE_URL
-        value: https://nexoraads.online
       - key: GAS_WEB_APP_URL
         sync: false
       - key: GAS_SECRET

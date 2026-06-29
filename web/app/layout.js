@@ -3,7 +3,7 @@ import Script from 'next/script';
 export const metadata = {
   title: 'NexoraWeb — сайты для бизнеса под ключ',
   description:
-    'NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, с заявками в Telegram и поддержкой менеджера.',
+    'NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, заявки на почту и поддержка менеджера.',
   keywords:
     'создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия',
   robots: 'index, follow',

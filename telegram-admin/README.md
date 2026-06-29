@@ -1,6 +1,6 @@
 # Nexora API
 
-Бэкенд: заявки с сайта, отзывы через Google Apps Script, уведомления в Telegram.
+Прокси к Google Apps Script: заявки и отзывы на почту.
 
 ## Быстрый старт
 
@@ -15,18 +15,16 @@ npm start
 
 См. `../google-apps-script/README.md`
 
-## Telegram
-
-1. Бот: **@Nexora_loginbot**
-2. Админ ID: `6057196483` — напишите боту `/start`
-3. Клиент указывает @telegram в заявке и нажимает `/start` в боте — статус заказа приходит в Telegram
-
 ## API
 
 | Метод | Путь | Описание |
 |-------|------|----------|
-| GET | `/api/reviews` | Одобренные отзывы (с Google Sheets) |
-| POST | `/api/reviews` | Отправить отзыв на модерацию |
-| POST | `/api/send-application` | Заявка с сайта |
+| GET | `/api/reviews` | Одобренные отзывы (Google Sheets) |
+| POST | `/api/reviews` | Отправить отзыв на модерацию → письмо с кнопками |
+| POST | `/api/send-application` | Заявка с сайта → письмо на почту |
 
-Хранилище заказов: локальный файл `data/store.json` на Render.
+## Render
+
+Переменные: `GAS_WEB_APP_URL`, `GAS_SECRET`
+
+Проверка: `GET /api/health` → `{ "ok": true, "gas": true }`

@@ -33,7 +33,7 @@ https://script.google.com/macros/s/AKfycbx.../exec
 ```
 
 ### 5. Добавьте URL на Render
-В [Render Dashboard](https://dashboard.render.com) → сервис `nexora-cabinet-api` → **Environment**:
+В [Render Dashboard](https://dashboard.render.com) → сервис API → **Environment**:
 
 | Переменная | Значение |
 |------------|----------|
@@ -59,7 +59,6 @@ https://script.google.com/macros/s/AKfycbx.../exec
 ### Заявки
 1. Клиент отправляет заявку на сайте
 2. Вам на почту письмо с данными
-3. В Telegram боте приходит уведомление с кнопками статуса
 
 ---
 

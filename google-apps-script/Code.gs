@@ -13,17 +13,32 @@
  */
 
 const CONFIG = {
-  ADMIN_EMAIL: 'nexoraads111@gmail.com', // ← замените на вашу почту
+  ADMIN_EMAIL: 'nexoraads111@gmail.com', // ← ваша почта Gmail
   SITE_URL: 'https://nexoraads.online',
   SECRET: 'nexora-gas-secret-change-me', // тот же GAS_SECRET на Render
+  // ID таблицы из URL: https://docs.google.com/spreadsheets/d/ВОТ_ЭТОТ_ID/edit
+  SPREADSHEET_ID: '', // ← обязательно укажите!
 };
 
+const REVIEW_HEADERS = ['id', 'name', 'title', 'type', 'rating', 'text', 'status', 'createdAt', 'token'];
+const ORDER_HEADERS = ['id', 'name', 'contact', 'plan', 'message', 'createdAt'];
+
+function getSpreadsheet_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SPREADSHEET_ID') || CONFIG.SPREADSHEET_ID;
+  if (id) return SpreadsheetApp.openById(id);
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return active;
+  throw new Error('Укажите SPREADSHEET_ID в CONFIG и запустите setup()');
+}
+
 function setup() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  ensureSheet_(ss, 'Reviews', ['id', 'name', 'title', 'type', 'rating', 'text', 'status', 'createdAt', 'token']);
-  ensureSheet_(ss, 'Orders', ['id', 'name', 'contact', 'plan', 'message', 'createdAt']);
+  const ss = getSpreadsheet_();
+  PropertiesService.getScriptProperties().setProperty('SPREADSHEET_ID', ss.getId());
+  ensureSheet_(ss, 'Reviews', REVIEW_HEADERS);
+  ensureSheet_(ss, 'Orders', ORDER_HEADERS);
   SpreadsheetApp.flush();
-  return 'OK — листы Reviews и Orders созданы';
+  return 'OK — ID сохранён: ' + ss.getId();
 }
 
 function ensureSheet_(ss, name, headers) {
@@ -37,9 +52,8 @@ function ensureSheet_(ss, name, headers) {
 }
 
 function sheet_(name) {
-  return ensureSheet_(SpreadsheetApp.getActiveSpreadsheet(), name, name === 'Reviews'
-    ? ['id', 'name', 'title', 'type', 'rating', 'text', 'status', 'createdAt', 'token']
-    : ['id', 'name', 'contact', 'plan', 'message', 'createdAt']);
+  const headers = name === 'Reviews' ? REVIEW_HEADERS : ORDER_HEADERS;
+  return ensureSheet_(getSpreadsheet_(), name, headers);
 }
 
 function json_(data) {
@@ -60,46 +74,54 @@ function checkSecret_(secret) {
 }
 
 function doGet(e) {
-  const p = e.parameter || {};
-  const action = p.action || '';
+  try {
+    const p = e.parameter || {};
+    const action = p.action || '';
 
-  if (action === 'reviews') {
-    return json_(getApprovedReviews_());
+    if (action === 'reviews') {
+      return json_(getApprovedReviews_());
+    }
+
+    if (action === 'approve') {
+      const result = moderateReview_(p.id, p.token, 'approved');
+      return html_('Отзыв', result.ok
+        ? `<h2>✅ Отзыв опубликован</h2><p>Теперь он виден на <a href="${CONFIG.SITE_URL}/#reviews">сайте</a>.</p>`
+        : `<h2>❌ Ошибка</h2><p>${result.error}</p>`);
+    }
+
+    if (action === 'reject') {
+      const result = moderateReview_(p.id, p.token, 'rejected');
+      return html_('Отзыв', result.ok
+        ? '<h2>🚫 Отзыв отклонён</h2><p>На сайте не появится.</p>'
+        : `<h2>❌ Ошибка</h2><p>${result.error}</p>`);
+    }
+
+    return json_({ ok: true, service: 'NexoraWeb GAS' });
+  } catch (err) {
+    return json_({ ok: false, error: String(err.message || err) });
   }
-
-  if (action === 'approve') {
-    const result = moderateReview_(p.id, p.token, 'approved');
-    return html_('Отзыв', result.ok
-      ? `<h2>✅ Отзыв опубликован</h2><p>Теперь он виден на <a href="${CONFIG.SITE_URL}/#reviews">сайте</a>.</p>`
-      : `<h2>❌ Ошибка</h2><p>${result.error}</p>`);
-  }
-
-  if (action === 'reject') {
-    const result = moderateReview_(p.id, p.token, 'rejected');
-    return html_('Отзыв', result.ok
-      ? '<h2>🚫 Отзыв отклонён</h2><p>На сайте не появится.</p>'
-      : `<h2>❌ Ошибка</h2><p>${result.error}</p>`);
-  }
-
-  return json_({ ok: true, service: 'NexoraWeb GAS' });
 }
 
 function doPost(e) {
-  let data = {};
   try {
-    data = JSON.parse(e.postData.contents || '{}');
+    let data = {};
+    try {
+      data = JSON.parse(e.postData.contents || '{}');
+    } catch (err) {
+      return json_({ ok: false, error: 'invalid_json' });
+    }
+
+    if (!checkSecret_(data.secret)) {
+      return json_({ ok: false, error: 'unauthorized' });
+    }
+
+    if (data.action === 'submitReview') return json_(submitReview_(data));
+    if (data.action === 'submitOrder') return json_(submitOrder_(data));
+
+    return json_({ ok: false, error: 'unknown_action' });
   } catch (err) {
-    return json_({ ok: false, error: 'invalid_json' });
+    return json_({ ok: false, error: String(err.message || err) });
   }
-
-  if (!checkSecret_(data.secret)) {
-    return json_({ ok: false, error: 'unauthorized' });
-  }
-
-  if (data.action === 'submitReview') return json_(submitReview_(data));
-  if (data.action === 'submitOrder') return json_(submitOrder_(data));
-
-  return json_({ ok: false, error: 'unknown_action' });
 }
 
 function getApprovedReviews_() {
