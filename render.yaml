@@ -13,9 +13,11 @@ services:
         value: Nexora_loginbot
       - key: ADMIN_ID
         value: "6057196483"
-      - key: FIREBASE_DATABASE_URL
-        value: https://nexorakabinetr-default-rtdb.europe-west1.firebasedatabase.app
       - key: SESSION_SECRET
         generateValue: true
       - key: SITE_URL
         value: https://nexoraads.online
+      - key: GAS_WEB_APP_URL
+        sync: false
+      - key: GAS_SECRET
+        sync: false

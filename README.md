@@ -37,4 +37,6 @@ cd web && npm install && npm run build
 cd telegram-admin && npm install && npm start
 ```
 
-Переменные: `BOT_TOKEN`, `ADMIN_ID`, `FIREBASE_DATABASE_URL`, `SESSION_SECRET`, `SITE_URL`.
+Переменные: `BOT_TOKEN`, `ADMIN_ID`, `SESSION_SECRET`, `SITE_URL`, `GAS_WEB_APP_URL`, `GAS_SECRET`.
+
+Отзывы и email-заявки: **`google-apps-script/README.md`**

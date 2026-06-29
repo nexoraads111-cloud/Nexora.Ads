@@ -4,7 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
-const fb = require('./firebase-db');
+const db = require('./local-db');
+const gas = require('./gas-client');
 const {
   STATUSES,
   STATUS_LABELS,
@@ -109,7 +110,7 @@ function contactMatchesUser(contact, user) {
 
 async function resolveUserIdFromContact(contact) {
   const tgUser = extractTelegramUsername(contact);
-  const users = await fb.listAllUsers();
+  const users = await db.listAllUsers();
   if (tgUser) {
     const byUsername = users.find((user) => normalizeContact(user.username) === tgUser);
     if (byUsername) return String(byUsername.userId);
@@ -124,7 +125,7 @@ async function ensureOrderTelegramId(order) {
   if (fromContact) {
     order.userId = fromContact;
     order.updatedAt = Date.now();
-    await fb.saveOrder(order.id, order);
+    await db.saveOrder(order.id, order);
     return fromContact;
   }
   return null;
@@ -157,7 +158,7 @@ async function notifyClientStatus(order, status) {
 }
 
 async function linkOrdersToUser(userId, user) {
-  const orders = await fb.listAllOrders();
+  const orders = await db.listAllOrders();
   for (const order of orders) {
     if (order.userId) continue;
     const byContact = contactMatchesUser(order.contact, user);
@@ -168,7 +169,7 @@ async function linkOrdersToUser(userId, user) {
     if (byContact || byUsername) {
       order.userId = String(userId);
       order.updatedAt = Date.now();
-      await fb.saveOrder(order.id, order);
+      await db.saveOrder(order.id, order);
     }
   }
 }
@@ -188,10 +189,10 @@ async function buildUserFromTelegram(from) {
     name: [from.first_name, from.last_name].filter(Boolean).join(' ') || from.username || 'Клиент',
     createdAt: Date.now(),
   };
-  const existing = await fb.getUser(userId);
+  const existing = await db.getUser(userId);
   const merged = { ...(existing || {}), ...profile };
   if (!merged.phone) merged.phone = existing?.phone || (from.username ? `@${from.username}` : '');
-  await fb.saveUser(userId, merged);
+  await db.saveUser(userId, merged);
   await linkOrdersToUser(userId, merged);
   const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
   return { token, user: merged };
@@ -201,7 +202,7 @@ async function completeLoginSession(sessionId, from) {
   const { token, user } = await buildUserFromTelegram(from);
   const session = { status: 'ok', token, user, telegramId: from.id, completedAt: Date.now() };
   loginSessionsMem.set(sessionId, session);
-  await fb.saveLoginSession(sessionId, session).catch(() => {});
+  await db.saveLoginSession(sessionId, session).catch(() => {});
   return { token, user };
 }
 
@@ -234,8 +235,9 @@ async function createOrder(body, userId = null) {
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
-  await fb.saveOrder(id, order);
+  await db.saveOrder(id, order);
   notifyAdmin(formatAdminOrderMessage(order), statusKeyboard(id, order.status));
+  gas.submitOrder(order).catch((e) => console.warn('GAS order email:', e.message));
   return order;
 }
 
@@ -271,7 +273,7 @@ if (bot) {
   });
 
   bot.onText(/\/orders/, async (msg) => {
-    const orders = await fb.listUserOrders(msg.from.id);
+    const orders = await db.listUserOrders(msg.from.id);
     if (!orders.length) {
       return bot.sendMessage(msg.chat.id, 'Заказов пока нет. Оформите заявку на сайте.');
     }
@@ -299,7 +301,7 @@ if (bot) {
       }
       if (action !== 'status' || !orderId || !status) return;
 
-      const order = await fb.getOrder(orderId);
+      const order = await db.getOrder(orderId);
       if (!order) return bot.answerCallbackQuery(cq.id, { text: 'Не найден' });
       if (order.status === status && status === 'ready') {
         return bot.answerCallbackQuery(cq.id, { text: '✅ Уже готов' });
@@ -307,7 +309,7 @@ if (bot) {
 
       order.status = status;
       order.updatedAt = Date.now();
-      await fb.saveOrder(orderId, order);
+      await db.saveOrder(orderId, order);
 
       await notifyClientStatus(order, status);
 
@@ -334,12 +336,12 @@ if (bot) {
       return;
     }
     pendingSiteUrl.delete(ADMIN_ID);
-    const order = await fb.getOrder(orderId);
+    const order = await db.getOrder(orderId);
     if (!order) return;
     order.siteUrl = url;
     order.status = 'ready';
     order.updatedAt = Date.now();
-    await fb.saveOrder(orderId, order);
+    await db.saveOrder(orderId, order);
     await notifyClientStatus(order, 'ready');
     await bot.sendMessage(ADMIN_ID, `✅ Ссылка сохранена для заказа ${orderId}`);
   });
@@ -349,9 +351,41 @@ app.get('/api/health', (req, res) => {
   res.json({
     ok: true,
     bot: Boolean(BOT_TOKEN),
-    firebase: fb.useRemote() ? 'cloud' : 'local',
+    storage: db.storage,
+    gas: gas.isConfigured(),
     botUsername: BOT_USERNAME,
   });
+});
+
+app.get('/api/reviews', async (req, res) => {
+  try {
+    if (!gas.isConfigured()) return res.json([]);
+    const reviews = await gas.gasGetReviews();
+    res.json(reviews);
+  } catch (e) {
+    console.error('reviews', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/reviews', async (req, res) => {
+  try {
+    if (!gas.isConfigured()) {
+      return res.status(503).json({ error: 'gas_not_configured' });
+    }
+    const body = req.body || {};
+    const result = await gas.submitReview({
+      name: body.name,
+      title: body.title,
+      text: body.text,
+      type: body.type,
+      rating: body.rating,
+    });
+    res.json(result);
+  } catch (e) {
+    console.error('submit review', e);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 app.post('/api/auth/session', async (req, res) => {
@@ -359,7 +393,7 @@ app.post('/api/auth/session', async (req, res) => {
     const sessionId = newSessionId();
     const session = { status: 'pending', createdAt: Date.now(), expiresAt: Date.now() + 10 * 60 * 1000 };
     loginSessionsMem.set(sessionId, session);
-    await fb.saveLoginSession(sessionId, session).catch(() => {});
+    await db.saveLoginSession(sessionId, session).catch(() => {});
     res.json({
       ok: true,
       sessionId,
@@ -374,7 +408,7 @@ app.get('/api/auth/session/:id', async (req, res) => {
   try {
     const sessionId = req.params.id;
     const mem = loginSessionsMem.get(sessionId);
-    const remote = await fb.getLoginSession(sessionId).catch(() => null);
+    const remote = await db.getLoginSession(sessionId).catch(() => null);
     const session = [mem, remote].find((s) => s?.status === 'ok') || mem || remote;
     if (!session) return res.json({ status: 'pending' });
     if (session.expiresAt && Date.now() > session.expiresAt && session.status !== 'ok') {
@@ -409,10 +443,10 @@ app.post('/api/auth/telegram', async (req, res) => {
       createdAt: Date.now(),
     };
 
-    const existing = await fb.getUser(userId);
+    const existing = await db.getUser(userId);
     const merged = { ...(existing || {}), ...profile };
     if (!merged.phone) merged.phone = existing?.phone || '';
-    await fb.saveUser(userId, merged);
+    await db.saveUser(userId, merged);
 
     const token = signToken({ userId, name: merged.name, exp: Date.now() + 30 * 86400000 }, SESSION_SECRET);
     res.json({ ok: true, token, user: merged });
@@ -423,12 +457,12 @@ app.post('/api/auth/telegram', async (req, res) => {
 });
 
 app.get('/api/profile', authMiddleware, async (req, res) => {
-  const profile = await fb.getUser(req.userId);
+  const profile = await db.getUser(req.userId);
   res.json(profile || { userId: req.userId });
 });
 
 app.patch('/api/profile', authMiddleware, async (req, res) => {
-  const existing = (await fb.getUser(req.userId)) || { userId: req.userId };
+  const existing = (await db.getUser(req.userId)) || { userId: req.userId };
   const updated = {
     ...existing,
     name: req.body.name ?? existing.name,
@@ -436,14 +470,14 @@ app.patch('/api/profile', authMiddleware, async (req, res) => {
     contact: req.body.contact ?? existing.contact,
     updatedAt: Date.now(),
   };
-  await fb.saveUser(req.userId, updated);
+  await db.saveUser(req.userId, updated);
   res.json(updated);
 });
 
 app.get('/api/orders', authMiddleware, async (req, res) => {
-  const profile = await fb.getUser(req.userId);
+  const profile = await db.getUser(req.userId);
   if (profile) await linkOrdersToUser(req.userId, profile);
-  const orders = await fb.listUserOrders(req.userId);
+  const orders = await db.listUserOrders(req.userId);
   res.json(orders);
 });
 
@@ -465,7 +499,7 @@ app.post('/api/orders', async (req, res) => {
 
 app.post('/api/orders/repeat', authMiddleware, async (req, res) => {
   try {
-    const original = await fb.getOrder(req.body.orderId);
+    const original = await db.getOrder(req.body.orderId);
     if (!original || String(original.userId) !== req.userId) {
       return res.status(404).json({ error: 'not_found' });
     }
@@ -493,5 +527,6 @@ app.post('/api/send-application', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Nexora API http://localhost:${PORT}`);
-  console.log(fb.useRemote() ? '🔥 Firebase cloud' : '📁 Local data/firebase-store.json');
+  console.log(`📁 Storage: ${db.storage}`);
+  console.log(gas.isConfigured() ? '📧 Google Apps Script connected' : '⚠️ GAS not configured');
 });

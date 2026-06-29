@@ -1,44 +1,33 @@
 # Nexora Cabinet API
 
-Бэкенд для личного кабинета: Telegram-вход, заказы, Firebase.
+Бэкенд: Telegram-вход, кабинет, отзывы и заявки через Google Apps Script.
 
 ## Быстрый старт
 
 ```bash
 cd telegram-admin
-cp .env.example .env   # заполните токены
+cp .env.example .env
 npm install
 npm start
 ```
 
-## Настройка Telegram
+## Google Apps Script
+
+См. `../google-apps-script/README.md`
+
+## Telegram
 
 1. Бот: **@Nexora_loginbot**
-2. В @BotFather: `/setdomain` → `nexoraads.online` (для виджета входа на сайте)
-3. Напишите боту `/start` с **админ-аккаунта** (ID `6057196483`), чтобы получать уведомления
-
-## Firebase
-
-1. [console.firebase.google.com](https://console.firebase.google.com) → проект **nexorakabinetr**
-2. Realtime Database → **Rules** → вставьте `firebase/database.rules.dev.json` (для старта)
-3. В `.env`: `FIREBASE_DATABASE_URL=https://nexorakabinetr-default-rtdb.europe-west1.firebasedatabase.app`
-
-## Деплой (Render)
-
-Используйте `render.yaml` в корне репозитория. После деплоя URL будет в `js/nexora-config.js`.
+2. Админ ID: `6057196483` — напишите боту `/start`
 
 ## API
 
 | Метод | Путь | Описание |
 |-------|------|----------|
-| POST | `/api/auth/telegram` | Вход через Telegram Widget |
-| GET | `/api/profile` | Профиль (Bearer token) |
-| PATCH | `/api/profile` | Сохранить имя/телефон |
-| GET | `/api/orders` | Мои заказы |
-| POST | `/api/orders` | Новая заявка |
-| POST | `/api/orders/repeat` | Повтор заказа |
-| POST | `/api/send-application` | Заявка с главной |
+| GET | `/api/reviews` | Одобренные отзывы (с Google Sheets) |
+| POST | `/api/reviews` | Отправить отзыв на модерацию |
+| POST | `/api/send-application` | Заявка с сайта |
+| POST | `/api/auth/session` | Вход через Telegram |
+| GET | `/api/orders` | Мои заказы (кабинет) |
 
-## Статусы заказа
-
-`Принят` → `В работе` → `Готов` (кнопки в Telegram у админа)
+Хранилище кабинета: локальный файл `data/store.json` на Render.
