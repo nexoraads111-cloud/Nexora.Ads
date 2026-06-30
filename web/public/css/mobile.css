@@ -86,17 +86,11 @@
     display: grid !important;
     place-items: center;
   }
-  .nx-iphone16 {
-    width: min(250px, 74vw) !important;
-    height: auto !important;
-    aspect-ratio: 300 / 620;
-    padding: 9px !important;
-    border-radius: 42px !important;
-    transform: rotateY(-8deg) rotateX(2deg) rotateZ(-2deg) !important;
+  .nx-pcstore-mockup {
+    width: min(290px, 90vw) !important;
+    transform: rotateY(-6deg) rotateX(2deg) rotateZ(-1deg) !important;
     animation: none !important;
   }
-  .nx-iphone16-screen { border-radius: 36px !important; min-height: 0; }
-  .nx-iphone16-island { top: 15px !important; width: 72px !important; height: 22px !important; }
   .nx-iphone16-glow { width: 260px !important; height: 260px !important; }
   .nx-iphone16-shadow { width: min(200px, 55vw) !important; }
   .nx-float-chip { display: none !important; }
