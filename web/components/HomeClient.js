@@ -6,7 +6,7 @@ export default function HomeClient({ html }) {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <Script src="/js/nexora-config.js?v=14" strategy="afterInteractive" />
+      <Script src="/js/nexora-config.js?v=15" strategy="afterInteractive" />
       <Script src="/js/script-01.js?v=14" type="module" strategy="afterInteractive" />
       <Script src="/js/main.js?v=14" strategy="afterInteractive" />
       <Script src="/js/module-03.js?v=14" strategy="afterInteractive" />
