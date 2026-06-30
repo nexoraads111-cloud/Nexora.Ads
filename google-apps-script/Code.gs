@@ -13,7 +13,9 @@ const CONFIG = {
   SITE_URL: 'https://nexoraads.online',
   SECRET: 'nexora-gas-secret-change-me',
   ADMIN_PIN: 'nexora2026',
+  SPREADSHEET_ID: '',
   BLOCKED_REVIEW_IDS: ['r_1782853940234', 'r_1782835228464'],
+};
 
 const REVIEW_HEADERS = ['id', 'name', 'title', 'type', 'rating', 'text', 'status', 'createdAt', 'token'];
 const ORDER_HEADERS = ['id', 'name', 'contact', 'plan', 'message', 'createdAt'];
