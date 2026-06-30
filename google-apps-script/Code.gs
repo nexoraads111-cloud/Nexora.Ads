@@ -98,9 +98,42 @@ function checkSecret_(secret) {
   return secret && secret === expected;
 }
 
+function parseBody_(e) {
+  if (e.postData && e.postData.contents) {
+    try {
+      return JSON.parse(e.postData.contents);
+    } catch (err) {
+      return null;
+    }
+  }
+  return null;
+}
+
+function parsePayload_(e) {
+  var p = e.parameter || {};
+  if (!p.payload) return null;
+  try {
+    return JSON.parse(p.payload);
+  } catch (err) {
+    return null;
+  }
+}
+
+function handleSubmit_(data) {
+  if (!data || !data.action) return null;
+  if (!checkSecret_(data.secret)) return { ok: false, error: 'unauthorized' };
+  if (data.action === 'submitReview') return submitReview_(data);
+  if (data.action === 'submitOrder') return submitOrder_(data);
+  return { ok: false, error: 'unknown_action' };
+}
+
 function doGet(e) {
   try {
     const p = e.parameter || {};
+    const payloadData = parsePayload_(e);
+    const submitResult = handleSubmit_(payloadData);
+    if (submitResult) return json_(submitResult);
+
     const action = p.action || '';
 
     if (action === 'reviews') {
@@ -125,35 +158,26 @@ function doGet(e) {
       const ss = getSpreadsheet_();
       return json_({
         ok: true,
+        version: '2.1',
         service: 'NexoraWeb GAS',
         spreadsheetId: ss.getId(),
         adminEmail: getProps_().getProperty('ADMIN_EMAIL') || CONFIG.ADMIN_EMAIL,
       });
     }
 
-    return json_({ ok: true, service: 'NexoraWeb GAS' });
+    return json_({ ok: true, version: '2.1', service: 'NexoraWeb GAS' });
   } catch (err) {
-    return json_({ ok: false, error: String(err.message || err) });
+    return json_({ ok: false, version: '2.1', error: String(err.message || err) });
   }
 }
 
 function doPost(e) {
   try {
-    let data = {};
-    try {
-      data = JSON.parse(e.postData.contents || '{}');
-    } catch (err) {
-      return json_({ ok: false, error: 'invalid_json' });
-    }
+    const data = parseBody_(e) || {};
+    const submitResult = handleSubmit_(data);
+    if (submitResult) return json_(submitResult);
 
-    if (!checkSecret_(data.secret)) {
-      return json_({ ok: false, error: 'unauthorized' });
-    }
-
-    if (data.action === 'submitReview') return json_(submitReview_(data));
-    if (data.action === 'submitOrder') return json_(submitOrder_(data));
-
-    return json_({ ok: false, error: 'unknown_action' });
+    return json_({ ok: false, error: 'invalid_json' });
   } catch (err) {
     return json_({ ok: false, error: String(err.message || err) });
   }
