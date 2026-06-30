@@ -220,6 +220,7 @@ async function savePrices() {
   try {
     const res = await api().savePricing(getSecret(), items);
     api().cachePricing(items);
+    localStorage.setItem('nexora_cache_ver', '3');
     toast('✅ Ціни збережено! (' + (res.count || items.length) + ')', true);
     await loadAll();
   } catch (e) {
@@ -237,7 +238,11 @@ async function saveProjects() {
   btn.textContent = 'Збереження…';
   try {
     const res = await api().saveProjects(getSecret(), items);
-    api().cacheProjects(items.filter((p) => p.active !== false));
+    const fresh = await api().getProjects();
+    if (Array.isArray(fresh)) {
+      api().cacheProjects(fresh);
+      localStorage.setItem('nexora_cache_ver', '3');
+    }
     toast('✅ Проєкти збережено! (' + (res.count || items.length) + ')', true);
     await loadAll();
   } catch (e) {

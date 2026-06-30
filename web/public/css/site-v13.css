@@ -1,8 +1,12 @@
 /* NexoraWeb v13 — mobile, map, review sheet, AI chat */
 
 .price-on-sale{position:relative;border-color:rgba(239,68,68,.45)!important;box-shadow:0 0 0 1px rgba(239,68,68,.2),-4px 0 0 0 #ef4444,0 24px 80px rgba(239,68,68,.12)!important;padding-left:28px!important}
-.price-sale-badge{position:absolute;top:18px;left:18px;padding:7px 12px;border-radius:999px;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;z-index:2}
-.price-old{font-size:22px;font-weight:800;color:#94a3b8;text-decoration:line-through;margin:14px 0 0;opacity:.85}
+.price-top-badges{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;z-index:3;pointer-events:none}
+.price.has-top-badges,.price-on-sale.has-top-badges{padding-top:58px!important}
+.price.has-top-badges h3,.price-on-sale.has-top-badges h3{margin-top:0}
+.price-sale-badge{position:static;flex:0 0 auto;padding:7px 12px;border-radius:999px;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;max-width:calc(100% - 110px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price.has-top-badges .price-tag,.price-on-sale.has-top-badges .price-tag{position:static;flex:0 0 auto;margin:0;top:auto;right:auto}
+.price-old{font-size:22px;font-weight:800;color:#94a3b8;text-decoration:line-through;margin:8px 0 0;opacity:.85}
 .price-on-sale .price-value{color:#fecaca;margin-top:4px}
 .admin-nav-btn{display:none;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;border:1px solid rgba(77,163,255,.35);background:rgba(77,163,255,.1);color:#93c5fd;font-size:18px;margin-right:4px}
 .admin-nav-btn:hover{background:rgba(77,163,255,.2);color:#fff}
@@ -99,6 +103,13 @@ img[loading=lazy]{content-visibility:auto}
   .reviews-top{flex-direction:column;align-items:stretch;gap:14px}
   .reviews-top .btn{width:100%}
   .review{flex-basis:86%;min-width:0}
+  .reviews-carousel{display:flex;gap:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:8px}
+  .reviews-carousel .review{scroll-snap-align:start;flex:0 0 86%}
+  .pricing{grid-template-columns:1fr!important;gap:14px}
+  .price.has-top-badges,.price-on-sale.has-top-badges{padding-top:54px!important;padding-left:22px!important}
+  .price-top-badges{left:12px;right:12px;top:12px}
+  .price-sale-badge{font-size:10px;padding:6px 10px;max-width:58%}
+  .price-value{font-size:34px!important}
   .map-wrap iframe{height:280px}
   .map-overlay{position:static;margin:0;border-radius:0;border:0;border-top:1px solid var(--line)}
   .ai-chat{right:0;left:0;bottom:0;width:100%;max-width:none;height:min(88vh,640px);border-radius:28px 28px 0 0}
