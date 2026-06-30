@@ -121,6 +121,19 @@
     } catch (e) {}
   }
 
+  async function loadReviewsBackup() {
+    if (typeof window.renderReviews !== 'function') return;
+    try {
+      const data = await fetchJson('reviews');
+      if (Array.isArray(data) && data.length) {
+        data.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        window.renderReviews(data);
+      }
+    } catch (e) {
+      console.warn('reviews backup load', e);
+    }
+  }
+
   async function load() {
     try {
       const [prices, projects] = await Promise.all([fetchJson('pricing'), fetchJson('projects')]);
@@ -140,6 +153,7 @@
       console.warn('site-data load', e);
       readCacheFallback();
     }
+    loadReviewsBackup();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
