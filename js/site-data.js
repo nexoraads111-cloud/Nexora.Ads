@@ -1,4 +1,4 @@
-// Завантаження цін і проєктів з Google Apps Script
+// Динамічні ціни та проєкти з Google Apps Script
 (function () {
   const GAS = (typeof NEXORA_GAS_URL !== 'undefined') ? NEXORA_GAS_URL : '';
   if (!GAS) return;
@@ -37,11 +37,8 @@
       const saleBadge = (onSale || p.saleLabel)
         ? `<span class="price-sale-badge">${esc(p.saleLabel || t('sale_badge') || 'Акція')}</span>`
         : '';
-      const oldPrice = onSale
-        ? `<div class="price-old">от ${esc(p.oldPrice)}€</div>`
-        : '';
+      const oldPrice = onSale ? `<div class="price-old">от ${esc(p.oldPrice)}€</div>` : '';
       const priceVal = `<div class="price-value">от ${esc(p.price)}€</div>`;
-
       const feats = ui.features.map((k) => `<span data-i18n="${k}">${t(k)}</span>`).join('');
       const popTag = p.popular ? `<span class="price-tag" data-i18n="popular">${t('popular')}</span>` : '';
 
@@ -81,19 +78,34 @@
   let cachedPrices = null;
   let cachedProjects = null;
 
-  async function load() {
+  async function fetchJson(action) {
+    const r = await fetch(GAS + '?action=' + action + '&_=' + Date.now(), { cache: 'no-store', redirect: 'follow' });
+    const text = await r.text();
+    try { return JSON.parse(text); } catch (e) { return null; }
+  }
+
+  function readCache() {
     try {
-      const [prices, projects] = await Promise.all([
-        fetch(GAS + '?action=pricing', { cache: 'no-cache' }).then((r) => r.json()),
-        fetch(GAS + '?action=projects', { cache: 'no-cache' }).then((r) => r.json()),
-      ]);
+      const p = JSON.parse(localStorage.getItem('nexora_cache_pricing') || 'null');
+      const j = JSON.parse(localStorage.getItem('nexora_cache_projects') || 'null');
+      if (Array.isArray(p) && p.length) { cachedPrices = p; renderPricing(p); }
+      if (Array.isArray(j) && j.length) { cachedProjects = j; renderProjects(j); }
+    } catch (e) {}
+  }
+
+  async function load() {
+    readCache();
+    try {
+      const [prices, projects] = await Promise.all([fetchJson('pricing'), fetchJson('projects')]);
       if (Array.isArray(prices) && prices.length) {
         cachedPrices = prices;
         renderPricing(prices);
+        localStorage.setItem('nexora_cache_pricing', JSON.stringify(prices));
       }
       if (Array.isArray(projects) && projects.length) {
         cachedProjects = projects;
         renderProjects(projects);
+        localStorage.setItem('nexora_cache_projects', JSON.stringify(projects));
       }
     } catch (e) {
       console.warn('site-data load', e);

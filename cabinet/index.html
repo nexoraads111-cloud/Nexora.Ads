@@ -4,57 +4,78 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex, nofollow"/>
-<title>Кабінет — NexoraWeb</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<link href="/cabinet/cabinet.css" rel="stylesheet"/>
+<title>Кабінет NexoraWeb</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="/cabinet/cabinet.css?v=16" rel="stylesheet"/>
 </head>
 <body>
-<div class="wrap">
-<div id="loginScreen">
-<div class="login-box">
-<h2>🔐 Особистий кабінет</h2>
-<p>Тільки для адміністратора. Введіть PIN-код.</p>
-<form onsubmit="doLogin(event)">
-<label>PIN-код<input type="password" id="adminPin" placeholder="••••••" required autocomplete="current-password"/></label>
-<button class="btn btn-primary" type="submit" style="width:100%;margin-top:16px">Увійти</button>
-</form>
-<p class="hint">PIN за замовчуванням: <b>nexora2026</b> (змініть у Google Apps Script → CONFIG.ADMIN_PIN)</p>
-<a href="/" style="display:inline-block;margin-top:16px">← На сайт</a>
-</div>
-</div>
+<div class="shell">
+  <div id="loginScreen" class="login-wrap">
+    <div class="login-card">
+      <div class="status-pill" id="connStatus">⏳ Перевірка з'єднання…</div>
+      <h1>🔐 Адмін-панель</h1>
+      <p>Керуй цінами, знижками та проєктами на сайті. Доступ тільки по PIN.</p>
+      <form onsubmit="doLogin(event)">
+        <label>PIN-код<input type="password" id="adminPin" placeholder="••••••" required autocomplete="current-password"/></label>
+        <button class="btn btn-primary btn-block" type="submit" id="loginBtn">Увійти</button>
+      </form>
+      <p class="hint">PIN за замовчуванням: <b>nexora2026</b></p>
+      <a href="/">← На головну</a>
+    </div>
+  </div>
 
-<div id="appScreen" style="display:none">
-<div class="top">
-<div class="brand"><div class="logo">N</div><div><h1>Кабінет адміна</h1><small style="color:#96a4bd">Ціни та проєкти</small></div></div>
-<div class="top-actions">
-<a class="btn btn-ghost" href="/" target="_blank">Відкрити сайт</a>
-<button class="btn btn-ghost" onclick="logout()">Вийти</button>
-</div>
-</div>
+  <div id="appScreen" style="display:none">
+    <header class="hdr">
+      <div class="brand">
+        <div class="logo">N</div>
+        <div>
+          <h1>Nexora Control</h1>
+          <small>Ціни • Акції • Проєкти</small>
+        </div>
+      </div>
+      <div class="hdr-actions">
+        <span class="status-pill ok" id="liveStatus">🟢 Підключено</span>
+        <a class="btn btn-ghost" href="/?refresh=1" target="_blank">Відкрити сайт</a>
+        <button class="btn btn-ghost" onclick="logout()">Вийти</button>
+      </div>
+    </header>
 
-<div class="tabs">
-<button class="tab active" data-tab="prices" onclick="switchTab('prices')">💰 Ціни та знижки</button>
-<button class="tab" data-tab="projects" onclick="switchTab('projects')">🌐 Проєкти</button>
-</div>
+    <div class="layout">
+      <section class="panel">
+        <div class="tabs">
+          <button class="tab active" data-tab="prices" onclick="switchTab('prices')">💰 Ціни</button>
+          <button class="tab" data-tab="projects" onclick="switchTab('projects')">🌐 Проєкти</button>
+        </div>
 
-<div id="tab-prices" class="panel">
-<p style="color:#96a4bd;margin-bottom:16px">Вкажіть ціну. Для знижки — стару ціну вище нової + текст акції.</p>
-<div class="grid" id="pricesList"></div>
-<button class="btn btn-primary" onclick="savePrices()" style="margin-top:20px;width:100%">💾 Зберегти ціни</button>
-</div>
+        <div id="tab-prices">
+          <h2>Ціни та знижки</h2>
+          <p class="sub">Стара ціна &gt; нова → на сайті перекреслення + червона акція зліва</p>
+          <div class="grid" id="pricesList"></div>
+          <button class="btn btn-primary btn-block" id="savePricesBtn" onclick="savePrices()">💾 Зберегти ціни на сайт</button>
+        </div>
 
-<div id="tab-projects" class="panel" style="display:none">
-<p style="color:#96a4bd;margin-bottom:16px">Додайте проєкт: назва, опис, фото (URL), посилання на сайт.</p>
-<div class="grid" id="projectsList"></div>
-<button class="btn btn-ghost" onclick="addProject()" style="margin-top:16px;width:100%">+ Додати проєкт</button>
-<button class="btn btn-primary" onclick="saveProjects()" style="margin-top:10px;width:100%">💾 Зберегти проєкти</button>
-<p class="hint">Фото: завантажте на imgur.com або додайте файл у Public/Image/ на GitHub і вкажіть шлях Public/Image/назва.png</p>
-</div>
-</div>
+        <div id="tab-projects" style="display:none">
+          <h2>Проєкти портфоліо</h2>
+          <p class="sub">Назва, опис, фото, посилання — з'являться в блоці «Проєкти»</p>
+          <div class="grid" id="projectsList"></div>
+          <button class="btn btn-ghost btn-block" onclick="addProject()">+ Додати проєкт</button>
+          <button class="btn btn-primary btn-block" id="saveProjectsBtn" onclick="saveProjects()">💾 Зберегти проєкти на сайт</button>
+          <p class="hint">Фото: imgur.com або файл у GitHub → <code>Public/Image/назва.png</code></p>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <h2>👁 Превʼю на сайті</h2>
+        <p class="sub">Так побачать відвідувачі після збереження</p>
+        <div id="previewArea"></div>
+      </aside>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="/js/nexora-config.js?v=15"></script>
-<script src="/cabinet/cabinet.js?v=14"></script>
+<script src="/js/nexora-config.js?v=16"></script>
+<script src="/js/gas-api.js?v=16"></script>
+<script src="/cabinet/cabinet.js?v=16"></script>
 </body>
 </html>
