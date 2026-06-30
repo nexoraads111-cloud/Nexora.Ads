@@ -1,6 +1,11 @@
 /* NexoraWeb v13 — mobile, map, review sheet, AI chat */
 
-.lang-v2 .lang-btn{min-width:54px;font-size:12px;font-weight:900;letter-spacing:.06em}
+.price-on-sale{position:relative;border-color:rgba(239,68,68,.45)!important;box-shadow:0 0 0 1px rgba(239,68,68,.2),-4px 0 0 0 #ef4444,0 24px 80px rgba(239,68,68,.12)!important;padding-left:28px!important}
+.price-sale-badge{position:absolute;top:18px;left:18px;padding:7px 12px;border-radius:999px;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;z-index:2}
+.price-old{font-size:22px;font-weight:800;color:#94a3b8;text-decoration:line-through;margin:14px 0 0;opacity:.85}
+.price-on-sale .price-value{color:#fecaca;margin-top:4px}
+.admin-nav-btn{display:none;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;border:1px solid rgba(77,163,255,.35);background:rgba(77,163,255,.1);color:#93c5fd;font-size:18px;margin-right:4px}
+.admin-nav-btn:hover{background:rgba(77,163,255,.2);color:#fff}
 .lang-v2 .lang-menu{min-width:180px}
 .lang-v2 .lang-menu button{display:flex;align-items:center;gap:10px}
 
