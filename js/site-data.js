@@ -3,6 +3,9 @@
   const GAS = (typeof NEXORA_GAS_URL !== 'undefined') ? NEXORA_GAS_URL : '';
   if (!GAS) return;
 
+  const CACHE_VER = '3';
+  const PLACEHOLDER_IMG = '/Public/Image/DiurdStav.png';
+
   const PRICE_UI = {
     price1: { titleKey: 'price1_title', textKey: 'price1_text', timeKey: 'price1_time', features: ['price_l_mobile', 'price_l_form', 'price_l_seo'] },
     price2: { titleKey: 'price2_title', textKey: 'price2_text', timeKey: 'price2_time', features: ['price_l_pages', 'price_l_reviews', 'price_l_manager'] },
@@ -20,9 +23,16 @@
   }
 
   function imgSrc(url) {
-    if (!url) return '';
-    if (url.startsWith('http')) return url;
-    return '/' + url.replace(/^\//, '');
+    const u = String(url || '').trim();
+    if (!u) return PLACEHOLDER_IMG;
+    if (/^https?:\/\//i.test(u)) return u;
+    if (/^Public\//i.test(u) || u.startsWith('/')) return '/' + u.replace(/^\//, '');
+    return PLACEHOLDER_IMG;
+  }
+
+  function safeUrl(url) {
+    const u = String(url || '').trim();
+    return /^https?:\/\//i.test(u) ? u : '#';
   }
 
   function renderPricing(items) {
@@ -32,18 +42,25 @@
     box.innerHTML = items.map((p) => {
       const ui = PRICE_UI[p.id] || { titleKey: p.id, textKey: '', timeKey: '', features: [] };
       const onSale = p.oldPrice && Number(p.oldPrice) > Number(p.price);
-      const saleClass = onSale || p.saleLabel ? ' price-on-sale' : '';
+      const hasSale = onSale || !!p.saleLabel;
+      const saleClass = hasSale ? ' price-on-sale' : '';
       const popular = p.popular ? ' popular' : '';
-      const saleBadge = (onSale || p.saleLabel)
+      const hasBadges = hasSale || p.popular;
+
+      const saleBadge = hasSale
         ? `<span class="price-sale-badge">${esc(p.saleLabel || t('sale_badge') || 'Акція')}</span>`
+        : '<span></span>';
+      const popTag = p.popular ? `<span class="price-tag" data-i18n="popular">${t('popular')}</span>` : '<span></span>';
+      const badges = hasBadges
+        ? `<div class="price-top-badges">${saleBadge}${popTag}</div>`
         : '';
+
       const oldPrice = onSale ? `<div class="price-old">от ${esc(p.oldPrice)}€</div>` : '';
       const priceVal = `<div class="price-value">от ${esc(p.price)}€</div>`;
       const feats = ui.features.map((k) => `<span data-i18n="${k}">${t(k)}</span>`).join('');
-      const popTag = p.popular ? `<span class="price-tag" data-i18n="popular">${t('popular')}</span>` : '';
 
-      return `<div class="card price${popular}${saleClass}" data-price-id="${p.id}">
-        ${saleBadge}${popTag}
+      return `<div class="card price${popular}${saleClass}${hasBadges ? ' has-top-badges' : ''}" data-price-id="${p.id}">
+        ${badges}
         <h3 data-i18n="${ui.titleKey}">${t(ui.titleKey)}</h3>
         <p class="muted" data-i18n="${ui.textKey}">${t(ui.textKey)}</p>
         ${oldPrice}${priceVal}
@@ -57,18 +74,23 @@
 
   function renderProjects(items) {
     const box = document.getElementById('projects-container');
-    if (!box || !items.length) return;
+    if (!box) return;
 
-    box.innerHTML = items.map((p) => {
+    const list = (items || []).filter((p) => p && String(p.name || '').trim());
+    if (!list.length) return;
+
+    box.innerHTML = list.map((p) => {
       const feat = p.featured ? ' project-featured' : '';
       const badge = p.featured ? '<span class="project-badge">New</span>' : '';
+      const src = imgSrc(p.imageUrl);
+      const href = safeUrl(p.siteUrl);
       return `<article class="card project${feat}">
-        <div class="project-img">${badge}<img alt="${esc(p.name)}" loading="lazy" src="${imgSrc(p.imageUrl)}"/></div>
+        <div class="project-img">${badge}<img alt="${esc(p.name)}" loading="lazy" src="${src}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'"/></div>
         <div class="project-body">
           <h3>${esc(p.name)}</h3>
           <p class="muted">${esc(p.description)}</p>
           <div class="project-actions">
-            <a class="btn ghost" data-i18n="open_site" href="${esc(p.siteUrl)}" rel="noopener" target="_blank">${t('open_site')}</a>
+            <a class="btn ghost" data-i18n="open_site" href="${esc(href)}" rel="noopener" target="_blank">${t('open_site')}</a>
           </div>
         </div>
       </article>`;
@@ -84,7 +106,13 @@
     try { return JSON.parse(text); } catch (e) { return null; }
   }
 
-  function readCache() {
+  function readCacheFallback() {
+    if (localStorage.getItem('nexora_cache_ver') !== CACHE_VER) {
+      localStorage.removeItem('nexora_cache_pricing');
+      localStorage.removeItem('nexora_cache_projects');
+      localStorage.setItem('nexora_cache_ver', CACHE_VER);
+      return;
+    }
     try {
       const p = JSON.parse(localStorage.getItem('nexora_cache_pricing') || 'null');
       const j = JSON.parse(localStorage.getItem('nexora_cache_projects') || 'null');
@@ -94,21 +122,23 @@
   }
 
   async function load() {
-    readCache();
     try {
       const [prices, projects] = await Promise.all([fetchJson('pricing'), fetchJson('projects')]);
       if (Array.isArray(prices) && prices.length) {
         cachedPrices = prices;
         renderPricing(prices);
         localStorage.setItem('nexora_cache_pricing', JSON.stringify(prices));
+        localStorage.setItem('nexora_cache_ver', CACHE_VER);
       }
-      if (Array.isArray(projects) && projects.length) {
+      if (Array.isArray(projects)) {
         cachedProjects = projects;
         renderProjects(projects);
         localStorage.setItem('nexora_cache_projects', JSON.stringify(projects));
+        localStorage.setItem('nexora_cache_ver', CACHE_VER);
       }
     } catch (e) {
       console.warn('site-data load', e);
+      readCacheFallback();
     }
   }
 
