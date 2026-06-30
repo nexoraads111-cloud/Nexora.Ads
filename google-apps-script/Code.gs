@@ -13,8 +13,7 @@ const CONFIG = {
   SITE_URL: 'https://nexoraads.online',
   SECRET: 'nexora-gas-secret-change-me',
   ADMIN_PIN: 'nexora2026',
-  SPREADSHEET_ID: '',
-};
+  BLOCKED_REVIEW_IDS: ['r_1782853940234', 'r_1782835228464'],
 
 const REVIEW_HEADERS = ['id', 'name', 'title', 'type', 'rating', 'text', 'status', 'createdAt', 'token'];
 const ORDER_HEADERS = ['id', 'name', 'contact', 'plan', 'message', 'createdAt'];
@@ -262,6 +261,7 @@ function handleSubmit_(data) {
   if (data.action === 'submitOrder') return submitOrder_(data);
   if (data.action === 'savePricing') return savePricing_(data);
   if (data.action === 'saveProjects') return saveProjects_(data);
+  if (data.action === 'deleteReview') return deleteReview_(data);
   return { ok: false, error: 'unknown_action' };
 }
 
@@ -334,6 +334,22 @@ function doPost(e) {
   }
 }
 
+function deleteReview_(data) {
+  var id = String(data.id || '');
+  if (!id) return { ok: false, error: 'missing_id' };
+  var sh = sheet_('Reviews');
+  var rows = sh.getDataRange().getValues();
+  var headers = rows.shift();
+  var idx = indexMap_(headers);
+  for (var i = 0; i < rows.length; i++) {
+    if (String(rows[i][idx.id]) === id) {
+      sh.deleteRow(i + 2);
+      return { ok: true, id: id };
+    }
+  }
+  return { ok: false, error: 'not_found' };
+}
+
 function getApprovedReviews_() {
   const sh = sheet_('Reviews');
   const rows = sh.getDataRange().getValues();
@@ -341,8 +357,10 @@ function getApprovedReviews_() {
 
   const headers = rows.shift();
   const idx = indexMap_(headers);
+  const blocked = (CONFIG.BLOCKED_REVIEW_IDS || []).map(String);
   return rows
     .filter(function (r) { return String(r[idx.status]) === 'approved'; })
+    .filter(function (r) { return blocked.indexOf(String(r[idx.id])) === -1; })
     .map(function (r) {
       return {
         id: r[idx.id],

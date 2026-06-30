@@ -123,11 +123,15 @@
 
   async function loadReviewsBackup() {
     if (typeof window.renderReviews !== 'function') return;
+    const BLOCKED = ['r_1782853940234', 'r_1782835228464'];
     try {
       const data = await fetchJson('reviews');
-      if (Array.isArray(data) && data.length) {
-        data.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-        window.renderReviews(data);
+      if (Array.isArray(data)) {
+        const clean = data.filter((r) => !BLOCKED.includes(String(r.id)));
+        if (clean.length) {
+          clean.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          window.renderReviews(clean);
+        }
       }
     } catch (e) {
       console.warn('reviews backup load', e);
