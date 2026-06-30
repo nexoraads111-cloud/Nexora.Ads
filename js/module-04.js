@@ -11,6 +11,6 @@
     document.body.classList.add('nx-ready');
     setTimeout(()=>loader.remove(),1000);
   };
-  window.addEventListener('load',()=>setTimeout(finish,2300));
-  setTimeout(finish,4200);
+  window.addEventListener('load',()=>setTimeout(finish,700));
+  setTimeout(finish,1600);
 })();
