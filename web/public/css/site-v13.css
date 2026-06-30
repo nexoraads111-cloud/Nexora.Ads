@@ -1,0 +1,113 @@
+/* NexoraWeb v13 — mobile, map, review sheet, AI chat */
+
+.lang-v2 .lang-btn{min-width:54px;font-size:12px;font-weight:900;letter-spacing:.06em}
+.lang-v2 .lang-menu{min-width:180px}
+.lang-v2 .lang-menu button{display:flex;align-items:center;gap:10px}
+
+.projects{grid-template-columns:repeat(3,1fr)}
+.project-featured{border-color:rgba(239,68,68,.28);box-shadow:0 24px 70px rgba(239,68,68,.08)}
+.project-featured .project-img{height:280px}
+.project-badge{position:absolute;top:14px;left:14px;z-index:2;padding:7px 11px;border-radius:999px;background:rgba(239,68,68,.92);color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.project-img{position:relative}
+
+.map-section{margin-top:0}
+.map-card{padding:0;overflow:hidden;border-radius:28px}
+.map-wrap{position:relative;min-height:360px;background:#0b1220}
+.map-wrap iframe{width:100%;height:360px;border:0;display:block;filter:grayscale(.15) contrast(1.05)}
+.map-overlay{position:absolute;inset:auto 18px 18px 18px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 18px;border-radius:20px;background:rgba(7,11,20,.82);border:1px solid var(--line);backdrop-filter:blur(16px)}
+.map-overlay b{font-size:16px}
+.map-overlay span{color:var(--muted);font-size:13px}
+.map-overlay a.btn{padding:12px 16px;min-height:auto;border-radius:14px;font-size:13px}
+
+/* Review bottom sheet */
+.nx-review-sheet{align-items:flex-end;padding:0}
+.nx-review-sheet.active{align-items:flex-end}
+.nx-review-box{width:min(560px,100%);max-height:92vh;border-radius:28px 28px 0 0;margin:0;padding:0;overflow:hidden;animation:sheetUp .28s ease}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.review-sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 12px;border-bottom:1px solid var(--line)}
+.review-sheet-head h3{font-size:24px;margin:0}
+.review-sheet-head p{color:var(--muted);font-size:14px;margin-top:6px}
+.review-progress{display:flex;gap:8px;padding:0 22px 14px}
+.review-progress span{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,.08)}
+.review-progress span.active{background:linear-gradient(90deg,var(--blue),#8b5cf6)}
+.review-quick-rating{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px}
+.review-quick-rating .star{font-size:38px;padding:4px;transition:.15s}
+.review-type-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 22px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.review-type-scroll::-webkit-scrollbar{display:none}
+.review-type-chip{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;font-weight:800;font-size:13px;white-space:nowrap}
+.review-type-chip.active{background:rgba(77,163,255,.14);border-color:rgba(77,163,255,.42);color:#fff}
+.nx-review-form{padding:0 22px 22px;display:grid;gap:12px}
+.nx-review-form input,.nx-review-form textarea{font-size:16px}
+.review-submit-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.review-submit-row .btn.ghost{background:rgba(255,255,255,.04)}
+
+/* AI Chat v2 */
+.chat-fab{position:fixed;right:18px;bottom:18px;z-index:120;width:64px;height:64px;border-radius:22px;border:1px solid rgba(77,163,255,.35);background:linear-gradient(135deg,#4da3ff,#7c3aed);color:#fff;box-shadow:0 20px 50px rgba(77,163,255,.35);cursor:pointer;display:grid;place-items:center;font-size:26px;transition:.25s}
+.chat-fab:hover{transform:translateY(-3px) scale(1.03)}
+.chat-fab .fab-pulse{position:absolute;inset:-4px;border-radius:26px;border:2px solid rgba(77,163,255,.45);animation:fabPulse 2s infinite}
+@keyframes fabPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:0;transform:scale(1.12)}}
+.ai-chat{position:fixed;right:18px;bottom:92px;z-index:120;width:min(420px,calc(100vw - 24px));height:min(620px,calc(100vh - 110px));display:none;flex-direction:column;border-radius:28px;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(8,14,28,.98));border:1px solid rgba(77,163,255,.22);box-shadow:0 30px 90px rgba(0,0,0,.45);overflow:hidden;backdrop-filter:blur(20px)}
+.ai-chat.active{display:flex;animation:chatIn .25s ease}
+@keyframes chatIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.ai-chat-header{display:flex;align-items:center;gap:14px;padding:16px 18px;background:linear-gradient(135deg,rgba(77,163,255,.16),rgba(124,58,237,.12));border-bottom:1px solid var(--line)}
+.ai-avatar{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#4da3ff,#7c3aed);display:grid;place-items:center;font-size:22px;box-shadow:0 12px 30px rgba(77,163,255,.25)}
+.ai-chat-header b{display:block;font-size:16px}
+.ai-chat-header small{color:var(--muted);font-size:12px}
+.ai-status{display:inline-flex;align-items:center;gap:6px;color:#86efac;font-size:11px;font-weight:800;margin-top:2px}
+.ai-status:before{content:"";width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e}
+.ai-chat-body{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.ai-msg{max-width:88%;padding:13px 15px;border-radius:18px;font-size:14px;line-height:1.55}
+.ai-msg.bot{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.ai-msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(77,163,255,.35),rgba(124,58,237,.28));border:1px solid rgba(77,163,255,.25)}
+.ai-typing{align-self:flex-start;display:none;gap:5px;padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.ai-typing.active{display:inline-flex}
+.ai-typing span{width:7px;height:7px;border-radius:50%;background:#93c5fd;animation:typingDot 1.2s infinite}
+.ai-typing span:nth-child(2){animation-delay:.15s}
+.ai-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typingDot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+.ai-suggestions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 12px}
+.ai-suggestions button{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#dbeafe;border-radius:14px;padding:11px 12px;font-weight:800;font-size:12px;cursor:pointer;text-align:left;line-height:1.35}
+.ai-suggestions button:hover{background:rgba(77,163,255,.12);border-color:rgba(77,163,255,.3)}
+.ai-chat-input{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line);background:rgba(0,0,0,.12)}
+.ai-chat-input input{flex:1;min-height:48px;border-radius:16px}
+.ai-chat-input button{width:50px;min-width:50px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--blue),#7c3aed);color:#fff;font-weight:900;cursor:pointer}
+
+/* Performance */
+img[loading=lazy]{content-visibility:auto}
+.nx-hide #nxPreloader{opacity:0;pointer-events:none}
+
+@media(max-width:980px){
+  .projects{grid-template-columns:1fr 1fr}
+  .map-overlay{grid-template-columns:1fr}
+}
+
+@media(max-width:720px){
+  html{scroll-padding-top:76px}
+  .section{padding:64px 0}
+  .section.small{padding:56px 0}
+  .container{width:min(100% - 24px,480px)}
+  .nav-links,.desktop-cta,.desktop-donate{display:none}
+  .menu-btn{display:block}
+  .projects{grid-template-columns:1fr;gap:14px}
+  .project-img{height:220px}
+  .project-featured .project-img{height:240px}
+  .reviews-top{flex-direction:column;align-items:stretch;gap:14px}
+  .reviews-top .btn{width:100%}
+  .review{flex-basis:86%;min-width:0}
+  .map-wrap iframe{height:280px}
+  .map-overlay{position:static;margin:0;border-radius:0;border:0;border-top:1px solid var(--line)}
+  .ai-chat{right:0;left:0;bottom:0;width:100%;max-width:none;height:min(88vh,640px);border-radius:28px 28px 0 0}
+  .chat-fab{right:14px;bottom:14px;width:58px;height:58px;border-radius:20px}
+  .nx-review-box{border-radius:24px 24px 0 0;max-height:94vh}
+  .review-submit-row{grid-template-columns:1fr}
+  .ai-suggestions{grid-template-columns:1fr}
+  .nx-feature-bar{grid-template-columns:1fr 1fr;gap:10px}
+  .nx-side-stats{display:none}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-row{flex-direction:column;gap:12px}
+}
+
+@media(max-width:400px){
+  .nx-title{font-size:34px!important}
+  .cards,.pricing,.steps{grid-template-columns:1fr}
+}
