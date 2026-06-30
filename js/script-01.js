@@ -2,7 +2,7 @@
 
 const GAS_REVIEWS_URL = (typeof NEXORA_GAS_URL !== 'undefined')
   ? `${NEXORA_GAS_URL}?action=reviews`
-  : 'https://script.google.com/macros/s/AKfycbxvE3e_uv8rYURscjC3YJxVmMmTLppuQvpQOzIRsRUI-Ngd5_88gniscbB-P4JlRfs4/exec?action=reviews';
+  : 'https://script.google.com/macros/s/AKfycbwmmgn3SkZiDNtbx1iLSaQ3MUQl8Kn64lQfku2xcS4zGUVq8RugKpwTbWYZVAQaaNr1/exec?action=reviews';
 
 async function loadReviews() {
   const box = document.getElementById('reviews-container');
