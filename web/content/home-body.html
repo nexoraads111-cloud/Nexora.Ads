@@ -26,6 +26,7 @@
 <a href="/cabinet/" class="admin-nav-btn" id="adminNavBtn" title="Кабінет" style="display:none">⚙️</a>
 <div class="lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
 <button class="btn ghost desktop-cta" data-i18n="nav_consult" onclick="openOrderModal()">Получить консультацию</button>
+<a href="/portal/" class="btn ghost desktop-cta" style="margin-right:8px">Личный кабинет</a>
 <button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛 Поддержать</button>
 <a href="/cabinet/" class="admin-nav-btn" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
 <button aria-label="Menu" class="menu-btn" onclick="openMobileMenu()">☰</button>
@@ -42,6 +43,7 @@
 <a data-i18n="nav_pricing" href="#pricing" onclick="closeMobileMenu()">Цены</a>
 <a data-i18n="nav_faq" href="#faq" onclick="closeMobileMenu()">FAQ</a>
 <a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
+<a href="/portal/" onclick="closeMobileMenu()">Личный кабинет</a>
 <button class="btn primary" data-i18n="nav_consult" onclick="closeMobileMenu();openOrderModal()" style="width:100%;margin-top:20px">Получить консультацию</button>
 <button class="btn donate-nav-btn mobile-donate-btn" data-donate-i18n="support_btn" onclick="closeMobileMenu();openDonateModal()">💛 Поддержать</button>
 </aside>
@@ -337,7 +339,7 @@
 </div>
 </section>
 </main>
-<footer class="footer"><div class="container footer-row"><div>© 2026 NexoraWeb • Premium Web Studio</div><div class="footer-links"><a href="mailto:nexoraads111@gmail.com">Email</a><a href="https://instagram.com/vladislav.ads" target="_blank">Instagram</a><a href="/cabinet/" title="Admin">⚙️</a><button data-donate-i18n="support_btn" onclick="openDonateModal()" style="background:none;border:0;color:inherit;cursor:pointer;font:inherit">💛 Поддержать</button><a href="#top">Top ↑</a></div></div></footer>
+<footer class="footer"><div class="container footer-row"><div>© 2026 NexoraWeb • Premium Web Studio</div><div class="footer-links"><a href="/portal/">Личный кабинет</a><a href="mailto:nexoraads111@gmail.com">Email</a><a href="https://instagram.com/vladislav.ads" target="_blank">Instagram</a><a href="/cabinet/" title="Admin">⚙️</a><button data-donate-i18n="support_btn" onclick="openDonateModal()" style="background:none;border:0;color:inherit;cursor:pointer;font:inherit">💛 Поддержать</button><a href="#top">Top ↑</a></div></div></footer>
 
 <!-- MODALS (unchanged functionality) -->
 <div class="modal" id="donateModal"><div class="modal-box donate-box"><div class="donate-hero"><div class="modal-head" style="margin-bottom:0"><div><span class="donate-kicker" data-donate-i18n="donate_kicker">Поддержать проект</span><h3 data-donate-i18n="donate_title">Спасибо за поддержку NexoraWeb 💛</h3><p data-donate-i18n="donate_text">Если хочешь поддержать развитие сайта и новые проекты — выбери удобный способ ниже.</p></div><button class="close" onclick="closeDonateModal()">×</button></div></div><div class="donate-grid"><article class="donate-card"><div class="donate-logo mono">mono</div><h4>Monobank Україна</h4><p data-donate-i18n="mono_text">Пополнение через официальный QR/ссылку банка для Владислава П.</p><div class="donate-actions"><a class="donate-link donate-pulse" data-donate-i18n="mono_btn" href="https://bank.gov.ua/qr/QkNECjAwMgoxClVDVAoK0J_QvtGA0L7RhdC90LDQstC10YbRjCDQktC70LDQtNC40YHQu9Cw0LIg0JDQvdCw0YLQvtC70ZbQudC-0LLQuNGHClVBMjkzMjIwMDEwMDAwMDI2MjA3Mzc2NTM0MjEzCgo0MDcxODAzMjU3CgoK0J_QvtC_0L7QstC90LXQvdC90Y8g0YDQsNGF0YPQvdC60YMKCg==" rel="noopener" target="_blank">Відкрити Monobank →</a></div></article><article class="donate-card"><div class="donate-logo sk">SK</div><h4>Slovak Bank / SEPA</h4><p data-donate-i18n="sk_text">Для перевода на словацкий счёт скопируй IBAN.</p><div class="iban-box" id="ibanText">SK6002000000005025750257</div><div class="donate-actions"><button class="copy-iban" data-donate-i18n="copy_iban" onclick="copyIban()">Скопировать IBAN</button></div></article><div class="donate-note" data-donate-i18n="donate_note">Без лишних форм: Monobank открывается по кнопке, а IBAN можно скопировать одним кликом.</div></div></div></div>

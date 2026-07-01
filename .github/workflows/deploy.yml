@@ -14,6 +14,7 @@ on:
       - 'css/**'
       - 'js/**'
       - 'cabinet/**'
+      - 'portal/**'
       - 'Public/**'
       - '404/**'
 
@@ -41,13 +42,13 @@ jobs:
           npm run build
       - name: Sync build to repository root
         run: |
-          rm -rf index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet Public
+          rm -rf index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public
           cp -r web/out/. .
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet Public
+          git add index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public
           git diff --staged --quiet && echo "No changes to deploy" && exit 0
           git commit -m "Deploy site to GitHub Pages root"
           git push

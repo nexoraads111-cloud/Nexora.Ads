@@ -257,6 +257,9 @@ function parsePayload_(e) {
 
 function handleSubmit_(data) {
   if (!data || !data.action) return null;
+  if (String(data.action).indexOf('portal') === 0) {
+    return portalHandleAction_(data);
+  }
   if (data.action === 'adminLogin') return adminLogin_(data);
   if (!checkSecret_(data.secret)) return { ok: false, error: 'unauthorized' };
   if (data.action === 'submitReview') return submitReview_(data);
@@ -269,6 +272,9 @@ function handleSubmit_(data) {
 
 function doGet(e) {
   try {
+    const portalResult = portalDoGet_(e);
+    if (portalResult) return portalResult;
+
     const p = e.parameter || {};
     const payloadData = parsePayload_(e);
     const submitResult = handleSubmit_(payloadData);
