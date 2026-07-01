@@ -5,7 +5,7 @@ export const metadata = {
   keywords:
     'создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия',
   robots: 'index, follow',
-  themeColor: '#070b14',
+  themeColor: '#050508',
   openGraph: {
     title: 'NexoraWeb — сайты для бизнеса под ключ',
     description: 'Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками.',
@@ -34,8 +34,9 @@ export default function RootLayout({ children }) {
         <link href="/css/style.css" rel="stylesheet" />
         <link href="/css/mobile.css" rel="stylesheet" />
         <link href="/css/site-v13.css" rel="stylesheet" />
+        <link href="/css/nexora-v14.css" rel="stylesheet" />
       </head>
-      <body>
+      <body className="nx-v14">
         {children}
       </body>
     </html>

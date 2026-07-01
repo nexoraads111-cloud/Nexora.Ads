@@ -58,6 +58,7 @@
       const oldPrice = onSale ? `<div class="price-old">от ${esc(p.oldPrice)}€</div>` : '';
       const priceVal = `<div class="price-value">от ${esc(p.price)}€</div>`;
       const feats = ui.features.map((k) => `<span data-i18n="${k}">${t(k)}</span>`).join('');
+      const btnClass = p.popular ? 'btn primary' : 'btn ghost';
 
       return `<div class="card price${popular}${saleClass}${hasBadges ? ' has-top-badges' : ''}" data-price-id="${p.id}">
         ${badges}
@@ -66,6 +67,7 @@
         ${oldPrice}${priceVal}
         <span class="price-time" data-i18n="${ui.timeKey}">${t(ui.timeKey)}</span>
         <div class="list">${feats}</div>
+        <button class="${btnClass}" data-i18n="v14_order_plan" onclick="openOrderModal()" style="width:100%;margin-top:18px">${t('v14_order_plan') || 'Заказать'}</button>
       </div>`;
     }).join('');
 
@@ -80,18 +82,19 @@
     if (!list.length) return;
 
     box.innerHTML = list.map((p) => {
-      const feat = p.featured ? ' project-featured' : '';
-      const badge = p.featured ? '<span class="project-badge">New</span>' : '';
       const src = imgSrc(p.imageUrl);
       const href = safeUrl(p.siteUrl);
-      return `<article class="card project${feat}">
-        <div class="project-img">${badge}<img alt="${esc(p.name)}" loading="lazy" src="${src}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'"/></div>
-        <div class="project-body">
+      return `<article class="nx-portfolio-card">
+        <div class="nx-portfolio-img"><img alt="${esc(p.name)}" loading="lazy" src="${src}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'"/></div>
+        <div class="nx-portfolio-body">
+          <span class="nx-portfolio-cat">${t('v14_filter_corp') || 'Корпоративный сайт'}</span>
           <h3>${esc(p.name)}</h3>
-          <p class="muted">${esc(p.description)}</p>
-          <div class="project-actions">
-            <a class="btn ghost" data-i18n="open_site" href="${esc(href)}" rel="noopener" target="_blank">${t('open_site')}</a>
+          <p>${esc(p.description)}</p>
+          <div class="nx-portfolio-meta">
+            <div><small>${t('v14_days_label') || 'Срок'}</small><b>—</b></div>
+            <div><small>${t('v14_pages_label') || 'Страниц'}</small><b>—</b></div>
           </div>
+          <a class="btn ghost" data-i18n="v14_view_project" href="${esc(href)}" rel="noopener" target="_blank">${t('v14_view_project') || t('open_site')} <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>`;
     }).join('');
