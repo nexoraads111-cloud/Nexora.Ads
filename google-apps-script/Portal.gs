@@ -39,30 +39,88 @@ function portalSetup() {
   portalSheet_('ProjectHistory');
   portalSheet_('Messages');
   portalSheet_('Files');
-  portalSeedAdmin_();
+  portalEnsureAdmin_(false);
   getOrCreateDriveFolder_();
   return 'Portal v4 OK — sheets ready';
 }
 
-function portalSeedAdmin_() {
+/**
+ * Запустите вручную в редакторе Apps Script, если не входит админ:
+ * portalResetAdminPassword()
+ * Пароль: NexoraAdmin2026! (или ADMIN_PORTAL_PASS в свойствах скрипта)
+ */
+function portalResetAdminPassword() {
+  return portalEnsureAdmin_(true);
+}
+
+function portalEnsureAdmin_(forcePassword) {
+  var email = (getProps_().getProperty('ADMIN_EMAIL') || CONFIG.ADMIN_EMAIL || '').toLowerCase();
+  if (!email) return 'ADMIN_EMAIL не задан';
+  var pass = getProps_().getProperty('ADMIN_PORTAL_PASS') || 'NexoraAdmin2026!';
   var sh = portalSheet_('Users');
   var rows = sh.getDataRange().getValues();
-  if (rows.length > 1) return;
-  var email = (getProps_().getProperty('ADMIN_EMAIL') || CONFIG.ADMIN_EMAIL || '').toLowerCase();
-  if (!email) return;
-  var salt = portalSalt_();
-  var pass = getProps_().getProperty('ADMIN_PORTAL_PASS') || 'NexoraAdmin2026!';
-  portalCreateUserRow_(sh, {
-    id: 'u_admin',
-    email: email,
-    name: 'Администратор',
-    passwordHash: portalHash_(pass, salt),
-    salt: salt,
-    role: 'admin',
-    avatarUrl: '',
-    emailVerified: 'true',
-    createdAt: Date.now(),
-  });
+  if (rows.length <= 1) {
+    var salt = portalSalt_();
+    portalCreateUserRow_(sh, {
+      id: 'u_admin',
+      email: email,
+      name: 'Администратор',
+      passwordHash: portalHash_(pass, salt),
+      salt: salt,
+      role: 'admin',
+      avatarUrl: '',
+      emailVerified: 'true',
+      createdAt: Date.now(),
+    });
+    return 'Админ создан: ' + email + ' / пароль: ' + pass;
+  }
+
+  var headers = rows.shift();
+  var idx = indexMap_(headers);
+  var found = -1;
+  for (var i = 0; i < rows.length; i++) {
+    var rowEmail = String(rows[i][idx.email] || '').toLowerCase();
+    var rowId = String(rows[i][idx.id] || '');
+    if (rowEmail === email || rowId === 'u_admin') {
+      found = i;
+      break;
+    }
+  }
+
+  if (found < 0) {
+    var salt2 = portalSalt_();
+    portalCreateUserRow_(sh, {
+      id: 'u_admin',
+      email: email,
+      name: 'Администратор',
+      passwordHash: portalHash_(pass, salt2),
+      salt: salt2,
+      role: 'admin',
+      avatarUrl: '',
+      emailVerified: 'true',
+      createdAt: Date.now(),
+    });
+    return 'Админ создан: ' + email + ' / пароль: ' + pass;
+  }
+
+  var rowNum = found + 2;
+  sh.getRange(rowNum, idx.email + 1).setValue(email);
+  sh.getRange(rowNum, idx.role + 1).setValue('admin');
+  sh.getRange(rowNum, idx.emailVerified + 1).setValue('true');
+  if (String(rows[found][idx.id]) !== 'u_admin') {
+    sh.getRange(rowNum, idx.id + 1).setValue('u_admin');
+  }
+  if (forcePassword) {
+    var salt3 = portalSalt_();
+    sh.getRange(rowNum, idx.salt + 1).setValue(salt3);
+    sh.getRange(rowNum, idx.passwordHash + 1).setValue(portalHash_(pass, salt3));
+    return 'Пароль админа сброшен: ' + email + ' / новый пароль: ' + pass;
+  }
+  return 'Админ уже есть: ' + email + ' (запустите portalResetAdminPassword() для сброса пароля)';
+}
+
+function portalSeedAdmin_() {
+  portalEnsureAdmin_(false);
 }
 
 function portalCreateUserRow_(sh, u) {
@@ -827,6 +885,10 @@ function portalAdminGetChats_(data) {
 
 function portalHandleAction_(data) {
   var action = data.action;
+  if (action === 'portalResetAdmin') {
+    if (!checkSecret_(data.secret)) return { ok: false, error: 'unauthorized' };
+    return { ok: true, message: portalEnsureAdmin_(true) };
+  }
   var publicActions = ['portalRegister', 'portalLogin', 'portalForgotPassword', 'portalResetPassword'];
   if (publicActions.indexOf(action) >= 0) {
     if (action === 'portalRegister') return portalRegister_(data);
