@@ -215,6 +215,21 @@ function portalCreateSession_(userId) {
 
 function portalGetSession_(token) {
   if (!token) return null;
+  var cache = CacheService.getScriptCache();
+  var cacheKey = 's_' + token.slice(0, 80);
+  var cached = cache.get(cacheKey);
+  if (cached) {
+    try {
+      var hit = JSON.parse(cached);
+      if (hit.expiresAt > Date.now()) {
+        var u = portalFindUserByIdCached_(hit.userId);
+        if (u) {
+          return { token: token, csrf: hit.csrf, userId: hit.userId, user: u };
+        }
+      }
+    } catch (e) {}
+  }
+
   var sh = portalSheet_('Sessions');
   var rows = sh.getDataRange().getValues();
   if (rows.length <= 1) return null;
@@ -224,16 +239,78 @@ function portalGetSession_(token) {
   for (var i = 0; i < rows.length; i++) {
     if (String(rows[i][idx.token]) !== String(token)) continue;
     if (Number(rows[i][idx.expiresAt]) < now) return null;
-    var user = portalFindUserById_(String(rows[i][idx.userId]));
+    var user = portalFindUserByIdCached_(String(rows[i][idx.userId]));
     if (!user) return null;
-    return {
+    var sess = {
       token: String(rows[i][idx.token]),
       csrf: String(rows[i][idx.csrf]),
       userId: String(rows[i][idx.userId]),
       user: user,
     };
+    cache.put(cacheKey, JSON.stringify({
+      csrf: sess.csrf,
+      userId: sess.userId,
+      expiresAt: Number(rows[i][idx.expiresAt]),
+    }), 300);
+    return sess;
   }
   return null;
+}
+
+function portalFindUserByIdCached_(id) {
+  var cache = CacheService.getScriptCache();
+  var key = 'u_' + String(id).slice(0, 80);
+  var cached = cache.get(key);
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) {}
+  }
+  var user = portalFindUserById_(id);
+  if (!user) return null;
+  delete user.passwordHash;
+  delete user.salt;
+  try {
+    cache.put(key, JSON.stringify(user), 300);
+  } catch (e) {}
+  return user;
+}
+
+function portalInvalidateUserCache_(userId) {
+  try {
+    CacheService.getScriptCache().remove('u_' + String(userId).slice(0, 80));
+    CacheService.getScriptCache().remove('users_map');
+  } catch (e) {}
+}
+
+function portalCountUnread_(user) {
+  var sh = portalSheet_('Messages');
+  var rows = sh.getDataRange().getValues();
+  if (rows.length <= 1) return 0;
+  var headers = rows.shift();
+  var idx = indexMap_(headers);
+  var count = 0;
+  if (user.role === 'admin') {
+    for (var i = 0; i < rows.length; i++) {
+      if (String(rows[i][idx.senderRole]) === 'client' && String(rows[i][idx.status]) === 'sent') count++;
+    }
+    return count;
+  }
+  for (var j = 0; j < rows.length; j++) {
+    if (String(rows[j][idx.userId]) !== String(user.id)) continue;
+    if (String(rows[j][idx.senderRole]) === 'admin' && String(rows[j][idx.status]) === 'sent') count++;
+  }
+  return count;
+}
+
+function portalGetDashboard_(data) {
+  var auth = portalAuth_(data, false);
+  if (!auth.ok) return auth;
+  var userId = auth.user.role === 'admin' && data.userId ? data.userId : auth.user.id;
+  return {
+    ok: true,
+    projects: portalListProjects_(userId),
+    unread: portalCountUnread_(auth.user),
+    user: portalPublicUser_(auth.user),
+  };
 }
 
 function portalAuth_(data, requireCsrf) {
@@ -422,6 +499,7 @@ function portalUpdateProfile_(data) {
   if (!auth.ok) return auth;
   if (data.name) portalUpdateUserField_(auth.user.id, 'name', portalSanitize_(data.name, 80));
   if (data.avatarUrl !== undefined) portalUpdateUserField_(auth.user.id, 'avatarUrl', portalSanitize_(data.avatarUrl, 500000));
+  portalInvalidateUserCache_(auth.user.id);
   var user = portalFindUserById_(auth.user.id);
   return { ok: true, user: portalPublicUser_(user) };
 }
@@ -856,12 +934,13 @@ function portalAdminGetChats_(data) {
   if (rows.length <= 1) return { ok: true, chats: [] };
   var headers = rows.shift();
   var idx = indexMap_(headers);
+  var usersMap = portalUsersMap_();
   var map = {};
   rows.forEach(function (r) {
     var uid = String(r[idx.userId]);
     var ts = Number(r[idx.createdAt]) || 0;
     if (!map[uid] || ts > map[uid].lastAt) {
-      var user = portalFindUserById_(uid);
+      var user = usersMap[uid];
       map[uid] = {
         userId: uid,
         name: user ? user.name : uid,
@@ -883,6 +962,30 @@ function portalAdminGetChats_(data) {
   return { ok: true, chats: chats };
 }
 
+function portalUsersMap_() {
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('users_map');
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) {}
+  }
+  var sh = portalSheet_('Users');
+  var rows = sh.getDataRange().getValues();
+  var map = {};
+  if (rows.length > 1) {
+    var headers = rows.shift();
+    var idx = indexMap_(headers);
+    rows.forEach(function (r) {
+      map[String(r[idx.id])] = {
+        id: String(r[idx.id]),
+        name: String(r[idx.name] || ''),
+        email: String(r[idx.email] || ''),
+      };
+    });
+  }
+  try { cache.put('users_map', JSON.stringify(map), 120); } catch (e) {}
+  return map;
+}
+
 function portalHandleAction_(data) {
   var action = data.action;
   if (action === 'portalResetAdmin') {
@@ -899,6 +1002,7 @@ function portalHandleAction_(data) {
 
   if (action === 'portalLogout') return portalLogout_(data);
   if (action === 'portalGetMe') return portalGetMe_(data);
+  if (action === 'portalGetDashboard') return portalGetDashboard_(data);
   if (action === 'portalUpdateProfile') return portalUpdateProfile_(data);
   if (action === 'portalChangePassword') return portalChangePassword_(data);
   if (action === 'portalChangeEmail') return portalChangeEmail_(data);
