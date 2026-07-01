@@ -90,11 +90,13 @@
           <span class="nx-portfolio-cat">${t('v14_filter_corp') || 'Корпоративный сайт'}</span>
           <h3>${esc(p.name)}</h3>
           <p>${esc(p.description)}</p>
-          <div class="nx-portfolio-meta">
-            <div><small>${t('v14_days_label') || 'Срок'}</small><b>—</b></div>
-            <div><small>${t('v14_pages_label') || 'Страниц'}</small><b>—</b></div>
+          <div class="nx-portfolio-foot">
+            <div class="nx-portfolio-meta">
+              <div><i class="fa-regular fa-calendar"></i><small>${t('v14_days_label') || 'Срок'}</small><b>—</b></div>
+              <div><i class="fa-regular fa-file-lines"></i><small>${t('v14_pages_label') || 'Страниц'}</small><b>—</b></div>
+            </div>
+            <a class="btn ghost nx-portfolio-btn" href="${esc(href)}" rel="noopener" target="_blank">${t('v14_view_project') || t('open_site')} <i class="fa-solid fa-arrow-right"></i></a>
           </div>
-          <a class="btn ghost" data-i18n="v14_view_project" href="${esc(href)}" rel="noopener" target="_blank">${t('v14_view_project') || t('open_site')} <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>`;
     }).join('');

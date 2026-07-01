@@ -6,16 +6,16 @@ export default function HomeClient({ html }) {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <Script src="/js/nexora-config.js?v=24" strategy="beforeInteractive" />
-      <Script src="/js/gas-api.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/main.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-03.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-04.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-05.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-06.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-i18n.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/site-data.js?v=24" strategy="afterInteractive" />
-      <Script src="/js/module-admin-nav.js?v=24" strategy="afterInteractive" />
+      <Script src="/js/nexora-config.js?v=25" strategy="beforeInteractive" />
+      <Script src="/js/gas-api.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/main.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-03.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-04.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-05.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-06.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-i18n.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/site-data.js?v=25" strategy="afterInteractive" />
+      <Script src="/js/module-admin-nav.js?v=25" strategy="afterInteractive" />
     </>
   );
 }
