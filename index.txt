@@ -1,7 +1,7 @@
-2:I[3542,["931","static/chunks/app/page-c4f73d133a1331cd.js"],"default"]
+2:I[3542,["931","static/chunks/app/page-42b989b37a10ab47.js"],"default"]
 4:I[4707,[],""]
 5:I[6423,[],""]
-3:T8d24,
+3:T948a,
 <div aria-label="NexoraWeb loading screen" id="nxPreloader">
 <div class="nx-loader-core">
 <div class="nx-loader-logo"><img alt="NexoraWeb logo" src="/Public/Image/apple-touch-icon-57x57.png"/></div>
@@ -24,7 +24,6 @@
 <a data-i18n="nav_process" href="#process">Процесс</a>
 <a data-i18n="nav_reviews" href="#reviews">Отзывы</a>
 <a data-i18n="nav_about" href="#about">О нас</a>
-<a data-i18n="nav_pricing" href="#pricing">Цены</a>
 </nav>
 <div class="nav-actions">
 <a href="/cabinet/" class="admin-nav-btn" id="adminNavBtn" title="Кабінет" style="display:none">⚙️</a>
@@ -66,11 +65,13 @@
 </div>
 <div class="nx-hero-mockups" aria-hidden="true">
 <div class="nx-hero-mockups-glow"></div>
-<div class="nx-mockup-desktop">
-<img alt="Пример сайта Stroplook.sk" loading="eager" src="/Public/Image/Stroplooksk.png"/>
+<div class="nx-device-showcase">
+<div class="nx-monitor-frame">
+<div class="nx-monitor-chrome"><span></span><span></span><span></span></div>
+<div class="nx-monitor-viewport"><img alt="DiurdStav.sk — пример сайта" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
+<div class="nx-monitor-base"></div>
 </div>
-<div class="nx-mockup-phone">
-<img alt="PCSTORE mobile" loading="eager" src="/Public/Image/зображення_2026-06-30_234802702.png"/>
+<div class="nx-phone-frame"><img alt="PCSTORE mobile" loading="eager" src="/Public/Image/зображення_2026-06-30_234802702.png"/></div>
 </div>
 </div>
 </div>
@@ -113,16 +114,17 @@
 <!-- PORTFOLIO -->
 <section class="section" id="projects">
 <div class="container">
-<div class="nx-section-head">
+<div class="nx-portfolio-head">
 <span class="nx-badge" data-i18n="projects_badge">Портфолио</span>
-<h2 class="section-title" data-i18n="v14_portfolio_title">Сайты, которые приносят <span class="nx-grad">результаты</span></h2>
-<p class="lead" data-i18n="v14_portfolio_lead">Каждый проект — уникальное решение под задачи бизнеса клиента.</p>
+<h2 class="section-title nx-left-title" data-i18n="v14_portfolio_title">Сайты, которые приносят <span class="nx-grad">результаты</span></h2>
+<p class="lead nx-left-lead" data-i18n="v14_portfolio_lead">Каждый проект — уникальное решение под задачи бизнеса клиента.</p>
 </div>
 <div class="nx-portfolio-filters">
 <button class="active" type="button" data-i18n="v14_filter_all">Все проекты</button>
 <button type="button" data-i18n="v14_filter_corp">Корпоративные сайты</button>
 <button type="button" data-i18n="v14_filter_land">Лендинги</button>
 <button type="button" data-i18n="v14_filter_shop">Интернет-магазины</button>
+<button type="button" data-i18n="v14_filter_svc">Сервисы</button>
 </div>
 <div class="nx-portfolio-grid" id="projects-container">
 <article class="nx-portfolio-card">
@@ -131,11 +133,13 @@
 <span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
 <h3>Stroplook.sk</h3>
 <p data-i18n="p1_text">Сайт для строительной компании с фокусом на доверие и заявки.</p>
+<div class="nx-portfolio-foot">
 <div class="nx-portfolio-meta">
-<div><small data-i18n="v14_days_label">Срок разработки</small><b>14 дней</b></div>
-<div><small data-i18n="v14_pages_label">Страниц</small><b>8</b></div>
+<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>14 дней</b></div>
+<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>8</b></div>
 </div>
-<a class="btn ghost" data-i18n="v14_view_project" href="https://stroplook.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://stroplook.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+</div>
 </div>
 </article>
 <article class="nx-portfolio-card">
@@ -144,11 +148,13 @@
 <span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
 <h3>Ukstav.sk</h3>
 <p data-i18n="p2_text">Сайт для услуг в строительной сфере, удобный для телефона.</p>
+<div class="nx-portfolio-foot">
 <div class="nx-portfolio-meta">
-<div><small data-i18n="v14_days_label">Срок разработки</small><b>12 дней</b></div>
-<div><small data-i18n="v14_pages_label">Страниц</small><b>6</b></div>
+<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>12 дней</b></div>
+<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>6</b></div>
 </div>
-<a class="btn ghost" data-i18n="v14_view_project" href="https://ukstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://ukstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+</div>
 </div>
 </article>
 <article class="nx-portfolio-card">
@@ -157,11 +163,13 @@
 <span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
 <h3>DiurdStav.sk</h3>
 <p data-i18n="p3_text">Сайт строительной компании DiurdStav в Братиславе — услуги, доверие и заявки.</p>
+<div class="nx-portfolio-foot">
 <div class="nx-portfolio-meta">
-<div><small data-i18n="v14_days_label">Срок разработки</small><b>18 дней</b></div>
-<div><small data-i18n="v14_pages_label">Страниц</small><b>10</b></div>
+<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>18 дней</b></div>
+<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>10</b></div>
 </div>
-<a class="btn ghost" data-i18n="v14_view_project" href="https://diurdstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://diurdstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
+</div>
 </div>
 </article>
 </div>
@@ -184,15 +192,15 @@
 <h2 class="section-title" data-i18n="v14_process_title">Как мы <span class="nx-grad">создаём</span> сайты</h2>
 <p class="lead" data-i18n="v14_process_lead">Прозрачный процесс — вы всегда знаете, на каком этапе проект.</p>
 </div>
-<div class="nx-process-grid">
-<div class="nx-process-steps">
-<div class="nx-process-step"><div class="nx-process-num">01</div><div><h4 data-i18n="v14_step1_t">Обсуждение и анализ</h4><p data-i18n="v14_step1_d">Уточняем цели, аудиторию и задачи бизнеса.</p></div></div>
-<div class="nx-process-step"><div class="nx-process-num">02</div><div><h4 data-i18n="v14_step2_t">Структура и дизайн</h4><p data-i18n="v14_step2_d">Прорабатываем UX, визуал и мобильную версию.</p></div></div>
-<div class="nx-process-step"><div class="nx-process-num">03</div><div><h4 data-i18n="v14_step3_t">Разработка</h4><p data-i18n="v14_step3_d">Вёрстка, формы заявок, интеграции и тестирование.</p></div></div>
-<div class="nx-process-step"><div class="nx-process-num">04</div><div><h4 data-i18n="v14_step4_t">Запуск</h4><p data-i18n="v14_step4_d">Подключаем домен, проверяем всё на всех устройствах.</p></div></div>
-<div class="nx-process-step"><div class="nx-process-num">05</div><div><h4 data-i18n="v14_step5_t">Поддержка</h4><p data-i18n="v14_step5_d">Помогаем с правками и развитием после запуска.</p></div></div>
+<div class="nx-process-wrap">
+<div class="nx-process-hline">
+<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-comments"></i></div><span class="nx-pnode-num">01</span><h4 data-i18n="v14_step1_t">Обсуждение и анализ</h4><p data-i18n="v14_step1_d">Уточняем цели, аудиторию и задачи бизнеса.</p></div>
+<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-pen-ruler"></i></div><span class="nx-pnode-num">02</span><h4 data-i18n="v14_step2_t">Структура и дизайн</h4><p data-i18n="v14_step2_d">Прорабатываем UX, визуал и мобильную версию.</p></div>
+<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-code"></i></div><span class="nx-pnode-num">03</span><h4 data-i18n="v14_step3_t">Разработка</h4><p data-i18n="v14_step3_d">Вёрстка, формы заявок и тестирование.</p></div>
+<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-rocket"></i></div><span class="nx-pnode-num">04</span><h4 data-i18n="v14_step4_t">Запуск</h4><p data-i18n="v14_step4_d">Подключаем домен и проверяем на всех устройствах.</p></div>
+<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-headset"></i></div><span class="nx-pnode-num">05</span><h4 data-i18n="v14_step5_t">Поддержка</h4><p data-i18n="v14_step5_d">Помогаем с правками после запуска.</p></div>
 </div>
-<div class="nx-process-visual">
+<div class="nx-process-visual nx-process-photo">
 <img alt="Рабочий процесс" loading="lazy" src="/Public/Image/Sajt posle.png"/>
 </div>
 </div>
@@ -238,9 +246,21 @@
 </div>
 </div>
 <div class="nx-about-mockups">
-<div class="nx-about-screen main"><img alt="Ukstav.sk" loading="lazy" src="/Public/Image/Ukstav.png"/></div>
-<div class="nx-about-screen sub"><img alt="PCSTORE" loading="lazy" src="/Public/Image/зображення_2026-06-30_234802702.png"/></div>
+<div class="nx-about-monitor"><div class="nx-monitor-chrome sm"><span></span><span></span><span></span></div><div class="nx-about-screen main"><img alt="Ukstav.sk" loading="lazy" src="/Public/Image/Ukstav.png"/></div></div>
+<div class="nx-about-laptop"><img alt="PCSTORE" loading="lazy" src="/Public/Image/зображення_2026-06-30_234802702.png"/></div>
 </div>
+</div>
+</div>
+</section>
+
+<!-- GUARANTEES -->
+<section class="section small nx-guarantees">
+<div class="container">
+<div class="nx-guarantees-grid">
+<div><i class="fa-solid fa-shield-halved"></i><b data-i18n="v14_g1_t">Гарантия качества</b><span data-i18n="v14_g1_d">30 дней бесплатных правок после запуска</span></div>
+<div><i class="fa-solid fa-truck-fast"></i><b data-i18n="v14_g2_t">Быстрый старт</b><span data-i18n="v14_g2_d">Запускаем проекты от 3 дней</span></div>
+<div><i class="fa-solid fa-lock"></i><b data-i18n="v14_g3_t">Безопасность</b><span data-i18n="v14_g3_d">Защищённые формы и надёжный код</span></div>
+<div><i class="fa-solid fa-headset"></i><b data-i18n="v14_g4_t">Поддержка 24/7</b><span data-i18n="v14_g4_d">Всегда на связи после запуска</span></div>
 </div>
 </div>
 </section>
@@ -364,6 +384,6 @@
 <button class="chat-fab" onclick="toggleChat()" aria-label="AI Chat"><span class="fab-pulse"></span><i class="fas fa-sparkles"></i></button>
 <div class="ai-chat" id="chat"><div class="ai-chat-header"><div class="ai-avatar"><i class="fas fa-robot"></i></div><div><b data-i18n="chat_title">Nexora AI</b><small data-i18n="chat_sub">помогает выбрать сайт</small><div class="ai-status" data-i18n="chat_status">онлайн • отвечает сразу</div></div><button class="close" onclick="toggleChat()">×</button></div><div class="ai-chat-body" id="chatMessages"><div class="ai-msg bot" data-i18n="chat_hello">Привет! Я помогу выбрать сайт под ваш бизнес.</div><div class="ai-typing" id="chatTyping"><span></span><span></span><span></span></div></div><div class="ai-suggestions"><button data-i18n="chip_landing" onclick="quickChat('Нужен лендинг')">🚀 Лендинг</button><button data-i18n="chip_portfolio" onclick="quickChat('Сайт для строительной компании')">🏗 Стройка</button><button data-i18n="chip_price" onclick="quickChat('Сколько стоит сайт?')">💰 Цена</button><button data-i18n="chip_time" onclick="quickChat('Сколько дней делается сайт?')">⏱ Сроки</button><button data-i18n="chip_store" onclick="quickChat('Нужен интернет-магазин')">🛒 Магазин</button><button data-i18n="chip_contact" onclick="quickChat('Как с вами связаться?')">📧 Контакт</button></div><div class="ai-chat-input"><input data-i18n-placeholder="chat_placeholder" id="chatInput" onkeydown="if(event.key==='Enter')sendChatMessage()" placeholder="Напишите нишу бизнеса..."/><button onclick="sendChatMessage()" aria-label="Send"><i class="fas fa-paper-plane"></i></button></div></div>
 <div class="toast" id="toast"></div>
-0:["VINfc2-3Zlk1f-DJrt7NK",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/style.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/mobile.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/site-v13.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/nexora-v14.css","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v14","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
+0:["uDaZV0UAX07h3zhyOPa7Y",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/style.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/mobile.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/site-v13.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/nexora-v14.css","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v14","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
 6:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","3",{"name":"description","content":"NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, заявки на почту и поддержка менеджера."}],["$","meta","4",{"name":"keywords","content":"создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия"}],["$","meta","5",{"name":"robots","content":"index, follow"}],["$","meta","6",{"property":"og:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","7",{"property":"og:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","8",{"property":"og:url","content":"https://nexoraads.online/"}],["$","meta","9",{"property":"og:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","meta","10",{"property":"og:type","content":"website"}],["$","meta","11",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","12",{"name":"twitter:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","13",{"name":"twitter:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","14",{"name":"twitter:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","link","15",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]]
 1:null
