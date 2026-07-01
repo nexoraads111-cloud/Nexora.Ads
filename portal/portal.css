@@ -321,7 +321,7 @@ a:hover { text-decoration: underline; }
 
 .nx-card {
   padding: 24px;
-  animation: nxFadeUp 0.5s ease backwards;
+  animation: nxFadeUp 0.35s ease backwards;
 }
 
 .nx-card h2, .nx-card h3 {
@@ -719,6 +719,11 @@ a:hover { text-decoration: underline; }
 
 @media (max-width: 1024px) {
   .nx-shell { grid-template-columns: 1fr; }
+  .nx-glass, .nx-sidebar, .nx-auth-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(17, 17, 24, 0.96);
+  }
   .nx-sidebar {
     position: fixed;
     left: -280px;

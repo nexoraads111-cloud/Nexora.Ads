@@ -17,7 +17,10 @@
     chatMessages: [],
     chatUserId: null,
     unread: 0,
+    booting: false,
   };
+
+  const AUTH_CHECK_MS = 10 * 60 * 1000;
 
   const app = document.getElementById('app');
   const toastEl = document.getElementById('toast');
@@ -83,10 +86,8 @@
 
   function animateBars() {
     requestAnimationFrame(function () {
-      document.querySelectorAll('.nx-progress-fill').forEach(function (el, i) {
-        const pct = el.getAttribute('data-pct');
-        const delay = Number(el.getAttribute('data-delay') || i * 80);
-        setTimeout(function () { el.style.width = pct + '%'; }, delay);
+      document.querySelectorAll('.nx-progress-fill').forEach(function (el) {
+        el.style.width = el.getAttribute('data-pct') + '%';
       });
     });
   }
@@ -130,6 +131,8 @@
   }
 
   async function boot() {
+    if (state.booting) return;
+    state.booting = true;
     const route = parseRoute();
     const publicRoutes = ['login', 'register', 'forgot', 'reset'];
     const sess = API.getSession();
@@ -137,32 +140,35 @@
     if (sess && sess.user) state.user = sess.user;
 
     if (!state.user && !publicRoutes.includes(route.path)) {
+      state.booting = false;
       nav('login');
       return;
     }
 
     if (state.user && publicRoutes.includes(route.path)) {
+      state.booting = false;
       nav(state.user.role === 'admin' ? 'admin' : 'dashboard');
       return;
     }
 
-    if (state.user && route.path !== 'login') {
-      try {
-        const me = await API.getMe();
-        if (me.user) {
-          state.user = me.user;
-          API.saveSession({ session: { token: sess.token, csrf: sess.csrf }, user: me.user });
-        }
-      } catch (e) {
-        if (!publicRoutes.includes(route.path)) {
+    render();
+
+    if (state.user && !publicRoutes.includes(route.path)) {
+      const lastCheck = Number(sessionStorage.getItem('nx_auth_ts') || 0);
+      if (Date.now() - lastCheck > AUTH_CHECK_MS) {
+        API.getMe().then(function (me) {
+          if (me.user) {
+            state.user = me.user;
+            API.saveSession({ session: { token: sess.token, csrf: sess.csrf }, user: me.user });
+            sessionStorage.setItem('nx_auth_ts', String(Date.now()));
+          }
+        }).catch(function () {
           API.clearSession();
           nav('login');
-          return;
-        }
+        });
       }
     }
-
-    render();
+    state.booting = false;
   }
 
   function render() {
@@ -200,6 +206,8 @@
       try {
         const res = await API.login(fd.get('email'), fd.get('password'));
         state.user = res.user;
+        sessionStorage.setItem('nx_auth_ts', String(Date.now()));
+        API.cacheClear('');
         toast('Добро пожаловать, ' + res.user.name + '!');
         nav(res.user.role === 'admin' ? 'admin' : 'dashboard');
       } catch (err) {
@@ -289,45 +297,48 @@
       '<main class="nx-main">' + content + '</main></div>';
   }
 
-  async function loadUnread() {
-    try {
-      if (state.user.role === 'admin') {
-        const res = await API.adminGetChats();
-        state.unread = (res.chats || []).reduce(function (s, c) { return s + (c.unread || 0); }, 0);
-      } else {
-        const res = await API.pollMessages(0);
-        state.unread = (res.messages || []).filter(function (m) {
-          return m.senderRole === 'admin' && m.status === 'sent';
-        }).length;
-      }
-    } catch (e) { state.unread = 0; }
+  function paintDashboard(projects) {
+    const cards = projects.length ? projects.map(function (p, i) {
+      return '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/project/' + esc(p.id) + '\'" style="animation-delay:' + (i * 30) + 'ms">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">' +
+        '<h3 style="margin:0">' + esc(p.title) + '</h3>' + statusBadge(p.status) + '</div>' +
+        '<p style="color:var(--nx-muted);font-size:14px;margin:12px 0 0">' + esc(p.description).slice(0, 120) + (p.description.length > 120 ? '…' : '') + '</p>' +
+        progressBar(p.progress, 0) +
+        '<div class="nx-meta"><span>📅 ' + fmtDate(p.startDate) + '</span><span>🎯 ' + fmtDate(p.dueDate) + '</span></div></div>';
+    }).join('') : '<div class="nx-card nx-glass nx-empty"><div class="icon">📁</div><p>Проектов пока нет</p><p style="font-size:13px">Когда администратор назначит проект, он появится здесь</p></div>';
+
+    app.innerHTML = shellLayout('dashboard',
+      '<div class="nx-topbar"><div><h1>Привет, ' + esc(state.user.name) + ' 👋</h1>' +
+      '<p>Ваши проекты и статус выполнения</p></div>' +
+      '<div class="nx-user-chip">' + avatarHtml(state.user) + '<span>' + esc(state.user.name) + '</span></div></div>' +
+      '<div class="nx-grid nx-grid-2">' + cards + '</div>');
+
+    bindShellEvents();
+    animateBars();
   }
 
   async function renderDashboard() {
-    app.innerHTML = shellLayout('dashboard', '<div class="nx-topbar"><div><h1>Загрузка…</h1></div></div>');
-    await loadUnread();
-    try {
-      const res = await API.getProjects();
-      const projects = res.projects || [];
-      const cards = projects.length ? projects.map(function (p, i) {
-        return '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/project/' + esc(p.id) + '\'" style="animation-delay:' + (i * 60) + 'ms">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">' +
-          '<h3 style="margin:0">' + esc(p.title) + '</h3>' + statusBadge(p.status) + '</div>' +
-          '<p style="color:var(--nx-muted);font-size:14px;margin:12px 0 0">' + esc(p.description).slice(0, 120) + (p.description.length > 120 ? '…' : '') + '</p>' +
-          progressBar(p.progress, i * 100) +
-          '<div class="nx-meta"><span>📅 ' + fmtDate(p.startDate) + '</span><span>🎯 ' + fmtDate(p.dueDate) + '</span></div></div>';
-      }).join('') : '<div class="nx-card nx-glass nx-empty"><div class="icon">📁</div><p>Проектов пока нет</p><p style="font-size:13px">Когда администратор назначит проект, он появится здесь</p></div>';
-
-      app.innerHTML = shellLayout('dashboard',
-        '<div class="nx-topbar"><div><h1>Привет, ' + esc(state.user.name) + ' 👋</h1>' +
-        '<p>Ваши проекты и статус выполнения</p></div>' +
-        '<div class="nx-user-chip">' + avatarHtml(state.user) + '<span>' + esc(state.user.name) + '</span></div></div>' +
-        '<div class="nx-grid nx-grid-2">' + cards + '</div>');
-
+    const cached = API.cacheGet('dashboard');
+    if (cached) {
+      state.unread = cached.unread || 0;
+      paintDashboard(cached.projects || []);
+    } else {
+      app.innerHTML = shellLayout('dashboard', '<div class="nx-topbar"><div><h1>Загрузка…</h1></div></div>');
       bindShellEvents();
-      animateBars();
+    }
+    try {
+      const res = await API.getDashboard();
+      state.unread = res.unread || 0;
+      paintDashboard(res.projects || []);
     } catch (err) {
-      toast(errMsg(err.message), 'err');
+      if (!cached) {
+        try {
+          const res = await API.getProjects();
+          paintDashboard(res.projects || []);
+        } catch (e2) {
+          toast(errMsg(err.message), 'err');
+        }
+      }
     }
   }
 
@@ -346,7 +357,7 @@
   async function renderProject(id) {
     if (!id) { nav('dashboard'); return; }
     app.innerHTML = shellLayout('dashboard', '<div class="nx-topbar"><h1>Загрузка…</h1></div>');
-    await loadUnread();
+    bindShellEvents();
     try {
       const res = await API.getProject(id);
       const p = res.project;
@@ -425,18 +436,33 @@
     }
   }
 
+  function renderOneMessage(m) {
+    const mine = m.senderId === state.user.id;
+    const fileHtml = m.file ? '<a class="file-link" href="' + esc(m.file.url) + '" target="_blank" rel="noopener">📎 ' + esc(m.file.filename) + ' (' + fmtSize(m.file.size) + ')</a>' : '';
+    const statusHtml = mine ? '<span class="status">' + (m.status === 'read' ? '✓✓' : '✓') + '</span>' : '';
+    return '<div class="nx-msg ' + (mine ? 'mine' : 'theirs') + '" data-id="' + esc(m.id) + '">' + esc(m.text) + fileHtml +
+      '<time>' + fmtDateTime(m.createdAt) + statusHtml + '</time></div>';
+  }
+
   function renderMessages(msgs) {
-    return msgs.map(function (m) {
-      const mine = m.senderId === state.user.id;
-      const fileHtml = m.file ? '<a class="file-link" href="' + esc(m.file.url) + '" target="_blank" rel="noopener">📎 ' + esc(m.file.filename) + ' (' + fmtSize(m.file.size) + ')</a>' : '';
-      const statusHtml = mine ? '<span class="status">' + (m.status === 'read' ? '✓✓' : '✓') + '</span>' : '';
-      return '<div class="nx-msg ' + (mine ? 'mine' : 'theirs') + '">' + esc(m.text) + fileHtml +
-        '<time>' + fmtDateTime(m.createdAt) + statusHtml + '</time></div>';
-    }).join('');
+    return msgs.map(renderOneMessage).join('');
+  }
+
+  function appendMessages(msgs) {
+    var box = document.getElementById('chatMessages');
+    if (!box || !msgs.length) return;
+    var added = false;
+    msgs.forEach(function (m) {
+      if (state.chatMessages.some(function (x) { return x.id === m.id; })) return;
+      state.chatMessages.push(m);
+      if (!added && box.querySelector('.sub')) box.innerHTML = '';
+      box.insertAdjacentHTML('beforeend', renderOneMessage(m));
+      added = true;
+    });
+    if (added) box.scrollTop = box.scrollHeight;
   }
 
   async function renderChat(userId) {
-    await loadUnread();
     const isAdmin = state.user.role === 'admin';
     state.chatUserId = isAdmin ? userId : state.user.id;
     state.chatMessages = [];
@@ -447,6 +473,7 @@
       try {
         const chatsRes = await API.adminGetChats();
         const chats = chatsRes.chats || [];
+        state.unread = chats.reduce(function (s, c) { return s + (c.unread || 0); }, 0);
         chatListHtml = '<div class="nx-chat-list nx-glass">' +
           (chats.length ? chats.map(function (c) {
             return '<button class="nx-chat-item' + (c.userId === state.chatUserId ? ' active' : '') + '" data-uid="' + esc(c.userId) + '">' +
@@ -523,18 +550,14 @@
   }
 
   async function refreshChat() {
+    if (document.hidden) return;
     try {
       const uid = state.user.role === 'admin' ? state.chatUserId : undefined;
       const res = await API.pollMessages(state.chatSince, uid);
       const newMsgs = res.messages || [];
       if (newMsgs.length) {
-        state.chatMessages = state.chatMessages.concat(newMsgs);
-        state.chatSince = Math.max.apply(null, state.chatMessages.map(function (m) { return m.createdAt; }));
-        var box = document.getElementById('chatMessages');
-        if (box) {
-          box.innerHTML = renderMessages(state.chatMessages);
-          box.scrollTop = box.scrollHeight;
-        }
+        state.chatSince = Math.max.apply(null, newMsgs.map(function (m) { return m.createdAt; }).concat([state.chatSince]));
+        appendMessages(newMsgs);
         var toMark = newMsgs.filter(function (m) {
           return m.senderId !== state.user.id && m.status === 'sent';
         }).map(function (m) { return m.id; });
@@ -548,11 +571,11 @@
 
   function startChatPoll() {
     stopChatPoll();
-    state.chatPoll = setInterval(refreshChat, 2500);
+    refreshChat();
+    state.chatPoll = setInterval(refreshChat, 4000);
   }
 
   async function renderProfile() {
-    await loadUnread();
     const u = state.user;
     app.innerHTML = shellLayout('profile',
       '<div class="nx-topbar"><div><h1>Профиль</h1><p>Настройки аккаунта</p></div></div>' +
@@ -622,7 +645,6 @@
 
   async function renderAdmin(parts) {
     if (state.user.role !== 'admin') { nav('dashboard'); return; }
-    await loadUnread();
     const sub = (parts && parts[0]) || '';
 
     if (sub === 'clients') return renderAdminClients();
@@ -734,6 +756,10 @@
     } catch (err) { toast(errMsg(err.message), 'err'); }
   }
 
-  window.addEventListener('hashchange', boot);
+  var bootTimer;
+  window.addEventListener('hashchange', function () {
+    clearTimeout(bootTimer);
+    bootTimer = setTimeout(boot, 50);
+  });
   boot();
 })();

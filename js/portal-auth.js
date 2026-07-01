@@ -52,6 +52,7 @@
     btn.textContent = 'Вход…';
     try {
       var res = await NexoraPortal.login(fd.get('email'), fd.get('password'));
+      sessionStorage.setItem('nx_auth_ts', String(Date.now()));
       closePortalAuth();
       if (typeof showToast === 'function') showToast('Добро пожаловать, ' + res.user.name + '!');
       updatePortalNav();
