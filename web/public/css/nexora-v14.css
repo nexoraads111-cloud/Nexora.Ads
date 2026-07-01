@@ -1042,6 +1042,43 @@ body.nx-v14 .ai-chat {
   border-color: var(--nx-line);
 }
 
+/* Portal auth modal on main site */
+body.nx-v14 .nx-auth-box { max-width: 440px; }
+body.nx-v14 .nx-auth-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0 22px 16px;
+  border-bottom: 1px solid var(--nx-line);
+  margin-bottom: 8px;
+}
+body.nx-v14 .nx-auth-tab {
+  flex: 1;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--nx-muted);
+  font: 600 13px/1 Inter, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+body.nx-v14 .nx-auth-tab.active,
+body.nx-v14 .nx-auth-tab:hover {
+  background: rgba(168, 85, 247, 0.12);
+  color: var(--nx-text);
+}
+body.nx-v14 .nx-auth-pane { padding: 8px 22px 22px; }
+body.nx-v14 .nx-auth-pane label { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+body.nx-v14 .nx-auth-pane label span { font-size: 13px; font-weight: 600; color: var(--nx-soft); }
+body.nx-v14 .nx-auth-pane input {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--nx-line);
+  background: rgba(0,0,0,0.35);
+  color: var(--nx-text);
+  font: inherit;
+}
+
 /* Preloader */
 body.nx-v14 #nxPreloader {
   background: var(--nx-bg);
