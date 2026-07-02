@@ -26,6 +26,20 @@ function getProps_() {
   return PropertiesService.getScriptProperties();
 }
 
+function cacheGetJson_(key) {
+  try {
+    var hit = CacheService.getScriptCache().get(key);
+    if (hit) return JSON.parse(hit);
+  } catch (e) {}
+  return null;
+}
+
+function cachePutJson_(key, data, ttl) {
+  try {
+    CacheService.getScriptCache().put(key, JSON.stringify(data), ttl || 120);
+  } catch (e) {}
+}
+
 function getSpreadsheet_() {
   const props = getProps_();
   const savedId = props.getProperty('SPREADSHEET_ID') || CONFIG.SPREADSHEET_ID;
@@ -119,12 +133,14 @@ function adminLogin_(data) {
 }
 
 function getPricing_() {
+  var cached = cacheGetJson_('site_pricing');
+  if (cached) return cached;
   var sh = sheet_('Pricing');
   var rows = sh.getDataRange().getValues();
   if (rows.length <= 1) { seedDefaults_(); rows = sh.getDataRange().getValues(); }
   var headers = rows.shift();
   var idx = indexMap_(headers);
-  return rows.map(function (r) {
+  var items = rows.map(function (r) {
     return {
       id: String(r[idx.id]),
       price: String(r[idx.price] || ''),
@@ -134,6 +150,8 @@ function getPricing_() {
       sortOrder: Number(r[idx.sortOrder]) || 0,
     };
   }).sort(function (a, b) { return a.sortOrder - b.sortOrder; });
+  cachePutJson_('site_pricing', items, 180);
+  return items;
 }
 
 function savePricing_(data) {
@@ -151,16 +169,19 @@ function savePricing_(data) {
       Number(item.sortOrder) || (i + 1),
     ]);
   });
+  try { CacheService.getScriptCache().remove('site_pricing'); } catch (e) {}
   return { ok: true, count: items.length };
 }
 
 function getProjects_() {
+  var cached = cacheGetJson_('site_projects');
+  if (cached) return cached;
   var sh = sheet_('Projects');
   var rows = sh.getDataRange().getValues();
   if (rows.length <= 1) { seedDefaults_(); rows = sh.getDataRange().getValues(); }
   var headers = rows.shift();
   var idx = indexMap_(headers);
-  return rows
+  var items = rows
     .filter(function (r) { return String(r[idx.active]) !== 'false'; })
     .map(function (r) {
       return {
@@ -174,6 +195,8 @@ function getProjects_() {
       };
     })
     .sort(function (a, b) { return a.sortOrder - b.sortOrder; });
+  cachePutJson_('site_projects', items, 180);
+  return items;
 }
 
 function getProjectsAdmin_() {
@@ -213,6 +236,7 @@ function saveProjects_(data) {
       item.active === false ? 'false' : 'true',
     ]);
   });
+  try { CacheService.getScriptCache().remove('site_projects'); } catch (e) {}
   return { ok: true, count: items.length };
 }
 

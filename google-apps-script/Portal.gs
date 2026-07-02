@@ -305,12 +305,19 @@ function portalGetDashboard_(data) {
   var auth = portalAuth_(data, false);
   if (!auth.ok) return auth;
   var userId = auth.user.role === 'admin' && data.userId ? data.userId : auth.user.id;
-  return {
+  var key = 'dashboard_' + String(userId).slice(0, 60);
+  try {
+    var hit = CacheService.getScriptCache().get(key);
+    if (hit) return JSON.parse(hit);
+  } catch (e) {}
+  var payload = {
     ok: true,
     projects: portalListProjects_(userId),
     unread: portalCountUnread_(auth.user),
     user: portalPublicUser_(auth.user),
   };
+  try { CacheService.getScriptCache().put(key, JSON.stringify(payload), 45); } catch (e2) {}
+  return payload;
 }
 
 function portalAuth_(data, requireCsrf) {
@@ -549,15 +556,29 @@ function portalGetMyProjects_(data) {
 }
 
 function portalListProjects_(userId) {
+  var key = 'plist_' + String(userId).slice(0, 60);
+  try {
+    var hit = CacheService.getScriptCache().get(key);
+    if (hit) return JSON.parse(hit);
+  } catch (e) {}
   var sh = portalSheet_('ClientProjects');
   var rows = sh.getDataRange().getValues();
   if (rows.length <= 1) return [];
   var headers = rows.shift();
   var idx = indexMap_(headers);
-  return rows
+  var list = rows
     .filter(function (r) { return String(r[idx.userId]) === String(userId); })
     .map(function (r) { return portalRowToProject_(r, idx); })
     .sort(function (a, b) { return b.createdAt - a.createdAt; });
+  try { CacheService.getScriptCache().put(key, JSON.stringify(list), 90); } catch (e2) {}
+  return list;
+}
+
+function portalInvalidateProjectsCache_(userId) {
+  try {
+    CacheService.getScriptCache().remove('plist_' + String(userId).slice(0, 60));
+    CacheService.getScriptCache().remove('dashboard_' + String(userId).slice(0, 60));
+  } catch (e) {}
 }
 
 function portalRowToProject_(r, idx) {
@@ -882,6 +903,7 @@ function portalAdminCreateProject_(data) {
     'Планирование', 0, start, due, '', '', now,
   ]);
   portalAddHistory_(id, 'Проект создан', auth.user);
+  portalInvalidateProjectsCache_(userId);
   return { ok: true, project: portalFindProject_(id) };
 }
 
@@ -911,6 +933,7 @@ function portalAdminUpdateProject_(data) {
     if (data.archiveUrl) sh.getRange(rowNum, idx.archiveUrl + 1).setValue(portalSanitize_(data.archiveUrl, 500));
     break;
   }
+  portalInvalidateProjectsCache_(project.userId);
   return { ok: true, project: portalFindProject_(data.projectId) };
 }
 

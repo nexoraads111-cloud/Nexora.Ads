@@ -5,17 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex, nofollow"/>
 <title>Личный кабинет — NexoraAds</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://script.google.com" crossorigin/>
 <link rel="dns-prefetch" href="https://script.google.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="/portal/portal.css?v=3" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="/portal/portal.css?v=4" rel="stylesheet"/>
+<style>
+#app.nx-boot{min-height:100vh;display:grid;place-items:center}
+.nx-boot-pulse{width:48px;height:48px;border-radius:50%;border:3px solid rgba(168,85,247,.2);border-top-color:#a855f7;animation:nxSpin .7s linear infinite}
+@keyframes nxSpin{to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
 <div class="nx-bg-glow"></div>
-<div id="app" class="nx-app"></div>
+<div id="app" class="nx-app nx-boot"><div class="nx-boot-pulse" aria-label="Загрузка"></div></div>
 <div class="nx-toast" id="toast"></div>
-<script src="/js/nexora-config.js?v=27"></script>
-<script src="/portal/portal-api.js?v=3" defer></script>
-<script src="/portal/portal-app.js?v=3" defer></script>
+<script src="/js/nexora-config.js?v=28"></script>
+<script>
+(function(){
+  var u=typeof NEXORA_GAS_URL!=='undefined'?NEXORA_GAS_URL:'';
+  if(u){try{fetch(u+'?action=portalHealth&_='+Date.now(),{mode:'no-cors',keepalive:true});}catch(e){}}
+})();
+</script>
+<script src="/portal/portal-api.js?v=4" defer></script>
+<script src="/portal/portal-app.js?v=4" defer></script>
 </body>
 </html>

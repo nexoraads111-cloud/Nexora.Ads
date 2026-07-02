@@ -23,13 +23,21 @@ export default function RootLayout({ children }) {
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
           rel="stylesheet"
         />
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           rel="stylesheet"
+          media="print"
+          id="nx-fa-css"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.getElementById('nx-fa-css').media='all';",
+          }}
         />
         <link href="/css/style.css" rel="stylesheet" />
         <link href="/css/mobile.css" rel="stylesheet" />
