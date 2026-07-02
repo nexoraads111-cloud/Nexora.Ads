@@ -3,7 +3,9 @@
   const GAS = (typeof NEXORA_GAS_URL !== 'undefined') ? NEXORA_GAS_URL : '';
   if (!GAS) return;
 
-  const CACHE_VER = '3';
+  const CACHE_VER = '4';
+  const REVIEWS_CACHE_KEY = 'nexora_reviews_cache';
+  const REVIEWS_CACHE_MS = 5 * 60 * 1000;
   const PLACEHOLDER_IMG = '/Public/Image/DiurdStav.png';
 
   const PRICE_UI = {
@@ -126,15 +128,40 @@
     } catch (e) {}
   }
 
+  readCacheFallback();
+
+  function readReviewsCache() {
+    try {
+      const raw = sessionStorage.getItem(REVIEWS_CACHE_KEY);
+      if (!raw) return null;
+      const pack = JSON.parse(raw);
+      if (!pack || Date.now() - pack.ts > REVIEWS_CACHE_MS) return null;
+      return pack.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeReviewsCache(data) {
+    try {
+      sessionStorage.setItem(REVIEWS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+    } catch (e) {}
+  }
+
   async function loadReviewsBackup() {
     if (typeof window.renderReviews !== 'function') return;
     const BLOCKED = ['r_1782853940234', 'r_1782835228464'];
+    const cached = readReviewsCache();
+    if (cached && cached.length) {
+      window.renderReviews(cached);
+    }
     try {
       const data = await fetchJson('reviews');
       if (Array.isArray(data)) {
         const clean = data.filter((r) => !BLOCKED.includes(String(r.id)));
         if (clean.length) {
           clean.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          writeReviewsCache(clean);
           window.renderReviews(clean);
         }
       }
@@ -165,8 +192,34 @@
     loadReviewsBackup();
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
-  else load();
+  function scheduleLoad() {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(function () { load(); }, { timeout: 400 });
+    } else {
+      setTimeout(load, 50);
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleLoad);
+  else scheduleLoad();
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var map = document.querySelector('.map-wrap iframe[data-src]');
+    if (!map) return;
+    if (!('IntersectionObserver' in window)) {
+      map.src = map.dataset.src;
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var f = entry.target;
+        if (f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+        io.unobserve(f);
+      });
+    }, { rootMargin: '300px' });
+    io.observe(map);
+  });
 
   const _setLang = window.setLang;
   window.setLang = function (l) {

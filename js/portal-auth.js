@@ -1,4 +1,7 @@
 (function () {
+  var V = '28';
+  var apiLoading = null;
+
   function errMsg(code) {
     var map = {
       invalid_credentials: 'Неверный email или пароль',
@@ -12,8 +15,31 @@
     return map[code] || code || 'Ошибка';
   }
 
+  function getSessionLocal() {
+    try {
+      var s = JSON.parse(localStorage.getItem('nexora_portal_session') || 'null');
+      return s && s.user ? s : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   function getSession() {
-    return window.NexoraPortal ? NexoraPortal.getSession() : null;
+    return window.NexoraPortal ? NexoraPortal.getSession() : getSessionLocal();
+  }
+
+  function ensureApi() {
+    if (window.NexoraPortal) return Promise.resolve();
+    if (apiLoading) return apiLoading;
+    apiLoading = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = '/js/portal-api.js?v=' + V;
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.body.appendChild(s);
+    });
+    return apiLoading;
   }
 
   function goPortal(user) {
@@ -22,11 +48,12 @@
   }
 
   window.openPortalAuth = function (tab) {
-    var s = getSession();
+    var s = getSessionLocal();
     if (s && s.user) return goPortal(s.user);
     switchAuthTab(tab || 'login');
     document.getElementById('portalAuthModal').classList.add('active');
     document.body.style.overflow = 'hidden';
+    ensureApi();
   };
 
   window.closePortalAuth = function () {
@@ -51,6 +78,7 @@
     btn.disabled = true;
     btn.textContent = 'Вход…';
     try {
+      await ensureApi();
       var res = await NexoraPortal.login(fd.get('email'), fd.get('password'));
       sessionStorage.setItem('nx_auth_ts', String(Date.now()));
       closePortalAuth();
@@ -73,6 +101,7 @@
     btn.disabled = true;
     btn.textContent = 'Регистрация…';
     try {
+      await ensureApi();
       await NexoraPortal.register(fd.get('email'), fd.get('password'), fd.get('name'));
       closePortalAuth();
       if (typeof showToast === 'function') showToast('✅ Аккаунт создан! Проверьте почту для подтверждения email.');
@@ -93,6 +122,7 @@
     btn.disabled = true;
     btn.textContent = 'Отправка…';
     try {
+      await ensureApi();
       await NexoraPortal.forgotPassword(fd.get('email'));
       closePortalAuth();
       if (typeof showToast === 'function') showToast('Если аккаунт существует, письмо отправлено');
@@ -106,7 +136,7 @@
   };
 
   window.updatePortalNav = function () {
-    var s = getSession();
+    var s = getSessionLocal();
     var btn = document.getElementById('portalNavBtn');
     var btnM = document.getElementById('portalNavBtnMobile');
     if (!btn) return;
@@ -121,7 +151,9 @@
     }
   };
 
-  document.addEventListener('DOMContentLoaded', function () {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updatePortalNav);
+  } else {
     updatePortalNav();
-  });
+  }
 })();

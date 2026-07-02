@@ -21,6 +21,11 @@ body.nx-v14 {
   font-family: Inter, system-ui, sans-serif;
 }
 
+body.nx-v14 .section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 480px;
+}
+
 body.nx-v14:before {
   background:
     radial-gradient(ellipse 80% 50% at 20% -10%, rgba(168, 85, 247, 0.15), transparent 50%),

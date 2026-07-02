@@ -155,7 +155,7 @@
     },
     getMe: function () { return request('portalGetMe', {}); },
     getDashboard: function () {
-      return request('portalGetDashboard', {}, { cacheKey: 'dashboard', cacheTtl: 45000 });
+      return request('portalGetDashboard', {}, { cacheKey: 'dashboard', cacheTtl: 60000 });
     },
     forgotPassword: function (email) { return request('portalForgotPassword', { email: email }); },
     resetPassword: function (token, password) {
@@ -171,10 +171,10 @@
       return request('portalChangeEmail', { email: email, password: password });
     },
     getProjects: function (userId) {
-      return request('portalGetMyProjects', userId ? { userId: userId } : {}, { cacheKey: 'projects', cacheTtl: 45000 });
+      return request('portalGetMyProjects', userId ? { userId: userId } : {}, { cacheKey: 'projects', cacheTtl: 60000 });
     },
     getProject: function (projectId) {
-      return request('portalGetProject', { projectId: projectId }, { cacheKey: 'project_' + projectId, cacheTtl: 20000 });
+      return request('portalGetProject', { projectId: projectId }, { cacheKey: 'project_' + projectId, cacheTtl: 45000 });
     },
     uploadFile: function (projectId, file) {
       return fileToBase64(file).then(function (b64) {

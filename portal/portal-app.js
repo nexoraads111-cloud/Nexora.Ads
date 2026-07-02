@@ -18,6 +18,7 @@
     chatUserId: null,
     unread: 0,
     booting: false,
+    shellReady: false,
   };
 
   const AUTH_CHECK_MS = 10 * 60 * 1000;
@@ -176,10 +177,10 @@
     const route = parseRoute();
     state.route = route.path;
 
-    if (route.path === 'login') return renderLogin();
-    if (route.path === 'register') return renderRegister();
-    if (route.path === 'forgot') return renderForgot();
-    if (route.path === 'reset') return renderReset(route.query.get('token'));
+    if (route.path === 'login') { state.shellReady = false; return renderLogin(); }
+    if (route.path === 'register') { state.shellReady = false; return renderRegister(); }
+    if (route.path === 'forgot') { state.shellReady = false; return renderForgot(); }
+    if (route.path === 'reset') { state.shellReady = false; return renderReset(route.query.get('token')); }
     if (route.path === 'dashboard') return renderDashboard();
     if (route.path === 'project') return renderProject(route.parts[1]);
     if (route.path === 'chat') return renderChat(route.parts[1]);
@@ -208,6 +209,7 @@
         state.user = res.user;
         sessionStorage.setItem('nx_auth_ts', String(Date.now()));
         API.cacheClear('');
+        if (state.user.role !== 'admin') API.getDashboard().catch(function () {});
         toast('Добро пожаловать, ' + res.user.name + '!');
         nav(res.user.role === 'admin' ? 'admin' : 'dashboard');
       } catch (err) {
@@ -285,16 +287,46 @@
     const badge = state.unread > 0 ? '<span class="badge">' + state.unread + '</span>' : '';
     return '<button class="nx-mobile-toggle" id="menuToggle">☰</button>' +
       '<div class="nx-shell"><aside class="nx-sidebar" id="sidebar">' + authBrand() +
-      '<nav class="nx-nav">' +
-      (isAdmin ? '' : '<a href="#/dashboard" class="' + (active === 'dashboard' ? 'active' : '') + '">📊 Dashboard</a>') +
-      (isAdmin ? '<a href="#/admin" class="' + (active === 'admin' ? 'active' : '') + '">⚡ Админ-панель</a>' +
-        '<a href="#/admin/clients" class="' + (active === 'clients' ? 'active' : '') + '">👥 Клиенты</a>' +
-        '<a href="#/admin/projects" class="' + (active === 'projects' ? 'active' : '') + '">📁 Проекты</a>' : '') +
-      '<a href="#/chat" class="' + (active === 'chat' ? 'active' : '') + '">💬 Чат' + badge + '</a>' +
-      '<a href="#/profile" class="' + (active === 'profile' ? 'active' : '') + '">👤 Профиль</a>' +
+      '<nav class="nx-nav" id="nxNav">' +
+      (isAdmin ? '' : '<a href="#/dashboard" data-nav="dashboard" class="' + (active === 'dashboard' ? 'active' : '') + '">📊 Dashboard</a>') +
+      (isAdmin ? '<a href="#/admin" data-nav="admin" class="' + (active === 'admin' ? 'active' : '') + '">⚡ Админ-панель</a>' +
+        '<a href="#/admin/clients" data-nav="clients" class="' + (active === 'clients' ? 'active' : '') + '">👥 Клиенты</a>' +
+        '<a href="#/admin/projects" data-nav="projects" class="' + (active === 'projects' ? 'active' : '') + '">📁 Проекты</a>' : '') +
+      '<a href="#/chat" data-nav="chat" class="' + (active === 'chat' ? 'active' : '') + '">💬 Чат' + badge + '</a>' +
+      '<a href="#/profile" data-nav="profile" class="' + (active === 'profile' ? 'active' : '') + '">👤 Профиль</a>' +
       '</nav><div class="nx-sidebar-foot"><button class="nx-nav" style="width:100%" id="logoutBtn">🚪 Выйти</button>' +
       '<a href="/" style="display:block;padding:12px 14px;font-size:13px;color:var(--nx-muted)">← На сайт</a></div></aside>' +
-      '<main class="nx-main">' + content + '</main></div>';
+      '<main class="nx-main" id="nxMain">' + content + '</main></div>';
+  }
+
+  function setShellActive(active) {
+    document.querySelectorAll('#nxNav [data-nav]').forEach(function (el) {
+      el.classList.toggle('active', el.getAttribute('data-nav') === active);
+    });
+  }
+
+  function mountShell(active) {
+    if (!state.shellReady) {
+      app.classList.remove('nx-boot');
+      app.innerHTML = shellLayout(active, '<div id="nxPage"></div>');
+      bindShellEvents();
+      state.shellReady = true;
+    } else {
+      setShellActive(active);
+    }
+    return document.getElementById('nxPage');
+  }
+
+  function currentNav() {
+    var route = parseRoute();
+    if (route.path === 'admin' && route.parts[1]) return route.parts[1];
+    if (route.path === 'project') return 'dashboard';
+    return route.path;
+  }
+
+  function setPage(html) {
+    var page = mountShell(currentNav());
+    if (page) page.innerHTML = html;
   }
 
   function paintDashboard(projects) {
@@ -307,24 +339,24 @@
         '<div class="nx-meta"><span>📅 ' + fmtDate(p.startDate) + '</span><span>🎯 ' + fmtDate(p.dueDate) + '</span></div></div>';
     }).join('') : '<div class="nx-card nx-glass nx-empty"><div class="icon">📁</div><p>Проектов пока нет</p><p style="font-size:13px">Когда администратор назначит проект, он появится здесь</p></div>';
 
-    app.innerHTML = shellLayout('dashboard',
+    setPage(
       '<div class="nx-topbar"><div><h1>Привет, ' + esc(state.user.name) + ' 👋</h1>' +
       '<p>Ваши проекты и статус выполнения</p></div>' +
       '<div class="nx-user-chip">' + avatarHtml(state.user) + '<span>' + esc(state.user.name) + '</span></div></div>' +
       '<div class="nx-grid nx-grid-2">' + cards + '</div>');
-
-    bindShellEvents();
     animateBars();
   }
 
   async function renderDashboard() {
+    state.route = 'dashboard';
     const cached = API.cacheGet('dashboard');
     if (cached) {
       state.unread = cached.unread || 0;
       paintDashboard(cached.projects || []);
     } else {
-      app.innerHTML = shellLayout('dashboard', '<div class="nx-topbar"><div><h1>Загрузка…</h1></div></div>');
-      bindShellEvents();
+      mountShell('dashboard');
+      var page = document.getElementById('nxPage');
+      if (page) page.innerHTML = '<div class="nx-topbar"><div><h1>Загрузка…</h1></div></div>';
     }
     try {
       const res = await API.getDashboard();
@@ -356,8 +388,9 @@
 
   async function renderProject(id) {
     if (!id) { nav('dashboard'); return; }
-    app.innerHTML = shellLayout('dashboard', '<div class="nx-topbar"><h1>Загрузка…</h1></div>');
-    bindShellEvents();
+    mountShell('dashboard');
+    var page = document.getElementById('nxPage');
+    if (page) page.innerHTML = '<div class="nx-topbar"><h1>Загрузка…</h1></div>';
     try {
       const res = await API.getProject(id);
       const p = res.project;
@@ -387,7 +420,7 @@
         '<button class="nx-btn nx-btn-primary" type="submit">Сохранить</button></form>' +
         '<div style="margin-top:20px"><label class="nx-upload-zone" id="uploadZone">📤 Загрузить файл для клиента<input type="file" id="fileInput" hidden/></label></div></div>' : '';
 
-      app.innerHTML = shellLayout('dashboard',
+      setPage(
         '<button class="nx-back-link" onclick="location.hash=\'#/dashboard\'">← Назад</button>' +
         '<div class="nx-topbar"><div><h1>' + esc(p.title) + '</h1><p>' + esc(p.description) + '</p></div>' +
         statusBadge(p.status) + '</div>' +
@@ -398,7 +431,6 @@
         '<div class="nx-card nx-glass" style="margin-top:20px"><h3>Файлы проекта</h3><div class="nx-files-list">' + files + '</div></div>' +
         adminControls);
 
-      bindShellEvents();
       animateBars();
 
       if (isAdmin) {
@@ -486,7 +518,7 @@
     }
 
     const chatTitle = isAdmin ? 'Чат с клиентом' : 'Личный чат с NexoraAds';
-    app.innerHTML = shellLayout('chat',
+    setPage(
       '<div class="nx-topbar"><div><h1>' + chatTitle + '</h1><p>Приватный диалог — только вы и администратор</p></div></div>' +
       '<div class="nx-chat-layout">' + (isAdmin ? chatListHtml : '') +
       '<div class="nx-card nx-glass nx-chat-window"><div class="nx-chat-header" id="chatHeader">' +
@@ -497,8 +529,6 @@
       '<input type="file" id="chatFile" hidden accept="image/*,.pdf,.zip,.rar,.doc,.docx"/>' +
       '<textarea id="msgText" placeholder="Сообщение…" rows="1"></textarea>' +
       '<button class="nx-btn nx-btn-primary nx-btn-sm" id="sendBtn">Отправить</button></div></div></div>');
-
-    bindShellEvents();
 
     if (isAdmin) {
       document.querySelectorAll('.nx-chat-item').forEach(function (btn) {
@@ -577,7 +607,7 @@
 
   async function renderProfile() {
     const u = state.user;
-    app.innerHTML = shellLayout('profile',
+    setPage(
       '<div class="nx-topbar"><div><h1>Профиль</h1><p>Настройки аккаунта</p></div></div>' +
       '<div class="nx-grid nx-grid-2">' +
       '<div class="nx-card nx-glass"><div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">' +
@@ -594,8 +624,6 @@
       '<div class="nx-field"><label>Текущий пароль</label><input type="password" name="oldPassword" required/></div>' +
       '<div class="nx-field"><label>Новый пароль</label><input type="password" name="newPassword" required minlength="8"/></div>' +
       '<button class="nx-btn nx-btn-primary nx-btn-sm" type="submit">Обновить пароль</button></form></div></div>');
-
-    bindShellEvents();
 
     document.getElementById('nameForm').onsubmit = async function (e) {
       e.preventDefault();
@@ -658,11 +686,15 @@
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/admin/clients\'"><h3>👥 Клиенты</h3><p class="sub">Создание и удаление клиентов</p></div>' +
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/admin/projects\'"><h3>📁 Проекты</h3><p class="sub">Все проекты и статусы</p></div>' +
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/chat\'"><h3>💬 Чаты</h3><p class="sub">Личные диалоги с клиентами</p></div></div>');
+    state.shellReady = true;
+    app.classList.remove('nx-boot');
     bindShellEvents();
   }
 
   async function renderAdminClients() {
-    app.innerHTML = shellLayout('clients', '<div class="nx-topbar"><h1>Загрузка…</h1></div>');
+    mountShell('clients');
+    var page = document.getElementById('nxPage');
+    if (page) page.innerHTML = '<div class="nx-topbar"><h1>Загрузка…</h1></div>';
     try {
       const res = await API.adminGetClients();
       const clients = res.clients || [];
@@ -673,7 +705,7 @@
           '<button class="nx-btn nx-btn-danger nx-btn-sm" data-del="' + esc(c.id) + '">Удалить</button></td></tr>';
       }).join('');
 
-      app.innerHTML = shellLayout('clients',
+      setPage(
         '<button class="nx-back-link" onclick="location.hash=\'#/admin\'">← Админ</button>' +
         '<div class="nx-topbar"><div><h1>Клиенты</h1><p>' + clients.length + ' клиентов</p></div></div>' +
         '<div class="nx-grid nx-grid-2"><div class="nx-card nx-glass"><h3>Новый клиент</h3>' +
@@ -684,7 +716,6 @@
         '<div class="nx-card nx-glass nx-table-wrap"><table class="nx-table"><thead><tr><th>Клиент</th><th>Email</th><th>Создан</th><th></th></tr></thead><tbody>' +
         (rows || '<tr><td colspan="4" class="sub">Нет клиентов</td></tr>') + '</tbody></table></div></div>');
 
-      bindShellEvents();
       document.getElementById('newClientForm').onsubmit = async function (e) {
         e.preventDefault();
         const fd = new FormData(e.target);
@@ -710,7 +741,9 @@
   }
 
   async function renderAdminProjects() {
-    app.innerHTML = shellLayout('projects', '<div class="nx-topbar"><h1>Загрузка…</h1></div>');
+    mountShell('projects');
+    var page = document.getElementById('nxPage');
+    if (page) page.innerHTML = '<div class="nx-topbar"><h1>Загрузка…</h1></div>';
     try {
       const [projRes, clientsRes] = await Promise.all([API.adminGetAllProjects(), API.adminGetClients()]);
       const projects = projRes.projects || [];
@@ -727,7 +760,7 @@
           '<td>' + fmtDate(p.dueDate) + '</td></tr>';
       }).join('');
 
-      app.innerHTML = shellLayout('projects',
+      setPage(
         '<button class="nx-back-link" onclick="location.hash=\'#/admin\'">← Админ</button>' +
         '<div class="nx-topbar"><div><h1>Проекты</h1><p>' + projects.length + ' проектов</p></div></div>' +
         '<div class="nx-grid nx-grid-2"><div class="nx-card nx-glass"><h3>Новый проект</h3>' +
@@ -740,7 +773,6 @@
         '<div class="nx-card nx-glass nx-table-wrap"><table class="nx-table"><thead><tr><th>Проект</th><th>Клиент</th><th>Статус</th><th>%</th><th>Срок</th></tr></thead><tbody>' +
         (rows || '<tr><td colspan="5">Нет проектов</td></tr>') + '</tbody></table></div></div>');
 
-      bindShellEvents();
       document.getElementById('newProjectForm').onsubmit = async function (e) {
         e.preventDefault();
         const fd = new FormData(e.target);
