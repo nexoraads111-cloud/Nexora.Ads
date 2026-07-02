@@ -201,7 +201,7 @@
       '<button class="nx-btn nx-btn-primary nx-btn-block" type="submit">Войти</button></form>' +
       '<div class="nx-auth-links"><a href="#/forgot">Забыли пароль?</a> · <a href="#/register">Регистрация</a> · <a href="/">На сайт</a></div></div></div>';
 
-    document.getElementById('loginForm').onsubmit = async function (e) {
+    bindForm('loginForm', async function (e) {
       e.preventDefault();
       const fd = new FormData(e.target);
       try {
@@ -215,7 +215,7 @@
       } catch (err) {
         toast(errMsg(err.message), 'err');
       }
-    };
+    });
   }
 
   function renderRegister() {
@@ -227,7 +227,7 @@
       '<button class="nx-btn nx-btn-primary nx-btn-block" type="submit">Зарегистрироваться</button></form>' +
       '<div class="nx-auth-links"><a href="#/login">Уже есть аккаунт?</a> · <a href="/">На сайт</a></div></div></div>';
 
-    document.getElementById('regForm').onsubmit = async function (e) {
+    bindForm('regForm', async function (e) {
       e.preventDefault();
       const fd = new FormData(e.target);
       try {
@@ -237,7 +237,7 @@
       } catch (err) {
         toast(errMsg(err.message), 'err');
       }
-    };
+    });
   }
 
   function renderForgot() {
@@ -247,7 +247,7 @@
       '<button class="nx-btn nx-btn-primary nx-btn-block" type="submit">Отправить ссылку</button></form>' +
       '<div class="nx-auth-links"><a href="#/login">← Назад к входу</a></div></div></div>';
 
-    document.getElementById('forgotForm').onsubmit = async function (e) {
+    bindForm('forgotForm', async function (e) {
       e.preventDefault();
       const email = new FormData(e.target).get('email');
       try {
@@ -257,7 +257,7 @@
       } catch (err) {
         toast(errMsg(err.message), 'err');
       }
-    };
+    });
   }
 
   function renderReset(token) {
@@ -269,7 +269,7 @@
       '<button class="nx-btn nx-btn-primary nx-btn-block" type="submit">Сохранить</button></form>' +
       '<div class="nx-auth-links"><a href="#/login">← К входу</a></div></div></div>';
 
-    document.getElementById('resetForm').onsubmit = async function (e) {
+    bindForm('resetForm', async function (e) {
       e.preventDefault();
       const fd = new FormData(e.target);
       try {
@@ -279,7 +279,7 @@
       } catch (err) {
         toast(errMsg(err.message), 'err');
       }
-    };
+    });
   }
 
   function shellLayout(active, content) {
@@ -306,15 +306,17 @@
   }
 
   function mountShell(active) {
-    if (!state.shellReady) {
-      app.classList.remove('nx-boot');
+    app.classList.remove('nx-boot');
+    var page = document.getElementById('nxPage');
+    if (!state.shellReady || !page || !document.getElementById('nxMain')) {
       app.innerHTML = shellLayout(active, '<div id="nxPage"></div>');
       bindShellEvents();
       state.shellReady = true;
+      page = document.getElementById('nxPage');
     } else {
       setShellActive(active);
     }
-    return document.getElementById('nxPage');
+    return page;
   }
 
   function currentNav() {
@@ -326,7 +328,23 @@
 
   function setPage(html) {
     var page = mountShell(currentNav());
-    if (page) page.innerHTML = html;
+    if (!page) {
+      var main = document.getElementById('nxMain');
+      if (main) {
+        main.innerHTML = '<div id="nxPage">' + html + '</div>';
+        page = document.getElementById('nxPage');
+      }
+    } else {
+      page.innerHTML = html;
+    }
+    return page;
+  }
+
+  function bindForm(id, handler) {
+    var el = document.getElementById(id);
+    if (!el) return false;
+    el.onsubmit = handler;
+    return true;
   }
 
   function paintDashboard(projects) {
@@ -375,15 +393,20 @@
   }
 
   function bindShellEvents() {
-    document.getElementById('logoutBtn').onclick = async function () {
-      await API.logout();
-      state.user = null;
-      nav('login');
-    };
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.onclick = async function () {
+        await API.logout();
+        state.user = null;
+        state.shellReady = false;
+        nav('login');
+      };
+    }
     var toggle = document.getElementById('menuToggle');
-    if (toggle) toggle.onclick = function () {
-      document.getElementById('sidebar').classList.toggle('open');
-    };
+    var sidebar = document.getElementById('sidebar');
+    if (toggle && sidebar) {
+      toggle.onclick = function () { sidebar.classList.toggle('open'); };
+    }
   }
 
   async function renderProject(id) {
@@ -434,7 +457,7 @@
       animateBars();
 
       if (isAdmin) {
-        document.getElementById('adminProjectForm').onsubmit = async function (e) {
+        bindForm('adminProjectForm', async function (e) {
           e.preventDefault();
           const fd = new FormData(e.target);
           try {
@@ -448,19 +471,21 @@
             toast('Проект обновлён');
             renderProject(id);
           } catch (err) { toast(errMsg(err.message), 'err'); }
-        };
+        });
         var zone = document.getElementById('uploadZone');
         var input = document.getElementById('fileInput');
-        zone.onclick = function () { input.click(); };
-        input.onchange = async function () {
-          if (!input.files[0]) return;
-          try {
-            toast('Загрузка…');
-            await API.uploadFile(id, input.files[0]);
-            toast('Файл загружен');
-            renderProject(id);
-          } catch (err) { toast(errMsg(err.message), 'err'); }
-        };
+        if (zone && input) {
+          zone.onclick = function () { input.click(); };
+          input.onchange = async function () {
+            if (!input.files[0]) return;
+            try {
+              toast('Загрузка…');
+              await API.uploadFile(id, input.files[0]);
+              toast('Файл загружен');
+              renderProject(id);
+            } catch (err) { toast(errMsg(err.message), 'err'); }
+          };
+        }
       }
     } catch (err) {
       toast(errMsg(err.message), 'err');
@@ -550,32 +575,39 @@
     var attachBtn = document.getElementById('attachBtn');
     var chatFile = document.getElementById('chatFile');
     var msgText = document.getElementById('msgText');
+    if (!sendBtn || !msgText) return;
 
     sendBtn.onclick = sendChatMessage;
     msgText.onkeydown = function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
     };
-    attachBtn.onclick = function () { chatFile.click(); };
-    chatFile.onchange = function () {
-      if (chatFile.files[0]) sendChatMessage(chatFile.files[0]);
-    };
+    if (attachBtn && chatFile) {
+      attachBtn.onclick = function () { chatFile.click(); };
+      chatFile.onchange = function () {
+        if (chatFile.files[0]) sendChatMessage(chatFile.files[0]);
+      };
+    }
   }
 
   async function sendChatMessage(file) {
-    var text = document.getElementById('msgText').value.trim();
-    var f = file || document.getElementById('chatFile').files[0];
+    var msgText = document.getElementById('msgText');
+    var chatFile = document.getElementById('chatFile');
+    var sendBtn = document.getElementById('sendBtn');
+    if (!msgText || !sendBtn) return;
+    var text = msgText.value.trim();
+    var f = file || (chatFile && chatFile.files[0]);
     if (!text && !f) return;
     try {
-      document.getElementById('sendBtn').disabled = true;
+      sendBtn.disabled = true;
       const uid = state.user.role === 'admin' ? state.chatUserId : undefined;
       await API.sendMessage(text, f, uid);
-      document.getElementById('msgText').value = '';
-      document.getElementById('chatFile').value = '';
+      msgText.value = '';
+      if (chatFile) chatFile.value = '';
       await refreshChat();
     } catch (err) {
       toast(errMsg(err.message), 'err');
     } finally {
-      document.getElementById('sendBtn').disabled = false;
+      sendBtn.disabled = false;
     }
   }
 
@@ -625,16 +657,16 @@
       '<div class="nx-field"><label>Новый пароль</label><input type="password" name="newPassword" required minlength="8"/></div>' +
       '<button class="nx-btn nx-btn-primary nx-btn-sm" type="submit">Обновить пароль</button></form></div></div>');
 
-    document.getElementById('nameForm').onsubmit = async function (e) {
+    bindForm('nameForm', async function (e) {
       e.preventDefault();
       try {
         const res = await API.updateProfile({ name: new FormData(e.target).get('name') });
         state.user = res.user;
         toast('Имя обновлено');
       } catch (err) { toast(errMsg(err.message), 'err'); }
-    };
+    });
 
-    document.getElementById('emailForm').onsubmit = async function (e) {
+    bindForm('emailForm', async function (e) {
       e.preventDefault();
       const fd = new FormData(e.target);
       try {
@@ -642,9 +674,9 @@
         state.user = res.user;
         toast('Email обновлён — проверьте почту для подтверждения');
       } catch (err) { toast(errMsg(err.message), 'err'); }
-    };
+    });
 
-    document.getElementById('passForm').onsubmit = async function (e) {
+    bindForm('passForm', async function (e) {
       e.preventDefault();
       const fd = new FormData(e.target);
       try {
@@ -652,9 +684,10 @@
         toast('Пароль обновлён');
         e.target.reset();
       } catch (err) { toast(errMsg(err.message), 'err'); }
-    };
+    });
 
-    document.querySelector('#avatarForm input').onchange = async function (e) {
+    var avatarInput = document.querySelector('#avatarForm input');
+    if (avatarInput) avatarInput.onchange = async function (e) {
       const file = e.target.files[0];
       if (!file) return;
       if (file.size > 500000) { toast('Изображение слишком большое (макс. 500 KB)', 'err'); return; }
@@ -679,16 +712,13 @@
     if (sub === 'projects') return renderAdminProjects();
     if (sub === 'chat' && parts[1]) { nav('chat/' + parts[1]); return; }
 
-    app.innerHTML = shellLayout('admin',
+    setPage(
       '<div class="nx-topbar"><div><h1>Админ-панель <span class="nx-admin-badge">Admin</span></h1>' +
       '<p>Управление клиентами, проектами и чатами</p></div></div>' +
       '<div class="nx-grid nx-grid-3">' +
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/admin/clients\'"><h3>👥 Клиенты</h3><p class="sub">Создание и удаление клиентов</p></div>' +
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/admin/projects\'"><h3>📁 Проекты</h3><p class="sub">Все проекты и статусы</p></div>' +
       '<div class="nx-card nx-glass nx-project-card" onclick="location.hash=\'#/chat\'"><h3>💬 Чаты</h3><p class="sub">Личные диалоги с клиентами</p></div></div>');
-    state.shellReady = true;
-    app.classList.remove('nx-boot');
-    bindShellEvents();
   }
 
   async function renderAdminClients() {
@@ -716,7 +746,7 @@
         '<div class="nx-card nx-glass nx-table-wrap"><table class="nx-table"><thead><tr><th>Клиент</th><th>Email</th><th>Создан</th><th></th></tr></thead><tbody>' +
         (rows || '<tr><td colspan="4" class="sub">Нет клиентов</td></tr>') + '</tbody></table></div></div>');
 
-      document.getElementById('newClientForm').onsubmit = async function (e) {
+      bindForm('newClientForm', async function (e) {
         e.preventDefault();
         const fd = new FormData(e.target);
         try {
@@ -726,7 +756,7 @@
           toast('Клиент создан — пароль отправлен на email');
           renderAdminClients();
         } catch (err) { toast(errMsg(err.message), 'err'); }
-      };
+      });
       document.querySelectorAll('[data-del]').forEach(function (btn) {
         btn.onclick = async function () {
           if (!confirm('Удалить клиента?')) return;
@@ -773,7 +803,7 @@
         '<div class="nx-card nx-glass nx-table-wrap"><table class="nx-table"><thead><tr><th>Проект</th><th>Клиент</th><th>Статус</th><th>%</th><th>Срок</th></tr></thead><tbody>' +
         (rows || '<tr><td colspan="5">Нет проектов</td></tr>') + '</tbody></table></div></div>');
 
-      document.getElementById('newProjectForm').onsubmit = async function (e) {
+      bindForm('newProjectForm', async function (e) {
         e.preventDefault();
         const fd = new FormData(e.target);
         try {
@@ -784,7 +814,7 @@
           toast('Проект создан');
           renderAdminProjects();
         } catch (err) { toast(errMsg(err.message), 'err'); }
-      };
+      });
     } catch (err) { toast(errMsg(err.message), 'err'); }
   }
 
