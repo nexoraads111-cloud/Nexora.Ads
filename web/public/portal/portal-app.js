@@ -25,6 +25,22 @@
 
   const app = document.getElementById('app');
   const toastEl = document.getElementById('toast');
+  const formHandlers = Object.create(null);
+
+  if (app) {
+    app.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (!form || form.tagName !== 'FORM' || !form.id) return;
+      var fn = formHandlers[form.id];
+      if (!fn || !app.contains(form)) return;
+      e.preventDefault();
+      fn(e);
+    });
+  }
+
+  function bindForm(id, handler) {
+    if (id && handler) formHandlers[id] = handler;
+  }
 
   function esc(s) {
     return String(s || '')
@@ -338,13 +354,6 @@
       page.innerHTML = html;
     }
     return page;
-  }
-
-  function bindForm(id, handler) {
-    var el = document.getElementById(id);
-    if (!el) return false;
-    el.onsubmit = handler;
-    return true;
   }
 
   function paintDashboard(projects) {

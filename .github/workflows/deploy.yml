@@ -14,7 +14,6 @@ on:
       - 'css/**'
       - 'js/**'
       - 'cabinet/**'
-      - 'portal/**'
       - 'Public/**'
       - '404/**'
 
