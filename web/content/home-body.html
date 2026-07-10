@@ -12,19 +12,23 @@
 <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
 <header>
 <div class="container nav">
-<a aria-label="NexoraWeb" class="brand" href="#top">
-<div class="logo">N</div><div><b>NexoraWeb</b><span data-i18n="brand_sub">Premium Web Studio</span></div>
+<a aria-label="NexoraWeb" class="brand wm-brand" href="#top">
+<div class="logo">N</div><div><b>NexoraWeb</b><span class="brand-sub" data-i18n="brand_sub">Premium Web Studio</span></div>
+<span class="wm-logo-text">NexoraWeb<span class="wm-dot">.</span></span>
 </a>
 <nav aria-label="Main navigation" class="nav-links">
+<a data-i18n="nav_home" href="#top">Главная</a>
+<a data-i18n="nav_about" href="#about">Обо мне</a>
 <a data-i18n="nav_services" href="#services">Услуги</a>
 <a data-i18n="nav_projects" href="#projects">Портфолио</a>
-<a data-i18n="nav_process" href="#process">Процесс</a>
 <a data-i18n="nav_reviews" href="#reviews">Отзывы</a>
-<a data-i18n="nav_about" href="#about">О нас</a>
+<a data-i18n="nav_contact" href="#contact">Контакты</a>
 </nav>
 <div class="nav-actions">
 <a href="/cabinet/" class="admin-nav-btn" id="adminNavBtn" title="Кабінет" style="display:none">⚙️</a>
 <div class="lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
+<button class="wm-contact-btn desktop-cta" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
+<button class="wm-theme-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeToggleIcon"></i></button>
 <button class="btn ghost desktop-cta" data-i18n="nav_consult" onclick="openOrderModal()">Получить консультацию</button>
 <button class="btn ghost desktop-cta" id="portalNavBtn" onclick="openPortalAuth()" style="margin-right:8px">Личный кабинет</button>
 <button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛 Поддержать</button>
@@ -34,78 +38,73 @@
 </div>
 </header>
 <aside class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-head"><div class="brand"><div class="logo">N</div><div><b>NexoraWeb</b></div></div><button class="close" onclick="closeMobileMenu()">×</button></div>
+<div class="mobile-menu-head"><div class="brand wm-brand"><span class="wm-logo-text">NexoraWeb<span class="wm-dot">.</span></span></div><button class="close" onclick="closeMobileMenu()">×</button></div>
+<a data-i18n="nav_home" href="#top" onclick="closeMobileMenu()">Главная</a>
+<a data-i18n="nav_about" href="#about" onclick="closeMobileMenu()">Обо мне</a>
 <a data-i18n="nav_services" href="#services" onclick="closeMobileMenu()">Услуги</a>
 <a data-i18n="nav_projects" href="#projects" onclick="closeMobileMenu()">Портфолио</a>
-<a data-i18n="nav_process" href="#process" onclick="closeMobileMenu()">Процесс</a>
 <a data-i18n="nav_reviews" href="#reviews" onclick="closeMobileMenu()">Отзывы</a>
-<a data-i18n="nav_about" href="#about" onclick="closeMobileMenu()">О нас</a>
+<a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
 <a data-i18n="nav_pricing" href="#pricing" onclick="closeMobileMenu()">Цены</a>
 <a data-i18n="nav_faq" href="#faq" onclick="closeMobileMenu()">FAQ</a>
 <a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
 <a href="/portal/" onclick="closeMobileMenu();openPortalAuth();return false" id="portalNavBtnMobile">Личный кабинет</a>
-<button class="btn primary" data-i18n="nav_consult" onclick="closeMobileMenu();openOrderModal()" style="width:100%;margin-top:20px">Получить консультацию</button>
+<button class="wm-contact-btn" data-i18n="wm_contact_btn" onclick="closeMobileMenu();openOrderModal()" style="width:100%;margin-top:20px">Связаться со мной</button>
 <button class="btn donate-nav-btn mobile-donate-btn" data-donate-i18n="support_btn" onclick="closeMobileMenu();openDonateModal()">💛 Поддержать</button>
 </aside>
 <main id="top">
 
 <!-- HERO -->
-<section class="hero nx-hero-v14">
+<section class="hero wm-hero" id="services">
 <div class="container">
-<div class="nx-hero-v14-grid">
-<div class="nx-hero-copy">
-<span class="nx-badge" data-i18n="v14_hero_badge">Создаём сайты, которые продают</span>
-<h1 data-i18n="v14_hero_title">Разработка сайтов для бизнеса, которые <span class="nx-grad">приносят клиентов</span></h1>
-<p class="nx-lead" data-i18n="v14_hero_lead">NexoraWeb — команда, которая создаёт современные, быстрые сайты под ключ: от идеи до запуска и поддержки.</p>
-<div class="nx-hero-v14-actions">
-<button class="btn primary" data-i18n="nav_consult" onclick="openOrderModal()">Получить консультацию <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-<a class="btn ghost" data-i18n="v14_portfolio_btn" href="#projects"><i class="fa-solid fa-play"></i> Смотреть портфолио</a>
+<div class="wm-hero-grid">
+<div class="wm-hero-copy">
+<span class="wm-label" data-i18n="wm_hero_label">ВЕБ-РАЗРАБОТЧИК</span>
+<h1 data-i18n="wm_hero_title">Создаю современные <span class="wm-grad">веб-сайты для вашего</span> бизнеса</h1>
+<p class="wm-hero-lead" data-i18n="wm_hero_lead">Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.</p>
+<div class="wm-hero-actions">
+<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+<a class="wm-btn-outline" data-i18n="wm_cta_works" href="#projects">Смотреть работы</a>
+</div>
+<div class="wm-features">
+<div class="wm-feature"><i class="fa-solid fa-palette"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
+<div class="wm-feature"><i class="fa-solid fa-mobile-screen"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
+<div class="wm-feature"><i class="fa-solid fa-bolt"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
 </div>
 </div>
-<div class="nx-hero-mockups" aria-hidden="true">
-<div class="nx-hero-mockups-glow"></div>
-<div class="nx-device-showcase">
-<div class="nx-monitor-frame">
-<div class="nx-monitor-chrome"><span></span><span></span><span></span></div>
-<div class="nx-monitor-viewport"><img alt="DiurdStav.sk — пример сайта" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
-<div class="nx-monitor-base"></div>
+<div class="wm-laptop-wrap" aria-hidden="true">
+<div class="wm-laptop-glow"></div>
+<div class="wm-laptop">
+<div class="wm-laptop-screen">
+<div class="wm-laptop-chrome"><span></span><span></span><span></span></div>
+<div class="wm-laptop-viewport"><img alt="Пример сайта NexoraWeb" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
 </div>
-<div class="nx-phone-frame"><img alt="PCSTORE mobile" loading="eager" src="/Public/Image/зображення_2026-06-30_234802702.png"/></div>
-</div>
-</div>
-</div>
-<div class="nx-stats-strip">
-<div><i class="fa-solid fa-star"></i><div><b data-i18n="v14_stat1">50+ проектов выполнено</b><span data-i18n="v14_stat1_sub">реальные кейсы в портфолио</span></div></div>
-<div><i class="fa-solid fa-circle-check"></i><div><b data-i18n="v14_stat2">98% клиентов довольны</b><span data-i18n="v14_stat2_sub">по обратной связи</span></div></div>
-<div><i class="fa-regular fa-clock"></i><div><b data-i18n="v14_stat3">1–2 недели средний срок</b><span data-i18n="v14_stat3_sub">разработки</span></div></div>
-<div><i class="fa-solid fa-layer-group"></i><div><b data-i18n="v14_stat4">Под ключ</b><span data-i18n="v14_stat4_sub">от дизайна до запуска</span></div></div>
+<div class="wm-laptop-base"></div>
+<div class="wm-laptop-shadow"></div>
 </div>
 </div>
-</section>
-
-<!-- TRUST -->
-<section class="nx-trust-bar">
-<div class="container">
-<p data-i18n="v14_trust_text">Нам доверяют компании из разных сфер</p>
-<div class="nx-trust-logos">
-<span>Stroplook</span><span>Ukstav</span><span>DiurdStav</span><span>PCSTORE</span><span>NexoraWeb</span>
 </div>
-</div>
-</section>
-
-<!-- WHY US -->
-<section class="section small" id="services">
-<div class="container">
-<div class="nx-section-head">
-<span class="nx-badge" data-i18n="v14_why_badge">Почему мы</span>
-<h2 class="section-title" data-i18n="v14_why_title">Почему выбирают <span class="nx-grad">NexoraWeb?</span></h2>
-<p class="lead" data-i18n="v14_why_lead">Мы не просто делаем сайты — мы помогаем вашему бизнесу расти.</p>
-</div>
-<div class="nx-why-grid">
-<div class="nx-why-card"><div class="nx-why-icon"><i class="fa-solid fa-bullseye"></i></div><h3 data-i18n="v14_why1_t">Фокус на результат</h3><p data-i18n="v14_why1_d">Структура сайта ведёт клиента к заявке, а не просто красиво выглядит.</p></div>
-<div class="nx-why-card"><div class="nx-why-icon"><i class="fa-solid fa-bolt"></i></div><h3 data-i18n="v14_why2_t">Скорость и качество</h3><p data-i18n="v14_why2_d">Запускаем проекты в короткие сроки без потери качества.</p></div>
-<div class="nx-why-card"><div class="nx-why-icon"><i class="fa-solid fa-palette"></i></div><h3 data-i18n="v14_why3_t">Современный дизайн</h3><p data-i18n="v14_why3_d">Актуальный визуал, адаптив и UX как у топовых студий.</p></div>
-<div class="nx-why-card"><div class="nx-why-icon"><i class="fa-solid fa-headset"></i></div><h3 data-i18n="v14_why4_t">Поддержка после запуска</h3><p data-i18n="v14_why4_d">Не бросаем после сдачи — помогаем с правками и развитием.</p></div>
+<div class="wm-services-grid">
+<article class="wm-service-card">
+<div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
+<h3 data-i18n="wm_svc1_t">Разработка сайтов</h3>
+<p data-i18n="wm_svc1_d">Создаю современные и удобные сайты под ключ</p>
+</article>
+<article class="wm-service-card">
+<div class="wm-service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+<h3 data-i18n="wm_svc2_t">Интернет-магазины</h3>
+<p data-i18n="wm_svc2_d">Разработка интернет-магазинов любой сложности</p>
+</article>
+<article class="wm-service-card">
+<div class="wm-service-icon"><i class="fa-solid fa-layer-group"></i></div>
+<h3 data-i18n="wm_svc3_t">Лендинги</h3>
+<p data-i18n="wm_svc3_d">Эффективные лендинги для вашего бизнеса</p>
+</article>
+<article class="wm-service-card">
+<div class="wm-service-icon"><i class="fa-solid fa-gear"></i></div>
+<h3 data-i18n="wm_svc4_t">Поддержка</h3>
+<p data-i18n="wm_svc4_d">Техническая поддержка и обслуживание сайтов</p>
+</article>
 </div>
 </div>
 </section>
