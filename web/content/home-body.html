@@ -25,13 +25,15 @@
 <a data-i18n="nav_contact" href="#contact">Контакты</a>
 </nav>
 <div class="nav-actions">
-<div class="lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
-<button class="wm-portal-btn" id="portalNavBtn" onclick="openPortalAuth()" title="Личный кабинет"><i class="fa-solid fa-user"></i><span>Кабинет</span></button>
-<a href="/cabinet/" class="wm-admin-btn" id="adminNavBtn" title="Админ" style="display:none"><i class="fa-solid fa-gear"></i></a>
-<button class="wm-contact-btn desktop-cta" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
+<div class="wm-hide-desktop lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
+<button class="wm-contact-btn" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
 <button class="wm-theme-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeToggleIcon"></i></button>
-<button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛</button>
-<a href="/cabinet/" class="admin-nav-btn" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
+<div class="wm-hide-desktop wm-nav-extra">
+<button class="wm-portal-btn" id="portalNavBtn" onclick="openPortalAuth()" title="Личный кабинет"><i class="fa-solid fa-user"></i></button>
+<a href="/cabinet/" class="wm-admin-btn" id="adminNavBtn" title="Админ" style="display:none"><i class="fa-solid fa-gear"></i></a>
+<button class="btn donate-nav-btn donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛</button>
+</div>
+<a href="/cabinet/" class="admin-nav-btn wm-hide-desktop" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
 <button aria-label="Menu" class="menu-btn" onclick="openMobileMenu()">☰</button>
 </div>
 </div>
@@ -54,44 +56,52 @@
 <main id="top">
 
 <!-- HERO -->
-<section class="hero wm-hero" id="services">
+<section class="hero wm-hero">
 <div class="container">
 <div class="wm-hero-grid">
 <div class="wm-hero-copy">
 <span class="wm-label" data-i18n="wm_hero_label">ВЕБ-РАЗРАБОТЧИК</span>
-<h1 data-i18n="wm_hero_title">Создаю современные <span class="wm-grad">веб-сайты для вашего</span> бизнеса</h1>
+<h1>Создаю современные <span class="wm-grad" data-i18n="wm_hero_grad">веб-сайты для вашего бизнеса</span></h1>
 <p class="wm-hero-lead" data-i18n="wm_hero_lead">Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.</p>
 <div class="wm-hero-actions">
-<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
 <a class="wm-btn-outline" data-i18n="wm_cta_works" href="#projects">Смотреть работы</a>
 </div>
 <div class="wm-features">
-<div class="wm-feature"><i class="fa-solid fa-palette"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
-<div class="wm-feature"><i class="fa-solid fa-mobile-screen"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
-<div class="wm-feature"><i class="fa-solid fa-bolt"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
 </div>
 </div>
 <div class="wm-laptop-wrap" aria-hidden="true">
+<div class="wm-laptop-stage"></div>
 <div class="wm-laptop-glow"></div>
 <div class="wm-laptop">
 <div class="wm-laptop-screen">
 <div class="wm-laptop-chrome"><span></span><span></span><span></span></div>
-<div class="wm-laptop-viewport"><img alt="Пример сайта NexoraWeb" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
+<div class="wm-laptop-viewport">
+<div class="wm-screen-app">
+<div class="wm-screen-top">
+<span class="wm-screen-logo">NexoraWeb<span>.</span></span>
+<span class="wm-screen-tag">Digital Agency</span>
+</div>
+<p class="wm-screen-headline">Современные сайты для бизнеса</p>
+<div class="wm-screen-stats">
+<div><b data-i18n="wm_stat1">120+</b><span data-i18n="wm_stat1_l">Проектов</span></div>
+<div><b data-i18n="wm_stat2">98%</b><span data-i18n="wm_stat2_l">Довольных клиентов</span></div>
+<div><b data-i18n="wm_stat3">3+</b><span data-i18n="wm_stat3_l">Года опыта</span></div>
+<div><b data-i18n="wm_stat4">24/7</b><span data-i18n="wm_stat4_l">Поддержка</span></div>
+</div>
+</div>
+</div>
 </div>
 <div class="wm-laptop-base"></div>
-<div class="wm-laptop-shadow"></div>
-<div class="wm-laptop-stats">
-<div><b data-i18n="wm_stat1">50+</b><span data-i18n="wm_stat1_l">проектов</span></div>
-<div><b data-i18n="wm_stat2">98%</b><span data-i18n="wm_stat2_l">довольных клиентов</span></div>
-<div><b data-i18n="wm_stat3">3+</b><span data-i18n="wm_stat3_l">года опыта</span></div>
-<div><b data-i18n="wm_stat4">24/7</b><span data-i18n="wm_stat4_l">поддержка</span></div>
 </div>
 </div>
 </div>
-</div>
-<div class="wm-services-grid">
+<div class="wm-services-grid" id="services">
 <article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
+<div class="wm-service-icon"><i class="fa-solid fa-code"></i></div>
 <h3 data-i18n="wm_svc1_t">Разработка сайтов</h3>
 <p data-i18n="wm_svc1_d">Создаю современные и удобные сайты под ключ</p>
 </article>
@@ -101,7 +111,7 @@
 <p data-i18n="wm_svc2_d">Разработка интернет-магазинов любой сложности</p>
 </article>
 <article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-layer-group"></i></div>
+<div class="wm-service-icon"><i class="fa-solid fa-file-lines"></i></div>
 <h3 data-i18n="wm_svc3_t">Лендинги</h3>
 <p data-i18n="wm_svc3_d">Эффективные лендинги для вашего бизнеса</p>
 </article>

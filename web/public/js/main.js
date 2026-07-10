@@ -43,7 +43,7 @@ const v14ru={nav_consult:'Получить консультацию',nav_process
 Object.assign(tr.ru,v14ru);
 Object.assign(tr.ru,{
   nav_home:'Главная',wm_contact_btn:'Связаться со мной',wm_hero_label:'ВЕБ-РАЗРАБОТЧИК',
-  wm_hero_title:'Создаю современные <span class="wm-grad">веб-сайты для вашего</span> бизнеса',
+  wm_hero_grad:'веб-сайты для вашего бизнеса',
   wm_hero_lead:'Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.',
   wm_cta_discuss:'Обсудить проект',wm_cta_works:'Смотреть работы',
   wm_feat1:'Современный дизайн',wm_feat2:'Адаптивность',wm_feat3:'Высокая скорость',
@@ -52,8 +52,8 @@ Object.assign(tr.ru,{
   wm_svc3_t:'Лендинги',wm_svc3_d:'Эффективные лендинги для вашего бизнеса',
   wm_svc4_t:'Поддержка',wm_svc4_d:'Техническая поддержка и обслуживание сайтов',
   nav_about:'Обо мне',
-  wm_stat1:'50+',wm_stat1_l:'проектов',wm_stat2:'98%',wm_stat2_l:'довольных клиентов',
-  wm_stat3:'3+',wm_stat3_l:'года опыта',wm_stat4:'24/7',wm_stat4_l:'поддержка'
+  wm_stat1:'120+',wm_stat1_l:'Проектов',wm_stat2:'98%',wm_stat2_l:'Довольных клиентов',
+  wm_stat3:'3+',wm_stat3_l:'Года опыта',wm_stat4:'24/7',wm_stat4_l:'Поддержка'
 });
 Object.assign(tr.uk,{...v14ru,nav_consult:'Отримати консультацію',nav_process:'Процес',nav_about:'Про мене',nav_home:'Головна',projects_badge:'Портфоліо',v14_order_plan:'Замовити',wm_contact_btn:'Зв\'язатися зі мною',wm_hero_label:'ВЕБ-РОЗРОБНИК',wm_cta_discuss:'Обговорити проєкт',wm_cta_works:'Дивитись роботи',wm_feat1:'Сучасний дизайн',wm_feat2:'Адаптивність',wm_feat3:'Висока швидкість',wm_svc1_t:'Розробка сайтів',wm_svc1_d:'Створюю сучасні та зручні сайти під ключ',wm_svc2_t:'Інтернет-магазини',wm_svc2_d:'Розробка інтернет-магазинів будь-якої складності',wm_svc3_t:'Лендінги',wm_svc3_d:'Ефективні лендінги для вашого бізнесу',wm_svc4_t:'Підтримка',wm_svc4_d:'Технічна підтримка та обслуговування сайтів'});
 Object.assign(tr.en,{...v14ru,nav_consult:'Get consultation',nav_process:'Process',nav_about:'About me',nav_home:'Home',projects_badge:'Portfolio',v14_order_plan:'Order',wm_contact_btn:'Contact me',wm_hero_label:'WEB DEVELOPER',wm_cta_discuss:'Discuss project',wm_cta_works:'View works',wm_feat1:'Modern design',wm_feat2:'Responsiveness',wm_feat3:'High speed',wm_svc1_t:'Website development',wm_svc1_d:'I create modern and convenient turnkey websites',wm_svc2_t:'Online stores',wm_svc2_d:'Development of online stores of any complexity',wm_svc3_t:'Landing pages',wm_svc3_d:'Effective landing pages for your business',wm_svc4_t:'Support',wm_svc4_d:'Technical support and website maintenance'});

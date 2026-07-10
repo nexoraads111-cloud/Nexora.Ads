@@ -41,9 +41,7 @@ export default function RootLayout({ children }) {
         />
         <link href="/css/style.css" rel="stylesheet" />
         <link href="/css/mobile.css" rel="stylesheet" />
-        <link href="/css/site-v13.css" rel="stylesheet" />
-        <link href="/css/nexora-v14.css" rel="stylesheet" />
-        <link href="/css/nexora-v15.css?v=15" rel="stylesheet" />
+        <link href="/css/nexora-v15.css?v=16" rel="stylesheet" />
       </head>
       <body className="nx-v15">
         {children}
