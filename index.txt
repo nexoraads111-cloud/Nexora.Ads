@@ -1,7 +1,7 @@
-2:I[3542,["931","static/chunks/app/page-f000420f3431f5cd.js"],"default"]
+2:I[3542,["931","static/chunks/app/page-be216bfac84b37ca.js"],"default"]
 4:I[4707,[],""]
 5:I[6423,[],""]
-3:T9d59,
+3:T9e2e,
 <div aria-label="NexoraWeb loading screen" id="nxPreloader">
 <div class="nx-loader-core">
 <div class="nx-loader-logo"><img alt="NexoraWeb logo" src="/Public/Image/apple-touch-icon-57x57.png"/></div>
@@ -28,13 +28,15 @@
 <a data-i18n="nav_contact" href="#contact">Контакты</a>
 </nav>
 <div class="nav-actions">
-<div class="lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
-<button class="wm-portal-btn" id="portalNavBtn" onclick="openPortalAuth()" title="Личный кабинет"><i class="fa-solid fa-user"></i><span>Кабинет</span></button>
-<a href="/cabinet/" class="wm-admin-btn" id="adminNavBtn" title="Админ" style="display:none"><i class="fa-solid fa-gear"></i></a>
-<button class="wm-contact-btn desktop-cta" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
+<div class="wm-hide-desktop lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
+<button class="wm-contact-btn" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
 <button class="wm-theme-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeToggleIcon"></i></button>
-<button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛</button>
-<a href="/cabinet/" class="admin-nav-btn" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
+<div class="wm-hide-desktop wm-nav-extra">
+<button class="wm-portal-btn" id="portalNavBtn" onclick="openPortalAuth()" title="Личный кабинет"><i class="fa-solid fa-user"></i></button>
+<a href="/cabinet/" class="wm-admin-btn" id="adminNavBtn" title="Админ" style="display:none"><i class="fa-solid fa-gear"></i></a>
+<button class="btn donate-nav-btn donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛</button>
+</div>
+<a href="/cabinet/" class="admin-nav-btn wm-hide-desktop" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
 <button aria-label="Menu" class="menu-btn" onclick="openMobileMenu()">☰</button>
 </div>
 </div>
@@ -57,44 +59,52 @@
 <main id="top">
 
 <!-- HERO -->
-<section class="hero wm-hero" id="services">
+<section class="hero wm-hero">
 <div class="container">
 <div class="wm-hero-grid">
 <div class="wm-hero-copy">
 <span class="wm-label" data-i18n="wm_hero_label">ВЕБ-РАЗРАБОТЧИК</span>
-<h1 data-i18n="wm_hero_title">Создаю современные <span class="wm-grad">веб-сайты для вашего</span> бизнеса</h1>
+<h1>Создаю современные <span class="wm-grad" data-i18n="wm_hero_grad">веб-сайты для вашего бизнеса</span></h1>
 <p class="wm-hero-lead" data-i18n="wm_hero_lead">Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.</p>
 <div class="wm-hero-actions">
-<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
 <a class="wm-btn-outline" data-i18n="wm_cta_works" href="#projects">Смотреть работы</a>
 </div>
 <div class="wm-features">
-<div class="wm-feature"><i class="fa-solid fa-palette"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
-<div class="wm-feature"><i class="fa-solid fa-mobile-screen"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
-<div class="wm-feature"><i class="fa-solid fa-bolt"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
+<div class="wm-feature"><i class="fa-regular fa-circle"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
 </div>
 </div>
 <div class="wm-laptop-wrap" aria-hidden="true">
+<div class="wm-laptop-stage"></div>
 <div class="wm-laptop-glow"></div>
 <div class="wm-laptop">
 <div class="wm-laptop-screen">
 <div class="wm-laptop-chrome"><span></span><span></span><span></span></div>
-<div class="wm-laptop-viewport"><img alt="Пример сайта NexoraWeb" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
+<div class="wm-laptop-viewport">
+<div class="wm-screen-app">
+<div class="wm-screen-top">
+<span class="wm-screen-logo">NexoraWeb<span>.</span></span>
+<span class="wm-screen-tag">Digital Agency</span>
+</div>
+<p class="wm-screen-headline">Современные сайты для бизнеса</p>
+<div class="wm-screen-stats">
+<div><b data-i18n="wm_stat1">120+</b><span data-i18n="wm_stat1_l">Проектов</span></div>
+<div><b data-i18n="wm_stat2">98%</b><span data-i18n="wm_stat2_l">Довольных клиентов</span></div>
+<div><b data-i18n="wm_stat3">3+</b><span data-i18n="wm_stat3_l">Года опыта</span></div>
+<div><b data-i18n="wm_stat4">24/7</b><span data-i18n="wm_stat4_l">Поддержка</span></div>
+</div>
+</div>
+</div>
 </div>
 <div class="wm-laptop-base"></div>
-<div class="wm-laptop-shadow"></div>
-<div class="wm-laptop-stats">
-<div><b data-i18n="wm_stat1">50+</b><span data-i18n="wm_stat1_l">проектов</span></div>
-<div><b data-i18n="wm_stat2">98%</b><span data-i18n="wm_stat2_l">довольных клиентов</span></div>
-<div><b data-i18n="wm_stat3">3+</b><span data-i18n="wm_stat3_l">года опыта</span></div>
-<div><b data-i18n="wm_stat4">24/7</b><span data-i18n="wm_stat4_l">поддержка</span></div>
 </div>
 </div>
 </div>
-</div>
-<div class="wm-services-grid">
+<div class="wm-services-grid" id="services">
 <article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
+<div class="wm-service-icon"><i class="fa-solid fa-code"></i></div>
 <h3 data-i18n="wm_svc1_t">Разработка сайтов</h3>
 <p data-i18n="wm_svc1_d">Создаю современные и удобные сайты под ключ</p>
 </article>
@@ -104,7 +114,7 @@
 <p data-i18n="wm_svc2_d">Разработка интернет-магазинов любой сложности</p>
 </article>
 <article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-layer-group"></i></div>
+<div class="wm-service-icon"><i class="fa-solid fa-file-lines"></i></div>
 <h3 data-i18n="wm_svc3_t">Лендинги</h3>
 <p data-i18n="wm_svc3_d">Эффективные лендинги для вашего бизнеса</p>
 </article>
@@ -429,6 +439,6 @@
 </div>
 </div>
 <div class="toast" id="toast"></div>
-0:["kgzzoaAcn0TuSRjtivYuM",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"rel":"dns-prefetch","href":"https://script.google.com"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet","media":"print","id":"nx-fa-css"}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"document.getElementById('nx-fa-css').media='all';"}}],["$","link",null,{"href":"/css/style.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/mobile.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/site-v13.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/nexora-v14.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/nexora-v15.css?v=15","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v15","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
+0:["WyzZNSu8pVBuJ7HTBcu7f",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"rel":"dns-prefetch","href":"https://script.google.com"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet","media":"print","id":"nx-fa-css"}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"document.getElementById('nx-fa-css').media='all';"}}],["$","link",null,{"href":"/css/style.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/mobile.css","rel":"stylesheet"}],["$","link",null,{"href":"/css/nexora-v15.css?v=16","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v15","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
 6:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"NexoraWeb — премиум сайты для бизнеса под ключ"}],["$","meta","3",{"name":"description","content":"NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, заявки на почту и поддержка менеджера."}],["$","meta","4",{"name":"keywords","content":"создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия"}],["$","meta","5",{"name":"robots","content":"index, follow"}],["$","meta","6",{"property":"og:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","7",{"property":"og:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","8",{"property":"og:url","content":"https://nexoraads.online/"}],["$","meta","9",{"property":"og:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","meta","10",{"property":"og:type","content":"website"}],["$","meta","11",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","12",{"name":"twitter:title","content":"NexoraWeb — сайты для бизнеса под ключ"}],["$","meta","13",{"name":"twitter:description","content":"Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками."}],["$","meta","14",{"name":"twitter:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","link","15",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]]
 1:null
