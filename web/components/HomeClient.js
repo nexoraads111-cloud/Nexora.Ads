@@ -6,9 +6,9 @@ export default function HomeClient({ html }) {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <Script src="/js/nexora-config.js?v=33" strategy="beforeInteractive" />
-      <Script src="/js/portal-auth.js?v=33" strategy="afterInteractive" />
-      <Script src="/js/nexora-boot.js?v=33" strategy="afterInteractive" />
+      <Script src="/js/nexora-config.js?v=34" strategy="beforeInteractive" />
+      <Script src="/js/portal-auth.js?v=34" strategy="afterInteractive" />
+      <Script src="/js/nexora-boot.js?v=34" strategy="afterInteractive" />
     </>
   );
 }
