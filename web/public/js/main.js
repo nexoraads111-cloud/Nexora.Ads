@@ -119,6 +119,7 @@ function initPortfolioFilter(){
     apply(btn.getAttribute('data-filter')||'all');
   });
 }
-function bootMain(){initTheme();setLang(localStorage.getItem('nexora_lang')||'ru');const reviewForm=document.getElementById('review-form');if(reviewForm){reviewForm.addEventListener('submit',submitReview)}initCounters();initPortfolioFilter();loadReviews()}
+function initFaqAccordion(){const items=[...document.querySelectorAll('.wm-faq-item')];if(!items.length)return;items.forEach(item=>{item.addEventListener('toggle',()=>{if(!item.open)return;items.forEach(other=>{if(other!==item)other.open=false})})})}
+function bootMain(){initTheme();setLang(localStorage.getItem('nexora_lang')||'ru');const reviewForm=document.getElementById('review-form');if(reviewForm){reviewForm.addEventListener('submit',submitReview)}initCounters();initPortfolioFilter();initFaqAccordion();loadReviews()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootMain);else bootMain();
 async function loadReviews(attempt=0){const box=document.getElementById('reviews-container');if(!box)return;if(!GAS_URL){if(attempt<40)return setTimeout(()=>loadReviews(attempt+1),100);return}const BLOCKED=['r_1782853940234','r_1782835228464'];try{const r=await fetch(GAS_URL+'?action=reviews&_='+Date.now(),{cache:'no-store',redirect:'follow'});const text=await r.text();const reviews=JSON.parse(text);if(!Array.isArray(reviews))throw new Error('bad_format');const clean=reviews.filter(x=>!BLOCKED.includes(String(x.id))).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));if(typeof window.renderReviews==='function')window.renderReviews(clean)}catch(e){console.error('Reviews load error',e)}}
