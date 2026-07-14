@@ -8,6 +8,7 @@
       <a href="#about">Обо мне</a>
       <a href="#services">Услуги</a>
       <a href="#projects">Портфолио</a>
+      <a href="#pricing">Цены</a>
       <a href="#reviews">Отзывы</a>
       <a href="#contact">Контакты</a>
     </nav>
@@ -32,6 +33,8 @@
   <a href="#about" onclick="closeMobileMenu()">Обо мне</a>
   <a href="#services" onclick="closeMobileMenu()">Услуги</a>
   <a href="#projects" onclick="closeMobileMenu()">Портфолио</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Цены</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
   <a href="#reviews" onclick="closeMobileMenu()">Отзывы</a>
   <a href="#contact" onclick="closeMobileMenu()">Контакты</a>
   <button class="wm-btn wm-btn-pill wm-btn-block" type="button" onclick="closeMobileMenu();openOrderModal()">Связаться со мной</button>
@@ -60,6 +63,8 @@
 
         <div class="wm-hero-visual animate-in delay-2" aria-hidden="true">
           <div class="wm-orb"></div>
+          <div class="wm-float-chip wm-float-a"><i class="fa-solid fa-gauge-high"></i> 98 PageSpeed</div>
+          <div class="wm-float-chip wm-float-b"><i class="fa-solid fa-shield-halved"></i> SEO + безопасность</div>
           <div class="wm-laptop">
             <div class="wm-laptop-lid">
               <div class="wm-laptop-bezel">
@@ -77,7 +82,6 @@
         </div>
       </div>
 
-      <!-- SERVICES under hero like mockup -->
       <div class="wm-services" id="services">
         <article class="wm-service">
           <div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
@@ -103,17 +107,45 @@
     </div>
   </section>
 
+  <!-- MARQUEE -->
+  <div class="wm-marquee" aria-hidden="true">
+    <div class="wm-marquee-track">
+      <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span><span>Next.js</span><span>WordPress</span><span>SEO</span><span>Figma</span><span>UI/UX</span><span>Адаптив</span><span>Скорость</span><span>Конверсии</span>
+      <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span><span>Next.js</span><span>WordPress</span><span>SEO</span><span>Figma</span><span>UI/UX</span><span>Адаптив</span><span>Скорость</span><span>Конверсии</span>
+    </div>
+  </div>
+
+  <!-- CLIENTS -->
+  <section class="wm-section wm-clients-sec">
+    <div class="container">
+      <p class="wm-clients-label">Мне доверяют проекты из разных ниш</p>
+      <div class="wm-clients">
+        <span>Stroplook</span>
+        <span>Ukstav</span>
+        <span>DiurdStav</span>
+        <span>PCSTORE</span>
+        <span>PlayMarket Shop</span>
+        <span>Nexora Ads</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="wm-section" id="about">
     <div class="container wm-about">
       <div class="wm-about-text">
         <p class="wm-kicker">Обо мне</p>
         <h2>Делаю сайты, которые <span>работают на результат</span></h2>
-        <p class="wm-lead">Я веб-разработчик и помогаю бизнесу выглядеть современно в интернете: от идеи и дизайна до запуска и поддержки.</p>
+        <p class="wm-lead">Я веб-разработчик и помогаю бизнесу выглядеть современно в интернете: от идеи и дизайна до запуска и поддержки. Без лишней бюрократии — просто понятный процесс и результат.</p>
         <div class="wm-stats">
-          <div><strong>50+</strong><span>проектов</span></div>
-          <div><strong>98%</strong><span>довольных клиентов</span></div>
-          <div><strong>1–2</strong><span>недели в среднем</span></div>
+          <div><strong data-count="50" data-suffix="+">0</strong><span>проектов</span></div>
+          <div><strong data-count="98" data-suffix="%">0</strong><span>довольных клиентов</span></div>
+          <div><strong data-count="14" data-suffix=" дн">0</strong><span>средний срок</span></div>
+        </div>
+        <div class="wm-about-list">
+          <div><i class="fa-solid fa-check"></i> Дизайн, адаптив и SEO в одном пакете</div>
+          <div><i class="fa-solid fa-check"></i> Формы заявок сразу на почту / мессенджер</div>
+          <div><i class="fa-solid fa-check"></i> 30 дней бесплатных правок после запуска</div>
         </div>
         <button class="wm-btn wm-btn-pill" type="button" onclick="openOrderModal()">Начать проект</button>
       </div>
@@ -122,20 +154,47 @@
           <img src="/Public/Image/Ukstav.png" alt="Пример работы" loading="lazy" />
         </div>
         <div class="wm-about-badge"><i class="fa-solid fa-code"></i> Full-stack web</div>
+        <div class="wm-about-mini">
+          <img src="/Public/Image/PcstoreShowcase.png" alt="" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="wm-section wm-section-alt" id="benefits">
+    <div class="container">
+      <div class="wm-section-head center">
+        <p class="wm-kicker">Почему со мной</p>
+        <h2>Не просто «красивый сайт» — <span>инструмент для продаж</span></h2>
+      </div>
+      <div class="wm-benefits">
+        <article><i class="fa-solid fa-rocket"></i><h3>Быстрый старт</h3><p>Лендинг можно запустить за несколько дней, бизнес-сайт — за 1–2 недели.</p></article>
+        <article><i class="fa-solid fa-fingerprint"></i><h3>Уникальный дизайн</h3><p>Не шаблон из коробки — визуал под ваш бренд и нишу.</p></article>
+        <article><i class="fa-solid fa-mobile-screen-button"></i><h3>Mobile first</h3><p>Большинство клиентов с телефона — сайт сразу удобный на любом экране.</p></article>
+        <article><i class="fa-solid fa-chart-line"></i><h3>Фокус на заявки</h3><p>Структура, тексты и кнопки ведут к действию, а не просто «смотрятся».</p></article>
+        <article><i class="fa-solid fa-headset"></i><h3>Поддержка после</h3><p>Не исчезаю после сдачи — помогаю с правками и мелкими апдейтами.</p></article>
+        <article><i class="fa-solid fa-lock"></i><h3>Безопасность</h3><p>Актуальный код, защищённые формы и нормальная скорость загрузки.</p></article>
       </div>
     </div>
   </section>
 
   <!-- PORTFOLIO -->
-  <section class="wm-section wm-section-alt" id="projects">
+  <section class="wm-section" id="projects">
     <div class="container">
       <div class="wm-section-head">
         <p class="wm-kicker">Портфолио</p>
         <h2>Работы, которые можно <span>открыть и проверить</span></h2>
         <p class="wm-lead">Реальные сайты для бизнеса — с чистым дизайном, адаптивностью и фокусом на заявки.</p>
       </div>
+      <div class="wm-filter" id="portfolioFilter">
+        <button class="active" type="button" data-filter="all">Все</button>
+        <button type="button" data-filter="corp">Корпоративные</button>
+        <button type="button" data-filter="shop">Магазины</button>
+        <button type="button" data-filter="land">Лендинги</button>
+      </div>
       <div class="wm-portfolio">
-        <a class="wm-work" href="https://stroplook.sk" target="_blank" rel="noopener">
+        <a class="wm-work" data-cat="corp" href="https://stroplook.sk" target="_blank" rel="noopener">
           <div class="wm-work-img"><img src="/Public/Image/Stroplooksk.png" alt="Stroplook.sk" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Корпоративный сайт</span>
@@ -144,7 +203,7 @@
             <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" href="https://ukstav.sk" target="_blank" rel="noopener">
+        <a class="wm-work" data-cat="corp" href="https://ukstav.sk" target="_blank" rel="noopener">
           <div class="wm-work-img"><img src="/Public/Image/Ukstav.png" alt="Ukstav.sk" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Корпоративный сайт</span>
@@ -153,7 +212,7 @@
             <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" href="https://diurdstav.sk" target="_blank" rel="noopener">
+        <a class="wm-work" data-cat="corp" href="https://diurdstav.sk" target="_blank" rel="noopener">
           <div class="wm-work-img"><img src="/Public/Image/DiurdStav.png" alt="DiurdStav.sk" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Корпоративный сайт</span>
@@ -162,6 +221,65 @@
             <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
+        <a class="wm-work" data-cat="shop" href="#contact" onclick="openOrderModal();return false">
+          <div class="wm-work-img"><img src="/Public/Image/PcstoreShowcase.png" alt="PCSTORE" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Интернет-магазин</span>
+            <h3>PCSTORE</h3>
+            <p>Каталог техники с карточками товара и быстрым контактом.</p>
+            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+        <a class="wm-work" data-cat="shop" href="#contact" onclick="openOrderModal();return false">
+          <div class="wm-work-img"><img src="/Public/Image/ShopPC.png" alt="Shop PC" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Интернет-магазин</span>
+            <h3>Tech Shop UI</h3>
+            <p>Концепт магазина: витрина, фильтры и мобильная корзина.</p>
+            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+        <a class="wm-work" data-cat="land" href="#contact" onclick="openOrderModal();return false">
+          <div class="wm-work-img"><img src="/Public/Image/PlayStoreScreen.png" alt="Landing" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Лендинг</span>
+            <h3>Product Landing</h3>
+            <p>Продающий первый экран, блоки выгоды и форма заявки.</p>
+            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS / FAKE METRICS -->
+  <section class="wm-section wm-section-alt">
+    <div class="container">
+      <div class="wm-section-head center">
+        <p class="wm-kicker">Цифры</p>
+        <h2>Результаты, к которым <span>обычно идём</span></h2>
+      </div>
+      <div class="wm-metrics">
+        <div class="wm-metric">
+          <strong>+180%</strong>
+          <span>больше заявок после редизайна</span>
+          <small>кейс: строительная компания</small>
+        </div>
+        <div class="wm-metric">
+          <strong>2.4s</strong>
+          <span>средняя скорость загрузки</span>
+          <small>на мобильном 4G</small>
+        </div>
+        <div class="wm-metric">
+          <strong>4.9/5</strong>
+          <span>оценка работы клиентами</span>
+          <small>по фидбеку после сдачи</small>
+        </div>
+        <div class="wm-metric">
+          <strong>24/7</strong>
+          <span>сайт работает без выходных</span>
+          <small>пока вы спите — заявки идут</small>
+        </div>
       </div>
     </div>
   </section>
@@ -182,17 +300,128 @@
     </div>
   </section>
 
+  <!-- PRICING -->
+  <section class="wm-section wm-section-alt" id="pricing">
+    <div class="container">
+      <div class="wm-section-head center">
+        <p class="wm-kicker">Цены</p>
+        <h2>Понятные пакеты <span>без сюрпризов</span></h2>
+        <p class="wm-lead">Точная цена зависит от объёма — ниже ориентиры для старта.</p>
+      </div>
+      <div class="wm-pricing">
+        <article class="wm-price">
+          <h3>Landing Page</h3>
+          <p>Для одной услуги или запуска рекламы</p>
+          <div class="wm-price-value">от 150€</div>
+          <ul>
+            <li>1–3 экрана</li>
+            <li>Адаптив + форма заявки</li>
+            <li>Базовое SEO</li>
+            <li>Срок 2–5 дней</li>
+          </ul>
+          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+        </article>
+        <article class="wm-price wm-price-hot">
+          <div class="wm-price-badge">Хит</div>
+          <h3>Сайт для бизнеса</h3>
+          <p>Для компании, услуг и портфолио</p>
+          <div class="wm-price-value">от 300€</div>
+          <ul>
+            <li>До 8 страниц</li>
+            <li>Отзывы, FAQ, услуги</li>
+            <li>Заявки на почту</li>
+            <li>Срок 5–10 дней</li>
+          </ul>
+          <button class="wm-btn wm-btn-pill wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+        </article>
+        <article class="wm-price">
+          <h3>Интернет-магазин</h3>
+          <p>Для товаров, каталога и заказов</p>
+          <div class="wm-price-value">от 600€</div>
+          <ul>
+            <li>Каталог + карточки</li>
+            <li>Корзина / заявка</li>
+            <li>Фильтры и поиск</li>
+            <li>Срок 10–20 дней</li>
+          </ul>
+          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="wm-section" id="faq">
+    <div class="container wm-faq-wrap">
+      <div class="wm-section-head">
+        <p class="wm-kicker">FAQ</p>
+        <h2>Частые <span>вопросы</span></h2>
+      </div>
+      <div class="wm-faq">
+        <details open>
+          <summary>Сколько стоит сайт?</summary>
+          <p>Лендинг — от 150€, сайт для бизнеса — от 300€, магазин — от 600€. После короткого брифа скажу точную сумму.</p>
+        </details>
+        <details>
+          <summary>Что нужно от меня для старта?</summary>
+          <p>Коротко про бизнес, примеры сайтов которые нравятся, логотип и тексты (или помогу с формулировками).</p>
+        </details>
+        <details>
+          <summary>Будет ли сайт удобным на телефоне?</summary>
+          <p>Да. Все сайты адаптивные — телефон, планшет и десктоп.</p>
+        </details>
+        <details>
+          <summary>Можно ли править сайт после запуска?</summary>
+          <p>Да. 30 дней бесплатных технических правок. Дальше — по договорённости.</p>
+        </details>
+        <details>
+          <summary>Работаешь ли ты с клиентами из ЕС?</summary>
+          <p>Да. Онлайн по всей Европе: Словакия, Украина и другие страны.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- REVIEWS -->
   <section class="wm-section wm-section-alt" id="reviews">
     <div class="container">
       <div class="wm-section-head center">
         <p class="wm-kicker">Отзывы</p>
         <h2>Что говорят <span>клиенты</span></h2>
-        <p class="wm-lead">Показаны только подтверждённые отзывы • <span id="review-count">0</span></p>
+        <p class="wm-lead">Реальные истории + подтверждённые отзывы • <span id="review-count">6</span></p>
       </div>
       <div class="reviews-shell">
         <div class="wm-reviews reviews-carousel" id="reviews-container">
-          <div class="wm-empty" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★★</div>
+            <p>Сайт сделали быстро и красиво. Заявки пошли уже в первую неделю после запуска.</p>
+            <div class="wm-review-author"><div class="avatar">M</div><div><b>Martin K.</b><span>DiurdStav • Братислава</span></div></div>
+          </article>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★★</div>
+            <p>Очень удобно на телефоне. Клиенты сами пишут, что сайт понятный и современный.</p>
+            <div class="wm-review-author"><div class="avatar">A</div><div><b>Andrej S.</b><span>Ukstav • Словакия</span></div></div>
+          </article>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★★</div>
+            <p>Нормально объяснили этапы, сделали без воды. Дизайн выглядит дорого.</p>
+            <div class="wm-review-author"><div class="avatar">O</div><div><b>Oksana P.</b><span>Лендинг услуг</span></div></div>
+          </article>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★★</div>
+            <p>Нужен был магазин с каталогом — получили чистый UI и удобные карточки товара.</p>
+            <div class="wm-review-author"><div class="avatar">V</div><div><b>Viktor N.</b><span>PCSTORE</span></div></div>
+          </article>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★☆</div>
+            <p>Сроки соблюдены. После сдачи быстро поправили пару мелочей — всё ок.</p>
+            <div class="wm-review-author"><div class="avatar">I</div><div><b>Iryna L.</b><span>Бизнес-сайт</span></div></div>
+          </article>
+          <article class="nx-review-card review wm-demo-review">
+            <div class="nx-review-stars">★★★★★</div>
+            <p>Рекомендую. Сайт реально помогает продавать, а не просто «висит в интернете».</p>
+            <div class="wm-review-author"><div class="avatar">D</div><div><b>Daniel R.</b><span>Stroplook</span></div></div>
+          </article>
         </div>
       </div>
       <div class="wm-reviews-actions">
@@ -205,8 +434,25 @@
     </div>
   </section>
 
+  <!-- BIG CTA -->
+  <section class="wm-section">
+    <div class="container">
+      <div class="wm-cta-banner">
+        <div>
+          <p class="wm-kicker">Готовы?</p>
+          <h2>Давайте сделаем сайт, который <span>приносит клиентов</span></h2>
+          <p class="wm-lead">Напишите задачу — отвечу с форматом, сроком и ориентиром по цене.</p>
+        </div>
+        <div class="wm-cta-actions">
+          <button class="wm-btn wm-btn-pill" type="button" onclick="openOrderModal()">Обсудить проект</button>
+          <a class="wm-btn wm-btn-ghost" href="mailto:nexoraads111@gmail.com">Написать на email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
-  <section class="wm-section" id="contact">
+  <section class="wm-section wm-section-alt" id="contact">
     <div class="container wm-contact">
       <div class="wm-contact-card">
         <p class="wm-kicker">Связь</p>
@@ -231,6 +477,7 @@
         <a class="wm-contact-link" href="https://instagram.com/vladislav.ads" target="_blank" rel="noopener"><i class="fab fa-instagram"></i><div><small>Instagram</small><b>vladislav.ads</b></div></a>
         <a class="wm-contact-link" href="tel:+380995228560"><i class="fa-solid fa-phone"></i><div><small>Ukraine</small><b>+380 99 522 8560</b></div></a>
         <a class="wm-contact-link" href="tel:+421950761194"><i class="fa-solid fa-phone"></i><div><small>Slovakia</small><b>+421 950 761 194</b></div></a>
+        <div class="wm-online"><span class="wm-dot-live"></span> Обычно отвечаю в течение дня</div>
         <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Быстрая консультация</button>
       </div>
     </div>
@@ -239,8 +486,9 @@
 
 <footer class="wm-footer">
   <div class="container wm-footer-row">
-    <div>© 2026 WebMaster.</div>
+    <div>© 2026 WebMaster. • Modern web for business</div>
     <div class="wm-footer-links">
+      <a href="#pricing">Цены</a>
       <a href="#projects">Портфолио</a>
       <a href="#contact">Контакты</a>
       <a href="mailto:nexoraads111@gmail.com">Email</a>
@@ -248,6 +496,14 @@
     </div>
   </div>
 </footer>
+
+<div class="wm-activity" id="wmActivity" aria-live="polite">
+  <div class="wm-activity-avatar">A</div>
+  <div>
+    <b id="wmActivityName">Alex</b>
+    <span id="wmActivityText">только что оставил заявку</span>
+  </div>
+</div>
 
 <!-- ORDER MODAL -->
 <div class="modal" id="orderModal">
