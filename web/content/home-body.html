@@ -161,39 +161,21 @@
     </div>
   </section>
 
-  <!-- BENEFITS -->
-  <section class="wm-section wm-section-alt" id="benefits">
-    <div class="container">
-      <div class="wm-section-head center">
-        <p class="wm-kicker">Почему со мной</p>
-        <h2>Не просто «красивый сайт» — <span>инструмент для продаж</span></h2>
-      </div>
-      <div class="wm-benefits">
-        <article><i class="fa-solid fa-rocket"></i><h3>Быстрый старт</h3><p>Лендинг можно запустить за несколько дней, бизнес-сайт — за 1–2 недели.</p></article>
-        <article><i class="fa-solid fa-fingerprint"></i><h3>Уникальный дизайн</h3><p>Не шаблон из коробки — визуал под ваш бренд и нишу.</p></article>
-        <article><i class="fa-solid fa-mobile-screen-button"></i><h3>Mobile first</h3><p>Большинство клиентов с телефона — сайт сразу удобный на любом экране.</p></article>
-        <article><i class="fa-solid fa-chart-line"></i><h3>Фокус на заявки</h3><p>Структура, тексты и кнопки ведут к действию, а не просто «смотрятся».</p></article>
-        <article><i class="fa-solid fa-headset"></i><h3>Поддержка после</h3><p>Не исчезаю после сдачи — помогаю с правками и мелкими апдейтами.</p></article>
-        <article><i class="fa-solid fa-lock"></i><h3>Безопасность</h3><p>Актуальный код, защищённые формы и нормальная скорость загрузки.</p></article>
-      </div>
-    </div>
-  </section>
-
   <!-- PORTFOLIO -->
-  <section class="wm-section" id="projects">
+  <section class="wm-section wm-section-alt" id="projects">
     <div class="container">
       <div class="wm-section-head">
         <p class="wm-kicker">Портфолио</p>
         <h2>Работы, которые можно <span>открыть и проверить</span></h2>
         <p class="wm-lead">Реальные сайты для бизнеса — с чистым дизайном, адаптивностью и фокусом на заявки.</p>
       </div>
-      <div class="wm-filter" id="portfolioFilter">
-        <button class="active" type="button" data-filter="all">Все</button>
+      <div class="wm-filter" id="portfolioFilter" role="tablist" aria-label="Фильтр портфолио">
+        <button class="active" type="button" data-filter="all">Все работы</button>
         <button type="button" data-filter="corp">Корпоративные</button>
         <button type="button" data-filter="shop">Магазины</button>
         <button type="button" data-filter="land">Лендинги</button>
       </div>
-      <div class="wm-portfolio">
+      <div class="wm-portfolio" id="portfolioGrid">
         <a class="wm-work" data-cat="corp" href="https://stroplook.sk" target="_blank" rel="noopener">
           <div class="wm-work-img"><img src="/Public/Image/Stroplooksk.png" alt="Stroplook.sk" loading="lazy" /></div>
           <div class="wm-work-body">
@@ -221,7 +203,7 @@
             <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" data-cat="shop" href="#contact" onclick="openOrderModal();return false">
+        <a class="wm-work" data-cat="shop" href="#contact" onclick="event.preventDefault();openOrderModal()">
           <div class="wm-work-img"><img src="/Public/Image/PcstoreShowcase.png" alt="PCSTORE" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Интернет-магазин</span>
@@ -230,7 +212,7 @@
             <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" data-cat="shop" href="#contact" onclick="openOrderModal();return false">
+        <a class="wm-work" data-cat="shop" href="#contact" onclick="event.preventDefault();openOrderModal()">
           <div class="wm-work-img"><img src="/Public/Image/ShopPC.png" alt="Shop PC" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Интернет-магазин</span>
@@ -239,7 +221,7 @@
             <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" data-cat="land" href="#contact" onclick="openOrderModal();return false">
+        <a class="wm-work" data-cat="land" href="#contact" onclick="event.preventDefault();openOrderModal()">
           <div class="wm-work-img"><img src="/Public/Image/PlayStoreScreen.png" alt="Landing" loading="lazy" /></div>
           <div class="wm-work-body">
             <span>Лендинг</span>
@@ -249,6 +231,7 @@
           </div>
         </a>
       </div>
+      <p class="wm-filter-empty" id="portfolioEmpty" hidden>В этой категории пока нет проектов.</p>
     </div>
   </section>
 
@@ -305,48 +288,58 @@
     <div class="container">
       <div class="wm-section-head center">
         <p class="wm-kicker">Цены</p>
-        <h2>Понятные пакеты <span>без сюрпризов</span></h2>
-        <p class="wm-lead">Точная цена зависит от объёма — ниже ориентиры для старта.</p>
+        <h2>Сколько стоит <span>сайт</span></h2>
+        <p class="wm-lead">Три формата под задачу. Точную сумму скажу после короткого брифа.</p>
       </div>
       <div class="wm-pricing">
         <article class="wm-price">
-          <h3>Landing Page</h3>
-          <p>Для одной услуги или запуска рекламы</p>
-          <div class="wm-price-value">от 150€</div>
+          <div class="wm-price-top">
+            <h3>Landing Page</h3>
+            <p>Одна услуга / быстрый запуск рекламы</p>
+          </div>
+          <div class="wm-price-value"><small>от</small> 150€</div>
+          <span class="wm-price-time"><i class="fa-regular fa-clock"></i> 2–5 дней</span>
           <ul>
-            <li>1–3 экрана</li>
-            <li>Адаптив + форма заявки</li>
+            <li>Сильный первый экран</li>
+            <li>Адаптив под телефон</li>
+            <li>Форма заявки на почту</li>
             <li>Базовое SEO</li>
-            <li>Срок 2–5 дней</li>
           </ul>
-          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderWithType('Landing Page')">Заказать лендинг</button>
         </article>
         <article class="wm-price wm-price-hot">
-          <div class="wm-price-badge">Хит</div>
-          <h3>Сайт для бизнеса</h3>
-          <p>Для компании, услуг и портфолио</p>
-          <div class="wm-price-value">от 300€</div>
+          <div class="wm-price-badge">Популярно</div>
+          <div class="wm-price-top">
+            <h3>Сайт для бизнеса</h3>
+            <p>Компания, услуги, портфолио</p>
+          </div>
+          <div class="wm-price-value"><small>от</small> 300€</div>
+          <span class="wm-price-time"><i class="fa-regular fa-clock"></i> 5–10 дней</span>
           <ul>
             <li>До 8 страниц</li>
-            <li>Отзывы, FAQ, услуги</li>
-            <li>Заявки на почту</li>
-            <li>Срок 5–10 дней</li>
+            <li>Услуги, отзывы, FAQ</li>
+            <li>Заявки менеджеру</li>
+            <li>30 дней правок после запуска</li>
           </ul>
-          <button class="wm-btn wm-btn-pill wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+          <button class="wm-btn wm-btn-pill wm-btn-block" type="button" onclick="openOrderWithType('Сайт для бизнеса')">Заказать сайт</button>
         </article>
         <article class="wm-price">
-          <h3>Интернет-магазин</h3>
-          <p>Для товаров, каталога и заказов</p>
-          <div class="wm-price-value">от 600€</div>
+          <div class="wm-price-top">
+            <h3>Интернет-магазин</h3>
+            <p>Товары, каталог и заказы</p>
+          </div>
+          <div class="wm-price-value"><small>от</small> 600€</div>
+          <span class="wm-price-time"><i class="fa-regular fa-clock"></i> 10–20 дней</span>
           <ul>
-            <li>Каталог + карточки</li>
-            <li>Корзина / заявка</li>
+            <li>Каталог и карточки товара</li>
+            <li>Корзина / форма заказа</li>
             <li>Фильтры и поиск</li>
-            <li>Срок 10–20 дней</li>
+            <li>Мобильная версия</li>
           </ul>
-          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Заказать</button>
+          <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderWithType('Интернет-магазин')">Заказать магазин</button>
         </article>
       </div>
+      <p class="wm-pricing-note">В цену входит дизайн, адаптив, формы и базовый запуск. Домен и хостинг — отдельно по желанию.</p>
     </div>
   </section>
 
