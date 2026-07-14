@@ -1,7 +1,7 @@
-2:I[3542,["931","static/chunks/app/page-d6a401bb284fedc2.js"],"default"]
+2:I[3542,["931","static/chunks/app/page-2536d7fbb807ca5d.js"],"default"]
 4:I[4707,[],""]
 5:I[6423,[],""]
-3:T814f,<div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+3:T71bd,<div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
 
 <header class="wm-header">
   <div class="container wm-nav">
@@ -144,14 +144,11 @@
   <!-- CLIENTS -->
   <section class="wm-section wm-clients-sec">
     <div class="container">
-      <p class="wm-clients-label">Мне доверяют проекты из разных ниш</p>
+      <p class="wm-clients-label">3 живых проекта — все клиенты довольны</p>
       <div class="wm-clients">
         <span>Stroplook</span>
         <span>Ukstav</span>
         <span>DiurdStav</span>
-        <span>PCSTORE</span>
-        <span>PlayMarket Shop</span>
-        <span>Nexora Ads</span>
       </div>
     </div>
   </section>
@@ -164,9 +161,9 @@
         <h2>Делаю сайты, которые <span>работают на результат</span></h2>
         <p class="wm-lead">Я веб-разработчик и помогаю бизнесу выглядеть современно в интернете: от идеи и дизайна до запуска и поддержки. Без лишней бюрократии — просто понятный процесс и результат.</p>
         <div class="wm-stats">
-          <div><strong data-count="50" data-suffix="+">0</strong><span>проектов</span></div>
-          <div><strong data-count="98" data-suffix="%">0</strong><span>довольных клиентов</span></div>
-          <div><strong data-count="14" data-suffix=" дн">0</strong><span>средний срок</span></div>
+          <div><strong data-count="3" data-suffix="">0</strong><span>готовых проекта</span></div>
+          <div><strong data-count="100" data-suffix="%">0</strong><span>довольных клиентов</span></div>
+          <div><strong data-count="3" data-suffix="/3">0</strong><span>успешно сданы</span></div>
         </div>
         <div class="wm-about-list">
           <div><i class="fa-solid fa-check"></i> Дизайн, адаптив и SEO в одном пакете</div>
@@ -181,7 +178,7 @@
         </div>
         <div class="wm-about-badge"><i class="fa-solid fa-code"></i> Full-stack web</div>
         <div class="wm-about-mini">
-          <img src="/Public/Image/PcstoreShowcase.png" alt="" loading="lazy" />
+          <img src="/Public/Image/DiurdStav.png" alt="" loading="lazy" />
         </div>
       </div>
     </div>
@@ -192,14 +189,8 @@
     <div class="container">
       <div class="wm-section-head">
         <p class="wm-kicker">Портфолио</p>
-        <h2>Работы, которые можно <span>открыть и проверить</span></h2>
-        <p class="wm-lead">Реальные сайты для бизнеса — с чистым дизайном, адаптивностью и фокусом на заявки.</p>
-      </div>
-      <div class="wm-filter" id="portfolioFilter" role="tablist" aria-label="Фильтр портфолио">
-        <button class="active" type="button" data-filter="all">Все работы</button>
-        <button type="button" data-filter="corp">Корпоративные</button>
-        <button type="button" data-filter="shop">Магазины</button>
-        <button type="button" data-filter="land">Лендинги</button>
+        <h2>Мои <span>3 проекта</span></h2>
+        <p class="wm-lead">Пока их немного — но все живые, все можно открыть, и все три клиента довольны.</p>
       </div>
       <div class="wm-portfolio" id="portfolioGrid">
         <a class="wm-work" data-cat="corp" href="https://stroplook.sk" target="_blank" rel="noopener">
@@ -229,65 +220,37 @@
             <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
           </div>
         </a>
-        <a class="wm-work" data-cat="shop" href="#contact" onclick="event.preventDefault();openOrderModal()">
-          <div class="wm-work-img"><img src="/Public/Image/PcstoreShowcase.png" alt="PCSTORE" loading="lazy" /></div>
-          <div class="wm-work-body">
-            <span>Интернет-магазин</span>
-            <h3>PCSTORE</h3>
-            <p>Каталог техники с карточками товара и быстрым контактом.</p>
-            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
-          </div>
-        </a>
-        <a class="wm-work" data-cat="shop" href="#contact" onclick="event.preventDefault();openOrderModal()">
-          <div class="wm-work-img"><img src="/Public/Image/ShopPC.png" alt="Shop PC" loading="lazy" /></div>
-          <div class="wm-work-body">
-            <span>Интернет-магазин</span>
-            <h3>Tech Shop UI</h3>
-            <p>Концепт магазина: витрина, фильтры и мобильная корзина.</p>
-            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
-          </div>
-        </a>
-        <a class="wm-work" data-cat="land" href="#contact" onclick="event.preventDefault();openOrderModal()">
-          <div class="wm-work-img"><img src="/Public/Image/PlayStoreScreen.png" alt="Landing" loading="lazy" /></div>
-          <div class="wm-work-body">
-            <span>Лендинг</span>
-            <h3>Product Landing</h3>
-            <p>Продающий первый экран, блоки выгоды и форма заявки.</p>
-            <em>Обсудить похожий <i class="fa-solid fa-arrow-right"></i></em>
-          </div>
-        </a>
       </div>
-      <p class="wm-filter-empty" id="portfolioEmpty" hidden>В этой категории пока нет проектов.</p>
     </div>
   </section>
 
-  <!-- RESULTS / FAKE METRICS -->
-  <section class="wm-section wm-section-alt">
+  <!-- HONEST STATS -->
+  <section class="wm-section">
     <div class="container">
       <div class="wm-section-head center">
-        <p class="wm-kicker">Цифры</p>
-        <h2>Результаты, к которым <span>обычно идём</span></h2>
+        <p class="wm-kicker">Честно</p>
+        <h2>Маленькое портфолио — <span>реальный результат</span></h2>
       </div>
       <div class="wm-metrics">
         <div class="wm-metric">
-          <strong>+180%</strong>
-          <span>больше заявок после редизайна</span>
-          <small>кейс: строительная компания</small>
+          <strong>3</strong>
+          <span>готовых сайта</span>
+          <small>Stroplook, Ukstav, DiurdStav</small>
         </div>
         <div class="wm-metric">
-          <strong>2.4s</strong>
-          <span>средняя скорость загрузки</span>
-          <small>на мобильном 4G</small>
+          <strong>3/3</strong>
+          <span>довольных клиентов</span>
+          <small>пока 100% обратная связь</small>
         </div>
         <div class="wm-metric">
-          <strong>4.9/5</strong>
-          <span>оценка работы клиентами</span>
-          <small>по фидбеку после сдачи</small>
+          <strong>100%</strong>
+          <span>живые проекты</span>
+          <small>можно открыть и проверить</small>
         </div>
         <div class="wm-metric">
-          <strong>24/7</strong>
-          <span>сайт работает без выходных</span>
-          <small>пока вы спите — заявки идут</small>
+          <strong>1–2</strong>
+          <span>недели в среднем</span>
+          <small>от идеи до запуска</small>
         </div>
       </div>
     </div>
@@ -407,40 +370,25 @@
     <div class="container">
       <div class="wm-section-head center">
         <p class="wm-kicker">Отзывы</p>
-        <h2>Что говорят <span>клиенты</span></h2>
-        <p class="wm-lead">Реальные истории + подтверждённые отзывы • <span id="review-count">6</span></p>
+        <h2>Все <span>3 клиента</span> довольны</h2>
+        <p class="wm-lead">По одному отзыву на каждый сданный проект • <span id="review-count">3</span></p>
       </div>
       <div class="reviews-shell">
         <div class="wm-reviews reviews-carousel" id="reviews-container">
           <article class="nx-review-card review wm-demo-review">
             <div class="nx-review-stars">★★★★★</div>
-            <p>Сайт сделали быстро и красиво. Заявки пошли уже в первую неделю после запуска.</p>
-            <div class="wm-review-author"><div class="avatar">M</div><div><b>Martin K.</b><span>DiurdStav • Братислава</span></div></div>
+            <p>Сайт сделали быстро и красиво. Удобно на телефоне, заявки идут.</p>
+            <div class="wm-review-author"><div class="avatar">S</div><div><b>Клиент</b><span>Stroplook.sk</span></div></div>
           </article>
           <article class="nx-review-card review wm-demo-review">
             <div class="nx-review-stars">★★★★★</div>
-            <p>Очень удобно на телефоне. Клиенты сами пишут, что сайт понятный и современный.</p>
-            <div class="wm-review-author"><div class="avatar">A</div><div><b>Andrej S.</b><span>Ukstav • Словакия</span></div></div>
+            <p>Всё понятно, выглядит современно. Клиенты сами отмечают, что сайт удобный.</p>
+            <div class="wm-review-author"><div class="avatar">U</div><div><b>Клиент</b><span>Ukstav.sk</span></div></div>
           </article>
           <article class="nx-review-card review wm-demo-review">
             <div class="nx-review-stars">★★★★★</div>
-            <p>Нормально объяснили этапы, сделали без воды. Дизайн выглядит дорого.</p>
-            <div class="wm-review-author"><div class="avatar">O</div><div><b>Oksana P.</b><span>Лендинг услуг</span></div></div>
-          </article>
-          <article class="nx-review-card review wm-demo-review">
-            <div class="nx-review-stars">★★★★★</div>
-            <p>Нужен был магазин с каталогом — получили чистый UI и удобные карточки товара.</p>
-            <div class="wm-review-author"><div class="avatar">V</div><div><b>Viktor N.</b><span>PCSTORE</span></div></div>
-          </article>
-          <article class="nx-review-card review wm-demo-review">
-            <div class="nx-review-stars">★★★★☆</div>
-            <p>Сроки соблюдены. После сдачи быстро поправили пару мелочей — всё ок.</p>
-            <div class="wm-review-author"><div class="avatar">I</div><div><b>Iryna L.</b><span>Бизнес-сайт</span></div></div>
-          </article>
-          <article class="nx-review-card review wm-demo-review">
-            <div class="nx-review-stars">★★★★★</div>
-            <p>Рекомендую. Сайт реально помогает продавать, а не просто «висит в интернете».</p>
-            <div class="wm-review-author"><div class="avatar">D</div><div><b>Daniel R.</b><span>Stroplook</span></div></div>
+            <p>Нормально объяснили этапы, сделали без воды. Результатом довольны.</p>
+            <div class="wm-review-author"><div class="avatar">D</div><div><b>Клиент</b><span>DiurdStav.sk</span></div></div>
           </article>
         </div>
       </div>
@@ -563,6 +511,6 @@
 </div>
 
 <div class="toast" id="toast"></div>
-0:["r4oflUhvnb7hZSQvdrZYp",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"rel":"dns-prefetch","href":"https://script.google.com"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet","media":"print","id":"nx-fa-css"}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"document.getElementById('nx-fa-css').media='all';"}}],["$","link",null,{"href":"/css/nexora-v15.css","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v15","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
+0:["xO_00uSZE7sccy1G2xgg0",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"html":"$3"}],null],null],null]},[[null,["$","html",null,{"lang":"ru","children":[["$","head",null,{"children":[["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"icon","type":"image/png"}],["$","link",null,{"href":"/Public/Image/apple-touch-icon-57x57.png","rel":"apple-touch-icon","sizes":"57x57"}],["$","link",null,{"href":"https://fonts.googleapis.com","rel":"preconnect"}],["$","link",null,{"crossOrigin":"","href":"https://fonts.gstatic.com","rel":"preconnect"}],["$","link",null,{"rel":"dns-prefetch","href":"https://script.google.com"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","rel":"stylesheet"}],["$","link",null,{"href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css","rel":"stylesheet","media":"print","id":"nx-fa-css"}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"document.getElementById('nx-fa-css').media='all';"}}],["$","link",null,{"href":"/css/nexora-v15.css","rel":"stylesheet"}]]}],["$","body",null,{"className":"nx-v15","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]]}]],null],null],["$L6",null]]]]
 6:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"WebMaster — создание сайтов для бизнеса"}],["$","meta","3",{"name":"description","content":"WebMaster: современные, быстрые и адаптивные сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины под ключ."}],["$","meta","4",{"name":"keywords","content":"создание сайтов, веб-разработчик, landing page, сайт для бизнеса, интернет магазин, WebMaster"}],["$","meta","5",{"name":"robots","content":"index, follow"}],["$","meta","6",{"property":"og:title","content":"WebMaster — создание сайтов для бизнеса"}],["$","meta","7",{"property":"og:description","content":"Создаю современные сайты, которые привлекают клиентов и помогают бизнесу расти."}],["$","meta","8",{"property":"og:url","content":"https://nexoraads.online/"}],["$","meta","9",{"property":"og:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","meta","10",{"property":"og:type","content":"website"}],["$","meta","11",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","12",{"name":"twitter:title","content":"WebMaster — создание сайтов для бизнеса"}],["$","meta","13",{"name":"twitter:description","content":"Создаю современные сайты, которые привлекают клиентов и помогают бизнесу расти."}],["$","meta","14",{"name":"twitter:image","content":"https://i.imgur.com/AUiHBKF.png"}],["$","link","15",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]]
 1:null
