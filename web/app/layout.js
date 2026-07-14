@@ -1,14 +1,14 @@
 export const metadata = {
-  title: 'NexoraWeb — сайты для бизнеса под ключ',
+  title: 'WebMaster — создание сайтов для бизнеса',
   description:
-    'NexoraWeb — современные сайты для бизнеса: landing page, бизнес-сайты и интернет-магазины. Быстро, адаптивно, заявки на почту и поддержка менеджера.',
+    'WebMaster: современные, быстрые и адаптивные сайты для бизнеса. Лендинги, корпоративные сайты и интернет-магазины под ключ.',
   keywords:
-    'создание сайтов, сайт под ключ, landing page, сайт для бизнеса, интернет магазин, NexoraWeb, веб студия',
+    'создание сайтов, веб-разработчик, landing page, сайт для бизнеса, интернет магазин, WebMaster',
   robots: 'index, follow',
   themeColor: '#000000',
   openGraph: {
-    title: 'NexoraWeb — сайты для бизнеса под ключ',
-    description: 'Создаём современные сайты для бизнеса: красиво, быстро, адаптивно и с заявками.',
+    title: 'WebMaster — создание сайтов для бизнеса',
+    description: 'Создаю современные сайты, которые привлекают клиентов и помогают бизнесу расти.',
     url: 'https://nexoraads.online/',
     type: 'website',
     images: ['https://i.imgur.com/AUiHBKF.png'],
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <link
@@ -39,10 +39,6 @@ export default function RootLayout({ children }) {
             __html: "document.getElementById('nx-fa-css').media='all';",
           }}
         />
-        <link href="/css/style.css" rel="stylesheet" />
-        <link href="/css/mobile.css" rel="stylesheet" />
-        <link href="/css/site-v13.css" rel="stylesheet" />
-        <link href="/css/nexora-v14.css" rel="stylesheet" />
         <link href="/css/nexora-v15.css" rel="stylesheet" />
       </head>
       <body className="nx-v15">

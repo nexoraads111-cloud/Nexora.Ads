@@ -1,423 +1,314 @@
-
-<div aria-label="NexoraWeb loading screen" id="nxPreloader">
-<div class="nx-loader-core">
-<div class="nx-loader-logo"><img alt="NexoraWeb logo" src="/Public/Image/apple-touch-icon-57x57.png"/></div>
-<div class="nx-loader-brand">
-<div class="nx-loader-name"><span>NexoraWeb</span></div>
-<div class="nx-loader-line"></div>
-<div class="nx-loader-percent">loading creative website</div>
-</div>
-</div>
-</div>
 <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
-<header>
-<div class="container nav">
-<a aria-label="NexoraWeb" class="brand wm-brand" href="#top">
-<div class="logo">N</div><div><b>NexoraWeb</b><span class="brand-sub" data-i18n="brand_sub">Premium Web Studio</span></div>
-<span class="wm-logo-text">NexoraWeb<span class="wm-dot">.</span></span>
-</a>
-<nav aria-label="Main navigation" class="nav-links">
-<a data-i18n="nav_home" href="#top">Главная</a>
-<a data-i18n="nav_about" href="#about">Обо мне</a>
-<a data-i18n="nav_services" href="#services">Услуги</a>
-<a data-i18n="nav_projects" href="#projects">Портфолио</a>
-<a data-i18n="nav_reviews" href="#reviews">Отзывы</a>
-<a data-i18n="nav_contact" href="#contact">Контакты</a>
-</nav>
-<div class="nav-actions">
-<a href="/cabinet/" class="admin-nav-btn" id="adminNavBtn" title="Кабінет" style="display:none">⚙️</a>
-<div class="lang lang-v2"><button class="lang-btn" onclick="toggleLangMenu()" aria-label="Language"><span id="langCurrent">RU</span></button><div class="lang-menu" id="langMenu"><button class="active" onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('uk')">🇺🇦 Українська</button><button onclick="setLang('en')">🇬🇧 English</button><button onclick="setLang('sk')">🇸🇰 Slovenčina</button></div></div>
-<button class="wm-contact-btn desktop-cta" data-i18n="wm_contact_btn" onclick="openOrderModal()">Связаться со мной</button>
-<button class="wm-theme-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fa-solid fa-moon" id="themeToggleIcon"></i></button>
-<button class="btn ghost desktop-cta" data-i18n="nav_consult" onclick="openOrderModal()">Получить консультацию</button>
-<button class="btn ghost desktop-cta" id="portalNavBtn" onclick="openPortalAuth()" style="margin-right:8px">Личный кабинет</button>
-<button class="btn donate-nav-btn desktop-donate donate-pulse" data-donate-i18n="support_btn" onclick="openDonateModal()">💛 Поддержать</button>
-<a href="/cabinet/" class="admin-nav-btn" id="adminNavBtnMobile" title="Кабінет" style="display:none" onclick="closeMobileMenu()">⚙️</a>
-<button aria-label="Menu" class="menu-btn" onclick="openMobileMenu()">☰</button>
-</div>
-</div>
+
+<header class="wm-header">
+  <div class="container wm-nav">
+    <a class="wm-logo" href="#top" aria-label="WebMaster">WebMaster<span>.</span></a>
+    <nav class="wm-links" aria-label="Main navigation">
+      <a href="#top">Главная</a>
+      <a href="#about">Обо мне</a>
+      <a href="#services">Услуги</a>
+      <a href="#projects">Портфолио</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="wm-nav-right">
+      <button class="wm-btn wm-btn-pill" type="button" onclick="openOrderModal()">Связаться со мной</button>
+      <button class="wm-theme" id="themeToggleBtn" type="button" onclick="toggleTheme()" aria-label="Тема">
+        <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
+      </button>
+      <button class="wm-burger" type="button" onclick="openMobileMenu()" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 </header>
-<aside class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-head"><div class="brand wm-brand"><span class="wm-logo-text">NexoraWeb<span class="wm-dot">.</span></span></div><button class="close" onclick="closeMobileMenu()">×</button></div>
-<a data-i18n="nav_home" href="#top" onclick="closeMobileMenu()">Главная</a>
-<a data-i18n="nav_about" href="#about" onclick="closeMobileMenu()">Обо мне</a>
-<a data-i18n="nav_services" href="#services" onclick="closeMobileMenu()">Услуги</a>
-<a data-i18n="nav_projects" href="#projects" onclick="closeMobileMenu()">Портфолио</a>
-<a data-i18n="nav_reviews" href="#reviews" onclick="closeMobileMenu()">Отзывы</a>
-<a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
-<a data-i18n="nav_pricing" href="#pricing" onclick="closeMobileMenu()">Цены</a>
-<a data-i18n="nav_faq" href="#faq" onclick="closeMobileMenu()">FAQ</a>
-<a data-i18n="nav_contact" href="#contact" onclick="closeMobileMenu()">Контакты</a>
-<a href="/portal/" onclick="closeMobileMenu();openPortalAuth();return false" id="portalNavBtnMobile">Личный кабинет</a>
-<button class="wm-contact-btn" data-i18n="wm_contact_btn" onclick="closeMobileMenu();openOrderModal()" style="width:100%;margin-top:20px">Связаться со мной</button>
-<button class="btn donate-nav-btn mobile-donate-btn" data-donate-i18n="support_btn" onclick="closeMobileMenu();openDonateModal()">💛 Поддержать</button>
+
+<aside class="wm-drawer" id="mobileMenu">
+  <div class="wm-drawer-head">
+    <a class="wm-logo" href="#top" onclick="closeMobileMenu()">WebMaster<span>.</span></a>
+    <button class="wm-drawer-close" type="button" onclick="closeMobileMenu()" aria-label="Закрыть">×</button>
+  </div>
+  <a href="#top" onclick="closeMobileMenu()">Главная</a>
+  <a href="#about" onclick="closeMobileMenu()">Обо мне</a>
+  <a href="#services" onclick="closeMobileMenu()">Услуги</a>
+  <a href="#projects" onclick="closeMobileMenu()">Портфолио</a>
+  <a href="#reviews" onclick="closeMobileMenu()">Отзывы</a>
+  <a href="#contact" onclick="closeMobileMenu()">Контакты</a>
+  <button class="wm-btn wm-btn-pill wm-btn-block" type="button" onclick="closeMobileMenu();openOrderModal()">Связаться со мной</button>
 </aside>
+
 <main id="top">
+  <!-- HERO -->
+  <section class="wm-hero">
+    <div class="wm-hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="wm-hero-grid">
+        <div class="wm-hero-copy">
+          <p class="wm-kicker animate-in">Веб-разработчик</p>
+          <h1 class="animate-in delay-1">Создаю современные <span>веб-сайты для вашего</span> бизнеса</h1>
+          <p class="wm-lead animate-in delay-2">Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.</p>
+          <div class="wm-hero-cta animate-in delay-3">
+            <button class="wm-btn wm-btn-pill" type="button" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
+            <a class="wm-btn wm-btn-ghost" href="#projects">Смотреть работы</a>
+          </div>
+          <ul class="wm-pills animate-in delay-4">
+            <li><i class="fa-solid fa-palette"></i> Современный дизайн</li>
+            <li><i class="fa-solid fa-mobile-screen"></i> Адаптивность</li>
+            <li><i class="fa-solid fa-bolt"></i> Высокая скорость</li>
+          </ul>
+        </div>
 
-<!-- HERO -->
-<section class="hero wm-hero" id="services">
-<div class="container">
-<div class="wm-hero-grid">
-<div class="wm-hero-copy">
-<span class="wm-label" data-i18n="wm_hero_label">ВЕБ-РАЗРАБОТЧИК</span>
-<h1 data-i18n="wm_hero_title">Создаю современные <span class="wm-grad">веб-сайты для вашего</span> бизнеса</h1>
-<p class="wm-hero-lead" data-i18n="wm_hero_lead">Разрабатываю быстрые, удобные и адаптивные сайты, которые помогают привлекать клиентов и развивать бизнес.</p>
-<div class="wm-hero-actions">
-<button class="wm-btn-primary" data-i18n="wm_cta_discuss" onclick="openOrderModal()">Обсудить проект <i class="fa-solid fa-arrow-right"></i></button>
-<a class="wm-btn-outline" data-i18n="wm_cta_works" href="#projects">Смотреть работы</a>
-</div>
-<div class="wm-features">
-<div class="wm-feature"><i class="fa-solid fa-palette"></i><span data-i18n="wm_feat1">Современный дизайн</span></div>
-<div class="wm-feature"><i class="fa-solid fa-mobile-screen"></i><span data-i18n="wm_feat2">Адаптивность</span></div>
-<div class="wm-feature"><i class="fa-solid fa-bolt"></i><span data-i18n="wm_feat3">Высокая скорость</span></div>
-</div>
-</div>
-<div class="wm-laptop-wrap" aria-hidden="true">
-<div class="wm-laptop-glow"></div>
-<div class="wm-laptop">
-<div class="wm-laptop-screen">
-<div class="wm-laptop-chrome"><span></span><span></span><span></span></div>
-<div class="wm-laptop-viewport"><img alt="Пример сайта NexoraWeb" loading="eager" src="/Public/Image/DiurdStav.png"/></div>
-</div>
-<div class="wm-laptop-base"></div>
-<div class="wm-laptop-shadow"></div>
-</div>
-</div>
-</div>
-<div class="wm-services-grid">
-<article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
-<h3 data-i18n="wm_svc1_t">Разработка сайтов</h3>
-<p data-i18n="wm_svc1_d">Создаю современные и удобные сайты под ключ</p>
-</article>
-<article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
-<h3 data-i18n="wm_svc2_t">Интернет-магазины</h3>
-<p data-i18n="wm_svc2_d">Разработка интернет-магазинов любой сложности</p>
-</article>
-<article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-layer-group"></i></div>
-<h3 data-i18n="wm_svc3_t">Лендинги</h3>
-<p data-i18n="wm_svc3_d">Эффективные лендинги для вашего бизнеса</p>
-</article>
-<article class="wm-service-card">
-<div class="wm-service-icon"><i class="fa-solid fa-gear"></i></div>
-<h3 data-i18n="wm_svc4_t">Поддержка</h3>
-<p data-i18n="wm_svc4_d">Техническая поддержка и обслуживание сайтов</p>
-</article>
-</div>
-</div>
-</section>
+        <div class="wm-hero-visual animate-in delay-2" aria-hidden="true">
+          <div class="wm-orb"></div>
+          <div class="wm-laptop">
+            <div class="wm-laptop-lid">
+              <div class="wm-laptop-bezel">
+                <div class="wm-laptop-cam"></div>
+                <div class="wm-laptop-screen">
+                  <img src="/Public/Image/DiurdStav.png" alt="" loading="eager" />
+                </div>
+              </div>
+            </div>
+            <div class="wm-laptop-base">
+              <div class="wm-laptop-notch"></div>
+            </div>
+            <div class="wm-laptop-floor"></div>
+          </div>
+        </div>
+      </div>
 
-<!-- PORTFOLIO -->
-<section class="section" id="projects">
-<div class="container">
-<div class="nx-portfolio-head">
-<span class="nx-badge" data-i18n="projects_badge">Портфолио</span>
-<h2 class="section-title nx-left-title" data-i18n="v14_portfolio_title">Сайты, которые приносят <span class="nx-grad">результаты</span></h2>
-<p class="lead nx-left-lead" data-i18n="v14_portfolio_lead">Каждый проект — уникальное решение под задачи бизнеса клиента.</p>
-</div>
-<div class="nx-portfolio-filters">
-<button class="active" type="button" data-i18n="v14_filter_all">Все проекты</button>
-<button type="button" data-i18n="v14_filter_corp">Корпоративные сайты</button>
-<button type="button" data-i18n="v14_filter_land">Лендинги</button>
-<button type="button" data-i18n="v14_filter_shop">Интернет-магазины</button>
-<button type="button" data-i18n="v14_filter_svc">Сервисы</button>
-</div>
-<div class="nx-portfolio-grid" id="projects-container">
-<article class="nx-portfolio-card">
-<div class="nx-portfolio-img"><img alt="Stroplook.sk" loading="lazy" src="/Public/Image/Stroplooksk.png"/></div>
-<div class="nx-portfolio-body">
-<span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
-<h3>Stroplook.sk</h3>
-<p data-i18n="p1_text">Сайт для строительной компании с фокусом на доверие и заявки.</p>
-<div class="nx-portfolio-foot">
-<div class="nx-portfolio-meta">
-<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>14 дней</b></div>
-<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>8</b></div>
-</div>
-<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://stroplook.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
-</div>
-</div>
-</article>
-<article class="nx-portfolio-card">
-<div class="nx-portfolio-img"><img alt="Ukstav.sk" loading="lazy" src="/Public/Image/Ukstav.png"/></div>
-<div class="nx-portfolio-body">
-<span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
-<h3>Ukstav.sk</h3>
-<p data-i18n="p2_text">Сайт для услуг в строительной сфере, удобный для телефона.</p>
-<div class="nx-portfolio-foot">
-<div class="nx-portfolio-meta">
-<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>12 дней</b></div>
-<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>6</b></div>
-</div>
-<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://ukstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
-</div>
-</div>
-</article>
-<article class="nx-portfolio-card">
-<div class="nx-portfolio-img"><img alt="DiurdStav.sk" loading="lazy" src="/Public/Image/DiurdStav.png"/></div>
-<div class="nx-portfolio-body">
-<span class="nx-portfolio-cat" data-i18n="v14_filter_corp">Корпоративный сайт</span>
-<h3>DiurdStav.sk</h3>
-<p data-i18n="p3_text">Сайт строительной компании DiurdStav в Братиславе — услуги, доверие и заявки.</p>
-<div class="nx-portfolio-foot">
-<div class="nx-portfolio-meta">
-<div><i class="fa-regular fa-calendar"></i><small data-i18n="v14_days_label">Срок разработки</small><b>18 дней</b></div>
-<div><i class="fa-regular fa-file-lines"></i><small data-i18n="v14_pages_label">Страниц</small><b>10</b></div>
-</div>
-<a class="btn ghost nx-portfolio-btn" data-i18n="v14_view_project" href="https://diurdstav.sk" rel="noopener" target="_blank">Смотреть проект <i class="fa-solid fa-arrow-right"></i></a>
-</div>
-</div>
-</article>
-</div>
-<div class="nx-portfolio-cta">
-<div class="nx-portfolio-cta-icon"><i class="fa-solid fa-bullseye"></i></div>
-<div class="nx-portfolio-cta-text">
-<h3 data-i18n="v14_cta_title">Хотите похожий результат?</h3>
-<p data-i18n="v14_cta_text">Оставьте заявку — обсудим ваш проект и подберём лучшее решение.</p>
-</div>
-<button class="btn primary" data-i18n="nav_consult" onclick="openOrderModal()">Получить консультацию <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-</div>
-</div>
-</section>
+      <!-- SERVICES under hero like mockup -->
+      <div class="wm-services" id="services">
+        <article class="wm-service">
+          <div class="wm-service-icon"><i class="fa-solid fa-desktop"></i></div>
+          <h3>Разработка сайтов</h3>
+          <p>Создаю современные и удобные сайты под ключ</p>
+        </article>
+        <article class="wm-service">
+          <div class="wm-service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+          <h3>Интернет-магазины</h3>
+          <p>Разработка интернет-магазинов любой сложности</p>
+        </article>
+        <article class="wm-service">
+          <div class="wm-service-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <h3>Лендинги</h3>
+          <p>Эффективные лендинги для вашего бизнеса</p>
+        </article>
+        <article class="wm-service">
+          <div class="wm-service-icon"><i class="fa-solid fa-gear"></i></div>
+          <h3>Поддержка</h3>
+          <p>Техническая поддержка и обслуживание сайтов</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<!-- PROCESS -->
-<section class="section small" id="process">
-<div class="container">
-<div class="nx-section-head">
-<span class="nx-badge" data-i18n="steps_badge">Процесс</span>
-<h2 class="section-title" data-i18n="v14_process_title">Как мы <span class="nx-grad">создаём</span> сайты</h2>
-<p class="lead" data-i18n="v14_process_lead">Прозрачный процесс — вы всегда знаете, на каком этапе проект.</p>
-</div>
-<div class="nx-process-wrap">
-<div class="nx-process-hline">
-<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-comments"></i></div><span class="nx-pnode-num">01</span><h4 data-i18n="v14_step1_t">Обсуждение и анализ</h4><p data-i18n="v14_step1_d">Уточняем цели, аудиторию и задачи бизнеса.</p></div>
-<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-pen-ruler"></i></div><span class="nx-pnode-num">02</span><h4 data-i18n="v14_step2_t">Структура и дизайн</h4><p data-i18n="v14_step2_d">Прорабатываем UX, визуал и мобильную версию.</p></div>
-<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-code"></i></div><span class="nx-pnode-num">03</span><h4 data-i18n="v14_step3_t">Разработка</h4><p data-i18n="v14_step3_d">Вёрстка, формы заявок и тестирование.</p></div>
-<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-rocket"></i></div><span class="nx-pnode-num">04</span><h4 data-i18n="v14_step4_t">Запуск</h4><p data-i18n="v14_step4_d">Подключаем домен и проверяем на всех устройствах.</p></div>
-<div class="nx-pnode"><div class="nx-pnode-icon"><i class="fa-solid fa-headset"></i></div><span class="nx-pnode-num">05</span><h4 data-i18n="v14_step5_t">Поддержка</h4><p data-i18n="v14_step5_d">Помогаем с правками после запуска.</p></div>
-</div>
-<div class="nx-process-visual nx-process-photo">
-<img alt="Рабочий процесс" loading="lazy" src="/Public/Image/Sajt posle.png"/>
-</div>
-</div>
-</div>
-</section>
+  <!-- ABOUT -->
+  <section class="wm-section" id="about">
+    <div class="container wm-about">
+      <div class="wm-about-text">
+        <p class="wm-kicker">Обо мне</p>
+        <h2>Делаю сайты, которые <span>работают на результат</span></h2>
+        <p class="wm-lead">Я веб-разработчик и помогаю бизнесу выглядеть современно в интернете: от идеи и дизайна до запуска и поддержки.</p>
+        <div class="wm-stats">
+          <div><strong>50+</strong><span>проектов</span></div>
+          <div><strong>98%</strong><span>довольных клиентов</span></div>
+          <div><strong>1–2</strong><span>недели в среднем</span></div>
+        </div>
+        <button class="wm-btn wm-btn-pill" type="button" onclick="openOrderModal()">Начать проект</button>
+      </div>
+      <div class="wm-about-media">
+        <div class="wm-about-frame">
+          <img src="/Public/Image/Ukstav.png" alt="Пример работы" loading="lazy" />
+        </div>
+        <div class="wm-about-badge"><i class="fa-solid fa-code"></i> Full-stack web</div>
+      </div>
+    </div>
+  </section>
 
-<!-- REVIEWS -->
-<section class="section" id="reviews">
-<div class="container">
-<div class="nx-reviews-header">
-<span class="nx-badge" data-i18n="reviews_badge">Отзывы о нас</span>
-<h2 class="section-title" data-i18n="v14_reviews_title">Что говорят <span class="nx-grad">наши клиенты</span></h2>
-<p class="muted"><span data-i18n="reviews_count_text">Показываются только после подтверждения</span> • <span id="review-count">0</span></p>
-</div>
-<div class="reviews-shell">
-<div class="nx-reviews-grid reviews-carousel" id="reviews-container">
-<div class="empty nx-review-card" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div>
-</div>
-</div>
-<div class="nx-reviews-actions">
-<button class="btn primary" data-i18n="review_cta" onclick="openReviewModal()"><i class="fa-solid fa-pen"></i> Оставить отзыв</button>
-<div class="review-controls" id="review-slider-controls">
-<button class="arrow" onclick="scrollReviews(-1)">←</button>
-<button class="arrow" onclick="scrollReviews(1)">→</button>
-</div>
-</div>
-</div>
-</section>
+  <!-- PORTFOLIO -->
+  <section class="wm-section wm-section-alt" id="projects">
+    <div class="container">
+      <div class="wm-section-head">
+        <p class="wm-kicker">Портфолио</p>
+        <h2>Работы, которые можно <span>открыть и проверить</span></h2>
+        <p class="wm-lead">Реальные сайты для бизнеса — с чистым дизайном, адаптивностью и фокусом на заявки.</p>
+      </div>
+      <div class="wm-portfolio">
+        <a class="wm-work" href="https://stroplook.sk" target="_blank" rel="noopener">
+          <div class="wm-work-img"><img src="/Public/Image/Stroplooksk.png" alt="Stroplook.sk" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Корпоративный сайт</span>
+            <h3>Stroplook.sk</h3>
+            <p>Сайт строительной компании с фокусом на доверие и заявки.</p>
+            <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+        <a class="wm-work" href="https://ukstav.sk" target="_blank" rel="noopener">
+          <div class="wm-work-img"><img src="/Public/Image/Ukstav.png" alt="Ukstav.sk" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Корпоративный сайт</span>
+            <h3>Ukstav.sk</h3>
+            <p>Услуги в строительной сфере — удобно открывать с телефона.</p>
+            <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+        <a class="wm-work" href="https://diurdstav.sk" target="_blank" rel="noopener">
+          <div class="wm-work-img"><img src="/Public/Image/DiurdStav.png" alt="DiurdStav.sk" loading="lazy" /></div>
+          <div class="wm-work-body">
+            <span>Корпоративный сайт</span>
+            <h3>DiurdStav.sk</h3>
+            <p>Сайт строительной компании в Братиславе — услуги и заявки.</p>
+            <em>Смотреть проект <i class="fa-solid fa-arrow-right"></i></em>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-<!-- ABOUT -->
-<section class="section small" id="about">
-<div class="container">
-<div class="nx-about-grid">
-<div>
-<span class="nx-badge" data-i18n="v14_about_badge">О нас</span>
-<h2 class="section-title" data-i18n="v14_about_title">NexoraWeb — ваш <span class="nx-grad">надёжный</span> партнёр в digital</h2>
-<p class="lead" data-i18n="v14_about_lead">Создаём сайты, которые работают на бизнес: привлекают клиентов, вызывают доверие и приносят заявки.</p>
-<div class="nx-about-stats">
-<div class="nx-about-stat"><i class="fa-solid fa-shield-halved"></i><b>50+</b><span data-i18n="v14_stat1">проектов выполнено</span></div>
-<div class="nx-about-stat"><i class="fa-solid fa-heart"></i><b>98%</b><span data-i18n="v14_stat2">клиентов довольны</span></div>
-<div class="nx-about-stat"><i class="fa-regular fa-clock"></i><b>1–2</b><span data-i18n="v14_stat3_sub">недели разработки</span></div>
-<div class="nx-about-stat"><i class="fa-solid fa-rocket"></i><b>24/7</b><span data-i18n="v14_about_support">поддержка и сопровождение</span></div>
-</div>
-</div>
-<div class="nx-about-mockups">
-<div class="nx-about-monitor"><div class="nx-monitor-chrome sm"><span></span><span></span><span></span></div><div class="nx-about-screen main"><img alt="Ukstav.sk" loading="lazy" src="/Public/Image/Ukstav.png"/></div></div>
-<div class="nx-about-laptop"><img alt="PCSTORE" loading="lazy" src="/Public/Image/зображення_2026-06-30_234802702.png"/></div>
-</div>
-</div>
-</div>
-</section>
+  <!-- PROCESS -->
+  <section class="wm-section" id="process">
+    <div class="container">
+      <div class="wm-section-head center">
+        <p class="wm-kicker">Как работаю</p>
+        <h2>Простой и понятный <span>процесс</span></h2>
+      </div>
+      <div class="wm-steps">
+        <div class="wm-step"><span>01</span><h3>Обсуждение</h3><p>Уточняем цели, аудиторию и задачи бизнеса.</p></div>
+        <div class="wm-step"><span>02</span><h3>Дизайн</h3><p>Делаю структуру, визуал и мобильную версию.</p></div>
+        <div class="wm-step"><span>03</span><h3>Разработка</h3><p>Вёрстка, формы, скорость и тестирование.</p></div>
+        <div class="wm-step"><span>04</span><h3>Запуск</h3><p>Подключаю домен и сопровождаю после релиза.</p></div>
+      </div>
+    </div>
+  </section>
 
-<!-- GUARANTEES -->
-<section class="section small nx-guarantees">
-<div class="container">
-<div class="nx-guarantees-grid">
-<div><i class="fa-solid fa-shield-halved"></i><b data-i18n="v14_g1_t">Гарантия качества</b><span data-i18n="v14_g1_d">30 дней бесплатных правок после запуска</span></div>
-<div><i class="fa-solid fa-truck-fast"></i><b data-i18n="v14_g2_t">Быстрый старт</b><span data-i18n="v14_g2_d">Запускаем проекты от 3 дней</span></div>
-<div><i class="fa-solid fa-lock"></i><b data-i18n="v14_g3_t">Безопасность</b><span data-i18n="v14_g3_d">Защищённые формы и надёжный код</span></div>
-<div><i class="fa-solid fa-headset"></i><b data-i18n="v14_g4_t">Поддержка 24/7</b><span data-i18n="v14_g4_d">Всегда на связи после запуска</span></div>
-</div>
-</div>
-</section>
+  <!-- REVIEWS -->
+  <section class="wm-section wm-section-alt" id="reviews">
+    <div class="container">
+      <div class="wm-section-head center">
+        <p class="wm-kicker">Отзывы</p>
+        <h2>Что говорят <span>клиенты</span></h2>
+        <p class="wm-lead">Показаны только подтверждённые отзывы • <span id="review-count">0</span></p>
+      </div>
+      <div class="reviews-shell">
+        <div class="wm-reviews reviews-carousel" id="reviews-container">
+          <div class="wm-empty" data-i18n="reviews_empty">Пока отзывы загружаются или ожидают подтверждения.</div>
+        </div>
+      </div>
+      <div class="wm-reviews-actions">
+        <button class="wm-btn wm-btn-pill" type="button" onclick="openReviewModal()"><i class="fa-solid fa-pen"></i> Оставить отзыв</button>
+        <div class="wm-arrows" id="review-slider-controls">
+          <button type="button" class="arrow" onclick="scrollReviews(-1)" aria-label="Назад">←</button>
+          <button type="button" class="arrow" onclick="scrollReviews(1)" aria-label="Вперёд">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- FAQ -->
-<section class="section small" id="faq">
-<div class="container">
-<div class="nx-section-head">
-<span class="nx-badge" data-i18n="v14_faq_badge">FAQ</span>
-<h2 class="section-title" data-i18n="v14_faq_title">Частые <span class="nx-grad">вопросы</span></h2>
-<p class="lead" data-i18n="v14_faq_lead">Ответы на популярные вопросы о разработке сайтов.</p>
-</div>
-<div class="nx-faq-list">
-<div class="nx-faq-item open">
-<button class="nx-faq-q" onclick="toggleFaq(this)" type="button"><span data-i18n="v14_faq1_q">Сколько стоит сайт?</span><i class="fa-solid fa-chevron-down"></i></button>
-<div class="nx-faq-a"><p data-i18n="v14_faq1_a">Лендинг — от 150€, сайт для бизнеса — от 300€, интернет-магазин — от 600€. Точная цена зависит от объёма и функций.</p></div>
-</div>
-<div class="nx-faq-item">
-<button class="nx-faq-q" onclick="toggleFaq(this)" type="button"><span data-i18n="v14_faq2_q">Как долго делается сайт?</span><i class="fa-solid fa-chevron-down"></i></button>
-<div class="nx-faq-a"><p data-i18n="v14_faq2_a">Лендинг — 2–5 дней, бизнес-сайт — 5–10 дней, магазин — 10–20 дней. Сроки зависят от сложности и скорости согласований.</p></div>
-</div>
-<div class="nx-faq-item">
-<button class="nx-faq-q" onclick="toggleFaq(this)" type="button"><span data-i18n="v14_faq3_q">Что нужно от меня для старта?</span><i class="fa-solid fa-chevron-down"></i></button>
-<div class="nx-faq-a"><p data-i18n="v14_faq3_a">Краткое описание бизнеса, примеры сайтов которые нравятся, логотип и тексты (или мы поможем с формулировками).</p></div>
-</div>
-<div class="nx-faq-item">
-<button class="nx-faq-q" onclick="toggleFaq(this)" type="button"><span data-i18n="v14_faq4_q">Будет ли сайт на телефоне?</span><i class="fa-solid fa-chevron-down"></i></button>
-<div class="nx-faq-a"><p data-i18n="v14_faq4_a">Да, все сайты адаптивные — корректно отображаются на телефонах, планшетах и десктопах.</p></div>
-</div>
-<div class="nx-faq-item">
-<button class="nx-faq-q" onclick="toggleFaq(this)" type="button"><span data-i18n="v14_faq5_q">Есть ли поддержка после запуска?</span><i class="fa-solid fa-chevron-down"></i></button>
-<div class="nx-faq-a"><p data-i18n="v14_faq5_a">Да, 30 дней бесплатных технических правок после запуска. Дальше — по договорённости.</p></div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- PRICING -->
-<section class="section" id="pricing">
-<div class="container">
-<div class="nx-section-head">
-<span class="nx-badge" data-i18n="pricing_badge">Цены</span>
-<h2 class="section-title" data-i18n="pricing_title">Понятные <span class="nx-grad">цены</span> и сроки</h2>
-<p class="lead" data-i18n="v14_pricing_lead">Выберите формат под вашу задачу — без скрытых платежей.</p>
-</div>
-<div class="nx-pricing-grid pricing" id="pricing-container">
-<div class="card price"><h3 data-i18n="price1_title">Landing Page</h3><p class="muted" data-i18n="price1_text">Для одной услуги или продукта.</p><div class="price-value">от 150€</div><span class="price-time" data-i18n="price1_time">2–5 дней</span><div class="list"><span data-i18n="price_l_mobile">мобильная версия</span><span data-i18n="price_l_form">форма заявки</span><span data-i18n="price_l_seo">базовое SEO</span></div><button class="btn ghost" data-i18n="v14_order_plan" onclick="openOrderModal()" style="width:100%;margin-top:18px">Заказать</button></div>
-<div class="card price popular"><span class="price-tag" data-i18n="popular">Популярно</span><h3 data-i18n="price2_title">Сайт для бизнеса</h3><p class="muted" data-i18n="price2_text">Для компании, услуг и портфолио.</p><div class="price-value">от 300€</div><span class="price-time" data-i18n="price2_time">5–10 дней</span><div class="list"><span data-i18n="price_l_pages">главные разделы</span><span data-i18n="price_l_reviews">отзывы и FAQ</span><span data-i18n="price_l_manager">заявки менеджеру</span></div><button class="btn primary" data-i18n="v14_order_plan" onclick="openOrderModal()" style="width:100%;margin-top:18px">Заказать</button></div>
-<div class="card price"><h3 data-i18n="price3_title">Интернет-магазин</h3><p class="muted" data-i18n="price3_text">Для товаров, каталога и заявок.</p><div class="price-value">от 600€</div><span class="price-time" data-i18n="price3_time">10–20 дней</span><div class="list"><span data-i18n="price_l_catalog">каталог</span><span data-i18n="price_l_products">карточки товара</span><span data-i18n="price_l_order">заказ или оплата</span></div><button class="btn ghost" data-i18n="v14_order_plan" onclick="openOrderModal()" style="width:100%;margin-top:18px">Заказать</button></div>
-</div>
-<div class="included"><div class="card"><h3 data-i18n="included_title">Что входит</h3><div class="chips"><span class="chip" data-i18n="inc_design">Дизайн</span><span class="chip" data-i18n="inc_mobile">Адаптив</span><span class="chip" data-i18n="inc_speed">Скорость</span><span class="chip" data-i18n="inc_forms">Формы</span><span class="chip" data-i18n="inc_seo">SEO</span><span class="chip" data-i18n="inc_support">Поддержка</span></div></div><div class="card"><h3 data-i18n="guarantee_title">Гарантия 30 дней</h3><p class="muted" data-i18n="guarantee_text">После запуска бесплатно исправляем технические ошибки и помогаем с базовыми настройками.</p></div></div>
-</div>
-</section>
-
-<!-- CONTACT -->
-<section class="section" id="contact">
-<div class="container contact-grid">
-<div class="card"><span class="nx-badge" data-i18n="contact_badge">Связь</span><h2 class="section-title" data-i18n="contact_title" style="margin:16px 0">Расскажите, какой сайт нужен</h2><p class="lead" data-i18n="contact_text">Заявка отправляется на почту. Мы свяжемся с вами и подскажем лучший формат.</p><p class="contact-email-note" data-i18n="contact_email_note">📧 Заявка сразу приходит на почту — ответим в течение рабочего дня</p><form class="form" id="order-form" onsubmit="submitOrder(event)"><input data-i18n-placeholder="form_name" id="order-name" placeholder="Имя" required=""/><input data-i18n-placeholder="form_contact" id="order-contact" placeholder="Email / WhatsApp / телефон" required=""/><select id="order-type"><option>Landing Page</option><option>Сайт для бизнеса</option><option>Интернет-магазин</option><option>Нужна консультация</option></select><textarea data-i18n-placeholder="form_message" id="order-message" placeholder="Коротко о проекте"></textarea><button class="btn primary" data-i18n="form_submit" type="submit">Отправить заявку</button></form></div>
-<div class="card"><h3 data-i18n="contacts_title">Контакты NexoraWeb</h3><div class="contact-list" style="margin-top:18px"><a class="contact-card contact-card-primary" href="mailto:nexoraads111@gmail.com"><i class="fas fa-envelope"></i><div><small>Email</small><b>nexoraads111@gmail.com</b></div></a><a class="contact-card" href="https://instagram.com/vladislav.ads" rel="noopener" target="_blank"><i class="fab fa-instagram"></i><div><small>Instagram</small><b>vladislav.ads</b></div></a><a class="contact-card" href="tel:+380995228560"><i class="fas fa-phone"></i><div><small>Ukraine</small><b>+380 99 522 8560</b></div></a><a class="contact-card" href="tel:+421950761194"><i class="fas fa-phone"></i><div><small>Slovakia</small><b>+421 950 761 194</b></div></a></div></div>
-</div>
-</section>
-
-<section class="section small map-section" id="location">
-<div class="container">
-<span class="nx-badge" data-i18n="map_badge">Локация</span>
-<h2 class="section-title" data-i18n="map_title" style="margin:16px 0 12px">Братислава и онлайн по всей Европе</h2>
-<p class="lead" data-i18n="map_text" style="margin-bottom:24px">Студия в Братиславе. Работаем с клиентами из Словакии, Украины и ЕС.</p>
-<div class="card map-card">
-<div class="map-wrap">
-<iframe allowfullscreen="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.078!2d17.1077!3d48.1486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c893c17c2f4c1%3A0x3b8b8b8b8b8b8b8b!2sBratislava%2C%20Slovakia!5e0!3m2!1sen!2s!4v1" referrerpolicy="no-referrer-when-downgrade" title="Bratislava map"></iframe>
-<div class="map-overlay">
-<div><b>NexoraWeb</b><span data-i18n="map_address">Bratislava, Slovakia</span></div>
-<a class="btn primary" data-i18n="map_cta" href="https://maps.google.com/?q=Bratislava,Slovakia" rel="noopener" target="_blank">Открыть в Google Maps</a>
-</div>
-</div>
-</div>
-</div>
-</section>
+  <!-- CONTACT -->
+  <section class="wm-section" id="contact">
+    <div class="container wm-contact">
+      <div class="wm-contact-card">
+        <p class="wm-kicker">Связь</p>
+        <h2>Расскажите о своём <span>проекте</span></h2>
+        <p class="wm-lead">Оставьте заявку — отвечу и предложу лучший формат сайта.</p>
+        <form class="wm-form" id="order-form" onsubmit="submitOrder(event)">
+          <input id="order-name" placeholder="Имя" required />
+          <input id="order-contact" placeholder="Email / WhatsApp / телефон" required />
+          <select id="order-type">
+            <option>Landing Page</option>
+            <option>Сайт для бизнеса</option>
+            <option>Интернет-магазин</option>
+            <option>Нужна консультация</option>
+          </select>
+          <textarea id="order-message" placeholder="Коротко о проекте"></textarea>
+          <button class="wm-btn wm-btn-pill wm-btn-block" type="submit">Отправить заявку</button>
+        </form>
+      </div>
+      <div class="wm-contact-side">
+        <h3>Контакты</h3>
+        <a class="wm-contact-link" href="mailto:nexoraads111@gmail.com"><i class="fa-solid fa-envelope"></i><div><small>Email</small><b>nexoraads111@gmail.com</b></div></a>
+        <a class="wm-contact-link" href="https://instagram.com/vladislav.ads" target="_blank" rel="noopener"><i class="fab fa-instagram"></i><div><small>Instagram</small><b>vladislav.ads</b></div></a>
+        <a class="wm-contact-link" href="tel:+380995228560"><i class="fa-solid fa-phone"></i><div><small>Ukraine</small><b>+380 99 522 8560</b></div></a>
+        <a class="wm-contact-link" href="tel:+421950761194"><i class="fa-solid fa-phone"></i><div><small>Slovakia</small><b>+421 950 761 194</b></div></a>
+        <button class="wm-btn wm-btn-ghost wm-btn-block" type="button" onclick="openOrderModal()">Быстрая консультация</button>
+      </div>
+    </div>
+  </section>
 </main>
-<footer class="footer"><div class="container footer-row"><div>© 2026 NexoraWeb • Premium Web Studio</div><div class="footer-links"><a href="#" onclick="openPortalAuth();return false">Личный кабинет</a><a href="mailto:nexoraads111@gmail.com">Email</a><a href="https://instagram.com/vladislav.ads" target="_blank">Instagram</a><a href="/cabinet/" title="Admin">⚙️</a><button data-donate-i18n="support_btn" onclick="openDonateModal()" style="background:none;border:0;color:inherit;cursor:pointer;font:inherit">💛 Поддержать</button><a href="#top">Top ↑</a></div></div></footer>
 
-<!-- MODALS (unchanged functionality) -->
-<div class="modal" id="donateModal"><div class="modal-box donate-box"><div class="donate-hero"><div class="modal-head" style="margin-bottom:0"><div><span class="donate-kicker" data-donate-i18n="donate_kicker">Поддержать проект</span><h3 data-donate-i18n="donate_title">Спасибо за поддержку NexoraWeb 💛</h3><p data-donate-i18n="donate_text">Если хочешь поддержать развитие сайта и новые проекты — выбери удобный способ ниже.</p></div><button class="close" onclick="closeDonateModal()">×</button></div></div><div class="donate-grid"><article class="donate-card"><div class="donate-logo mono">mono</div><h4>Monobank Україна</h4><p data-donate-i18n="mono_text">Пополнение через официальный QR/ссылку банка для Владислава П.</p><div class="donate-actions"><a class="donate-link donate-pulse" data-donate-i18n="mono_btn" href="https://bank.gov.ua/qr/QkNECjAwMgoxClVDVAoK0J_QvtGA0L7RhdC90LDQstC10YbRjCDQktC70LDQtNC40YHQu9Cw0LIg0JDQvdCw0YLQvtC70ZbQudC-0LLQuNGHClVBMjkzMjIwMDEwMDAwMDI2MjA3Mzc2NTM0MjEzCgo0MDcxODAzMjU3CgoK0J_QvtC_0L7QstC90LXQvdC90Y8g0YDQsNGF0YPQvdC60YMKCg==" rel="noopener" target="_blank">Відкрити Monobank →</a></div></article><article class="donate-card"><div class="donate-logo sk">SK</div><h4>Slovak Bank / SEPA</h4><p data-donate-i18n="sk_text">Для перевода на словацкий счёт скопируй IBAN.</p><div class="iban-box" id="ibanText">SK6002000000005025750257</div><div class="donate-actions"><button class="copy-iban" data-donate-i18n="copy_iban" onclick="copyIban()">Скопировать IBAN</button></div></article><div class="donate-note" data-donate-i18n="donate_note">Без лишних форм: Monobank открывается по кнопке, а IBAN можно скопировать одним кликом.</div></div></div></div>
-<div class="modal nx-sheet-modal" id="orderModal">
-<div class="modal-box nx-order-box">
-<div class="modal-head nx-order-head">
-<div>
-<span class="nx-form-kicker" data-i18n="order_kicker">Новая заявка</span>
-<h3 data-i18n="modal_order_title">Оставить заявку</h3>
-<p data-i18n="order_subtitle">Ответим по почте и подскажем лучший формат сайта.</p>
+<footer class="wm-footer">
+  <div class="container wm-footer-row">
+    <div>© 2026 WebMaster.</div>
+    <div class="wm-footer-links">
+      <a href="#projects">Портфолио</a>
+      <a href="#contact">Контакты</a>
+      <a href="mailto:nexoraads111@gmail.com">Email</a>
+      <a href="#top">↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ORDER MODAL -->
+<div class="modal" id="orderModal">
+  <div class="modal-box wm-modal">
+    <div class="modal-head">
+      <div>
+        <p class="wm-kicker">Новая заявка</p>
+        <h3>Обсудить проект</h3>
+      </div>
+      <button class="close" type="button" onclick="closeOrderModal()">×</button>
+    </div>
+    <form class="wm-form" onsubmit="submitModalOrder(event)">
+      <input id="modal-type" type="hidden" value="Landing Page" />
+      <div class="wm-choice-grid">
+        <button class="wm-choice active" type="button" onclick="chooseSiteType('Landing Page',this)"><b>Landing</b><span>одна услуга</span></button>
+        <button class="wm-choice" type="button" onclick="chooseSiteType('Сайт для бизнеса',this)"><b>Бизнес</b><span>компания</span></button>
+        <button class="wm-choice" type="button" onclick="chooseSiteType('Интернет-магазин',this)"><b>Магазин</b><span>каталог</span></button>
+        <button class="wm-choice" type="button" onclick="chooseSiteType('Консультация',this)"><b>Консультация</b><span>подобрать</span></button>
+      </div>
+      <input id="modal-name" placeholder="Имя" required />
+      <input id="modal-contact" placeholder="Email / WhatsApp / телефон" required />
+      <textarea id="modal-message" placeholder="Например: нужен сайт для строительной компании"></textarea>
+      <button class="wm-btn wm-btn-pill wm-btn-block" type="submit">Отправить заявку</button>
+    </form>
+  </div>
 </div>
-<button class="close" onclick="closeOrderModal()">×</button>
+
+<!-- REVIEW MODAL -->
+<div class="modal" id="reviewModal">
+  <div class="modal-box wm-modal">
+    <div class="modal-head">
+      <div>
+        <h3>Оставить отзыв</h3>
+        <p class="wm-lead" style="margin:0">Быстрая форма — 30 секунд</p>
+      </div>
+      <button class="close" type="button" onclick="closeReviewModal()">×</button>
+    </div>
+    <div class="review-quick-rating" id="ratingStars">
+      <span class="star active" onclick="setRating(1)">★</span>
+      <span class="star active" onclick="setRating(2)">★</span>
+      <span class="star active" onclick="setRating(3)">★</span>
+      <span class="star active" onclick="setRating(4)">★</span>
+      <span class="star active" onclick="setRating(5)">★</span>
+    </div>
+    <div class="review-type-scroll">
+      <button class="review-type-chip active" type="button" onclick="selectReviewType('Создание сайта',this)">Создание сайта</button>
+      <button class="review-type-chip" type="button" onclick="selectReviewType('Работа с менеджером',this)">Менеджер</button>
+      <button class="review-type-chip" type="button" onclick="selectReviewType('Поддержка',this)">Поддержка</button>
+      <button class="review-type-chip" type="button" onclick="selectReviewType('Общее впечатление',this)">Впечатление</button>
+    </div>
+    <form class="wm-form" id="review-form" onsubmit="return submitReview(event)">
+      <input id="review-type" type="hidden" value="Создание сайта" />
+      <input id="review-name" placeholder="Ваше имя" required />
+      <input id="review-title" placeholder="Короткий заголовок" />
+      <textarea id="review-text" placeholder="Ваш отзыв" required rows="3"></textarea>
+      <div class="wm-form-row">
+        <button class="wm-btn wm-btn-ghost" type="button" onclick="closeReviewModal()">Отмена</button>
+        <button class="wm-btn wm-btn-pill" type="submit">Отправить</button>
+      </div>
+    </form>
+  </div>
 </div>
-<form class="form nx-order-form" onsubmit="submitModalOrder(event)">
-<input id="modal-type" type="hidden" value="Landing Page"/>
-<div class="nx-choice-grid">
-<button class="nx-service-choice active" onclick="chooseSiteType('Landing Page',this)" type="button">
-<i class="fa-solid fa-rocket"></i><b data-i18n="choice_landing">Landing</b><span data-i18n="choice_landing_sub">для одной услуги</span>
-</button>
-<button class="nx-service-choice" onclick="chooseSiteType('Сайт для бизнеса',this)" type="button">
-<i class="fa-solid fa-building"></i><b data-i18n="choice_business">Бизнес сайт</b><span data-i18n="choice_business_sub">компания / услуги</span>
-</button>
-<button class="nx-service-choice" onclick="chooseSiteType('Интернет-магазин',this)" type="button">
-<i class="fa-solid fa-cart-shopping"></i><b data-i18n="choice_shop">Магазин</b><span data-i18n="choice_shop_sub">товары / каталог</span>
-</button>
-<button class="nx-service-choice" onclick="chooseSiteType('Консультация',this)" type="button">
-<i class="fa-solid fa-comments"></i><b data-i18n="choice_consult">Консультация</b><span data-i18n="choice_consult_sub">подобрать решение</span>
-</button>
-</div>
-<div class="nx-form-row">
-<label><span data-i18n="form_name_label">Имя</span><input data-i18n-placeholder="form_name" id="modal-name" placeholder="Имя" required=""/></label>
-<label><span data-i18n="form_contact_label">Контакт</span><input data-i18n-placeholder="form_contact" id="modal-contact" placeholder="Email / WhatsApp / телефон" required=""/></label>
-</div>
-<label><span data-i18n="form_message_label">Коротко о проекте</span><textarea data-i18n-placeholder="modal_message" id="modal-message" placeholder="Например: нужен сайт для строительной компании"></textarea></label>
-<button class="btn primary nx-submit" data-i18n="form_submit" type="submit">Отправить заявку</button>
-<p class="nx-form-note" data-i18n="order_note">Заявка придёт на почту менеджера.</p>
-</form>
-</div>
-</div>
-<div class="modal nx-review-sheet" id="reviewModal"><div class="modal-box nx-review-box"><div class="review-sheet-head"><div><h3 data-i18n="modal_review_title">Оставить отзыв</h3><p data-i18n="review_subtitle">Быстрая форма — 30 секунд</p></div><button class="close" onclick="closeReviewModal()">×</button></div><div class="review-progress"><span class="active"></span><span class="active"></span><span></span></div><p class="muted" data-i18n="review_quick_hint" style="padding:0 22px 8px;font-size:13px">Нажмите на звёзды и выберите тип</p><div class="review-quick-rating" id="ratingStars"><span class="star active" onclick="setRating(1)">★</span><span class="star active" onclick="setRating(2)">★</span><span class="star active" onclick="setRating(3)">★</span><span class="star active" onclick="setRating(4)">★</span><span class="star active" onclick="setRating(5)">★</span></div><div class="review-type-scroll"><button class="review-type-chip active" onclick="selectReviewType('Создание сайта',this)" type="button">🌐 <span data-i18n="rtype_site">Создание сайта</span></button><button class="review-type-chip" onclick="selectReviewType('Работа с менеджером',this)" type="button">🤝 <span data-i18n="rtype_manager">Менеджер</span></button><button class="review-type-chip" onclick="selectReviewType('Поддержка',this)" type="button">🛠️ <span data-i18n="rtype_support">Поддержка</span></button><button class="review-type-chip" onclick="selectReviewType('Общее впечатление',this)" type="button">💎 <span data-i18n="rtype_total">Впечатление</span></button></div><form class="nx-review-form" id="review-form" onsubmit="return submitReview(event)"><input id="review-type" type="hidden" value="Создание сайта"/><input data-i18n-placeholder="review_name" id="review-name" placeholder="Ваше имя" required=""/><input data-i18n-placeholder="review_title_ph" id="review-title" placeholder="Короткий заголовок"/><textarea data-i18n-placeholder="review_text_ph" id="review-text" placeholder="Ваш отзыв" required="" rows="3"></textarea><div class="review-submit-row"><button class="btn ghost" data-i18n="review_cancel" onclick="closeReviewModal();return false" type="button">Отмена</button><button class="btn primary" data-i18n="review_submit" type="submit">Отправить отзыв</button></div></form></div></div>
-<button class="chat-fab" onclick="toggleChat()" aria-label="AI Chat"><span class="fab-pulse"></span><i class="fas fa-sparkles"></i></button>
-<div class="ai-chat" id="chat"><div class="ai-chat-header"><div class="ai-avatar"><i class="fas fa-robot"></i></div><div><b data-i18n="chat_title">Nexora AI</b><small data-i18n="chat_sub">помогает выбрать сайт</small><div class="ai-status" data-i18n="chat_status">онлайн • отвечает сразу</div></div><button class="close" onclick="toggleChat()">×</button></div><div class="ai-chat-body" id="chatMessages"><div class="ai-msg bot" data-i18n="chat_hello">Привет! Я помогу выбрать сайт под ваш бизнес.</div><div class="ai-typing" id="chatTyping"><span></span><span></span><span></span></div></div><div class="ai-suggestions"><button data-i18n="chip_landing" onclick="quickChat('Нужен лендинг')">🚀 Лендинг</button><button data-i18n="chip_portfolio" onclick="quickChat('Сайт для строительной компании')">🏗 Стройка</button><button data-i18n="chip_price" onclick="quickChat('Сколько стоит сайт?')">💰 Цена</button><button data-i18n="chip_time" onclick="quickChat('Сколько дней делается сайт?')">⏱ Сроки</button><button data-i18n="chip_store" onclick="quickChat('Нужен интернет-магазин')">🛒 Магазин</button><button data-i18n="chip_contact" onclick="quickChat('Как с вами связаться?')">📧 Контакт</button></div><div class="ai-chat-input"><input data-i18n-placeholder="chat_placeholder" id="chatInput" onkeydown="if(event.key==='Enter')sendChatMessage()" placeholder="Напишите нишу бизнеса..."/><button onclick="sendChatMessage()" aria-label="Send"><i class="fas fa-paper-plane"></i></button></div></div>
-<div class="modal nx-auth-modal" id="portalAuthModal">
-<div class="modal-box nx-auth-box">
-<div class="modal-head nx-order-head">
-<div>
-<span class="nx-form-kicker">Личный кабинет</span>
-<h3>Вход и регистрация</h3>
-<p>Отслеживайте проекты, файлы и чат с менеджером</p>
-</div>
-<button class="close" onclick="closePortalAuth()">×</button>
-</div>
-<div class="nx-auth-tabs">
-<button class="nx-auth-tab active" data-tab="login" type="button" onclick="switchAuthTab('login')">Вход</button>
-<button class="nx-auth-tab" data-tab="register" type="button" onclick="switchAuthTab('register')">Регистрация</button>
-<button class="nx-auth-tab" data-tab="forgot" type="button" onclick="switchAuthTab('forgot')">Забыли пароль?</button>
-</div>
-<div class="nx-auth-pane" id="auth-login">
-<form class="form nx-order-form" onsubmit="submitPortalLogin(event)">
-<label><span>Email</span><input type="email" name="email" required autocomplete="email" placeholder="you@email.com"/></label>
-<label><span>Пароль</span><input type="password" name="password" required autocomplete="current-password" placeholder="••••••••"/></label>
-<button class="btn primary nx-submit" type="submit">Войти в кабинет</button>
-</form>
-</div>
-<div class="nx-auth-pane" id="auth-register" style="display:none">
-<form class="form nx-order-form" onsubmit="submitPortalRegister(event)">
-<label><span>Имя</span><input name="name" required autocomplete="name" placeholder="Ваше имя"/></label>
-<label><span>Email</span><input type="email" name="email" required autocomplete="email" placeholder="you@email.com"/></label>
-<label><span>Пароль</span><input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="Минимум 8 символов"/></label>
-<button class="btn primary nx-submit" type="submit">Создать аккаунт</button>
-<p class="nx-form-note">После регистрации подтвердите email по ссылке из письма</p>
-</form>
-</div>
-<div class="nx-auth-pane" id="auth-forgot" style="display:none">
-<form class="form nx-order-form" onsubmit="submitPortalForgot(event)">
-<label><span>Email</span><input type="email" name="email" required placeholder="you@email.com"/></label>
-<button class="btn primary nx-submit" type="submit">Отправить ссылку для сброса</button>
-</form>
-</div>
-</div>
-</div>
+
 <div class="toast" id="toast"></div>
