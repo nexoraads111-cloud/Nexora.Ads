@@ -63,7 +63,11 @@ function openMobileMenu(){document.getElementById('mobileMenu').classList.add('a
 function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('active');setTimeout(()=>el.classList.remove('active'),3000)}
 async function gasPost(action,payload){if(!GAS_URL)throw new Error('gas_not_configured');const body=JSON.stringify({action,secret:GAS_SECRET,...payload});let d=null;try{const r=await fetch(GAS_URL+'?payload='+encodeURIComponent(body)+'&_='+Date.now(),{redirect:'follow',cache:'no-store'});d=JSON.parse(await r.text())}catch(e){}if(!d||d.error||d.ok===false){try{const r2=await fetch(GAS_URL,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body});d=JSON.parse(await r2.text())}catch(e2){}}if(!d||d.error||(d.ok===false))throw new Error((d&&d.error)||'Ошибка отправки');return d}
 async function postToBackend(endpoint,payload){if(endpoint==='send-application')return gasPost('submitOrder',{name:payload.name,contact:payload.contact,plan:payload.plan||payload.company,message:payload.message});if(endpoint==='reviews')return gasPost('submitReview',payload);throw new Error('unknown_endpoint')}
-function openOrderModal(){document.getElementById('orderModal').classList.add('active')}function closeOrderModal(){document.getElementById('orderModal').classList.remove('active')}function chooseSiteType(t,el){document.getElementById('modal-type').value=t;document.querySelectorAll('#orderModal .wm-choice,#orderModal .nx-service-choice,#orderModal .choice').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function openOrderModal(){document.getElementById('orderModal').classList.add('active')}
+function closeOrderModal(){document.getElementById('orderModal').classList.remove('active')}
+function chooseSiteType(t,el){const modalType=document.getElementById('modal-type');if(modalType)modalType.value=t;document.querySelectorAll('#orderModal .wm-choice,#orderModal .nx-service-choice,#orderModal .choice').forEach(x=>x.classList.remove('active'));if(el&&el.classList&&(el.classList.contains('wm-choice')||el.classList.contains('nx-service-choice')||el.classList.contains('choice')))el.classList.add('active');else{const map={ 'Landing Page':'Landing','Сайт для бизнеса':'Бизнес','Интернет-магазин':'Магазин','Консультация':'Консультация'};const label=map[t]||String(t);const match=[...document.querySelectorAll('#orderModal .wm-choice')].find(b=>(b.querySelector('b')?.textContent||b.textContent||'').includes(label.slice(0,6)));if(match)match.classList.add('active')}}
+function openOrderWithType(t){chooseSiteType(t,null);openOrderModal()}
+window.openOrderWithType=openOrderWithType;
 function toggleFaq(btn){const item=btn.closest('.nx-faq-item');const was=item.classList.contains('open');document.querySelectorAll('.nx-faq-item').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open')}
 window.toggleFaq=toggleFaq;
 function toggleTheme(){const isLight=document.body.classList.toggle('nx-light');localStorage.setItem('nexora_theme',isLight?'light':'dark');updateThemeIcon()}
@@ -92,7 +96,29 @@ function applyDonateLang(l){const d=donateTr[l]||donateTr.ru;document.querySelec
 const _oldSetLang=setLang; setLang=function(l){_oldSetLang(l);applyDonateLang(l)};
 
 function initCounters(){const els=document.querySelectorAll('[data-count]');if(!els.length)return;const play=el=>{const target=Number(el.dataset.count)||0;const suffix=el.dataset.suffix||'';const start=performance.now();const dur=1200;const tick=now=>{const p=Math.min(1,(now-start)/dur);el.textContent=Math.floor(target*(0.5-Math.cos(Math.PI*p)/2))+suffix;if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};if(!('IntersectionObserver' in window)){els.forEach(play);return}const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){play(e.target);io.unobserve(e.target)}})},{threshold:0.4});els.forEach(el=>io.observe(el))}
-function initPortfolioFilter(){const wrap=document.getElementById('portfolioFilter');if(!wrap)return;wrap.addEventListener('click',e=>{const btn=e.target.closest('button[data-filter]');if(!btn)return;wrap.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.wm-work').forEach(card=>{const ok=f==='all'||card.dataset.cat===f;card.classList.toggle('is-hidden',!ok)})})}
+function initPortfolioFilter(){
+  const wrap=document.getElementById('portfolioFilter');
+  const empty=document.getElementById('portfolioEmpty');
+  if(!wrap)return;
+  const apply=f=>{
+    let shown=0;
+    document.querySelectorAll('#portfolioGrid .wm-work, .wm-portfolio .wm-work').forEach(card=>{
+      const ok=f==='all'||card.getAttribute('data-cat')===f;
+      card.style.display=ok?'':'none';
+      card.classList.toggle('is-hidden',!ok);
+      if(ok)shown++;
+    });
+    if(empty)empty.hidden=shown>0;
+  };
+  wrap.addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-filter]');
+    if(!btn)return;
+    e.preventDefault();
+    wrap.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    apply(btn.getAttribute('data-filter')||'all');
+  });
+}
 function initFakeActivity(){const box=document.getElementById('wmActivity');if(!box)return;const items=[{n:'Alex',t:'только что оставил заявку'},{n:'Martin',t:'смотрит портфолио'},{n:'Oksana',t:'выбрала пакет «Бизнес»'},{n:'Daniel',t:'написал в Instagram'},{n:'Iryna',t:'заказала лендинг'}];let i=0;const show=()=>{const it=items[i%items.length];i++;const av=box.querySelector('.wm-activity-avatar');const name=document.getElementById('wmActivityName');const text=document.getElementById('wmActivityText');if(av)av.textContent=it.n[0];if(name)name.textContent=it.n;if(text)text.textContent=it.t;box.classList.add('show');setTimeout(()=>box.classList.remove('show'),4200);setTimeout(show,9000+Math.random()*5000)};setTimeout(show,3500)}
 function bootMain(){initTheme();setLang(localStorage.getItem('nexora_lang')||'ru');const reviewForm=document.getElementById('review-form');if(reviewForm){reviewForm.addEventListener('submit',submitReview)}initCounters();initPortfolioFilter();initFakeActivity();loadReviews()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootMain);else bootMain();
