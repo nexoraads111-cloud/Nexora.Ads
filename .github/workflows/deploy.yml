@@ -16,6 +16,9 @@ on:
       - 'cabinet/**'
       - 'Public/**'
       - '404/**'
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'google*.html'
 
 permissions:
   contents: write
@@ -41,13 +44,13 @@ jobs:
           npm run build
       - name: Sync build to repository root
         run: |
-          rm -rf index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public
+          rm -rf index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public robots.txt sitemap.xml google*.html
           cp -r web/out/. .
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public
+          git add index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public robots.txt sitemap.xml google*.html
           git diff --staged --quiet && echo "No changes to deploy" && exit 0
           git commit -m "Deploy site to GitHub Pages root"
           git push

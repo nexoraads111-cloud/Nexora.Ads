@@ -86,17 +86,13 @@ function ShowcaseMock({ item }) {
         <span />
         <i>{item.niche.toLowerCase().replace(/\s/g, '')}.demo</i>
       </div>
-      <div className="nx-mock-body">
-        <div className="nx-mock-nav" />
-        <div className="nx-mock-hero">
+      <div className="nx-mock-shot">
+        {item.img ? (
+          <img src={item.img} alt={`${item.niche} website demo`} loading="lazy" />
+        ) : null}
+        <div className="nx-mock-overlay">
           <b>{item.niche}</b>
           <em>{item.style}</em>
-          <div className="nx-mock-cta" />
-        </div>
-        <div className="nx-mock-grid">
-          <i />
-          <i />
-          <i />
         </div>
       </div>
     </div>
@@ -275,10 +271,20 @@ export default function PremiumSite() {
       </div>
 
       <div className="nx-ambient" aria-hidden>
+        <div className="nx-aurora" />
+        <div className="nx-aurora nx-aurora-2" />
         <div className="orb orb-a" />
         <div className="orb orb-b" />
         <div className="orb orb-c" />
+        <div className="nx-beam nx-beam-a" />
+        <div className="nx-beam nx-beam-b" />
+        <div className="nx-particles">
+          {Array.from({ length: 24 }).map((_, i) => (
+            <i key={i} style={{ '--i': i }} />
+          ))}
+        </div>
         <div className="grid" />
+        <div className="nx-noise" />
       </div>
 
       <div className={`nx-overlay ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(false)} />
