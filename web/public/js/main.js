@@ -70,9 +70,9 @@ function openOrderWithType(t){chooseSiteType(t,null);openOrderModal()}
 window.openOrderWithType=openOrderWithType;
 function toggleFaq(btn){const item=btn.closest('.nx-faq-item');const was=item.classList.contains('open');document.querySelectorAll('.nx-faq-item').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open')}
 window.toggleFaq=toggleFaq;
-function toggleTheme(){const isLight=document.body.classList.toggle('nx-light');localStorage.setItem('nexora_theme',isLight?'light':'dark');updateThemeIcon()}
-function updateThemeIcon(){const icon=document.getElementById('themeToggleIcon');if(!icon)return;const isLight=document.body.classList.contains('nx-light');icon.className=isLight?'fa-solid fa-sun':'fa-solid fa-moon'}
-function initTheme(){const saved=localStorage.getItem('nexora_theme');if(saved==='light')document.body.classList.add('nx-light');updateThemeIcon()}
+function toggleTheme(){if(document.body.classList.contains('nx-mega'))return;const isLight=document.body.classList.toggle('nx-light');localStorage.setItem('nexora_theme',isLight?'light':'dark');updateThemeIcon()}
+function updateThemeIcon(){const icon=document.getElementById('themeToggleIcon');if(!icon)return;const isLight=document.body.classList.contains('nx-light');const target=icon.tagName==='I'?icon:icon.querySelector('i');if(target)target.className=isLight?'fa-solid fa-sun':'fa-solid fa-moon'}
+function initTheme(){if(document.body.classList.contains('nx-mega'))return;const saved=localStorage.getItem('nexora_theme');if(saved==='light')document.body.classList.add('nx-light');updateThemeIcon()}
 window.toggleTheme=toggleTheme;
 async function sendApplication(data,btn){const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent='...'}try{await postToBackend('send-application',{name:data.name,contact:data.contact,plan:data.company||data.plan,message:data.message});showToast('✅ Заявку надіслано! Відповімо найближчим часом.')}catch(e){console.error(e);showToast('⚠️ Не вдалося надіслати. Напишіть на nexora.ads111@gmail.com')}finally{if(btn){btn.disabled=false;btn.textContent=old}}}
 window.sendApplication=sendApplication;
