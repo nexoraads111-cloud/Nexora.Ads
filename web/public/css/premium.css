@@ -54,9 +54,9 @@ body.nx-premium {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  font-size: 16.5px;
-  line-height: 1.65;
-  letter-spacing: 0.01em;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -908,6 +908,11 @@ body.nx-premium .toast.active { display: block; }
   .nx-hero h1 { max-width: 14ch; font-size: 30px; }
   .nx-lead { font-size: 15px; max-width: 36ch; }
   .nx-title { max-width: 14ch; }
+  .wm-choice-grid { grid-template-columns: 1fr; }
+  .nx-chat { right: 12px; bottom: 12px; }
+  .nx-nav { min-height: 64px; gap: 10px; }
+  .nx-showcase-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .nx-showcase-filters button { flex: 0 0 auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .nx-laptop, .nx-ambient .orb, .nx-tech-track, .nx-particles i,
