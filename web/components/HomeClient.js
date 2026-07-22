@@ -7,9 +7,9 @@ export default function HomeClient() {
   return (
     <>
       <PremiumSite />
-      <Script src="/js/nexora-config.js?v=40" strategy="beforeInteractive" />
-      <Script src="/js/portal-auth.js?v=40" strategy="afterInteractive" />
-      <Script src="/js/nexora-boot.js?v=40" strategy="afterInteractive" />
+      <Script src="/js/nexora-config.js?v=41" strategy="beforeInteractive" />
+      <Script src="/js/portal-auth.js?v=41" strategy="afterInteractive" />
+      <Script src="/js/nexora-boot.js?v=41" strategy="afterInteractive" />
     </>
   );
 }

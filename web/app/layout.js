@@ -1,14 +1,13 @@
 export const metadata = {
-  title: 'Nexora Studio — сучасні сайти для бізнесу',
+  title: 'Nexora Studio — premium websites for business',
   description:
-    'Nexora Studio: стильні, швидкі та адаптивні сайти під ключ. Лендинги, корпоративні сайти та інтернет-магазини.',
+    'Nexora Studio: сучасні сайти під ключ. UA / SK / EN. Лендинги, бізнес-сайти, інтернет-магазини.',
   keywords:
-    'створення сайтів, веброзробник, landing page, сайт для бізнесу, інтернет магазин, Nexora Studio',
+    'створення сайтів, веброзробник, landing page, webstránky, website development, Nexora Studio',
   robots: 'index, follow',
-  themeColor: '#05060a',
   openGraph: {
-    title: 'Nexora Studio — сучасні сайти для бізнесу',
-    description: 'Створюю сучасні сайти, які допомагають залучати нових клієнтів.',
+    title: 'Nexora Studio — premium websites for business',
+    description: 'Modern websites that help attract new clients. UA · SK · EN.',
     url: 'https://nexoraads.online/',
     type: 'website',
     images: ['https://i.imgur.com/AUiHBKF.png'],
