@@ -413,13 +413,15 @@ export default function PremiumSite() {
               </Reveal>
               <Reveal delay={0.06}>
                 <h1>
-                  {t.heroTitle.split(',').map((part, i, arr) =>
-                    i === arr.length - 1 ? (
-                      <em key={i}>{part.trim()}</em>
-                    ) : (
-                      <span key={i}>{part}, </span>
-                    )
-                  )}
+                  {(() => {
+                    const parts = t.heroTitle.split(',');
+                    if (parts.length < 2) return t.heroTitle;
+                    return (
+                      <>
+                        {parts.slice(0, -1).join(',')}, <em>{parts.at(-1).trim()}</em>
+                      </>
+                    );
+                  })()}
                 </h1>
               </Reveal>
               <Reveal delay={0.14}>
