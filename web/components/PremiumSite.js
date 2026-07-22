@@ -118,7 +118,7 @@ export default function PremiumSite() {
   const [theme, setTheme] = useState('dark');
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaderHide, setLoaderHide] = useState(false);
-  const [loadPct, setLoadPct] = useState(0);
+  const [loadPct, setLoadPct] = useState(12);
   const [openFaq, setOpenFaq] = useState(0);
   const [supportOpen, setSupportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -174,17 +174,18 @@ export default function PremiumSite() {
     let raf;
     let done = false;
     const start = performance.now();
+    const dur = 900;
     const tick = (now) => {
-      const p = Math.min(100, Math.floor(((now - start) / 1400) * 100));
+      const p = Math.min(100, Math.floor(12 + ((now - start) / dur) * 88));
       setLoadPct(p);
       if (p < 100) raf = requestAnimationFrame(tick);
       else if (!done) {
         done = true;
-        setTimeout(() => setLoaderHide(true), 200);
+        setTimeout(() => setLoaderHide(true), 160);
       }
     };
     raf = requestAnimationFrame(tick);
-    const force = setTimeout(() => setLoaderHide(true), 2800);
+    const force = setTimeout(() => setLoaderHide(true), 1600);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(force);
@@ -279,17 +280,13 @@ export default function PremiumSite() {
     <div ref={rootRef} className="nx-root">
       <div className={`nx-loader ${loaderHide ? 'hide' : ''}`} aria-hidden={loaderHide}>
         <div className="nx-loader-inner">
-          <div className="nx-loader-ring">
-            <svg viewBox="0 0 120 120" aria-hidden>
-              <circle cx="60" cy="60" r="52" />
-              <circle cx="60" cy="60" r="52" style={{ strokeDashoffset: 327 - (327 * loadPct) / 100 }} />
-            </svg>
-            <strong>{loadPct}%</strong>
-          </div>
+          <div className="nx-loader-mark">N</div>
           <div className="nx-loader-brand">
             Nexora <span>Studio</span>
           </div>
-          <p>{t.loader}</p>
+          <div className="nx-loader-track" aria-hidden>
+            <i style={{ width: `${loadPct}%` }} />
+          </div>
         </div>
       </div>
 
