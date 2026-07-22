@@ -403,17 +403,7 @@ export default function PremiumSite() {
                 <p className="nx-kicker">{t.kicker}</p>
               </Reveal>
               <Reveal delay={0.05}>
-                <h1>
-                  {(() => {
-                    const parts = t.heroTitle.split(',');
-                    if (parts.length < 2) return t.heroTitle;
-                    return (
-                      <>
-                        {parts.slice(0, -1).join(',')}, <em>{parts.at(-1).trim()}</em>
-                      </>
-                    );
-                  })()}
-                </h1>
+                <h1>{t.heroTitle}</h1>
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="nx-lead">{t.heroLead}</p>

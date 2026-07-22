@@ -135,7 +135,7 @@ export default function RootLayout({ children }) {
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <link
