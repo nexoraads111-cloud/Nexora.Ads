@@ -77,25 +77,39 @@ function AnimatedNumber({ value, suffix = '' }) {
   );
 }
 
-function ShowcaseMock({ item }) {
+function ShowcaseCard({ item, t, featured = false, onOrder }) {
   return (
-    <div className={`nx-mock tone-${item.tone}`}>
-      <div className="nx-mock-bar">
-        <span />
-        <span />
-        <span />
-        <i>{item.niche.toLowerCase().replace(/\s/g, '')}.demo</i>
-      </div>
-      <div className="nx-mock-shot">
-        {item.img ? (
-          <img src={item.img} alt={`${item.niche} website demo`} loading="lazy" />
-        ) : null}
-        <div className="nx-mock-overlay">
-          <b>{item.niche}</b>
-          <em>{item.style}</em>
+    <article className={`nx-glass nx-showcase-card ${featured ? 'is-featured' : ''} tone-${item.tone}`}>
+      <div className="nx-mock">
+        <div className="nx-mock-bar">
+          <span />
+          <span />
+          <span />
+          <i>{item.id || 'demo'}.nexora</i>
+          <em>{t.showcaseDemo}</em>
+        </div>
+        <div className="nx-mock-shot">
+          <img src={item.img} alt={`${item.niche} — ${t.showcaseDemo}`} loading="lazy" />
+          <div className="nx-mock-overlay">
+            <div className="nx-mock-tags">
+              {(item.tags || []).map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="nx-showcase-meta">
+        <div className="nx-showcase-top">
+          <p className="nx-showcase-style">{item.style}</p>
+          <h3>{item.niche}</h3>
+        </div>
+        <p className="nx-showcase-desc">{item.desc}</p>
+        <button className="nx-btn nx-btn-primary" type="button" onClick={onOrder}>
+          {t.showcaseCta} <i className="fa-solid fa-arrow-right" />
+        </button>
+      </div>
+    </article>
   );
 }
 
@@ -112,10 +126,18 @@ export default function PremiumSite() {
   const [chatInput, setChatInput] = useState('');
   const [chatTyping, setChatTyping] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [showcaseFilter, setShowcaseFilter] = useState('all');
   const rootRef = useRef(null);
   const chatEndRef = useRef(null);
 
   const t = useMemo(() => dict[lang] || dict.uk, [lang]);
+  const showcaseItems = useMemo(() => {
+    const list = t.showcase || [];
+    if (showcaseFilter === 'all') return list;
+    return list.filter((x) => x.id === showcaseFilter);
+  }, [t.showcase, showcaseFilter]);
+  const featured = showcaseItems.find((x) => x.featured) || showcaseItems[0];
+  const rest = showcaseItems.filter((x) => x !== featured);
 
   useEffect(() => {
     try {
@@ -133,6 +155,7 @@ export default function PremiumSite() {
     } catch (_) {}
     document.documentElement.lang = lang === 'uk' ? 'uk' : lang === 'sk' ? 'sk' : 'en';
     setMessages([{ role: 'bot', text: (dict[lang] || dict.uk).chatHello }]);
+    setShowcaseFilter('all');
   }, [lang]);
 
   useEffect(() => {
@@ -522,7 +545,7 @@ export default function PremiumSite() {
           </div>
         </section>
 
-        <section className="nx-section" id="showcase">
+        <section className="nx-section nx-showcase-section" id="showcase">
           <div className="nx-container">
             <Reveal>
               <div className="nx-head center">
@@ -531,18 +554,38 @@ export default function PremiumSite() {
                 <p className="nx-lead">{t.showcaseLead}</p>
               </div>
             </Reveal>
-            <div className="nx-showcase">
-              {t.showcase.map((item, i) => (
-                <Reveal key={item.niche} delay={Math.min(i * 0.04, 0.2)}>
-                  <article className="nx-glass nx-showcase-card">
-                    <ShowcaseMock item={item} />
-                    <div className="nx-showcase-meta">
-                      <h3>{item.niche}</h3>
-                      <p>{item.style}</p>
-                    </div>
-                  </article>
-                </Reveal>
+            <div className="nx-showcase-filters" role="tablist" aria-label="showcase">
+              <button
+                type="button"
+                className={showcaseFilter === 'all' ? 'active' : ''}
+                onClick={() => setShowcaseFilter('all')}
+              >
+                {t.showcaseAll}
+              </button>
+              {(t.showcase || []).map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={showcaseFilter === item.id ? 'active' : ''}
+                  onClick={() => setShowcaseFilter(item.id)}
+                >
+                  {item.niche}
+                </button>
               ))}
+            </div>
+            <div className={`nx-showcase-bento ${showcaseFilter !== 'all' ? 'is-single' : ''}`}>
+              {featured && (
+                <Reveal className="nx-showcase-featured-wrap">
+                  <ShowcaseCard item={featured} t={t} featured onOrder={openOrder} />
+                </Reveal>
+              )}
+              <div className="nx-showcase-grid">
+                {rest.map((item, i) => (
+                  <Reveal key={item.id} delay={Math.min(i * 0.05, 0.2)}>
+                    <ShowcaseCard item={item} t={t} onOrder={openOrder} />
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </div>
         </section>
