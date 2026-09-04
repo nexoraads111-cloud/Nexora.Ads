@@ -1,10 +1,31 @@
-name: Legacy Next.js export (manual)
+name: Deploy Next.js to GitHub Pages
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'index.html'
+      - 'index.txt'
+      - '404.html'
+      - 'CNAME'
+      - '.nojekyll'
+      - 'favicon.ico'
+      - '_next/**'
+      - 'css/**'
+      - 'js/**'
+      - 'cabinet/**'
+      - 'Public/**'
+      - '404/**'
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'google*.html'
 
 permissions:
   contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -14,6 +35,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install and build
         working-directory: web
-        run: npm ci && npm run build
+        run: |
+          npm ci
+          npm run build
+      - name: Sync build to repository root
+        run: |
+          rm -rf index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public robots.txt sitemap.xml google*.html
+          cp -r web/out/. .
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html index.txt 404.html 404 CNAME .nojekyll favicon.ico _next css js cabinet portal Public robots.txt sitemap.xml google*.html
+          git diff --staged --quiet && echo "No changes to deploy" && exit 0
+          git commit -m "Deploy site to GitHub Pages root"
+          git push
