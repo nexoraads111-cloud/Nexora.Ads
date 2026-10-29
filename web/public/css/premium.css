@@ -720,6 +720,103 @@ body.nx-premium button, body.nx-premium input, body.nx-premium textarea {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* Mobile readability — ordinary UI font, higher contrast */
+@media (max-width: 899px) {
+  :root,
+  html[data-theme="dark"],
+  body.nx-premium,
+  body.nx-premium.nx-cosmic {
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --display: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --muted: #c8d0e8;
+  }
+  body.nx-premium,
+  body.nx-premium.nx-cosmic {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 17px;
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+  body.nx-premium button,
+  body.nx-premium input,
+  body.nx-premium textarea {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: 0;
+  }
+  .nx-hero h1,
+  .nx-head h2,
+  .nx-about h2,
+  .nx-cta-banner h2,
+  .nx-hero-order h3,
+  .nx-project-body h3,
+  .nx-service h3,
+  .nx-contact-card h3,
+  .nx-contact-form h3,
+  .nx-support-modal h3,
+  .modal-head h3,
+  .nx-logo,
+  .nx-stat strong {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: -0.01em;
+    font-weight: 800;
+  }
+  .nx-hero h1 {
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.18;
+    max-width: none;
+  }
+  .nx-lead,
+  .nx-project-body p,
+  .nx-service p,
+  .nx-review-card p,
+  .nx-plan-text b,
+  .nx-plan-text em,
+  .nx-trust-item,
+  .nx-contact-link,
+  .nx-chat-msg,
+  .nx-form input,
+  .nx-form textarea,
+  .nx-hero-fields input,
+  .nx-hero-fields textarea,
+  .wm-form input,
+  .wm-form textarea,
+  .nx-footer,
+  .nx-kicker,
+  .nx-stat span,
+  .nx-btn {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: 0;
+  }
+  .nx-lead {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #d5dced;
+    max-width: none;
+  }
+  .nx-project-body p,
+  .nx-service p,
+  .nx-review-card p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: #d0d7ec;
+  }
+  .nx-plan-text b { font-size: 15px; font-weight: 700; color: #fff; }
+  .nx-plan-text em { font-size: 14px; color: #7dd3fc; }
+  .nx-trust-item { font-size: 13px; color: #d0d7ec; }
+  .nx-kicker {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #d8b4fe;
+  }
+  .nx-btn { font-size: 15px; font-weight: 700; min-height: 48px; }
+  .nx-nav-desktop a,
+  .nx-drawer a { font-size: 16px; color: #e8ecf8; }
+  .nx-lang button { font-size: 12px; }
+  .nx-contact-link { font-size: 15px; color: #e2e8f8; }
+  .nx-stat span { font-size: 12px; color: #c8d0e8; }
+  .nx-footer-copy { font-size: 13px; color: #b8c0d8; }
+}
+
 /* Desktop */
 @media (min-width: 900px) {
   .nx-nav-desktop { display: flex; }
