@@ -116,6 +116,7 @@ export default function PremiumSite() {
   const [submitting, setSubmitting] = useState(false);
   const [formType, setFormType] = useState('Landing Page');
   const [progress, setProgress] = useState(0);
+  const [liveReviewCount, setLiveReviewCount] = useState(0);
   const chatEndRef = useRef(null);
   const starsRef = useRef(null);
   const formRef = useRef(null);
@@ -195,24 +196,30 @@ export default function PremiumSite() {
   }, [messages, chatTyping, chatOpen]);
 
   useEffect(() => {
-    // Keep real demo testimonials visible if GAS returns an empty list.
-    // Do not alter public/js handlers — only wrap the renderer.
-    const wrap = () => {
-      const prev = window.renderReviews;
-      if (typeof prev !== 'function' || prev.__nxKeepDemo) return false;
-      const wrapped = function renderReviewsSafe(reviews) {
-        if (!Array.isArray(reviews) || !reviews.length) return;
-        return prev(reviews);
+    // Visual-only: keep GAS loadReviews wiring, but never blank the UI when empty.
+    // Live reviews render into #reviews-container; static real reviews stay as fallback.
+    const install = () => {
+      if (window.renderReviews?.__nxSplit) return true;
+      const prev = typeof window.renderReviews === 'function' ? window.renderReviews : null;
+      const wrapped = function renderReviewsSplit(reviews) {
+        const list = Array.isArray(reviews) ? reviews : [];
+        setLiveReviewCount(list.length);
+        if (!list.length) {
+          const box = document.getElementById('reviews-container');
+          if (box) box.innerHTML = '';
+          return;
+        }
+        if (prev) return prev(list);
       };
-      wrapped.__nxKeepDemo = true;
+      wrapped.__nxSplit = true;
       window.renderReviews = wrapped;
       return true;
     };
-    if (wrap()) return undefined;
+    if (install()) return undefined;
     const id = setInterval(() => {
-      if (wrap()) clearInterval(id);
-    }, 200);
-    const stop = setTimeout(() => clearInterval(id), 8000);
+      if (install()) clearInterval(id);
+    }, 150);
+    const stop = setTimeout(() => clearInterval(id), 10000);
     return () => {
       clearInterval(id);
       clearTimeout(stop);
@@ -635,20 +642,23 @@ export default function PremiumSite() {
                 <h2>{t.reviewsTitle}</h2>
               </div>
             </Reveal>
-            <div className="nx-reviews" id="reviews-container">
-              {t.demoReviews.map((r) => (
-                <article key={r.title} className="nx-glass nx-review review wm-demo-review">
-                  <p>“{r.text}”</p>
-                  <div className="wm-review-author">
-                    <div className="avatar">{r.name[0]}</div>
-                    <div>
-                      <b>{r.name}</b>
-                      <span>{r.title}</span>
+            {liveReviewCount === 0 && (
+              <div className="nx-reviews nx-reviews-fallback">
+                {t.demoReviews.map((r) => (
+                  <article key={r.title} className="nx-glass nx-review review wm-demo-review">
+                    <p>“{r.text}”</p>
+                    <div className="wm-review-author">
+                      <div className="avatar">{r.name[0]}</div>
+                      <div>
+                        <b>{r.name}</b>
+                        <span>{r.title}</span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+                  </article>
+                ))}
+              </div>
+            )}
+            <div className="nx-reviews" id="reviews-container" />
             <div className="nx-center-actions">
               <button className="nx-btn nx-btn-primary" type="button" onClick={openReview}>
                 {t.leaveReview}
