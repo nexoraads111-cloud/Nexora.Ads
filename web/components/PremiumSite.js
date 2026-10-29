@@ -1,43 +1,21 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { LANGS, dict, aiReply } from '@/components/i18n';
+import DemoApps from '@/components/DemoApps';
 
 const MONO_URL = 'https://send.monobank.ua/24TAxCchRC';
 const IBAN = 'SK6002000000005025750257';
 
-const TECHS = [
-  ['fa-brands fa-html5', 'HTML'],
-  ['fa-brands fa-css3-alt', 'CSS'],
-  ['fa-brands fa-js', 'JS'],
-  ['fa-solid fa-code', 'TS'],
-  ['fa-brands fa-python', 'Python'],
-  ['fa-brands fa-react', 'React'],
-  ['fa-solid fa-n', 'Next'],
-  ['fa-solid fa-wind', 'Tailwind'],
-  ['fa-brands fa-github', 'GitHub'],
-];
-
-const PLANS = [
-  { id: 'Landing Page', price: 150, labelKey: 'planLanding' },
-  { id: 'Сайт для бизнеса', price: 300, labelKey: 'planBusiness' },
-  { id: 'Интернет-магазин', price: 600, labelKey: 'planStore' },
-  { id: 'Другое', price: null, labelKey: 'planOther' },
-];
-
 function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.12, margin: '0px 0px -40px 0px' });
+  const inView = useInView(ref, { once: true, amount: 0.12, margin: '0px 0px -36px 0px' });
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const visible = !mounted || inView;
   return (
-    <div
-      ref={ref}
-      className={`nx-reveal ${visible ? 'is-in' : 'is-wait'} ${className}`}
-      style={mounted ? { transitionDelay: `${delay}s` } : undefined}
-    >
+    <div ref={ref} className={`nx-reveal ${visible ? 'is-in' : 'is-wait'} ${className}`} style={mounted ? { transitionDelay: `${delay}s` } : undefined}>
       {children}
     </div>
   );
@@ -53,9 +31,8 @@ function AnimatedNumber({ value, suffix = '' }) {
     let raf;
     const start = performance.now();
     const tick = (now) => {
-      const p = Math.min(1, (now - start) / 1100);
-      const eased = 0.5 - Math.cos(Math.PI * p) / 2;
-      setN(Math.floor(value * eased));
+      const p = Math.min(1, (now - start) / 1000);
+      setN(Math.floor(value * (0.5 - Math.cos(Math.PI * p) / 2)));
       if (p < 1) raf = requestAnimationFrame(tick);
       else setN(value);
     };
@@ -70,60 +47,74 @@ function AnimatedNumber({ value, suffix = '' }) {
   );
 }
 
-function NeonCube() {
+function NeonCore() {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-40, 40], [10, -10]), { stiffness: 120, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-40, 40], [-14, 14]), { stiffness: 120, damping: 18 });
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   return (
-    <div className="nx-cube-scene" aria-hidden>
-      <div className="nx-cube">
-        <div className="nx-cube-face front">N</div>
-        <div className="nx-cube-face back">N</div>
-        <div className="nx-cube-face right">N</div>
-        <div className="nx-cube-face left">N</div>
-        <div className="nx-cube-face top" />
-        <div className="nx-cube-face bottom" />
-      </div>
-      <div className="nx-cube-glow" />
-      <i className="nx-spark s1" />
-      <i className="nx-spark s2" />
-      <i className="nx-spark s3" />
-      <i className="nx-rock r1" />
-      <i className="nx-rock r2" />
-      <i className="nx-rock r3" />
+    <div
+      className="nx-core"
+      onMouseMove={(e) => {
+        if (reduce) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        mx.set(((e.clientX - r.left) / r.width - 0.5) * 80);
+        my.set(((e.clientY - r.top) / r.height - 0.5) * 80);
+      }}
+      onMouseLeave={() => {
+        mx.set(0);
+        my.set(0);
+      }}
+    >
+      <motion.div className="nx-core-inner" style={{ rotateX: rx, rotateY: ry }}>
+        <div className="nx-ring r1" />
+        <div className="nx-ring r2" />
+        <div className="nx-ring r3" />
+        <div className="nx-orb">
+          <span>N</span>
+        </div>
+        <i className="nx-spark a" />
+        <i className="nx-spark b" />
+        <i className="nx-spark c" />
+      </motion.div>
     </div>
   );
 }
 
 export default function PremiumSite() {
-  const [lang, setLang] = useState('ru');
+  const [lang, setLang] = useState('uk');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [loaderHide, setLoaderHide] = useState(false);
-  const [loadPct, setLoadPct] = useState(10);
+  const [showLoader, setShowLoader] = useState(true);
   const [supportOpen, setSupportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatTyping, setChatTyping] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [plan, setPlan] = useState(PLANS[0].id);
-  const [heroStep, setHeroStep] = useState(0);
-  const [heroName, setHeroName] = useState('');
-  const [heroContact, setHeroContact] = useState('');
-  const [heroMessage, setHeroMessage] = useState('');
-  const rootRef = useRef(null);
-  const heroRef = useRef(null);
+  const [activeDemo, setActiveDemo] = useState(null);
+  const [activeSection, setActiveSection] = useState('top');
+  const [submitting, setSubmitting] = useState(false);
+  const [formType, setFormType] = useState('Landing Page');
+  const [progress, setProgress] = useState(0);
   const chatEndRef = useRef(null);
   const starsRef = useRef(null);
+  const formRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const planetY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const cubeY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-
-  const t = useMemo(() => dict[lang] || dict.ru, [lang]);
+  const t = useMemo(() => dict[lang] || dict.uk, [lang]);
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('nexora_lang');
       if (saved && dict[saved]) setLang(saved);
-      else if (saved === 'sk') setLang('uk');
+      const seen = sessionStorage.getItem('nexora_splash_seen');
+      if (seen === '1') {
+        setShowLoader(false);
+        setLoaderHide(true);
+      }
     } catch (_) {}
   }, []);
 
@@ -133,42 +124,53 @@ export default function PremiumSite() {
     } catch (_) {}
     document.documentElement.lang = lang;
     document.documentElement.setAttribute('data-theme', 'dark');
-    document.body.classList.add('nx-premium', 'nx-cosmic');
-    setMessages([{ role: 'bot', text: (dict[lang] || dict.ru).chatHello }]);
-    return () => document.body.classList.remove('nx-premium', 'nx-cosmic');
+    document.body.classList.add('nx-premium', 'nx-full');
+    setMessages([{ role: 'bot', text: (dict[lang] || dict.uk).chatHello }]);
+    return () => document.body.classList.remove('nx-premium', 'nx-full');
   }, [lang]);
 
   useEffect(() => {
-    let raf;
-    let done = false;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min(100, Math.floor(10 + ((now - start) / 1000) * 90));
-      setLoadPct(p);
-      if (p < 100) raf = requestAnimationFrame(tick);
-      else if (!done) {
-        done = true;
-        setTimeout(() => setLoaderHide(true), 180);
+    if (!showLoader) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const done = () => {
+      setLoaderHide(true);
+      try {
+        sessionStorage.setItem('nexora_splash_seen', '1');
+      } catch (_) {}
+      setTimeout(() => setShowLoader(false), 500);
+    };
+    const tmr = setTimeout(done, reduce ? 200 : 1400);
+    return () => clearTimeout(tmr);
+  }, [showLoader]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? (window.scrollY / max) * 100 : 0);
+      const ids = ['top', 'projects', 'demos', 'skills', 'services', 'about', 'reviews', 'contact'];
+      let current = 'top';
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) current = id;
       }
+      setActiveSection(current);
     };
-    raf = requestAnimationFrame(tick);
-    const force = setTimeout(() => setLoaderHide(true), 1700);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(force);
-    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     const el = starsRef.current;
     if (!el) return;
     el.innerHTML = '';
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 70; i++) {
       const s = document.createElement('i');
       s.style.left = `${Math.random() * 100}%`;
       s.style.top = `${Math.random() * 100}%`;
-      s.style.setProperty('--d', `${1.5 + Math.random() * 3}s`);
-      s.style.setProperty('--s', `${0.6 + Math.random() * 1.8}px`);
+      s.style.setProperty('--d', `${1.4 + Math.random() * 3}s`);
+      s.style.setProperty('--s', `${0.6 + Math.random() * 1.6}px`);
       el.appendChild(s);
     }
   }, []);
@@ -178,35 +180,34 @@ export default function PremiumSite() {
   }, [messages, chatTyping, chatOpen]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || supportOpen ? 'hidden' : '';
+    document.body.style.overflow = menuOpen || supportOpen || activeDemo ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [menuOpen, supportOpen]);
+  }, [menuOpen, supportOpen, activeDemo]);
 
   const openOrder = (type) => {
     if (type) {
+      setFormType(type);
       const modalType = document.getElementById('modal-type');
       if (modalType) modalType.value = type;
       window.chooseSiteType?.(type, null);
     }
-    if (typeof window.openOrderModal === 'function') window.openOrderModal();
-    else document.getElementById('orderModal')?.classList.add('active');
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => formRef.current?.querySelector('input')?.focus(), 400);
   };
+
   const openReview = () => {
     if (typeof window.openReviewModal === 'function') window.openReviewModal();
     else document.getElementById('reviewModal')?.classList.add('active');
   };
-  const scrollReviews = (d) => window.scrollReviews?.(d);
 
   const copyIban = async () => {
     try {
       await navigator.clipboard.writeText(IBAN);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch (_) {
-      setCopied(false);
-    }
+      setTimeout(() => setCopied(false), 1600);
+    } catch (_) {}
   };
 
   const sendChat = (raw) => {
@@ -218,88 +219,93 @@ export default function PremiumSite() {
     setTimeout(() => {
       setMessages((m) => [...m, { role: 'bot', text: aiReply(lang, text) }]);
       setChatTyping(false);
-    }, 480);
-  };
-
-  const submitHeroOrder = (e) => {
-    e.preventDefault();
-    if (heroStep === 0) {
-      setHeroStep(1);
-      return;
-    }
-    const name = heroName.trim();
-    const contact = heroContact.trim();
-    const message = heroMessage.trim();
-    const btn = e.target.querySelector('button[type="submit"]');
-    if (typeof window.sendApplication === 'function') {
-      window.sendApplication({ name, contact, company: plan, plan, message }, btn);
-      setHeroStep(0);
-      setHeroName('');
-      setHeroContact('');
-      setHeroMessage('');
-    } else {
-      openOrder(plan);
-    }
+    }, 500);
   };
 
   const onContactSubmit = (e) => {
+    // Visual UI only — delegate to existing main.js submitOrder / sendApplication (GAS).
     e.preventDefault();
-    const name = document.getElementById('order-name')?.value?.trim() || '';
-    const phone = document.getElementById('order-phone')?.value?.trim() || '';
-    const email = document.getElementById('order-email')?.value?.trim() || '';
-    const message = document.getElementById('order-message')?.value?.trim() || '';
-    const contact = [phone, email].filter(Boolean).join(' | ');
+    if (submitting) return;
+    const fd = new FormData(e.target);
+    const type = String(fd.get('type') || formType);
+    const budget = String(fd.get('budget') || '');
+    const timeline = String(fd.get('timeline') || '');
+    const idea = String(fd.get('message') || '').trim();
     const typeEl = document.getElementById('order-type');
-    if (typeEl) typeEl.value = plan || 'Консультація';
-    const fakeContact = document.getElementById('order-contact');
-    if (fakeContact) fakeContact.value = contact;
-    if (typeof window.sendApplication === 'function') {
-      window.sendApplication(
-        { name, contact, company: plan || 'Консультація', plan: plan || 'Консультація', message },
-        e.target.querySelector('button[type="submit"]')
-      );
-      e.target.reset();
+    if (typeEl) typeEl.value = type;
+    const msgEl = document.getElementById('order-message');
+    if (msgEl) msgEl.value = `${idea}\n\nBudget: ${budget}\nTimeline: ${timeline}`;
+    setSubmitting(true);
+    try {
+      if (typeof window.submitOrder === 'function') window.submitOrder(e);
+      else if (typeof window.sendApplication === 'function') {
+        window.sendApplication(
+          {
+            name: document.getElementById('order-name')?.value?.trim() || '',
+            contact: document.getElementById('order-contact')?.value?.trim() || '',
+            company: type,
+            plan: type,
+            message: document.getElementById('order-message')?.value || idea,
+          },
+          e.target.querySelector('button[type="submit"]')
+        );
+        e.target.reset();
+      }
+    } finally {
+      setTimeout(() => {
+        setSubmitting(false);
+        setFormType('Landing Page');
+      }, 800);
     }
   };
 
   const navLinks = [
-    ['#top', t.nav.home],
-    ['#projects', t.nav.projects],
-    ['#about', t.nav.about],
-    ['#services', t.nav.services],
-    ['#skills', t.nav.skills],
-    ['#reviews', t.nav.reviews],
-    ['#contact', t.nav.contact],
+    ['#top', t.nav.home, 'top'],
+    ['#projects', t.nav.projects, 'projects'],
+    ['#about', t.nav.about, 'about'],
+    ['#services', t.nav.services, 'services'],
+    ['#skills', t.nav.skills, 'skills'],
+    ['#reviews', t.nav.reviews, 'reviews'],
+    ['#contact', t.nav.contact, 'contact'],
   ];
 
+  const skillGroups = useMemo(() => {
+    const map = {};
+    for (const s of t.skills) {
+      map[s.cat] = map[s.cat] || [];
+      map[s.cat].push(s);
+    }
+    return map;
+  }, [t.skills]);
+
   return (
-    <div ref={rootRef} className="nx-root">
-      <div className={`nx-loader ${loaderHide ? 'hide' : ''}`} aria-hidden={loaderHide}>
-        <div className="nx-loader-core">
-          <div className="nx-loader-n">N</div>
-          <div className="nx-loader-ring" style={{ '--p': `${loadPct}%` }} />
-          <b>{t.brand}</b>
+    <div className="nx-root">
+      <div className="nx-progress" style={{ width: `${progress}%` }} aria-hidden />
+
+      {showLoader && (
+        <div className={`nx-splash ${loaderHide ? 'hide' : ''}`} aria-hidden={loaderHide}>
+          <div className="nx-splash-logo">N</div>
+          <div className="nx-splash-word">{t.brand}</div>
+          <div className="nx-splash-line" />
           <small>{t.loader}</small>
         </div>
-      </div>
+      )}
 
       <div className="nx-space" aria-hidden>
         <div className="nx-nebula n1" />
         <div className="nx-nebula n2" />
-        <div className="nx-nebula n3" />
         <div className="nx-stars" ref={starsRef} />
-        <motion.div className="nx-planet" style={{ y: planetY }} />
       </div>
 
-      <header className="nx-top">
+      <header className={`nx-top ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="nx-container nx-top-inner">
           <a className="nx-logo" href="#top">
             <span className="nx-logo-mark">N</span>
             {t.brand}
           </a>
-          <nav className="nx-nav-desktop" aria-label="nav">
-            {navLinks.map(([href, label]) => (
-              <a key={href} href={href}>
+          <nav className="nx-nav" aria-label="Primary">
+            {navLinks.map(([href, label, id]) => (
+              <a key={href} href={href} className={activeSection === id ? 'active' : ''}>
                 {label}
               </a>
             ))}
@@ -312,8 +318,8 @@ export default function PremiumSite() {
                 </button>
               ))}
             </div>
-            <button className="nx-icon-btn nx-support-mini" type="button" onClick={() => setSupportOpen(true)} aria-label={t.support}>
-              <i className="fa-solid fa-heart" />
+            <button className="nx-btn nx-btn-ghost nx-support-top" type="button" onClick={() => setSupportOpen(true)}>
+              {t.support}
             </button>
             <button className="nx-burger" type="button" aria-label={t.menu} onClick={() => setMenuOpen(true)}>
               <span />
@@ -340,7 +346,10 @@ export default function PremiumSite() {
             {label}
           </a>
         ))}
-        <div className="nx-lang nx-lang-block" role="group">
+        <a href="#demos" onClick={() => setMenuOpen(false)}>
+          {t.nav.demos}
+        </a>
+        <div className="nx-lang nx-lang-block">
           {LANGS.map((l) => (
             <button key={l.code} type="button" className={lang === l.code ? 'active' : ''} onClick={() => setLang(l.code)}>
               {l.label}
@@ -348,29 +357,34 @@ export default function PremiumSite() {
           ))}
         </div>
         <button className="nx-btn nx-btn-ghost nx-btn-block" type="button" onClick={() => { setMenuOpen(false); setSupportOpen(true); }}>
-          <i className="fa-solid fa-heart" /> {t.support}
+          {t.support}
         </button>
-        <button className="nx-btn nx-btn-primary nx-btn-block" type="button" onClick={() => { setMenuOpen(false); openOrder(plan); }}>
+        <button className="nx-btn nx-btn-primary nx-btn-block" type="button" onClick={() => { setMenuOpen(false); openOrder(); }}>
           {t.order}
         </button>
       </aside>
 
       <main id="top">
-        <section className="nx-hero" ref={heroRef}>
+        <section className="nx-hero">
           <div className="nx-container nx-hero-grid">
-            <div className="nx-hero-copy">
-              <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-                {t.heroTitle}
+            <div>
+              <motion.p className="nx-badge" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+                {t.badge}
+              </motion.p>
+              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
+                {t.heroTitleBefore}
+                <span>{t.heroTitleAccent}</span>
+                {t.heroTitleAfter}
               </motion.h1>
-              <motion.p className="nx-lead" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12, duration: 0.6 }}>
+              <motion.p className="nx-lead" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
                 {t.heroLead}
               </motion.p>
-              <motion.div className="nx-hero-actions" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
-                <button className="nx-btn nx-btn-primary" type="button" onClick={() => openOrder(plan)}>
-                  {t.order} <i className="fa-solid fa-arrow-right" />
+              <motion.div className="nx-hero-actions" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24 }}>
+                <button className="nx-btn nx-btn-primary" type="button" onClick={() => openOrder()}>
+                  {t.order}
                 </button>
                 <a className="nx-btn nx-btn-ghost" href="#projects">
-                  {t.viewProjects} <i className="fa-solid fa-chevron-right" />
+                  {t.viewProjects}
                 </a>
               </motion.div>
               <div className="nx-trust">
@@ -382,53 +396,11 @@ export default function PremiumSite() {
                 ))}
               </div>
             </div>
-
-            <motion.div className="nx-hero-visual" style={{ y: cubeY }}>
-              <NeonCube />
-            </motion.div>
-
-            <motion.form
-              className="nx-glass nx-hero-order"
-              onSubmit={submitHeroOrder}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.65 }}
-            >
-              <h3>{t.heroOrderTitle}</h3>
-              {heroStep === 0 ? (
-                <div className="nx-plan-list" role="radiogroup">
-                  {PLANS.map((p) => (
-                    <label key={p.id} className={`nx-plan ${plan === p.id ? 'active' : ''}`}>
-                      <input type="radio" name="plan" checked={plan === p.id} onChange={() => setPlan(p.id)} />
-                      <span className="nx-plan-dot" />
-                      <span className="nx-plan-text">
-                        <b>{t[p.labelKey]}</b>
-                        {p.price != null && (
-                          <em>
-                            {t.from} {p.price}€
-                          </em>
-                        )}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              ) : (
-                <div className="nx-hero-fields">
-                  <input value={heroName} onChange={(e) => setHeroName(e.target.value)} placeholder={t.name} required />
-                  <input value={heroContact} onChange={(e) => setHeroContact(e.target.value)} placeholder={t.contact} required />
-                  <textarea value={heroMessage} onChange={(e) => setHeroMessage(e.target.value)} placeholder={t.message} rows={3} />
-                </div>
-              )}
-              <button className="nx-btn nx-btn-primary nx-btn-block" type="submit">
-                {heroStep === 0 ? t.orderNext : t.send} <i className="fa-solid fa-arrow-right" />
-              </button>
-              {heroStep === 1 && (
-                <button className="nx-link-back" type="button" onClick={() => setHeroStep(0)}>
-                  ←
-                </button>
-              )}
-            </motion.form>
+            <NeonCore />
           </div>
+          <a className="nx-scroll-hint" href="#projects">
+            {t.scrollHint}
+          </a>
         </section>
 
         <section className="nx-section" id="projects">
@@ -440,10 +412,10 @@ export default function PremiumSite() {
                 <p className="nx-lead">{t.projectsLead}</p>
               </div>
             </Reveal>
-            <div className="nx-projects" id="projects-container">
+            <div className="nx-projects">
               {t.projects.map((p, i) => (
-                <Reveal key={p.name} delay={i * 0.05}>
-                  <article className="nx-glass nx-project">
+                <Reveal key={p.name} delay={i * 0.06} className={`nx-project-wrap span-${(i % 3) + 1}`}>
+                  <article className={`nx-glass nx-project featured-${i === 0 ? 'lg' : 'sm'}`}>
                     <div className="nx-project-media">
                       <img src={p.img} alt={p.name} loading="lazy" />
                       <span>{p.tag}</span>
@@ -451,15 +423,41 @@ export default function PremiumSite() {
                     <div className="nx-project-body">
                       <h3>{p.name}</h3>
                       <p>{p.text}</p>
-                      <a
-                        className="nx-btn nx-btn-ghost"
-                        href={p.href}
-                        target={p.href.startsWith('http') ? '_blank' : undefined}
-                        rel={p.href.startsWith('http') ? 'noreferrer' : undefined}
-                      >
-                        {t.viewSite} <i className="fa-solid fa-arrow-right" />
+                      <div className="nx-tags">
+                        {p.tech.map((tag) => (
+                          <em key={tag}>{tag}</em>
+                        ))}
+                      </div>
+                      <a className="nx-btn nx-btn-ghost" href={p.href} target="_blank" rel="noreferrer">
+                        {t.viewProject}
                       </a>
                     </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="nx-section" id="demos">
+          <div className="nx-container">
+            <Reveal>
+              <div className="nx-head">
+                <p className="nx-kicker">{t.demosKicker}</p>
+                <h2>{t.demosTitle}</h2>
+                <p className="nx-lead">{t.demosLead}</p>
+              </div>
+            </Reveal>
+            <div className="nx-demos">
+              {t.demos.map((d, i) => (
+                <Reveal key={d.id} delay={i * 0.05}>
+                  <article className="nx-glass nx-demo-card">
+                    <div className={`nx-demo-art tone-${i + 1}`} />
+                    <h3>{d.title}</h3>
+                    <p>{d.text}</p>
+                    <button className="nx-btn nx-btn-primary" type="button" onClick={() => setActiveDemo(d.id)}>
+                      {t.openDemo}
+                    </button>
                   </article>
                 </Reveal>
               ))}
@@ -475,15 +473,22 @@ export default function PremiumSite() {
                 <h2>{t.skillsTitle}</h2>
               </div>
             </Reveal>
-            <div className="nx-skills-orbit">
-              <div className="nx-skills-track">
-                {[...TECHS, ...TECHS].map(([icon, name], i) => (
-                  <div className="nx-skill-bubble" key={`${name}-${i}`}>
-                    <i className={icon} />
-                    <span>{name}</span>
+            <div className="nx-skills">
+              {Object.entries(skillGroups).map(([cat, items]) => (
+                <Reveal key={cat}>
+                  <div className="nx-glass nx-skill-group">
+                    <h3>{t.skillsCats[cat] || cat}</h3>
+                    <ul>
+                      {items.map((s) => (
+                        <li key={s.name}>
+                          <b>{s.name}</b>
+                          <span>{s.note}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
-              </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
@@ -491,20 +496,26 @@ export default function PremiumSite() {
         <section className="nx-section" id="services">
           <div className="nx-container">
             <Reveal>
-              <div className="nx-head center">
-                <p className="nx-kicker">{t.nav.services}</p>
+              <div className="nx-head">
+                <p className="nx-kicker">{t.servicesKicker}</p>
                 <h2>{t.servicesTitle}</h2>
+                <p className="nx-lead">{t.servicesNote}</p>
               </div>
             </Reveal>
             <div className="nx-services">
               {t.services.map((s, i) => (
-                <Reveal key={s.title} delay={i * 0.05}>
+                <Reveal key={s.id} delay={i * 0.05}>
                   <article className="nx-glass nx-service">
-                    <div className="nx-service-icon">
-                      <i className={`fa-solid ${s.icon}`} />
-                    </div>
                     <h3>{s.title}</h3>
-                    <p>{s.text}</p>
+                    <div className="nx-price">{s.price}</div>
+                    <ul>
+                      {s.items.map((it) => (
+                        <li key={it}>{it}</li>
+                      ))}
+                    </ul>
+                    <button className="nx-btn nx-btn-primary nx-btn-block" type="button" onClick={() => openOrder(s.id)}>
+                      {t.discuss}
+                    </button>
                   </article>
                 </Reveal>
               ))}
@@ -516,10 +527,7 @@ export default function PremiumSite() {
           <div className="nx-container nx-about">
             <Reveal>
               <div className="nx-about-visual">
-                <div className="nx-silhouette">
-                  <span className="nx-silhouette-n">N</span>
-                </div>
-                <img src="/Public/Image/NexoraMobilePreview.png" alt="Nexora" loading="lazy" />
+                <NeonCore />
               </div>
             </Reveal>
             <Reveal delay={0.08}>
@@ -527,20 +535,17 @@ export default function PremiumSite() {
                 <p className="nx-kicker">{t.aboutKicker}</p>
                 <h2>{t.aboutTitle}</h2>
                 <p className="nx-lead">{t.aboutText}</p>
+                <ul className="nx-about-points">
+                  {t.aboutPoints.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
                 <div className="nx-stats">
                   {t.stats.map((s) => (
                     <div key={s.label} className="nx-stat">
                       <AnimatedNumber value={s.value} suffix={s.suffix} />
                       <span>{s.label}</span>
                     </div>
-                  ))}
-                </div>
-                <p className="nx-kicker" style={{ marginTop: 28 }}>
-                  {t.gallery}
-                </p>
-                <div className="nx-gallery">
-                  {t.projects.slice(0, 4).map((p) => (
-                    <img key={p.name} src={p.img} alt={p.name} loading="lazy" />
                   ))}
                 </div>
               </div>
@@ -556,56 +561,57 @@ export default function PremiumSite() {
                 <h2>{t.reviewsTitle}</h2>
               </div>
             </Reveal>
-            <div className="reviews-shell">
-              <div className="nx-reviews reviews-carousel" id="reviews-container">
-                {t.demoReviews.map((r) => (
-                  <article key={r.title} className="nx-glass nx-review-card review wm-demo-review">
-                    <div className="nx-review-stars">★★★★★</div>
-                    <p>{r.text}</p>
-                    <div className="wm-review-author">
-                      <div className="avatar">{r.name[0]}</div>
-                      <div>
-                        <b>{r.name}</b>
-                        <span>{r.title}</span>
-                      </div>
+            <div className="nx-reviews" id="reviews-container">
+              {t.demoReviews.map((r) => (
+                <article key={r.title} className="nx-glass nx-review review wm-demo-review">
+                  <p>“{r.text}”</p>
+                  <div className="wm-review-author">
+                    <div className="avatar">{r.name[0]}</div>
+                    <div>
+                      <b>{r.name}</b>
+                      <span>{r.title}</span>
                     </div>
-                  </article>
-                ))}
-              </div>
+                  </div>
+                </article>
+              ))}
             </div>
-            <div className="nx-reviews-actions">
+            <div className="nx-center-actions">
               <button className="nx-btn nx-btn-primary" type="button" onClick={openReview}>
                 {t.leaveReview}
               </button>
-              <div className="nx-arrows" id="review-slider-controls">
-                <button type="button" className="arrow" onClick={() => scrollReviews(-1)} aria-label="prev">
-                  ←
-                </button>
-                <button type="button" className="arrow" onClick={() => scrollReviews(1)} aria-label="next">
-                  →
+            </div>
+          </div>
+        </section>
+
+        <section className="nx-section" id="support-block">
+          <div className="nx-container">
+            <Reveal>
+              <div className="nx-glass nx-support-banner">
+                <div>
+                  <p className="nx-kicker">{t.support}</p>
+                  <h2>{t.supportTitle}</h2>
+                  <p className="nx-lead">{t.supportLead}</p>
+                </div>
+                <button className="nx-btn nx-btn-primary" type="button" onClick={() => setSupportOpen(true)}>
+                  {t.support}
                 </button>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <section className="nx-section" id="contact">
           <div className="nx-container">
             <Reveal>
-              <div className="nx-glass nx-cta-banner">
-                <div>
-                  <h2>{t.ctaTitle}</h2>
-                  <p>{t.ctaLead}</p>
-                </div>
-                <button className="nx-btn nx-btn-primary" type="button" onClick={() => openOrder(plan)}>
-                  {t.order}
-                </button>
+              <div className="nx-head">
+                <p className="nx-kicker">{t.contactKicker}</p>
+                <h2>{t.ctaTitle}</h2>
+                <p className="nx-lead">{t.ctaLead}</p>
               </div>
             </Reveal>
             <div className="nx-contact">
               <Reveal>
                 <div className="nx-glass nx-contact-card">
-                  <h3>{t.nav.contact}</h3>
                   <a className="nx-contact-link" href="tel:+380995228560">
                     <i className="fa-solid fa-phone" /> 099 522 8560
                   </a>
@@ -615,22 +621,49 @@ export default function PremiumSite() {
                   <a className="nx-contact-link" href="mailto:nexora.ads111@gmail.com">
                     <i className="fa-solid fa-envelope" /> nexora.ads111@gmail.com
                   </a>
+                  <button className="nx-btn nx-btn-ghost nx-btn-block" type="button" onClick={() => setSupportOpen(true)}>
+                    {t.support}
+                  </button>
                 </div>
               </Reveal>
-              <Reveal delay={0.08}>
+              <Reveal delay={0.06}>
                 <div className="nx-glass nx-contact-form">
                   <h3>{t.formTitle}</h3>
-                  <form className="nx-form" id="order-form" onSubmit={onContactSubmit}>
-                    <input id="order-name" name="name" placeholder={t.name} required autoComplete="name" />
+                  <form className="nx-form" id="order-form" ref={formRef} onSubmit={onContactSubmit}>
+                    <input name="name" id="order-name" placeholder={t.name} required autoComplete="name" />
+                    <input name="contact" id="order-contact" placeholder={t.contact} required />
+                    <input id="order-type" type="hidden" value={formType} readOnly />
+                    <label>
+                      <span>{t.projectType}</span>
+                      <select name="type" value={formType} onChange={(e) => setFormType(e.target.value)}>
+                        {t.types.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                     <div className="nx-form-row">
-                      <input id="order-phone" name="phone" placeholder={t.phone} required autoComplete="tel" />
-                      <input id="order-email" name="email" type="email" placeholder={t.email} required autoComplete="email" />
+                      <label>
+                        <span>{t.budget}</span>
+                        <select name="budget" defaultValue={t.budgetOpts[4]}>
+                          {t.budgetOpts.map((b) => (
+                            <option key={b}>{b}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <label>
+                        <span>{t.timeline}</span>
+                        <select name="timeline" defaultValue={t.timelineOpts[3]}>
+                          {t.timelineOpts.map((b) => (
+                            <option key={b}>{b}</option>
+                          ))}
+                        </select>
+                      </label>
                     </div>
-                    <input id="order-contact" type="hidden" defaultValue="" />
-                    <input id="order-type" type="hidden" defaultValue="Landing Page" />
-                    <textarea id="order-message" name="message" placeholder={t.message} />
-                    <button className="nx-btn nx-btn-primary nx-btn-block" type="submit">
-                      {t.send}
+                    <textarea name="message" id="order-message" placeholder={t.message} rows={4} />
+                    <button className="nx-btn nx-btn-primary nx-btn-block" type="submit" disabled={submitting}>
+                      {submitting ? t.sending : t.send}
                     </button>
                   </form>
                 </div>
@@ -642,10 +675,13 @@ export default function PremiumSite() {
 
       <footer className="nx-footer">
         <div className="nx-container nx-footer-grid">
-          <a className="nx-logo" href="#top">
-            <span className="nx-logo-mark">N</span>
-            {t.brand}
-          </a>
+          <div>
+            <a className="nx-logo" href="#top">
+              <span className="nx-logo-mark">N</span>
+              {t.brand}
+            </a>
+            <p>{t.footerBlurb}</p>
+          </div>
           <div className="nx-footer-links">
             {navLinks.slice(1).map(([href, label]) => (
               <a key={href} href={href}>
@@ -654,35 +690,41 @@ export default function PremiumSite() {
             ))}
           </div>
           <div className="nx-socials">
-            <a href="https://t.me/" target="_blank" rel="noreferrer" aria-label="Telegram">
-              <i className="fa-brands fa-telegram" />
-            </a>
-            <a href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
-              <i className="fa-brands fa-instagram" />
-            </a>
             <a href="mailto:nexora.ads111@gmail.com" aria-label="Email">
               <i className="fa-solid fa-envelope" />
+            </a>
+            <a href="tel:+380995228560" aria-label="Phone">
+              <i className="fa-solid fa-phone" />
             </a>
             <button type="button" onClick={() => setSupportOpen(true)} aria-label={t.support}>
               <i className="fa-solid fa-heart" />
             </button>
           </div>
         </div>
-        <div className="nx-container nx-footer-copy">© 2026 {t.brand}. {t.footerCopy}</div>
+        <div className="nx-container nx-footer-copy">
+          © 2026 {t.brand}. {t.footerCopy}
+          <div className="nx-lang">
+            {LANGS.map((l) => (
+              <button key={l.code} type="button" className={lang === l.code ? 'active' : ''} onClick={() => setLang(l.code)}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </footer>
 
-      <nav className="nx-dock" aria-label="mobile">
-        <a href="#top" aria-label={t.nav.home}>
+      <nav className="nx-dock" aria-label="Mobile">
+        <a href="#top">
           <i className="fa-solid fa-house" />
         </a>
-        <a href="#projects" aria-label={t.nav.projects}>
+        <a href="#projects">
           <i className="fa-solid fa-briefcase" />
         </a>
-        <button type="button" className="nx-dock-cta" onClick={() => openOrder(plan)} aria-label={t.order}>
+        <button type="button" className="nx-dock-cta" onClick={() => openOrder()} aria-label={t.order}>
           <i className="fa-solid fa-plus" />
         </button>
-        <a href="#reviews" aria-label={t.nav.reviews}>
-          <i className="fa-solid fa-star" />
+        <a href="#demos">
+          <i className="fa-solid fa-play" />
         </a>
         <button type="button" onClick={() => setSupportOpen(true)} aria-label={t.support}>
           <i className="fa-solid fa-heart" />
@@ -691,41 +733,42 @@ export default function PremiumSite() {
 
       <AnimatePresence>
         {supportOpen && (
-          <motion.div className="nx-support-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSupportOpen(false)}>
-            <motion.div
-              className="nx-glass nx-support-modal"
-              initial={{ scale: 0.96, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
+          <motion.div className="nx-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSupportOpen(false)}>
+            <motion.div className="nx-glass nx-support-modal" initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ opacity: 0 }} onClick={(e) => e.stopPropagation()}>
               <button className="close" type="button" onClick={() => setSupportOpen(false)} aria-label={t.close}>
                 ×
               </button>
-              <p className="nx-kicker">{t.support}</p>
               <h3>{t.supportTitle}</h3>
               <p className="nx-lead">{t.supportLead}</p>
-              <div className="nx-support-grid">
-                <a className="nx-support-card" href={MONO_URL} target="_blank" rel="noreferrer">
-                  <i className="fa-solid fa-credit-card" />
-                  <div>
-                    <b>{t.monoTitle}</b>
-                    <span>{t.monoBtn}</span>
-                  </div>
-                </a>
-                <div className="nx-support-card">
-                  <i className="fa-solid fa-building-columns" />
-                  <div>
-                    <b>{t.ibanTitle}</b>
-                    <span>{t.ibanHint}</span>
-                    <code>{IBAN}</code>
-                  </div>
-                  <button type="button" className="nx-btn nx-btn-ghost" onClick={copyIban}>
-                    {copied ? t.copied : t.copy}
-                  </button>
-                </div>
+              <a className="nx-support-card" href={MONO_URL} target="_blank" rel="noreferrer">
+                <b>{t.monoTitle}</b>
+                <span>{t.monoBtn}</span>
+              </a>
+              <div className="nx-support-card">
+                <b>{t.ibanTitle}</b>
+                <span>{t.ibanHint}</span>
+                <code>{IBAN}</code>
+                <button type="button" className="nx-btn nx-btn-ghost" onClick={copyIban}>
+                  {copied ? t.copied : t.copy}
+                </button>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeDemo && (
+          <motion.div className="demo-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <DemoApps
+              demoId={activeDemo}
+              onClose={() => setActiveDemo(null)}
+              labels={{
+                desktop: t.demoDeviceDesktop,
+                tablet: t.demoDeviceTablet,
+                mobile: t.demoDeviceMobile,
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -793,18 +836,11 @@ export default function PremiumSite() {
           >
             <input id="modal-type" type="hidden" defaultValue="Landing Page" />
             <div className="wm-choice-grid">
-              <button className="wm-choice active" type="button" onClick={(e) => window.chooseSiteType?.('Landing Page', e.currentTarget)}>
-                <b>{t.choose.landing}</b>
-              </button>
-              <button className="wm-choice" type="button" onClick={(e) => window.chooseSiteType?.('Сайт для бизнеса', e.currentTarget)}>
-                <b>{t.choose.business}</b>
-              </button>
-              <button className="wm-choice" type="button" onClick={(e) => window.chooseSiteType?.('Интернет-магазин', e.currentTarget)}>
-                <b>{t.choose.shop}</b>
-              </button>
-              <button className="wm-choice" type="button" onClick={(e) => window.chooseSiteType?.('Консультация', e.currentTarget)}>
-                <b>{t.choose.consult}</b>
-              </button>
+              {['Landing Page', 'Business Website', 'Online Store', 'Redesign'].map((type, idx) => (
+                <button key={type} className={`wm-choice ${idx === 0 ? 'active' : ''}`} type="button" onClick={(e) => window.chooseSiteType?.(type, e.currentTarget)}>
+                  <b>{type}</b>
+                </button>
+              ))}
             </div>
             <input id="modal-name" placeholder={t.name} required />
             <input id="modal-contact" placeholder={t.contact} required />
@@ -836,28 +872,7 @@ export default function PremiumSite() {
               </span>
             ))}
           </div>
-          <div className="review-type-scroll">
-            <button className="review-type-chip active" type="button" onClick={(e) => window.selectReviewType?.('Создание сайта', e.currentTarget)}>
-              Web
-            </button>
-            <button className="review-type-chip" type="button" onClick={(e) => window.selectReviewType?.('Работа с менеджером', e.currentTarget)}>
-              Manager
-            </button>
-            <button className="review-type-chip" type="button" onClick={(e) => window.selectReviewType?.('Поддержка', e.currentTarget)}>
-              Support
-            </button>
-            <button className="review-type-chip" type="button" onClick={(e) => window.selectReviewType?.('Общее впечатление', e.currentTarget)}>
-              Impression
-            </button>
-          </div>
-          <form
-            className="wm-form"
-            id="review-form"
-            onSubmit={(e) => {
-              if (typeof window.submitReview === 'function') return window.submitReview(e);
-              return false;
-            }}
-          >
+          <form className="wm-form" id="review-form">
             <input id="review-type" type="hidden" defaultValue="Создание сайта" />
             <input id="review-name" placeholder={t.name} required />
             <input id="review-title" placeholder="Title" />

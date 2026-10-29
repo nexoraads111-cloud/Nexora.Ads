@@ -31,7 +31,7 @@ export const metadata = {
     description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
     url: 'https://nexoraads.online/',
     siteName: 'Nexora',
-    locale: 'ru_RU',
+    locale: 'uk_UA',
     type: 'website',
     images: [{ url: 'https://i.imgur.com/AUiHBKF.png', width: 1200, height: 630, alt: 'Nexora' }],
   },
@@ -69,7 +69,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru">
+    <html lang="uk">
       <head>
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="icon" type="image/png" />
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57" />
@@ -78,7 +78,7 @@ export default function RootLayout({ children }) {
         <link rel="alternate" hrefLang="en" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="ru" href="https://nexoraads.online/" />
         <meta name="google-site-verification" content="google56c6b547d4fd3ea7" />
-        <meta name="theme-color" content="#03040a" />
+        <meta name="theme-color" content="#05060d" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
         <link href="/css/premium.css" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-cosmic">{children}</body>
+      <body className="nx-premium nx-full">{children}</body>
     </html>
   );
 }
