@@ -1,32 +1,22 @@
 export const metadata = {
   metadataBase: new URL('https://nexoraads.online'),
   title: {
-    default: 'Nexora Studio — створення сайтів для бізнесу | UA EN RU',
-    template: '%s | Nexora Studio',
+    default: 'Nexora — сучасні сайти, які приносять результат | UA EN RU',
+    template: '%s | Nexora',
   },
   description:
-    'Nexora Studio: сучасні сайти під ключ — лендинги, бізнес-сайти, інтернет-магазини. Швидко, адаптивно, з SEO. Працюємо UA / EN / RU. Bratislava & online.',
+    'Nexora: сучасні сайти під ключ — лендинги, бізнес-сайти, інтернет-магазини. Швидко, адаптивно, з SEO. UA / EN / RU.',
   keywords: [
     'створення сайтів',
     'веброзробник',
     'landing page',
     'сайт для бізнесу',
-    'інтернет-магазин',
+    'Nexora',
     'website development',
     'создание сайтов',
-    'Nexora Studio',
-    'Bratislava',
-    'SEO',
-    'Next.js',
   ],
-  authors: [{ name: 'Nexora Studio', url: 'https://nexoraads.online' }],
-  creator: 'Nexora Studio',
-  publisher: 'Nexora Studio',
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
-  },
+  authors: [{ name: 'Nexora', url: 'https://nexoraads.online' }],
+  robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://nexoraads.online/',
     languages: {
@@ -37,34 +27,21 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: 'Nexora Studio — сучасні сайти для бізнесу',
+    title: 'Nexora — сайти, які приносять результат',
     description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
     url: 'https://nexoraads.online/',
-    siteName: 'Nexora Studio',
-    locale: 'uk_UA',
-    alternateLocale: ['en_US', 'ru_RU'],
+    siteName: 'Nexora',
+    locale: 'ru_RU',
     type: 'website',
-    images: [
-      {
-        url: 'https://i.imgur.com/AUiHBKF.png',
-        width: 1200,
-        height: 630,
-        alt: 'Nexora Studio — premium websites',
-      },
-    ],
+    images: [{ url: 'https://i.imgur.com/AUiHBKF.png', width: 1200, height: 630, alt: 'Nexora' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexora Studio — сучасні сайти для бізнесу',
-    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
+    title: 'Nexora — сайти, які приносять результат',
+    description: 'Лендинги, бізнес-сайти та магазини під ключ.',
     images: ['https://i.imgur.com/AUiHBKF.png'],
   },
-  verification: {
-    other: {
-      'google-site-verification': 'google56c6b547d4fd3ea7',
-    },
-  },
-  category: 'technology',
+  verification: { other: { 'google-site-verification': 'google56c6b547d4fd3ea7' } },
 };
 
 const jsonLd = {
@@ -73,49 +50,26 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': 'https://nexoraads.online/#organization',
-      name: 'Nexora Studio',
+      name: 'Nexora',
       url: 'https://nexoraads.online/',
       logo: 'https://nexoraads.online/Public/Image/apple-touch-icon-57x57.png',
       email: 'nexora.ads111@gmail.com',
       telephone: ['+380995228560', '+380950761194'],
-      sameAs: [],
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Bratislava',
-        addressCountry: 'SK',
-      },
     },
     {
       '@type': 'WebSite',
       '@id': 'https://nexoraads.online/#website',
       url: 'https://nexoraads.online/',
-      name: 'Nexora Studio',
+      name: 'Nexora',
       publisher: { '@id': 'https://nexoraads.online/#organization' },
       inLanguage: ['uk', 'en', 'ru'],
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: 'https://nexoraads.online/#contact',
-        'query-input': 'required name=search_term_string',
-      },
-    },
-    {
-      '@type': 'ProfessionalService',
-      '@id': 'https://nexoraads.online/#service',
-      name: 'Nexora Studio Web Development',
-      image: 'https://i.imgur.com/AUiHBKF.png',
-      url: 'https://nexoraads.online/',
-      telephone: '+380995228560',
-      priceRange: '€€',
-      areaServed: ['UA', 'SK', 'EU'],
-      serviceType: ['Landing Page', 'Business Website', 'E-commerce', 'Website Redesign', 'SEO'],
-      provider: { '@id': 'https://nexoraads.online/#organization' },
     },
   ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="uk">
+    <html lang="ru">
       <head>
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="icon" type="image/png" />
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57" />
@@ -123,13 +77,8 @@ export default function RootLayout({ children }) {
         <link rel="alternate" hrefLang="uk" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="en" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="ru" href="https://nexoraads.online/" />
-        <link rel="alternate" hrefLang="x-default" href="https://nexoraads.online/" />
         <meta name="google-site-verification" content="google56c6b547d4fd3ea7" />
-        <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#e9eef3" media="(prefers-color-scheme: light)" />
-        <meta name="format-detection" content="telephone=yes" />
-        <meta name="geo.region" content="SK" />
-        <meta name="geo.placename" content="Bratislava" />
+        <meta name="theme-color" content="#03040a" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
@@ -149,12 +98,9 @@ export default function RootLayout({ children }) {
           }}
         />
         <link href="/css/premium.css" rel="stylesheet" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-atelier nx-light">{children}</body>
+      <body className="nx-premium nx-cosmic">{children}</body>
     </html>
   );
 }
