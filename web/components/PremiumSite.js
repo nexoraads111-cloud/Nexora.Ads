@@ -196,33 +196,44 @@ export default function PremiumSite() {
   }, [messages, chatTyping, chatOpen]);
 
   useEffect(() => {
-    // Visual-only: keep GAS loadReviews wiring, but never blank the UI when empty.
-    // Live reviews render into #reviews-container; static real reviews stay as fallback.
+    // Visual-only: keep GAS loadReviews wiring. Live cards go in #reviews-container;
+    // static real reviews are fallback only when that box is empty.
+    const box = document.getElementById('reviews-container');
+    const syncCount = () => {
+      const n = box ? box.querySelectorAll('.review, .nx-review-card, article').length : 0;
+      setLiveReviewCount(n);
+    };
+    syncCount();
+    const mo = box ? new MutationObserver(syncCount) : null;
+    if (box && mo) mo.observe(box, { childList: true, subtree: true });
+
     const install = () => {
       if (window.renderReviews?.__nxSplit) return true;
       const prev = typeof window.renderReviews === 'function' ? window.renderReviews : null;
       const wrapped = function renderReviewsSplit(reviews) {
         const list = Array.isArray(reviews) ? reviews : [];
-        setLiveReviewCount(list.length);
         if (!list.length) {
-          const box = document.getElementById('reviews-container');
           if (box) box.innerHTML = '';
+          setLiveReviewCount(0);
           return;
         }
-        if (prev) return prev(list);
+        if (prev) prev(list);
+        else setLiveReviewCount(list.length);
       };
       wrapped.__nxSplit = true;
       window.renderReviews = wrapped;
       return true;
     };
-    if (install()) return undefined;
+    install();
     const id = setInterval(() => {
       if (install()) clearInterval(id);
-    }, 150);
+      syncCount();
+    }, 200);
     const stop = setTimeout(() => clearInterval(id), 10000);
     return () => {
       clearInterval(id);
       clearTimeout(stop);
+      mo?.disconnect();
     };
   }, []);
 
