@@ -3,21 +3,21 @@
 import { useMemo, useState } from 'react';
 
 const PC_ITEMS = [
-  { id: 'gpu1', cat: 'GPU', name: 'RTX 4070 Super', price: 649, tag: 'Popular' },
-  { id: 'gpu2', cat: 'GPU', name: 'RX 7800 XT', price: 519, tag: 'Value' },
-  { id: 'cpu1', cat: 'CPU', name: 'Ryzen 7 7800X3D', price: 369, tag: 'Gaming' },
-  { id: 'cpu2', cat: 'CPU', name: 'Core i5-14600K', price: 299, tag: '' },
-  { id: 'ram1', cat: 'RAM', name: '32GB DDR5 6000', price: 119, tag: '' },
-  { id: 'ssd1', cat: 'SSD', name: '2TB NVMe Gen4', price: 149, tag: 'Fast' },
+  { id: 'gpu1', cat: 'GPU', name: 'RTX 4070 Super', price: 649, tag: 'Popular', img: '/Public/Image/PcstoreScreen.png' },
+  { id: 'gpu2', cat: 'GPU', name: 'RX 7800 XT', price: 519, tag: 'Value', img: '/Public/Image/PcstoreShowcase.png' },
+  { id: 'cpu1', cat: 'CPU', name: 'Ryzen 7 7800X3D', price: 369, tag: 'Gaming', img: '/Public/Image/showcase-tech.jpg' },
+  { id: 'cpu2', cat: 'CPU', name: 'Core i5-14600K', price: 299, tag: '', img: '/Public/Image/showcase-tech.jpg' },
+  { id: 'ram1', cat: 'RAM', name: '32GB DDR5 6000', price: 119, tag: '', img: '/Public/Image/PcstoreScreen.png' },
+  { id: 'ssd1', cat: 'SSD', name: '2TB NVMe Gen4', price: 149, tag: 'Fast', img: '/Public/Image/PcstoreShowcase.png' },
 ];
 
 const GADGETS = [
-  { id: 'g1', cat: 'Audio', name: 'Aura Buds Pro', price: 129, color: '#a855f7' },
-  { id: 'g2', cat: 'Wearables', name: 'Pulse Watch S', price: 189, color: '#38bdf8' },
-  { id: 'g3', cat: 'Accessories', name: 'Carbon Case Mag', price: 39, color: '#22d3ee' },
-  { id: 'g4', cat: 'Audio', name: 'Studio Mic Mini', price: 89, color: '#c084fc' },
-  { id: 'g5', cat: 'Accessories', name: 'Desk Mat XL', price: 49, color: '#818cf8' },
-  { id: 'g6', cat: 'Wearables', name: 'Link Band Steel', price: 59, color: '#67e8f9' },
+  { id: 'g1', cat: 'Audio', name: 'Aura Buds Pro', price: 129, tone: '#1f2937' },
+  { id: 'g2', cat: 'Wearables', name: 'Pulse Watch S', price: 189, tone: '#111827' },
+  { id: 'g3', cat: 'Accessories', name: 'Carbon Case Mag', price: 39, tone: '#374151' },
+  { id: 'g4', cat: 'Audio', name: 'Studio Mic Mini', price: 89, tone: '#4b5563' },
+  { id: 'g5', cat: 'Accessories', name: 'Desk Mat XL', price: 49, tone: '#6b7280' },
+  { id: 'g6', cat: 'Wearables', name: 'Link Band Steel', price: 59, tone: '#9ca3af' },
 ];
 
 const PIZZAS = [
@@ -32,10 +32,7 @@ const PIZZAS = [
 function useCart() {
   const [cart, setCart] = useState({});
   const lines = useMemo(
-    () =>
-      Object.entries(cart)
-        .filter(([, q]) => q > 0)
-        .map(([id, qty]) => ({ id, qty })),
+    () => Object.entries(cart).filter(([, q]) => q > 0).map(([id, qty]) => ({ id, qty })),
     [cart]
   );
   const add = (id) => setCart((c) => ({ ...c, [id]: (c[id] || 0) + 1 }));
@@ -49,15 +46,11 @@ function useCart() {
   return { cart, lines, add, sub, clear };
 }
 
-function DemoShell({ title, children, onClose, device, setDevice, labels }) {
+function DemoShell({ title, children, onClose, device, setDevice, labels, theme = 'dark' }) {
   return (
-    <div className="demo-frame" data-device={device}>
+    <div className={`demo-frame theme-${theme}`} data-device={device}>
       <div className="demo-chrome">
-        <div className="demo-dots" aria-hidden>
-          <span />
-          <span />
-          <span />
-        </div>
+        <div className="demo-dots" aria-hidden><span /><span /><span /></div>
         <b>{title}</b>
         <div className="demo-devices">
           {['desktop', 'tablet', 'mobile'].map((d) => (
@@ -66,9 +59,7 @@ function DemoShell({ title, children, onClose, device, setDevice, labels }) {
             </button>
           ))}
         </div>
-        <button type="button" className="demo-close" onClick={onClose} aria-label="Close">
-          ×
-        </button>
+        <button type="button" className="demo-close" onClick={onClose} aria-label="Close">×</button>
       </div>
       <div className="demo-viewport">{children}</div>
       <p className="demo-note">Demo only — example prices, no real checkout.</p>
@@ -81,7 +72,7 @@ function PcStoreDemo({ onClose, labels }) {
   const [q, setQ] = useState('');
   const [cat, setCat] = useState('All');
   const [sort, setSort] = useState('pop');
-  const { cart, add, sub, clear, lines } = useCart();
+  const { add, sub, clear, lines } = useCart();
   const cats = ['All', 'GPU', 'CPU', 'RAM', 'SSD'];
   const items = useMemo(() => {
     let list = PC_ITEMS.filter((i) => (cat === 'All' || i.cat === cat) && i.name.toLowerCase().includes(q.toLowerCase()));
@@ -92,18 +83,23 @@ function PcStoreDemo({ onClose, labels }) {
   const total = lines.reduce((s, l) => s + (PC_ITEMS.find((i) => i.id === l.id)?.price || 0) * l.qty, 0);
 
   return (
-    <DemoShell title="Nexora Demo · PC Store" onClose={onClose} device={device} setDevice={setDevice} labels={labels}>
+    <DemoShell title="01 / PC STORE — DEMO" onClose={onClose} device={device} setDevice={setDevice} labels={labels} theme="dark">
       <div className="demo-app demo-pc">
         <header>
           <strong>NEON<span>PC</span></strong>
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search components…" />
           <em>Cart {lines.reduce((s, l) => s + l.qty, 0)}</em>
         </header>
+        <div className="demo-banner pc-hero">
+          <div>
+            <small>Gaming season</small>
+            <h3>Power for your victories</h3>
+            <p>Demo catalog — example EUR prices</p>
+          </div>
+        </div>
         <div className="demo-toolbar">
           {cats.map((c) => (
-            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>
-              {c}
-            </button>
+            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>
           ))}
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="pop">Popular</option>
@@ -114,14 +110,10 @@ function PcStoreDemo({ onClose, labels }) {
         <div className="demo-grid">
           {items.map((i) => (
             <article key={i.id}>
-              <div className="demo-thumb pc">{i.cat}</div>
+              <div className="demo-thumb photo" style={{ backgroundImage: `url(${i.img})` }} />
               <h4>{i.name}</h4>
-              <p>
-                {i.tag && <span>{i.tag}</span>} €{i.price}
-              </p>
-              <button type="button" onClick={() => add(i.id)}>
-                Add
-              </button>
+              <p>{i.tag && <span>{i.tag}</span>} €{i.price}</p>
+              <button type="button" onClick={() => add(i.id)}>Add</button>
             </article>
           ))}
         </div>
@@ -134,21 +126,15 @@ function PcStoreDemo({ onClose, labels }) {
               <div key={l.id} className="demo-cart-row">
                 <span>{item.name}</span>
                 <div>
-                  <button type="button" onClick={() => sub(l.id)}>
-                    −
-                  </button>
+                  <button type="button" onClick={() => sub(l.id)}>−</button>
                   <b>{l.qty}</b>
-                  <button type="button" onClick={() => add(l.id)}>
-                    +
-                  </button>
+                  <button type="button" onClick={() => add(l.id)}>+</button>
                 </div>
               </div>
             );
           })}
           <strong>Total €{total}</strong>
-          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>
-            Demo checkout
-          </button>
+          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>Demo checkout</button>
         </aside>
       </div>
     </DemoShell>
@@ -159,40 +145,35 @@ function EcommerceDemo({ onClose, labels }) {
   const [device, setDevice] = useState('desktop');
   const [cat, setCat] = useState('All');
   const [wish, setWish] = useState({});
-  const { cart, add, sub, clear, lines } = useCart();
+  const { add, sub, clear, lines } = useCart();
   const cats = ['All', 'Audio', 'Wearables', 'Accessories'];
   const items = GADGETS.filter((i) => cat === 'All' || i.cat === cat);
   const total = lines.reduce((s, l) => s + (GADGETS.find((i) => i.id === l.id)?.price || 0) * l.qty, 0);
 
   return (
-    <DemoShell title="Nexora Demo · Aura Shop" onClose={onClose} device={device} setDevice={setDevice} labels={labels}>
-      <div className="demo-app demo-shop">
-        <div className="demo-banner">
+    <DemoShell title="02 / PREMIUM STORE — DEMO" onClose={onClose} device={device} setDevice={setDevice} labels={labels} theme="light">
+      <div className="demo-app demo-shop light">
+        <div className="demo-banner shop-hero">
           <div>
             <small>New season</small>
             <h3>Premium gadgets, soft luxury feel</h3>
           </div>
+          <img src="/Public/Image/ShopPC.png" alt="" />
         </div>
         <div className="demo-toolbar">
           {cats.map((c) => (
-            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>
-              {c}
-            </button>
+            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>
           ))}
           <em>♥ {Object.values(wish).filter(Boolean).length}</em>
         </div>
         <div className="demo-grid shop">
           {items.map((i) => (
             <article key={i.id}>
-              <div className="demo-thumb shop" style={{ background: `linear-gradient(145deg, ${i.color}, #0b1020)` }} />
+              <div className="demo-thumb shop" style={{ background: `linear-gradient(145deg, ${i.tone}, #f5f0e8)` }} />
               <h4>{i.name}</h4>
-              <p>
-                {i.cat} · €{i.price}
-              </p>
+              <p>{i.cat} · €{i.price}</p>
               <div className="demo-row">
-                <button type="button" onClick={() => add(i.id)}>
-                  Add
-                </button>
+                <button type="button" onClick={() => add(i.id)}>Add</button>
                 <button type="button" className="ghost" onClick={() => setWish((w) => ({ ...w, [i.id]: !w[i.id] }))}>
                   {wish[i.id] ? '♥' : '♡'}
                 </button>
@@ -208,21 +189,15 @@ function EcommerceDemo({ onClose, labels }) {
               <div key={l.id} className="demo-cart-row">
                 <span>{item.name}</span>
                 <div>
-                  <button type="button" onClick={() => sub(l.id)}>
-                    −
-                  </button>
+                  <button type="button" onClick={() => sub(l.id)}>−</button>
                   <b>{l.qty}</b>
-                  <button type="button" onClick={() => add(l.id)}>
-                    +
-                  </button>
+                  <button type="button" onClick={() => add(l.id)}>+</button>
                 </div>
               </div>
             );
           })}
           <strong>Total €{total}</strong>
-          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>
-            Demo pay
-          </button>
+          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>Demo pay</button>
         </aside>
       </div>
     </DemoShell>
@@ -233,7 +208,7 @@ function PizzaDemo({ onClose, labels }) {
   const [device, setDevice] = useState('desktop');
   const [cat, setCat] = useState('All');
   const [size, setSize] = useState({});
-  const { cart, add, sub, clear, lines } = useCart();
+  const { add, sub, clear, lines } = useCart();
   const cats = ['All', 'Classic', 'Premium', 'Veggie'];
   const items = PIZZAS.filter((i) => cat === 'All' || i.cat === cat);
   const total = lines.reduce((s, l) => {
@@ -243,20 +218,19 @@ function PizzaDemo({ onClose, labels }) {
   }, 0);
 
   return (
-    <DemoShell title="Nexora Demo · Forno Pizza" onClose={onClose} device={device} setDevice={setDevice} labels={labels}>
-      <div className="demo-app demo-pizza">
+    <DemoShell title="03 / PIZZA — DEMO" onClose={onClose} device={device} setDevice={setDevice} labels={labels} theme="food">
+      <div className="demo-app demo-pizza food">
         <div className="demo-banner pizza">
           <div>
             <small>Open · 11:00–23:00</small>
             <h3>Wood-fired pizza, modern vibe</h3>
-            <p>Demo menu — Bratislava style place</p>
+            <p>Demo menu</p>
           </div>
+          <img src="/Public/Image/showcase-restaurant.jpg" alt="" />
         </div>
         <div className="demo-toolbar">
           {cats.map((c) => (
-            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>
-              {c}
-            </button>
+            <button key={c} type="button" className={cat === c ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>
           ))}
         </div>
         <div className="demo-grid pizza">
@@ -267,16 +241,12 @@ function PizzaDemo({ onClose, labels }) {
               <p>{i.ingredients}</p>
               <div className="demo-sizes">
                 {['S', 'M', 'L'].map((s) => (
-                  <button key={s} type="button" className={(size[i.id] || 'M') === s ? 'active' : ''} onClick={() => setSize((x) => ({ ...x, [i.id]: s }))}>
-                    {s}
-                  </button>
+                  <button key={s} type="button" className={(size[i.id] || 'M') === s ? 'active' : ''} onClick={() => setSize((x) => ({ ...x, [i.id]: s }))}>{s}</button>
                 ))}
               </div>
               <div className="demo-row">
                 <b>€{i.price}</b>
-                <button type="button" onClick={() => add(i.id)}>
-                  Add
-                </button>
+                <button type="button" onClick={() => add(i.id)}>Add</button>
               </div>
             </article>
           ))}
@@ -287,26 +257,17 @@ function PizzaDemo({ onClose, labels }) {
             const item = PIZZAS.find((i) => i.id === l.id);
             return (
               <div key={l.id} className="demo-cart-row">
-                <span>
-                  {item.name} ({size[l.id] || 'M'})
-                </span>
+                <span>{item.name} ({size[l.id] || 'M'})</span>
                 <div>
-                  <button type="button" onClick={() => sub(l.id)}>
-                    −
-                  </button>
+                  <button type="button" onClick={() => sub(l.id)}>−</button>
                   <b>{l.qty}</b>
-                  <button type="button" onClick={() => add(l.id)}>
-                    +
-                  </button>
+                  <button type="button" onClick={() => add(l.id)}>+</button>
                 </div>
               </div>
             );
           })}
           <strong>Total €{total.toFixed(2)}</strong>
-          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>
-            Demo place order
-          </button>
-          <p className="demo-meta">+380 99 522 8560 · demo contacts</p>
+          <button type="button" className="demo-checkout" disabled={!lines.length} onClick={clear}>Demo place order</button>
         </aside>
       </div>
     </DemoShell>
