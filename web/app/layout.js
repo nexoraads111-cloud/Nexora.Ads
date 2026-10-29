@@ -1,20 +1,19 @@
 export const metadata = {
   metadataBase: new URL('https://nexoraads.online'),
   title: {
-    default: 'Nexora Studio — створення сайтів для бізнесу | UA SK EN',
+    default: 'Nexora Studio — створення сайтів для бізнесу | UA EN RU',
     template: '%s | Nexora Studio',
   },
   description:
-    'Nexora Studio: сучасні сайти під ключ — лендинги, бізнес-сайти, інтернет-магазини. Швидко, адаптивно, з SEO. Працюємо UA / SK / EN. Bratislava & online.',
+    'Nexora Studio: сучасні сайти під ключ — лендинги, бізнес-сайти, інтернет-магазини. Швидко, адаптивно, з SEO. Працюємо UA / EN / RU. Bratislava & online.',
   keywords: [
     'створення сайтів',
     'веброзробник',
     'landing page',
     'сайт для бізнесу',
     'інтернет-магазин',
-    'webstránky na kľúč',
-    'tvorba webov',
     'website development',
+    'создание сайтов',
     'Nexora Studio',
     'Bratislava',
     'SEO',
@@ -32,18 +31,18 @@ export const metadata = {
     canonical: 'https://nexoraads.online/',
     languages: {
       uk: 'https://nexoraads.online/',
-      sk: 'https://nexoraads.online/',
       en: 'https://nexoraads.online/',
+      ru: 'https://nexoraads.online/',
       'x-default': 'https://nexoraads.online/',
     },
   },
   openGraph: {
     title: 'Nexora Studio — сучасні сайти для бізнесу',
-    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · SK · EN.',
+    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
     url: 'https://nexoraads.online/',
     siteName: 'Nexora Studio',
     locale: 'uk_UA',
-    alternateLocale: ['sk_SK', 'en_US'],
+    alternateLocale: ['en_US', 'ru_RU'],
     type: 'website',
     images: [
       {
@@ -57,7 +56,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Nexora Studio — сучасні сайти для бізнесу',
-    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · SK · EN.',
+    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
     images: ['https://i.imgur.com/AUiHBKF.png'],
   },
   verification: {
@@ -92,7 +91,7 @@ const jsonLd = {
       url: 'https://nexoraads.online/',
       name: 'Nexora Studio',
       publisher: { '@id': 'https://nexoraads.online/#organization' },
-      inLanguage: ['uk', 'sk', 'en'],
+      inLanguage: ['uk', 'en', 'ru'],
       potentialAction: {
         '@type': 'SearchAction',
         target: 'https://nexoraads.online/#contact',
@@ -122,12 +121,12 @@ export default function RootLayout({ children }) {
         <link href="/Public/Image/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57" />
         <link rel="canonical" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="uk" href="https://nexoraads.online/" />
-        <link rel="alternate" hrefLang="sk" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="en" href="https://nexoraads.online/" />
+        <link rel="alternate" hrefLang="ru" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="x-default" href="https://nexoraads.online/" />
         <meta name="google-site-verification" content="google56c6b547d4fd3ea7" />
-        <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#e9eef3" media="(prefers-color-scheme: light)" />
         <meta name="format-detection" content="telephone=yes" />
         <meta name="geo.region" content="SK" />
         <meta name="geo.placename" content="Bratislava" />
@@ -135,7 +134,7 @@ export default function RootLayout({ children }) {
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
           rel="stylesheet"
         />
         <link
@@ -155,7 +154,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="nx-premium">{children}</body>
+      <body className="nx-premium nx-atelier nx-light">{children}</body>
     </html>
   );
 }

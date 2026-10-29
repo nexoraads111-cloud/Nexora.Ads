@@ -1,14 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion';
 import { LANGS, dict, aiReply } from '@/components/i18n';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const techs = [
   ['fa-brands fa-html5', 'HTML5'],
@@ -26,7 +20,6 @@ const techs = [
 const MONO_URL = 'https://send.monobank.ua/24TAxCchRC';
 const IBAN = 'SK6002000000005025750257';
 
-/** Safe reveal: visible before hydration; animates only after mount */
 function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.12, margin: '0px 0px -40px 0px' });
@@ -57,7 +50,7 @@ function AnimatedNumber({ value, suffix = '' }) {
     setN(0);
     let raf;
     const start = performance.now();
-    const dur = 1200;
+    const dur = 1100;
     const tick = (now) => {
       const p = Math.min(1, (now - start) / dur);
       const eased = 0.5 - Math.cos(Math.PI * p) / 2;
@@ -79,7 +72,7 @@ function AnimatedNumber({ value, suffix = '' }) {
 
 function ShowcaseCard({ item, t, featured = false, onOrder }) {
   return (
-    <article className={`nx-glass nx-showcase-card ${featured ? 'is-featured' : ''} tone-${item.tone}`}>
+    <article className={`nx-showcase-card ${featured ? 'is-featured' : ''} tone-${item.tone}`}>
       <div className="nx-mock">
         <div className="nx-mock-bar">
           <span />
@@ -90,21 +83,17 @@ function ShowcaseCard({ item, t, featured = false, onOrder }) {
         </div>
         <div className="nx-mock-shot">
           <img src={item.img} alt={`${item.niche} — ${t.showcaseDemo}`} loading="lazy" />
-          <div className="nx-mock-overlay">
-            <div className="nx-mock-tags">
-              {(item.tags || []).map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
       <div className="nx-showcase-meta">
-        <div className="nx-showcase-top">
-          <p className="nx-showcase-style">{item.style}</p>
-          <h3>{item.niche}</h3>
-        </div>
+        <p className="nx-showcase-style">{item.style}</p>
+        <h3>{item.niche}</h3>
         <p className="nx-showcase-desc">{item.desc}</p>
+        <div className="nx-mock-tags">
+          {(item.tags || []).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
         <button className="nx-btn nx-btn-primary" type="button" onClick={onOrder}>
           {t.showcaseCta} <i className="fa-solid fa-arrow-right" />
         </button>
@@ -115,10 +104,11 @@ function ShowcaseCard({ item, t, featured = false, onOrder }) {
 
 export default function PremiumSite() {
   const [lang, setLang] = useState('uk');
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [islandExpanded, setIslandExpanded] = useState(false);
   const [loaderHide, setLoaderHide] = useState(false);
-  const [loadPct, setLoadPct] = useState(12);
+  const [loadPct, setLoadPct] = useState(8);
   const [openFaq, setOpenFaq] = useState(0);
   const [supportOpen, setSupportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -127,8 +117,17 @@ export default function PremiumSite() {
   const [chatTyping, setChatTyping] = useState(false);
   const [messages, setMessages] = useState([]);
   const [showcaseFilter, setShowcaseFilter] = useState('all');
+  const [scrolled, setScrolled] = useState(false);
   const rootRef = useRef(null);
+  const heroRef = useRef(null);
   const chatEndRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
 
   const t = useMemo(() => dict[lang] || dict.uk, [lang]);
   const showcaseItems = useMemo(() => {
@@ -144,7 +143,7 @@ export default function PremiumSite() {
       const savedLang = localStorage.getItem('nexora_lang');
       const savedTheme = localStorage.getItem('nexora_theme');
       if (savedLang && dict[savedLang]) setLang(savedLang);
-      else if (savedLang === 'ru') setLang('uk');
+      else if (savedLang === 'sk') setLang('uk');
       if (savedTheme === 'light' || savedTheme === 'dark') setTheme(savedTheme);
     } catch (_) {}
   }, []);
@@ -153,7 +152,7 @@ export default function PremiumSite() {
     try {
       localStorage.setItem('nexora_lang', lang);
     } catch (_) {}
-    document.documentElement.lang = lang === 'uk' ? 'uk' : lang === 'sk' ? 'sk' : 'en';
+    document.documentElement.lang = lang;
     setMessages([{ role: 'bot', text: (dict[lang] || dict.uk).chatHello }]);
     setShowcaseFilter('all');
   }, [lang]);
@@ -162,11 +161,12 @@ export default function PremiumSite() {
     try {
       localStorage.setItem('nexora_theme', theme);
     } catch (_) {}
-    document.body.classList.add('nx-premium', 'nx-mega');
+    document.body.classList.add('nx-premium', 'nx-atelier');
     document.body.classList.toggle('nx-light', theme === 'light');
+    document.body.classList.toggle('nx-dark', theme === 'dark');
     document.documentElement.setAttribute('data-theme', theme);
     return () => {
-      document.body.classList.remove('nx-premium', 'nx-mega', 'nx-light');
+      document.body.classList.remove('nx-premium', 'nx-atelier', 'nx-light', 'nx-dark');
     };
   }, [theme]);
 
@@ -174,18 +174,18 @@ export default function PremiumSite() {
     let raf;
     let done = false;
     const start = performance.now();
-    const dur = 900;
+    const dur = 1000;
     const tick = (now) => {
-      const p = Math.min(100, Math.floor(12 + ((now - start) / dur) * 88));
+      const p = Math.min(100, Math.floor(8 + ((now - start) / dur) * 92));
       setLoadPct(p);
       if (p < 100) raf = requestAnimationFrame(tick);
       else if (!done) {
         done = true;
-        setTimeout(() => setLoaderHide(true), 160);
+        setTimeout(() => setLoaderHide(true), 180);
       }
     };
     raf = requestAnimationFrame(tick);
-    const force = setTimeout(() => setLoaderHide(true), 1600);
+    const force = setTimeout(() => setLoaderHide(true), 1700);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(force);
@@ -193,18 +193,10 @@ export default function PremiumSite() {
   }, []);
 
   useEffect(() => {
-    if (!rootRef.current || typeof window === 'undefined') return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray('.nx-parallax').forEach((el) => {
-        gsap.to(el, {
-          y: -28,
-          ease: 'none',
-          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-        });
-      });
-    }, rootRef);
-    return () => ctx.revert();
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
@@ -212,14 +204,20 @@ export default function PremiumSite() {
   }, [messages, chatTyping, chatOpen]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || supportOpen ? 'hidden' : '';
+    document.body.style.overflow = menuOpen || supportOpen || islandExpanded ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [menuOpen, supportOpen]);
+  }, [menuOpen, supportOpen, islandExpanded]);
 
-  const openOrder = () => window.openOrderModal?.();
-  const openReview = () => window.openReviewModal?.();
+  const openOrder = () => {
+    if (typeof window.openOrderModal === 'function') window.openOrderModal();
+    else document.getElementById('orderModal')?.classList.add('active');
+  };
+  const openReview = () => {
+    if (typeof window.openReviewModal === 'function') window.openReviewModal();
+    else document.getElementById('reviewModal')?.classList.add('active');
+  };
   const scrollReviews = (d) => window.scrollReviews?.(d);
 
   const copyIban = async () => {
@@ -241,7 +239,7 @@ export default function PremiumSite() {
     setTimeout(() => {
       setMessages((m) => [...m, { role: 'bot', text: aiReply(lang, text) }]);
       setChatTyping(false);
-    }, 550);
+    }, 520);
   };
 
   const onContactSubmit = (e) => {
@@ -276,182 +274,228 @@ export default function PremiumSite() {
     ['#contact', t.nav.contact],
   ];
 
+  const closeIsland = () => {
+    setIslandExpanded(false);
+    setMenuOpen(false);
+  };
+
   return (
     <div ref={rootRef} className="nx-root">
       <div className={`nx-loader ${loaderHide ? 'hide' : ''}`} aria-hidden={loaderHide}>
-        <div className="nx-loader-inner">
+        <div className="nx-loader-island">
+          <div className="nx-loader-pulse" />
           <div className="nx-loader-mark">N</div>
-          <div className="nx-loader-brand">
-            Nexora <span>Studio</span>
+          <div className="nx-loader-copy">
+            <b>
+              {t.brand}
+              <span>{t.brandMark}</span>
+            </b>
+            <small>{t.loader}</small>
           </div>
-          <div className="nx-loader-track" aria-hidden>
-            <i style={{ width: `${loadPct}%` }} />
-          </div>
+          <div className="nx-loader-ring" style={{ '--p': `${loadPct}%` }} />
         </div>
       </div>
 
       <div className="nx-ambient" aria-hidden>
-        <div className="nx-aurora" />
-        <div className="nx-aurora nx-aurora-2" />
-        <div className="orb orb-a" />
-        <div className="orb orb-b" />
-        <div className="orb orb-c" />
-        <div className="nx-beam nx-beam-a" />
-        <div className="nx-beam nx-beam-b" />
-        <div className="nx-particles">
-          {Array.from({ length: 24 }).map((_, i) => (
-            <i key={i} style={{ '--i': i }} />
-          ))}
-        </div>
-        <div className="grid" />
-        <div className="nx-noise" />
+        <div className="nx-wash nx-wash-a" />
+        <div className="nx-wash nx-wash-b" />
+        <div className="nx-grain" />
       </div>
 
-      <div className={`nx-overlay ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(false)} />
-      <aside className={`nx-drawer ${menuOpen ? 'active' : ''}`} id="mobileMenu">
-        <div className="nx-drawer-head">
-          <a className="nx-logo" href="#top" onClick={() => setMenuOpen(false)}>
-            Nexora<span>.</span>
-          </a>
-          <button className="nx-drawer-close" type="button" onClick={() => setMenuOpen(false)} aria-label="Close">
-            ×
-          </button>
-        </div>
-        {navLinks.map(([href, label]) => (
-          <a key={href} href={href} onClick={() => setMenuOpen(false)}>
-            {label}
-          </a>
-        ))}
-        <div className="nx-drawer-tools">
-          <div className="nx-lang" role="group" aria-label="Language">
-            {LANGS.map((l) => (
-              <button key={l.code} type="button" className={lang === l.code ? 'active' : ''} onClick={() => setLang(l.code)}>
-                {l.label}
-              </button>
-            ))}
-          </div>
-          <button
-            className="nx-icon-btn"
-            type="button"
-            aria-label="theme"
-            onClick={() => setTheme((x) => (x === 'dark' ? 'light' : 'dark'))}
-          >
-            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
-          </button>
-        </div>
-        <button className="nx-btn nx-btn-ghost nx-btn-block" type="button" onClick={() => { setMenuOpen(false); setSupportOpen(true); }}>
-          <i className="fa-solid fa-heart" /> {t.support}
-        </button>
-        <button
-          className="nx-btn nx-btn-primary nx-btn-block"
-          type="button"
-          onClick={() => {
-            setMenuOpen(false);
-            openOrder();
-          }}
+      {/* Dynamic Island chrome */}
+      <div className={`nx-island-wrap ${scrolled ? 'is-scrolled' : ''} ${islandExpanded || menuOpen ? 'is-open' : ''}`}>
+        <motion.div
+          className="nx-island"
+          layout
+          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
         >
-          {t.order}
-        </button>
-      </aside>
+          <button
+            type="button"
+            className="nx-island-brand"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              closeIsland();
+            }}
+            aria-label="Nexora Studio"
+          >
+            <span className="nx-island-dot" />
+            <strong>
+              {t.brand} <em>{t.brandMark}</em>
+            </strong>
+          </button>
 
-      <header className="nx-header">
-        <div className="nx-container nx-nav">
-          <a className="nx-logo" href="#top">
-            Nexora<span>Studio</span>
-          </a>
-          <nav className="nx-links" aria-label="nav">
-            {navLinks.slice(0, 5).map(([href, label]) => (
+          <nav className="nx-island-links" aria-label="nav">
+            {navLinks.slice(0, 4).map(([href, label]) => (
               <a key={href} href={href}>
                 {label}
               </a>
             ))}
           </nav>
-          <div className="nx-nav-actions">
-            <div className="nx-lang nx-lang-desktop" role="group" aria-label="Language">
+
+          <div className="nx-island-actions">
+            <div className="nx-lang" role="group" aria-label="Language">
               {LANGS.map((l) => (
-                <button key={l.code} type="button" className={lang === l.code ? 'active' : ''} onClick={() => setLang(l.code)}>
+                <button
+                  key={l.code}
+                  type="button"
+                  className={lang === l.code ? 'active' : ''}
+                  onClick={() => setLang(l.code)}
+                >
                   {l.label}
                 </button>
               ))}
             </div>
             <button
-              className="nx-icon-btn nx-theme-desktop"
+              className="nx-icon-btn"
               type="button"
               aria-label="theme"
               onClick={() => setTheme((x) => (x === 'dark' ? 'light' : 'dark'))}
             >
-              <i id="themeToggleIcon" className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
+              <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
             </button>
             <button className="nx-btn nx-btn-ghost nx-support-btn" type="button" onClick={() => setSupportOpen(true)}>
-              <i className="fa-solid fa-heart" /> {t.support}
+              <i className="fa-solid fa-heart" /> <span>{t.support}</span>
             </button>
             <button className="nx-btn nx-btn-primary nx-order-desktop" type="button" onClick={openOrder}>
               {t.order}
             </button>
-            <button className="nx-burger" type="button" aria-label="menu" onClick={() => setMenuOpen(true)}>
-              ☰
+            <button
+              className="nx-island-toggle"
+              type="button"
+              aria-label={t.menu}
+              aria-expanded={islandExpanded || menuOpen}
+              onClick={() => {
+                setIslandExpanded((v) => !v);
+                setMenuOpen((v) => !v);
+              }}
+            >
+              <span />
+              <span />
             </button>
           </div>
-        </div>
-      </header>
+        </motion.div>
+
+        <AnimatePresence>
+          {(islandExpanded || menuOpen) && (
+            <motion.div
+              className="nx-island-panel"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {navLinks.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={closeIsland}
+                >
+                  {label}
+                </a>
+              ))}
+              <div className="nx-island-panel-tools">
+                <div className="nx-lang" role="group" aria-label="Language">
+                  {LANGS.map((l) => (
+                    <button
+                      key={l.code}
+                      type="button"
+                      className={lang === l.code ? 'active' : ''}
+                      onClick={() => setLang(l.code)}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  className="nx-icon-btn"
+                  type="button"
+                  aria-label="theme"
+                  onClick={() => setTheme((x) => (x === 'dark' ? 'light' : 'dark'))}
+                >
+                  <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
+                </button>
+              </div>
+              <button
+                className="nx-btn nx-btn-ghost nx-btn-block"
+                type="button"
+                onClick={() => {
+                  closeIsland();
+                  setSupportOpen(true);
+                }}
+              >
+                <i className="fa-solid fa-heart" /> {t.support}
+              </button>
+              <button
+                className="nx-btn nx-btn-primary nx-btn-block"
+                type="button"
+                onClick={() => {
+                  closeIsland();
+                  openOrder();
+                }}
+              >
+                {t.order}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <div
+        className={`nx-overlay ${islandExpanded || menuOpen ? 'active' : ''}`}
+        onClick={closeIsland}
+      />
 
       <main id="top">
-        <section className="nx-hero">
-          <div className="nx-container nx-hero-grid">
-            <div>
-              <Reveal>
-                <p className="nx-kicker">{t.kicker}</p>
-              </Reveal>
-              <Reveal delay={0.05}>
-                <h1>{t.heroTitle}</h1>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p className="nx-lead">{t.heroLead}</p>
-              </Reveal>
-              <Reveal delay={0.15}>
-                <div className="nx-hero-actions">
-                  <button className="nx-btn nx-btn-primary" type="button" onClick={openOrder}>
-                    {t.order} <i className="fa-solid fa-arrow-right" />
-                  </button>
-                  <a className="nx-btn nx-btn-ghost" href="#projects">
-                    {t.portfolio}
-                  </a>
-                </div>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <div className="nx-hero-pills">
-                  <span>
-                    <i className="fa-solid fa-bolt" /> PageSpeed 99+
-                  </span>
-                  <span>
-                    <i className="fa-solid fa-mobile-screen" /> Mobile first
-                  </span>
-                  <span>
-                    <i className="fa-solid fa-globe" /> UA · SK · EN
-                  </span>
-                </div>
-              </Reveal>
-            </div>
-            <div className="nx-hero-visual nx-parallax">
-              <div className="nx-hero-glow" />
-              <div className="nx-float-card nx-float-a">
-                <i className="fa-solid fa-gauge-high" /> PageSpeed 99+
-              </div>
-              <div className="nx-float-card nx-float-b">
-                <i className="fa-solid fa-shield-halved" /> Turnkey
-              </div>
-              <motion.div
-                className="nx-laptop"
-                initial={false}
+        <section className="nx-hero" ref={heroRef}>
+          <div className="nx-hero-stage">
+            <motion.div className="nx-hero-media" style={{ y: heroY, scale: heroScale }}>
+              <img src="/Public/Image/showcase-realty.jpg" alt="Nexora Studio" loading="eager" />
+              <div className="nx-hero-veil" />
+            </motion.div>
+            <div className="nx-container nx-hero-content">
+              <motion.p
+                className="nx-brand-lockup"
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ delay: 0.12, duration: 0.6 }}
               >
-                <div className="nx-laptop-lid">
-                  <div className="nx-laptop-screen">
-                    <img src="/Public/Image/DiurdStav.png" alt="Nexora demo" loading="eager" />
-                  </div>
-                </div>
-                <div className="nx-laptop-base" />
+                {t.brand} <em>{t.brandMark}</em>
+              </motion.p>
+              <motion.p
+                className="nx-kicker"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                {t.kicker}
+              </motion.p>
+              <motion.h1
+                className="nx-hero-line"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.26, duration: 0.6 }}
+              >
+                {t.heroTitle}
+              </motion.h1>
+              <motion.p
+                className="nx-lead"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.34, duration: 0.5 }}
+              >
+                {t.heroLead}
+              </motion.p>
+              <motion.div
+                className="nx-hero-actions"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.42, duration: 0.45 }}
+              >
+                <button className="nx-btn nx-btn-primary" type="button" onClick={openOrder}>
+                  {t.order} <i className="fa-solid fa-arrow-right" />
+                </button>
+                <a className="nx-btn nx-btn-ghost" href="#projects">
+                  {t.portfolio}
+                </a>
               </motion.div>
             </div>
           </div>
@@ -464,12 +508,10 @@ export default function PremiumSite() {
                 <p className="nx-kicker">{t.aboutKicker}</p>
                 <h2 className="nx-title">{t.aboutTitle}</h2>
               </div>
-              <div className="nx-glass nx-about-panel">
-                <p>{t.aboutText}</p>
-              </div>
+              <p className="nx-about-text">{t.aboutText}</p>
             </Reveal>
             <Reveal delay={0.08}>
-              <div className="nx-glass nx-about-media">
+              <div className="nx-about-media">
                 <img src="/Public/Image/Ukstav.png" alt="Nexora Studio" loading="lazy" />
               </div>
             </Reveal>
@@ -485,10 +527,10 @@ export default function PremiumSite() {
                 <p className="nx-lead">{t.servicesLead}</p>
               </div>
             </Reveal>
-            <div className="nx-services nx-services-8">
+            <div className="nx-services">
               {t.services.map((s, i) => (
                 <Reveal key={s.title} delay={Math.min(i * 0.03, 0.2)}>
-                  <article className="nx-glass nx-service">
+                  <article className="nx-service">
                     <div className="nx-service-icon">
                       <i className={`fa-solid ${s.icon}`} />
                     </div>
@@ -510,10 +552,10 @@ export default function PremiumSite() {
                 <p className="nx-lead">{t.projectsLead}</p>
               </div>
             </Reveal>
-            <div className="nx-projects">
+            <div className="nx-projects" id="projects-container">
               {t.projects.map((p, i) => (
-                <Reveal key={p.name} delay={i * 0.06}>
-                  <article className="nx-project nx-glass">
+                <Reveal key={p.name} delay={i * 0.05}>
+                  <article className="nx-project">
                     <div className="nx-project-media">
                       <img src={p.img} alt={p.name} loading="lazy" />
                       <span>{p.tag}</span>
@@ -521,11 +563,38 @@ export default function PremiumSite() {
                     <div className="nx-project-body">
                       <h3>{p.name}</h3>
                       <p>{p.text}</p>
-                      <a className="nx-btn nx-btn-ghost" href={p.href} target="_blank" rel="noreferrer">
+                      <a
+                        className="nx-btn nx-btn-ghost"
+                        href={p.href}
+                        target={p.href.startsWith('http') ? '_blank' : undefined}
+                        rel={p.href.startsWith('http') ? 'noreferrer' : undefined}
+                      >
                         {t.view} <i className="fa-solid fa-arrow-up-right-from-square" />
                       </a>
                     </div>
                   </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="nx-section" id="redesign">
+          <div className="nx-container">
+            <Reveal>
+              <div className="nx-head center">
+                <p className="nx-kicker">{t.redesignKicker}</p>
+                <h2 className="nx-title">{t.redesignTitle}</h2>
+                <p className="nx-lead">{t.redesignLead}</p>
+              </div>
+            </Reveal>
+            <div className="nx-redesign">
+              {(t.redesign || []).map((item) => (
+                <Reveal key={item.label}>
+                  <figure className="nx-redesign-card">
+                    <img src={item.img} alt={item.label} loading="lazy" />
+                    <figcaption>{item.label}</figcaption>
+                  </figure>
                 </Reveal>
               ))}
             </div>
@@ -588,7 +657,7 @@ export default function PremiumSite() {
             <div className="nx-stats">
               {t.stats.map((s, i) => (
                 <Reveal key={s.label} delay={i * 0.05}>
-                  <div className="nx-glass nx-stat">
+                  <div className="nx-stat">
                     <AnimatedNumber value={s.value} suffix={s.suffix} />
                     <span>{s.label}</span>
                   </div>
@@ -596,7 +665,7 @@ export default function PremiumSite() {
               ))}
             </div>
             <Reveal delay={0.08}>
-              <div className="nx-included nx-glass">
+              <div className="nx-included">
                 <h3>{t.includedTitle}</h3>
                 <ul>
                   {t.included.map((x) => (
@@ -619,11 +688,11 @@ export default function PremiumSite() {
                 <p className="nx-lead">{t.pricingLead}</p>
               </div>
             </Reveal>
-            <div className="nx-prices">
+            <div className="nx-prices" id="pricing-container">
               {t.prices.map((p, i) => (
                 <Reveal key={p.name} delay={i * 0.06}>
-                  <article className={`nx-glass nx-price ${p.popular ? 'popular' : ''}`}>
-                    {p.popular && <span className="nx-badge">Best</span>}
+                  <article className={`nx-price ${p.popular ? 'popular' : ''}`}>
+                    {p.popular && <span className="nx-badge">{t.best}</span>}
                     <h3>{p.name}</h3>
                     <div className="nx-price-value">{p.price}</div>
                     <ul>
@@ -654,7 +723,7 @@ export default function PremiumSite() {
                 <Reveal key={s.t} delay={Math.min(i * 0.04, 0.24)}>
                   <div className="nx-timeline-item">
                     <div className="nx-timeline-num">{String(i + 1).padStart(2, '0')}</div>
-                    <div className="nx-glass nx-timeline-card">
+                    <div className="nx-timeline-card">
                       <h3>{s.t}</h3>
                       <p>{s.d}</p>
                     </div>
@@ -757,9 +826,7 @@ export default function PremiumSite() {
             <Reveal>
               <div className="nx-contact-card">
                 <p className="nx-kicker">{t.contactKicker}</p>
-                <h2 className="nx-title" style={{ fontSize: 'clamp(28px, 3vw, 42px)' }}>
-                  {t.contactTitle}
-                </h2>
+                <h2 className="nx-title nx-contact-title">{t.contactTitle}</h2>
                 <p className="nx-lead">{t.contactLead}</p>
                 <div className="nx-contact-links">
                   <a className="nx-contact-link" href="tel:+380995228560">
@@ -788,7 +855,7 @@ export default function PremiumSite() {
             </Reveal>
             <Reveal delay={0.08}>
               <div className="nx-contact-form">
-                <h3 style={{ margin: '0 0 8px', fontSize: 22 }}>{t.formTitle}</h3>
+                <h3>{t.formTitle}</h3>
                 <form className="nx-form" id="order-form" onSubmit={onContactSubmit}>
                   <input id="order-name" name="name" placeholder={t.name} required autoComplete="name" />
                   <div className="nx-form-row">
@@ -810,7 +877,9 @@ export default function PremiumSite() {
 
       <footer className="nx-footer">
         <div className="nx-container nx-footer-row">
-          <div>© 2026 Nexora Studio</div>
+          <div>
+            © 2026 {t.brand} {t.brandMark}
+          </div>
           <div className="nx-footer-actions">
             <button type="button" onClick={() => setSupportOpen(true)}>
               {t.support}
@@ -830,7 +899,7 @@ export default function PremiumSite() {
             onClick={() => setSupportOpen(false)}
           >
             <motion.div
-              className="nx-support-modal nx-glass"
+              className="nx-support-modal"
               initial={{ scale: 0.96, y: 16, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.98, opacity: 0 }}
@@ -870,7 +939,7 @@ export default function PremiumSite() {
 
       <div className={`nx-chat ${chatOpen ? 'open' : ''}`}>
         {chatOpen && (
-          <div className="nx-chat-panel nx-glass">
+          <div className="nx-chat-panel">
             <div className="nx-chat-head">
               <div>
                 <b>{t.chatTitle}</b>
