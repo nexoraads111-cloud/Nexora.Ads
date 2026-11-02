@@ -987,14 +987,25 @@ main,
   color: var(--muted);
 }
 
+/* Visible by default — React re-renders (e.g. language switch) must not wipe content to opacity:0 */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  opacity: 1;
+  transform: none;
+  animation: fadeRise 0.55s var(--ease) both;
 }
 .reveal.in {
   opacity: 1;
   transform: none;
+}
+.rev-stars {
+  color: #fbbf24;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+.rev-empty {
+  color: var(--muted);
+  grid-column: 1 / -1;
 }
 
 .svc-grid {

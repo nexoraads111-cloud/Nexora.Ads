@@ -6,15 +6,18 @@ import NexoraChat from '@/components/NexoraChat';
 
 const MONO_URL = 'https://send.monobank.ua/jar/A5b5mA3d2';
 const IBAN = 'SK60 0200 0000 0050 2575 0257';
+const GAS_EXEC =
+  'https://script.google.com/macros/s/AKfycbzgkzDQx_eGsSI5vudKtRHmMOqZtqggbxGO4ZOcETjUflIAOpwOxgnLDJd3ioz72FDK/exec';
+const BLOCKED_REVIEWS = new Set(['r_1782853940234', 'r_1782835228464']);
 
-function useReveal() {
+function useReveal(lang) {
   useEffect(() => {
-    const nodes = [...document.querySelectorAll('.reveal')];
-    if (!nodes.length) return undefined;
-    if (!('IntersectionObserver' in window)) {
-      nodes.forEach((n) => n.classList.add('in'));
-      return undefined;
-    }
+    const mark = () => {
+      document.querySelectorAll('.reveal').forEach((n) => n.classList.add('in'));
+    };
+    mark();
+    const id = window.requestAnimationFrame(mark);
+    if (!('IntersectionObserver' in window)) return () => window.cancelAnimationFrame(id);
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -24,61 +27,118 @@ function useReveal() {
           }
         });
       },
-      { threshold: 0.16 }
+      { threshold: 0.08, rootMargin: '40px 0px' }
     );
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
-  }, []);
+    document.querySelectorAll('.reveal').forEach((n) => io.observe(n));
+    return () => {
+      window.cancelAnimationFrame(id);
+      io.disconnect();
+    };
+  }, [lang]);
+}
+
+function normalizeReview(r) {
+  const text = String(r?.text || '').trim();
+  if (text.length < 8) return null;
+  return {
+    text: text.slice(0, 420),
+    name: String(r?.name || 'Client').trim() || 'Client',
+    title: String(r?.title || r?.type || '').trim(),
+    rating: Math.max(1, Math.min(5, Number(r?.rating) || 5)),
+  };
+}
+
+function parseDomReviews(root) {
+  if (!root) return [];
+  return [...root.querySelectorAll('.nx-review-card, .review-card, article.review, [data-review]')]
+    .map((card) => {
+      const text =
+        card.querySelector('.review-text, p')?.textContent?.trim() ||
+        '';
+      const name =
+        card.querySelector('.wm-review-author b, .review-name, .author, b')?.textContent?.trim() ||
+        'Client';
+      const title =
+        card.querySelector('.wm-review-author span, .review-role, .role')?.textContent?.trim() || '';
+      return normalizeReview({ text, name, title });
+    })
+    .filter(Boolean);
 }
 
 function useReviews(fallback) {
   const [items, setItems] = useState(fallback);
+  const liveRef = useRef(null);
+
   useEffect(() => {
-    setItems(fallback);
+    if (liveRef.current?.length) setItems(liveRef.current);
+    else setItems(fallback);
   }, [fallback]);
 
   useEffect(() => {
-    const sync = () => {
-      const root = document.getElementById('reviews-container');
-      if (!root) return;
-      const cards = [...root.querySelectorAll('.review-card, [data-review], article, .nx-review-card')];
-      const parsed = cards
-        .map((card) => {
-          const text =
-            card.querySelector('.review-text, p, blockquote')?.textContent?.trim() ||
-            card.textContent?.trim() ||
-            '';
-          const name =
-            card.querySelector('.review-name, .author, strong, h4, h3, b')?.textContent?.trim() ||
-            'Client';
-          const title = card.querySelector('.review-role, .role, small, span')?.textContent?.trim() || '';
-          return text.length > 20 ? { text: text.slice(0, 280), name, title } : null;
-        })
-        .filter(Boolean);
-      if (parsed.length) setItems(parsed);
+    let cancelled = false;
+    const apply = (list) => {
+      const clean = (list || []).map(normalizeReview).filter(Boolean);
+      if (!clean.length || cancelled) return;
+      liveRef.current = clean;
+      setItems(clean);
     };
 
-    const obs = new MutationObserver(sync);
-    const boot = () => {
+    const syncDom = () => apply(parseDomReviews(document.getElementById('reviews-container')));
+
+    const obs = new MutationObserver(syncDom);
+    const bind = () => {
       const root = document.getElementById('reviews-container');
-      if (root) {
-        obs.observe(root, { childList: true, subtree: true });
-        sync();
+      if (!root) return false;
+      obs.observe(root, { childList: true, subtree: true });
+      syncDom();
+      return true;
+    };
+    bind();
+    const bootT = window.setTimeout(bind, 600);
+
+    const fetchLive = async (attempt = 0) => {
+      try {
+        const url =
+          (typeof window !== 'undefined' && window.NEXORA_GAS_URL) || GAS_EXEC;
+        const res = await fetch(`${url}?action=reviews&_=${Date.now()}`, {
+          cache: 'no-store',
+          redirect: 'follow',
+        });
+        const data = JSON.parse(await res.text());
+        if (!Array.isArray(data)) throw new Error('bad_format');
+        const clean = data
+          .filter((x) => !BLOCKED_REVIEWS.has(String(x.id)))
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        apply(clean);
+      } catch {
+        if (!cancelled && attempt < 8) {
+          window.setTimeout(() => fetchLive(attempt + 1), 700 + attempt * 250);
+        }
       }
     };
-    boot();
-    const t = window.setTimeout(boot, 800);
+    fetchLive();
+    const late = window.setTimeout(() => fetchLive(0), 1800);
+
     return () => {
+      cancelled = true;
       obs.disconnect();
-      window.clearTimeout(t);
+      window.clearTimeout(bootT);
+      window.clearTimeout(late);
     };
   }, []);
 
   return items;
 }
 
+function readInitialLang() {
+  if (typeof window === 'undefined') return 'uk';
+  const saved = window.localStorage.getItem('nexora_lang');
+  if (saved && dict[saved]) return saved;
+  return 'uk';
+}
+
 export default function PremiumSite() {
-  const [lang, setLang] = useState('uk');
+  const [lang, setLang] = useState(readInitialLang);
   const t = dict[lang] || dict.uk;
   const [menuOpen, setMenuOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
@@ -94,10 +154,24 @@ export default function PremiumSite() {
   });
   const portfolioRef = useRef(null);
   const reviews = useReviews(t.demoReviews);
-  useReveal();
+  useReveal(lang);
+
+  const changeLang = (code) => {
+    setLang(code);
+    try {
+      window.localStorage.setItem('nexora_lang', code);
+    } catch {
+      /* ignore */
+    }
+  };
 
   useEffect(() => {
     document.documentElement.lang = lang === 'uk' ? 'uk' : lang;
+    try {
+      window.localStorage.setItem('nexora_lang', lang);
+    } catch {
+      /* ignore */
+    }
   }, [lang]);
 
   useEffect(() => {
@@ -184,22 +258,22 @@ export default function PremiumSite() {
         </a>
         <nav className={`st-nav loved-nav ${menuOpen ? 'open' : ''}`}>
           <a className="active" href="#home" onClick={() => setMenuOpen(false)}>
-            Home
+            {t.nav.home}
           </a>
           <a href="#features" onClick={() => setMenuOpen(false)}>
-            Features
+            {t.nav.features}
           </a>
           <a href="#services" onClick={() => setMenuOpen(false)}>
-            Pricing
+            {t.nav.pricing}
           </a>
           <a href="#about" onClick={() => setMenuOpen(false)}>
-            About
+            {t.nav.about}
           </a>
           <a href="#faq" onClick={() => setMenuOpen(false)}>
-            FAQ
+            {t.nav.faq}
           </a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>
-            Contact
+            {t.nav.contact}
           </a>
         </nav>
         <div className="st-actions loved-actions">
@@ -209,7 +283,7 @@ export default function PremiumSite() {
                 key={l.code}
                 type="button"
                 className={lang === l.code ? 'on' : ''}
-                onClick={() => setLang(l.code)}
+                onClick={() => changeLang(l.code)}
               >
                 {l.label}
               </button>
@@ -219,10 +293,10 @@ export default function PremiumSite() {
             <i className="fa-solid fa-sun" />
           </button>
           <button type="button" className="btn-signin" onClick={() => openOrder()}>
-            Sign In
+            {t.signIn}
           </button>
           <button type="button" className="btn-primary btn-get-started" onClick={() => openOrder()}>
-            Get Started
+            {t.getStarted}
           </button>
           <button type="button" className="st-burger" aria-label={t.menu} onClick={() => setMenuOpen((v) => !v)}>
             <span />
@@ -240,23 +314,23 @@ export default function PremiumSite() {
           </div>
           <div className="hero-copy">
             <span className="hero-badge loved-badge">
-              <span aria-hidden>🚀</span> Next-Gen Advertising Platform
+              <span aria-hidden>🚀</span> {t.shellBadge}
             </span>
             <h1>
-              <span className="brand-line">NexoraAds</span>
-              <span className="grad-line">Grow Faster.</span>
-              <span className="plain-line">Advertise Smarter.</span>
+              <span className="brand-line">{t.shellBrand}</span>
+              <span className="grad-line">{t.shellGrow}</span>
+              <span className="plain-line">{t.shellSmarter}</span>
             </h1>
-            <p>Powerful tools. Targeted reach. Real results. Take your advertising to the next level with NexoraAds.</p>
+            <p>{t.shellSub}</p>
             <div className="hero-cta">
               <button type="button" className="btn-primary btn-start-ads" onClick={() => openOrder()}>
-                Start Advertising →
+                {t.startAds}
               </button>
               <a className="btn-outline play" href="#features">
                 <span className="play-ico" aria-hidden>
                   ▶
                 </span>
-                Learn More
+                {t.learnMore}
               </a>
             </div>
             <div className="social-proof">
@@ -268,7 +342,7 @@ export default function PremiumSite() {
                 <span style={{ background: 'linear-gradient(135deg,#c084fc,#e879f9)' }} />
               </div>
               <div className="proof-text">
-                <b>Trusted by 50K+ businesses worldwide</b>
+                <b>{t.trustedBy}</b>
                 <span className="proof-sep" aria-hidden />
                 <span className="stars" aria-hidden>
                   ★★★★★
@@ -375,42 +449,17 @@ export default function PremiumSite() {
             </div>
           </div>
           <div className="hero-features" id="features">
-            <div className="hf-item">
-              <div className="hf-ico">
-                <i className="fa-solid fa-bolt" />
+            {t.featItems.map((f) => (
+              <div className="hf-item" key={f.title}>
+                <div className="hf-ico">
+                  <i className={`fa-solid ${f.icon}`} />
+                </div>
+                <div>
+                  <b>{f.title}</b>
+                  <span>{f.text}</span>
+                </div>
               </div>
-              <div>
-                <b>High Performance</b>
-                <span>Lightning-fast ad delivery for maximum impact.</span>
-              </div>
-            </div>
-            <div className="hf-item">
-              <div className="hf-ico">
-                <i className="fa-solid fa-crosshairs" />
-              </div>
-              <div>
-                <b>Advanced Targeting</b>
-                <span>Reach the right audience with precision.</span>
-              </div>
-            </div>
-            <div className="hf-item">
-              <div className="hf-ico">
-                <i className="fa-solid fa-chart-column" />
-              </div>
-              <div>
-                <b>Real-Time Analytics</b>
-                <span>Track performance and optimize with ease.</span>
-              </div>
-            </div>
-            <div className="hf-item">
-              <div className="hf-ico">
-                <i className="fa-solid fa-shield-halved" />
-              </div>
-              <div>
-                <b>Enterprise-Grade Security</b>
-                <span>Your data is always safe and secure.</span>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
@@ -525,49 +574,43 @@ export default function PremiumSite() {
             </div>
           </div>
           <div className="rev-grid">
-            {visibleReviews().map((r, i) => (
-              <blockquote key={`${r.name}-${i}`} className="rev-card reveal">
-                <p>“{r.text}”</p>
-                <footer>
-                  <span className="rev-avatar" aria-hidden>
-                    {(r.name || 'C').slice(0, 1)}
-                  </span>
-                  <div>
-                    <strong>{r.name}</strong>
-                    <em>{r.title}</em>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            {visibleReviews().length ? (
+              visibleReviews().map((r, i) => (
+                <blockquote key={`${r.name}-${r.title}-${i}`} className="rev-card reveal in">
+                  {r.rating ? (
+                    <div className="rev-stars" aria-hidden>
+                      {'★'.repeat(r.rating)}
+                      {'☆'.repeat(Math.max(0, 5 - r.rating))}
+                    </div>
+                  ) : null}
+                  <p>“{r.text}”</p>
+                  <footer>
+                    <span className="rev-avatar" aria-hidden>
+                      {(r.name || 'C').slice(0, 1)}
+                    </span>
+                    <div>
+                      <strong>{r.name}</strong>
+                      <em>{r.title}</em>
+                    </div>
+                  </footer>
+                </blockquote>
+              ))
+            ) : (
+              <p className="rev-empty reveal in">{t.reviewsTitle}…</p>
+            )}
           </div>
+          {/* Bridge for legacy main.js renderReviews / loadReviews — keep in DOM, visually hidden */}
           <div id="reviews-container" className="sr-only" aria-hidden="true" />
         </section>
 
         <section className="st-section" id="faq">
-          <div className="sec-head reveal">
+          <div className="sec-head reveal in">
             <span className="kicker">FAQ</span>
-            <h2>{lang === 'uk' ? 'Питання' : lang === 'ru' ? 'Вопросы' : 'Questions'}</h2>
+            <h2>{t.faqTitle}</h2>
           </div>
           <div className="faq-grid">
-            {(lang === 'uk'
-              ? [
-                  ['Скільки коштує сайт?', 'Лендинг від €150, бізнес-сайт від €300, магазин від €600, редизайн від €100.'],
-                  ['Які мови підтримуєте?', 'Сайти та комунікація — українською, англійською та російською.'],
-                  ['Як замовити?', 'Натисніть Start Advertising / Get Started або заповніть форму нижче — заявка йде в нашу систему.'],
-                ]
-              : lang === 'ru'
-                ? [
-                    ['Сколько стоит сайт?', 'Лендинг от €150, бизнес-сайт от €300, магазин от €600, редизайн от €100.'],
-                    ['Какие языки поддерживаете?', 'Сайты и коммуникация — на украинском, английском и русском.'],
-                    ['Как заказать?', 'Нажмите Start Advertising / Get Started или заполните форму ниже.'],
-                  ]
-                : [
-                    ['How much does a site cost?', 'Landing from €150, business site from €300, store from €600, redesign from €100.'],
-                    ['Which languages do you support?', 'Sites and communication in Ukrainian, English, and Russian.'],
-                    ['How do I order?', 'Click Start Advertising / Get Started or fill the form below — we get your request instantly.'],
-                  ]
-            ).map(([q, a]) => (
-              <article key={q} className="faq-card reveal">
+            {t.faqItems.map(([q, a]) => (
+              <article key={q} className="faq-card reveal in">
                 <h3>{q}</h3>
                 <p>{a}</p>
               </article>
