@@ -1,21 +1,20 @@
 export const metadata = {
   metadataBase: new URL('https://nexoraads.online'),
   title: {
-    default: 'Nexora — сучасні сайти, які приносять результат | UA EN RU',
-    template: '%s | Nexora',
+    default: 'NexoraAds — веб-студія | сайти для бізнесу | UA EN RU',
+    template: '%s | NexoraAds',
   },
   description:
-    'Nexora: сучасні сайти під ключ — лендинги, бізнес-сайти, інтернет-магазини. Швидко, адаптивно, з SEO. UA / EN / RU.',
+    'NexoraAds — веб-студія. Створюємо лендинги, бізнес-сайти та інтернет-магазини. Сучасний дизайн, швидке завантаження, продумана структура.',
   keywords: [
+    'веб-студія',
     'створення сайтів',
-    'веброзробник',
     'landing page',
     'сайт для бізнесу',
-    'Nexora',
+    'NexoraAds',
     'website development',
-    'создание сайтов',
   ],
-  authors: [{ name: 'Nexora', url: 'https://nexoraads.online' }],
+  authors: [{ name: 'NexoraAds', url: 'https://nexoraads.online' }],
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://nexoraads.online/',
@@ -27,17 +26,17 @@ export const metadata = {
     },
   },
   openGraph: {
-    title: 'Nexora — сайти, які приносять результат',
-    description: 'Лендинги, бізнес-сайти та магазини під ключ. UA · EN · RU.',
+    title: 'NexoraAds — сайти, які виділяють бізнес',
+    description: 'Веб-студія: лендинги, бізнес-сайти, магазини. UA · EN · RU.',
     url: 'https://nexoraads.online/',
-    siteName: 'Nexora',
+    siteName: 'NexoraAds',
     locale: 'uk_UA',
     type: 'website',
-    images: [{ url: 'https://i.imgur.com/AUiHBKF.png', width: 1200, height: 630, alt: 'Nexora' }],
+    images: [{ url: 'https://i.imgur.com/AUiHBKF.png', width: 1200, height: 630, alt: 'NexoraAds' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexora — сайти, які приносять результат',
+    title: 'NexoraAds — веб-студія',
     description: 'Лендинги, бізнес-сайти та магазини під ключ.',
     images: ['https://i.imgur.com/AUiHBKF.png'],
   },
@@ -50,7 +49,7 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': 'https://nexoraads.online/#organization',
-      name: 'Nexora',
+      name: 'NexoraAds',
       url: 'https://nexoraads.online/',
       logo: 'https://nexoraads.online/Public/Image/apple-touch-icon-57x57.png',
       email: 'nexora.ads111@gmail.com',
@@ -60,7 +59,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': 'https://nexoraads.online/#website',
       url: 'https://nexoraads.online/',
-      name: 'Nexora',
+      name: 'NexoraAds',
       publisher: { '@id': 'https://nexoraads.online/#organization' },
       inLanguage: ['uk', 'en', 'ru'],
     },
@@ -78,12 +77,12 @@ export default function RootLayout({ children }) {
         <link rel="alternate" hrefLang="en" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="ru" href="https://nexoraads.online/" />
         <meta name="google-site-verification" content="google56c6b547d4fd3ea7" />
-        <meta name="theme-color" content="#090a0c" />
+        <meta name="theme-color" content="#07060c" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600&family=Sora:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
           rel="stylesheet"
         />
         <link
@@ -100,7 +99,7 @@ export default function RootLayout({ children }) {
         <link href="/css/premium.css" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-atelier">{children}</body>
+      <body className="nx-premium nx-studio">{children}</body>
     </html>
   );
 }

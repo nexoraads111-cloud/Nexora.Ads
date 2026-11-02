@@ -2,11 +2,34 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { LANGS, dict } from '@/components/i18n';
-import DemoGallery from '@/components/DemoGallery';
 import NexoraChat from '@/components/NexoraChat';
 
 const MONO_URL = 'https://send.monobank.ua/jar/A5b5mA3d2';
 const IBAN = 'SK60 0200 0000 0050 2575 0257';
+
+function useReveal() {
+  useEffect(() => {
+    const nodes = [...document.querySelectorAll('.reveal')];
+    if (!nodes.length) return undefined;
+    if (!('IntersectionObserver' in window)) {
+      nodes.forEach((n) => n.classList.add('in'));
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+    nodes.forEach((n) => io.observe(n));
+    return () => io.disconnect();
+  }, []);
+}
 
 function useReviews(fallback) {
   const [items, setItems] = useState(fallback);
@@ -28,8 +51,7 @@ function useReviews(fallback) {
           const name =
             card.querySelector('.review-name, .author, strong, h4, h3, b')?.textContent?.trim() ||
             'Client';
-          const title =
-            card.querySelector('.review-role, .role, small, span')?.textContent?.trim() || '';
+          const title = card.querySelector('.review-role, .role, small, span')?.textContent?.trim() || '';
           return text.length > 20 ? { text: text.slice(0, 280), name, title } : null;
         })
         .filter(Boolean);
@@ -61,7 +83,6 @@ export default function PremiumSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeDemo, setActiveDemo] = useState(null);
   const [reviewIdx, setReviewIdx] = useState(0);
   const [orderBusy, setOrderBusy] = useState(false);
   const [form, setForm] = useState({
@@ -69,11 +90,11 @@ export default function PremiumSite() {
     contact: '',
     type: 'Landing Page',
     budget: '',
-    timeline: '',
     message: '',
   });
   const portfolioRef = useRef(null);
   const reviews = useReviews(t.demoReviews);
+  useReveal();
 
   useEffect(() => {
     document.documentElement.lang = lang === 'uk' ? 'uk' : lang;
@@ -83,7 +104,6 @@ export default function PremiumSite() {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         setSupportOpen(false);
-        setActiveDemo(null);
         setMenuOpen(false);
       }
     };
@@ -115,10 +135,9 @@ export default function PremiumSite() {
   const onOrderSubmit = (e) => {
     e.preventDefault();
     if (orderBusy) return;
+    if (!form.name.trim() || !form.contact.trim()) return;
     setOrderBusy(true);
-    const message = [form.message, form.budget && `Budget: ${form.budget}`, form.timeline && `Timeline: ${form.timeline}`]
-      .filter(Boolean)
-      .join('\n');
+    const message = [form.message, form.budget && `Budget: ${form.budget}`].filter(Boolean).join('\n');
     const msgEl = document.getElementById('order-message');
     if (msgEl) msgEl.value = message;
     try {
@@ -129,7 +148,7 @@ export default function PremiumSite() {
           e.currentTarget.querySelector('button[type="submit"]')
         );
       }
-      setForm({ name: '', contact: '', type: 'Landing Page', budget: '', timeline: '', message: '' });
+      setForm({ name: '', contact: '', type: 'Landing Page', budget: '', message: '' });
     } finally {
       window.setTimeout(() => setOrderBusy(false), 600);
     }
@@ -139,7 +158,7 @@ export default function PremiumSite() {
     const el = portfolioRef.current;
     if (!el) return;
     const card = el.querySelector('.pf-card');
-    const step = (card?.offsetWidth || 340) + 20;
+    const step = (card?.offsetWidth || 340) + 18;
     el.scrollBy({ left: dir * step, behavior: 'smooth' });
   };
 
@@ -153,32 +172,34 @@ export default function PremiumSite() {
   };
 
   return (
-    <div className="atelier">
-      <div className="atelier-noise" aria-hidden />
+    <div className="studio">
+      <div className="studio-glow a" aria-hidden />
+      <div className="studio-glow b" aria-hidden />
+      <div className="studio-waves" aria-hidden />
 
-      <header className="at-header">
-        <a className="at-logo" href="#home">
-          <span className="at-mark" aria-hidden />
+      <header className="st-header">
+        <a className="st-logo" href="#home" aria-label={t.brand}>
+          <span className="st-mark">N</span>
           <b>{t.brand}</b>
         </a>
-        <nav className={`at-nav ${menuOpen ? 'open' : ''}`}>
-          <a href="#work" onClick={() => setMenuOpen(false)}>
-            {t.nav.work}
+        <nav className={`st-nav ${menuOpen ? 'open' : ''}`}>
+          <a href="#home" onClick={() => setMenuOpen(false)}>
+            {t.nav.home}
           </a>
-          <a href="#offer" onClick={() => setMenuOpen(false)}>
-            {t.nav.offer}
+          <a href="#services" onClick={() => setMenuOpen(false)}>
+            {t.nav.services}
           </a>
-          <a href="#demos" onClick={() => setMenuOpen(false)}>
-            {t.nav.demos}
+          <a href="#portfolio" onClick={() => setMenuOpen(false)}>
+            {t.nav.portfolio}
           </a>
-          <a href="#reviews" onClick={() => setMenuOpen(false)}>
-            {t.nav.reviews}
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            {t.nav.about}
           </a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>
             {t.nav.contact}
           </a>
         </nav>
-        <div className="at-actions">
+        <div className="st-actions">
           <div className="lang-switch" role="group" aria-label="Language">
             {LANGS.map((l) => (
               <button
@@ -192,12 +213,12 @@ export default function PremiumSite() {
             ))}
           </div>
           <button type="button" className="btn-ghost" onClick={() => setSupportOpen(true)}>
-            {t.supportHeart}
+            {t.support}
           </button>
-          <button type="button" className="btn-solid" onClick={() => openOrder()}>
-            {t.discuss}
+          <button type="button" className="btn-primary" onClick={() => openOrder()}>
+            {t.orderSite}
           </button>
-          <button type="button" className="at-burger" aria-label={t.menu} onClick={() => setMenuOpen((v) => !v)}>
+          <button type="button" className="st-burger" aria-label={t.menu} onClick={() => setMenuOpen((v) => !v)}>
             <span />
             <span />
           </button>
@@ -205,65 +226,99 @@ export default function PremiumSite() {
       </header>
 
       <main>
-        <section className="at-hero" id="home">
-          <div className="hero-media" aria-hidden>
-            <img src="/Public/Image/DospretonStav.jpg" alt="" />
-            <div className="hero-veil" />
-          </div>
-          <div className="hero-content">
-            <p className="brand-hero">{t.brand}</p>
-            <h1>{t.heroLead}</h1>
-            <p className="hero-sub">{t.heroSub}</p>
+        <section className="st-hero" id="home">
+          <div className="hero-copy">
+            <h1>{t.heroTitle}</h1>
+            <p>{t.heroSub}</p>
             <div className="hero-cta">
-              <button type="button" className="btn-solid" onClick={() => openOrder()}>
-                {t.orderNow}
-              </button>
-              <a className="btn-line" href="#work">
-                {t.scrollWork}
+              <a className="btn-outline" href="#services">
+                {t.viewServices}
               </a>
+              <button type="button" className="btn-primary" onClick={() => openOrder()}>
+                {t.orderSite}
+              </button>
             </div>
           </div>
-          <div className="hero-rail" aria-hidden>
-            <span>Landing €150</span>
-            <span>Business €300</span>
-            <span>Store €600</span>
-            <span>Redesign €100</span>
+          <div className="hero-visual" aria-hidden>
+            <div className="laptop">
+              <div className="laptop-lid">
+                <div className="laptop-screen">
+                  <div className="fake-site">
+                    <div className="fake-bar">
+                      <i />
+                      <i />
+                      <i />
+                    </div>
+                    <div className="fake-hero" />
+                    <div className="fake-rows">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="laptop-base" />
+            </div>
+            <div className="orb" />
           </div>
         </section>
 
-        <section className="at-section" id="offer">
-          <div className="sec-intro">
-            <span className="kicker">{t.offerKicker}</span>
-            <h2>{t.offerTitle}</h2>
-            <p>{t.offerLead}</p>
+        <section className="st-section" id="services">
+          <div className="sec-head reveal">
+            <span className="kicker">{t.servicesKicker}</span>
+            <h2>{t.servicesTitle}</h2>
           </div>
-          <div className="offer-list">
-            {t.services.map((s, i) => (
-              <article key={s.id} className="offer-row">
-                <span className="idx">0{i + 1}</span>
-                <div className="offer-main">
-                  <h3>{s.title}</h3>
-                  <ul>
-                    {s.items.map((it) => (
-                      <li key={it}>{it}</li>
-                    ))}
-                  </ul>
+          <div className="svc-grid">
+            {t.services.map((s) => (
+              <article key={s.id} className={`svc-card reveal ${s.accent ? 'accent' : ''}`}>
+                <div className="svc-top">
+                  <span className="num">{s.num}</span>
+                  <i className={`fa-solid ${s.icon}`} />
                 </div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
                 <b className="price">{s.price}</b>
-                <button type="button" className="btn-line" onClick={() => openOrder(s.id)}>
-                  {t.orderService}
+                <ul>
+                  {s.items.map((it) => (
+                    <li key={it}>
+                      <i className="fa-solid fa-check" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+                <button type="button" className="btn-primary" onClick={() => openOrder(s.id)}>
+                  {s.cta}
                 </button>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="at-section" id="work">
-          <div className="sec-intro row">
+        <section className="st-section" id="about">
+          <div className="sec-head reveal">
+            <span className="kicker">{t.whyKicker}</span>
+            <h2>{t.whyTitle}</h2>
+          </div>
+          <div className="why-grid">
+            {t.why.map((w) => (
+              <article key={w.title} className="why-card reveal">
+                <div className="why-ico">
+                  <i className={`fa-solid ${w.icon}`} />
+                </div>
+                <h3>{w.title}</h3>
+                <p>{w.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="st-section" id="portfolio">
+          <div className="sec-head row reveal">
             <div>
-              <span className="kicker">{t.workKicker}</span>
-              <h2>{t.workTitle}</h2>
-              <p>{t.workLead}</p>
+              <span className="kicker">{t.portfolioKicker}</span>
+              <h2>{t.portfolioTitle}</h2>
+              <p>{t.portfolioLead}</p>
             </div>
             <div className="pf-arrows">
               <button type="button" onClick={() => scrollPortfolio(-1)} aria-label="Prev">
@@ -276,7 +331,7 @@ export default function PremiumSite() {
           </div>
           <div className="pf-track" ref={portfolioRef}>
             {t.projects.map((p) => (
-              <article key={p.name} className={`pf-card ${p.name === 'Nexora' ? 'brand' : ''}`}>
+              <article key={p.name} className="pf-card reveal">
                 <div className="pf-media">
                   <img src={p.img} alt={p.name} loading="lazy" />
                 </div>
@@ -293,46 +348,8 @@ export default function PremiumSite() {
           </div>
         </section>
 
-        <section className="at-section" id="demos">
-          <div className="sec-intro">
-            <span className="kicker">{t.demosKicker}</span>
-            <h2>{t.demosTitle}</h2>
-            <p>{t.demosLead}</p>
-          </div>
-          <div className="demo-strip">
-            {t.demos.map((d) => (
-              <article key={d.id} className="demo-tile">
-                <button type="button" className="demo-hit" onClick={() => setActiveDemo(d.id)}>
-                  <img src={d.img} alt={d.title} loading="lazy" />
-                  <span className="demo-label">
-                    <b>{d.title}</b>
-                    <em>{t.openDemo}</em>
-                  </span>
-                </button>
-                <p>{d.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="at-section at-about" id="about">
-          <div className="about-layout">
-            <div className="about-avatar">
-              <img src="/Public/Image/about-avatar.jpg" alt={t.aboutTitle} width={200} height={200} />
-            </div>
-            <div>
-              <span className="kicker">{t.aboutKicker}</span>
-              <h2>{t.aboutTitle}</h2>
-              <p>{t.aboutText}</p>
-              <button type="button" className="btn-solid" onClick={() => openOrder()}>
-                {t.discuss}
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="at-section" id="reviews">
-          <div className="sec-intro row">
+        <section className="st-section" id="reviews">
+          <div className="sec-head row reveal">
             <div>
               <span className="kicker">{t.reviewsKicker}</span>
               <h2>{t.reviewsTitle}</h2>
@@ -359,7 +376,7 @@ export default function PremiumSite() {
           </div>
           <div className="rev-grid">
             {visibleReviews().map((r, i) => (
-              <blockquote key={`${r.name}-${i}`} className="rev-card">
+              <blockquote key={`${r.name}-${i}`} className="rev-card reveal">
                 <p>“{r.text}”</p>
                 <footer>
                   <span className="rev-avatar" aria-hidden>
@@ -376,13 +393,13 @@ export default function PremiumSite() {
           <div id="reviews-container" className="sr-only" aria-hidden="true" />
         </section>
 
-        <section className="at-section at-contact" id="contact">
-          <div className="sec-intro">
+        <section className="st-section st-contact" id="contact">
+          <div className="sec-head reveal">
             <span className="kicker">{t.formKicker}</span>
             <h2>{t.formTitle}</h2>
             <p>{t.formLead}</p>
           </div>
-          <form id="order-form" className="order-form" onSubmit={onOrderSubmit}>
+          <form id="order-form" className="order-form reveal" onSubmit={onOrderSubmit}>
             <label>
               <span>{t.name}</span>
               <input
@@ -429,40 +446,50 @@ export default function PremiumSite() {
                 ))}
               </select>
             </label>
-            <label>
-              <span>{t.timeline}</span>
-              <select value={form.timeline} onChange={(e) => setForm({ ...form, timeline: e.target.value })}>
-                <option value="">—</option>
-                {t.timelineOpts.map((x) => (
-                  <option key={x} value={x}>
-                    {x}
-                  </option>
-                ))}
-              </select>
-            </label>
             <label className="full">
               <span>{t.message}</span>
               <textarea
                 id="order-message"
                 name="message"
                 rows={4}
+                required
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
               />
             </label>
-            <button type="submit" className="btn-solid" disabled={orderBusy}>
+            <button type="submit" className="btn-primary" disabled={orderBusy}>
               {orderBusy ? t.sending : t.sendRequest}
             </button>
           </form>
+          <div className="contact-row reveal">
+            <a href={`mailto:${t.email}`}>{t.email}</a>
+            <a href="tel:+380995228560">{t.phone}</a>
+            <a href="tel:+380950761194">{t.phone2}</a>
+          </div>
         </section>
       </main>
 
-      <footer className="at-footer">
-        <a className="at-logo" href="#home">
-          <span className="at-mark" aria-hidden />
-          <b>{t.brand}</b>
-        </a>
-        <p>
+      <footer className="st-footer">
+        <div className="foot-brand">
+          <a className="st-logo" href="#home">
+            <span className="st-mark">N</span>
+            <b>{t.brand}</b>
+          </a>
+          <p>{t.footerBlurb}</p>
+        </div>
+        <nav>
+          <a href="#home">{t.nav.home}</a>
+          <a href="#services">{t.nav.services}</a>
+          <a href="#portfolio">{t.nav.portfolio}</a>
+          <a href="#about">{t.nav.about}</a>
+          <a href="#contact">{t.nav.contact}</a>
+          <a href="/privacy/">{t.privacy}</a>
+        </nav>
+        <div className="foot-contacts">
+          <a href={`mailto:${t.email}`}>{t.email}</a>
+          <a href="tel:+380995228560">{t.phone}</a>
+        </div>
+        <p className="copy">
           © {new Date().getFullYear()} {t.brand}. {t.footerCopy}
         </p>
       </footer>
@@ -480,7 +507,7 @@ export default function PremiumSite() {
             <div className="support-grid">
               <div>
                 <h4>{t.monoTitle}</h4>
-                <a className="btn-solid" href={MONO_URL} target="_blank" rel="noopener noreferrer">
+                <a className="btn-primary" href={MONO_URL} target="_blank" rel="noopener noreferrer">
                   {t.monoBtn}
                 </a>
               </div>
@@ -488,21 +515,13 @@ export default function PremiumSite() {
                 <h4>{t.ibanTitle}</h4>
                 <p className="iban">{IBAN}</p>
                 <small>{t.ibanHint}</small>
-                <button type="button" className="btn-line" onClick={copyIban}>
+                <button type="button" className="btn-outline" onClick={copyIban}>
                   {copied ? t.copied : t.copy}
                 </button>
               </div>
             </div>
           </div>
         </div>
-      )}
-
-      {activeDemo && (
-        <DemoGallery
-          demoId={activeDemo}
-          onClose={() => setActiveDemo(null)}
-          labels={{ close: t.close, hint: t.galleryHint }}
-        />
       )}
 
       <div id="orderModal" className="sr-only" aria-hidden="true" />
@@ -538,7 +557,7 @@ export default function PremiumSite() {
             <input id="review-name" name="name" required placeholder={t.name} />
             <input id="review-title" name="title" placeholder="Role / project" />
             <textarea id="review-text" name="text" required rows={4} placeholder={t.message} />
-            <button type="submit" className="btn-solid">
+            <button type="submit" className="btn-primary">
               {t.send}
             </button>
           </form>
