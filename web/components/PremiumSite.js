@@ -177,29 +177,32 @@ export default function PremiumSite() {
       <div className="studio-glow b" aria-hidden />
       <div className="studio-waves" aria-hidden />
 
-      <header className="st-header">
-        <a className="st-logo" href="#home" aria-label={t.brand}>
+      <header className="st-header loved-header">
+        <a className="st-logo" href="#home" aria-label="NexoraAds">
           <span className="st-mark">N</span>
-          <b>{t.brand}</b>
+          <b>NexoraAds</b>
         </a>
-        <nav className={`st-nav ${menuOpen ? 'open' : ''}`}>
-          <a href="#home" onClick={() => setMenuOpen(false)}>
-            {t.nav.home}
+        <nav className={`st-nav loved-nav ${menuOpen ? 'open' : ''}`}>
+          <a className="active" href="#home" onClick={() => setMenuOpen(false)}>
+            Home
+          </a>
+          <a href="#features" onClick={() => setMenuOpen(false)}>
+            Features
           </a>
           <a href="#services" onClick={() => setMenuOpen(false)}>
-            {t.nav.services}
-          </a>
-          <a href="#portfolio" onClick={() => setMenuOpen(false)}>
-            {t.nav.portfolio}
+            Pricing
           </a>
           <a href="#about" onClick={() => setMenuOpen(false)}>
-            {t.nav.about}
+            About
+          </a>
+          <a href="#faq" onClick={() => setMenuOpen(false)}>
+            FAQ
           </a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>
-            {t.nav.contact}
+            Contact
           </a>
         </nav>
-        <div className="st-actions">
+        <div className="st-actions loved-actions">
           <div className="lang-switch" role="group" aria-label="Language">
             {LANGS.map((l) => (
               <button
@@ -212,11 +215,14 @@ export default function PremiumSite() {
               </button>
             ))}
           </div>
-          <button type="button" className="btn-ghost" onClick={() => setSupportOpen(true)}>
-            {t.support}
+          <button type="button" className="theme-sun" aria-label="Theme" tabIndex={-1}>
+            <i className="fa-solid fa-sun" />
           </button>
-          <button type="button" className="btn-primary" onClick={() => openOrder()}>
-            {t.orderSite}
+          <button type="button" className="btn-signin" onClick={() => openOrder()}>
+            Sign In
+          </button>
+          <button type="button" className="btn-primary btn-get-started" onClick={() => openOrder()}>
+            Get Started
           </button>
           <button type="button" className="st-burger" aria-label={t.menu} onClick={() => setMenuOpen((v) => !v)}>
             <span />
@@ -226,101 +232,185 @@ export default function PremiumSite() {
       </header>
 
       <main>
-        <section className="st-hero" id="home">
+        <section className="st-hero loved-hero" id="home">
           <div className="hero-bg" aria-hidden>
             <span className="wave w1" />
             <span className="wave w2" />
             <span className="wave w3" />
           </div>
           <div className="hero-copy">
-            <span className="hero-badge">{t.heroBadge}</span>
+            <span className="hero-badge loved-badge">
+              <span aria-hidden>🚀</span> Next-Gen Advertising Platform
+            </span>
             <h1>
-              <span className="brand-line">{t.brand}</span>
-              <span className="grad-line">{t.heroTitle}</span>
+              <span className="brand-line">NexoraAds</span>
+              <span className="grad-line">Grow Faster.</span>
+              <span className="plain-line">Advertise Smarter.</span>
             </h1>
-            <p>{t.heroSub}</p>
+            <p>Powerful tools. Targeted reach. Real results. Take your advertising to the next level with NexoraAds.</p>
             <div className="hero-cta">
-              <button type="button" className="btn-primary" onClick={() => openOrder()}>
-                {t.orderSite} →
+              <button type="button" className="btn-primary btn-start-ads" onClick={() => openOrder()}>
+                Start Advertising →
               </button>
-              <a className="btn-outline play" href="#services">
+              <a className="btn-outline play" href="#features">
                 <span className="play-ico" aria-hidden>
                   ▶
                 </span>
-                {t.viewServices}
+                Learn More
               </a>
+            </div>
+            <div className="social-proof">
+              <div className="avatars" aria-hidden>
+                <span style={{ background: 'linear-gradient(135deg,#f472b6,#a855f7)' }} />
+                <span style={{ background: 'linear-gradient(135deg,#38bdf8,#6366f1)' }} />
+                <span style={{ background: 'linear-gradient(135deg,#34d399,#22d3ee)' }} />
+                <span style={{ background: 'linear-gradient(135deg,#fbbf24,#f97316)' }} />
+                <span style={{ background: 'linear-gradient(135deg,#c084fc,#e879f9)' }} />
+              </div>
+              <div className="proof-text">
+                <b>Trusted by 50K+ businesses worldwide</b>
+                <span className="proof-sep" aria-hidden />
+                <span className="stars" aria-hidden>
+                  ★★★★★
+                </span>
+              </div>
             </div>
           </div>
           <div className="hero-visual" aria-hidden>
-            <div className="glass-stack">
-              <div className="glass-panel main-panel">
-                <div className="panel-chrome">
-                  <i />
-                  <i />
-                  <i />
-                  <em>nexoraads.online</em>
-                </div>
-                <div className="panel-body">
-                  <aside className="mini-nav">
-                    <span className="on" />
-                    <span />
-                    <span />
-                    <span />
+            <div className="glass-stack loved-dash">
+              <div className="glass-panel main-panel dash-panel">
+                <div className="panel-body dash-body">
+                  <aside className="dash-side">
+                    <div className="side-item on">
+                      <i className="fa-solid fa-table-cells" />
+                      <em>Dashboard</em>
+                    </div>
+                    <div className="side-item">
+                      <i className="fa-solid fa-bullhorn" />
+                      <em>Campaigns</em>
+                    </div>
+                    <div className="side-item">
+                      <i className="fa-solid fa-chart-line" />
+                      <em>Analytics</em>
+                    </div>
+                    <div className="side-item">
+                      <i className="fa-solid fa-credit-card" />
+                      <em>Billing</em>
+                    </div>
+                    <div className="side-item">
+                      <i className="fa-solid fa-gear" />
+                      <em>Settings</em>
+                    </div>
                   </aside>
                   <div className="mini-main">
+                    <div className="dash-head">
+                      <strong>Dashboard</strong>
+                      <span className="dash-range">
+                        Last 30 days <i className="fa-solid fa-chevron-down" />
+                      </span>
+                    </div>
                     <div className="metric-row">
                       <div className="metric">
-                        <small>Sections</small>
-                        <b>08</b>
+                        <small>Total Impressions</small>
+                        <b>4.8M</b>
+                        <em className="up">+12.5%</em>
                       </div>
                       <div className="metric">
-                        <small>Speed</small>
-                        <b>98</b>
+                        <small>Total Clicks</small>
+                        <b>320K</b>
+                        <em className="up">+18.2%</em>
                       </div>
                       <div className="metric">
-                        <small>Mobile</small>
-                        <b>100</b>
+                        <small>Conversions</small>
+                        <b>48.7K</b>
+                        <em className="up">+24.9%</em>
                       </div>
                     </div>
                     <div className="chart-area">
+                      <span className="chart-tip">+24.9%</span>
                       <svg viewBox="0 0 240 90" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(168,85,247,0.55)" />
+                            <stop offset="0%" stopColor="rgba(168,85,247,0.65)" />
                             <stop offset="100%" stopColor="rgba(168,85,247,0)" />
                           </linearGradient>
                         </defs>
-                        <path d="M0 70 C40 60, 60 30, 100 35 S160 10, 200 22 S230 40, 240 28 L240 90 L0 90 Z" fill="url(#cg)" />
-                        <path d="M0 70 C40 60, 60 30, 100 35 S160 10, 200 22 S230 40, 240 28" fill="none" stroke="#c084fc" strokeWidth="2.5" />
+                        <path
+                          d="M0 72 C30 68, 50 40, 80 48 S120 18, 150 28 S190 8, 240 20 L240 90 L0 90 Z"
+                          fill="url(#cg)"
+                        />
+                        <path
+                          d="M0 72 C30 68, 50 40, 80 48 S120 18, 150 28 S190 8, 240 20"
+                          fill="none"
+                          stroke="#c084fc"
+                          strokeWidth="2.8"
+                        />
+                        <circle cx="190" cy="12" r="4" fill="#e879f9" />
                       </svg>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="glass-panel float-card">
+              <div className="glass-panel float-card campaign-card">
                 <div className="float-thumb" />
-                <div>
-                  <strong>Landing live</strong>
-                  <span className="status">Ready</span>
-                  <div className="bar">
-                    <i style={{ width: '82%' }} />
+                <div className="camp-body">
+                  <div className="camp-top">
+                    <strong>Your Campaign</strong>
+                    <span className="status">
+                      <i /> Active
+                    </span>
+                  </div>
+                  <div className="bar-row">
+                    <div className="bar">
+                      <i style={{ width: '78%' }} />
+                    </div>
+                    <small className="pct">78%</small>
+                  </div>
+                  <div className="camp-foot">
+                    <span>4.8M Impressions</span>
+                    <span>48.7K Conversions</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="hero-features">
-            {t.why.map((w) => (
-              <div key={w.title} className="hf-item">
-                <div className="hf-ico">
-                  <i className={`fa-solid ${w.icon}`} />
-                </div>
-                <div>
-                  <b>{w.title}</b>
-                  <span>{w.text}</span>
-                </div>
+          <div className="hero-features" id="features">
+            <div className="hf-item">
+              <div className="hf-ico">
+                <i className="fa-solid fa-bolt" />
               </div>
-            ))}
+              <div>
+                <b>High Performance</b>
+                <span>Lightning-fast ad delivery for maximum impact.</span>
+              </div>
+            </div>
+            <div className="hf-item">
+              <div className="hf-ico">
+                <i className="fa-solid fa-crosshairs" />
+              </div>
+              <div>
+                <b>Advanced Targeting</b>
+                <span>Reach the right audience with precision.</span>
+              </div>
+            </div>
+            <div className="hf-item">
+              <div className="hf-ico">
+                <i className="fa-solid fa-chart-column" />
+              </div>
+              <div>
+                <b>Real-Time Analytics</b>
+                <span>Track performance and optimize with ease.</span>
+              </div>
+            </div>
+            <div className="hf-item">
+              <div className="hf-ico">
+                <i className="fa-solid fa-shield-halved" />
+              </div>
+              <div>
+                <b>Enterprise-Grade Security</b>
+                <span>Your data is always safe and secure.</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -451,6 +541,38 @@ export default function PremiumSite() {
             ))}
           </div>
           <div id="reviews-container" className="sr-only" aria-hidden="true" />
+        </section>
+
+        <section className="st-section" id="faq">
+          <div className="sec-head reveal">
+            <span className="kicker">FAQ</span>
+            <h2>{lang === 'uk' ? 'Питання' : lang === 'ru' ? 'Вопросы' : 'Questions'}</h2>
+          </div>
+          <div className="faq-grid">
+            {(lang === 'uk'
+              ? [
+                  ['Скільки коштує сайт?', 'Лендинг від €150, бізнес-сайт від €300, магазин від €600, редизайн від €100.'],
+                  ['Які мови підтримуєте?', 'Сайти та комунікація — українською, англійською та російською.'],
+                  ['Як замовити?', 'Натисніть Start Advertising / Get Started або заповніть форму нижче — заявка йде в нашу систему.'],
+                ]
+              : lang === 'ru'
+                ? [
+                    ['Сколько стоит сайт?', 'Лендинг от €150, бизнес-сайт от €300, магазин от €600, редизайн от €100.'],
+                    ['Какие языки поддерживаете?', 'Сайты и коммуникация — на украинском, английском и русском.'],
+                    ['Как заказать?', 'Нажмите Start Advertising / Get Started или заполните форму ниже.'],
+                  ]
+                : [
+                    ['How much does a site cost?', 'Landing from €150, business site from €300, store from €600, redesign from €100.'],
+                    ['Which languages do you support?', 'Sites and communication in Ukrainian, English, and Russian.'],
+                    ['How do I order?', 'Click Start Advertising / Get Started or fill the form below — we get your request instantly.'],
+                  ]
+            ).map(([q, a]) => (
+              <article key={q} className="faq-card reveal">
+                <h3>{q}</h3>
+                <p>{a}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="st-section st-contact" id="contact">
