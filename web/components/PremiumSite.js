@@ -9,6 +9,13 @@ const IBAN = 'SK60 0200 0000 0050 2575 0257';
 const GAS_EXEC =
   'https://script.google.com/macros/s/AKfycbzgkzDQx_eGsSI5vudKtRHmMOqZtqggbxGO4ZOcETjUflIAOpwOxgnLDJd3ioz72FDK/exec';
 const BLOCKED_REVIEWS = new Set(['r_1782853940234', 'r_1782835228464']);
+const TRUST_AVATARS = [
+  '/Public/Image/avatars/a1.png',
+  '/Public/Image/avatars/a2.png',
+  '/Public/Image/avatars/a3.png',
+  '/Public/Image/avatars/a4.png',
+  '/Public/Image/avatars/a5.png',
+];
 
 function useReveal(lang) {
   useEffect(() => {
@@ -137,9 +144,15 @@ function readInitialLang() {
   return 'uk';
 }
 
+function readInitialTheme() {
+  if (typeof window === 'undefined') return 'dark';
+  return window.localStorage.getItem('nexora_theme') === 'light' ? 'light' : 'dark';
+}
+
 export default function PremiumSite() {
   const [lang, setLang] = useState(readInitialLang);
   const t = dict[lang] || dict.uk;
+  const [theme, setTheme] = useState(readInitialTheme);
   const [menuOpen, setMenuOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -165,6 +178,18 @@ export default function PremiumSite() {
     }
   };
 
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      try {
+        window.localStorage.setItem('nexora_theme', next);
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
+
   useEffect(() => {
     document.documentElement.lang = lang === 'uk' ? 'uk' : lang;
     try {
@@ -173,6 +198,15 @@ export default function PremiumSite() {
       /* ignore */
     }
   }, [lang]);
+
+  useEffect(() => {
+    document.body.classList.toggle('nx-light', theme === 'light');
+    try {
+      window.localStorage.setItem('nexora_theme', theme);
+    } catch {
+      /* ignore */
+    }
+  }, [theme]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -187,8 +221,14 @@ export default function PremiumSite() {
 
   const openOrder = (type) => {
     if (type) setForm((f) => ({ ...f, type }));
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.setTimeout(() => document.getElementById('order-name')?.focus(), 350);
+    setMenuOpen(false);
+    const target = document.getElementById('order-form') || document.getElementById('contact');
+    target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.setTimeout(() => {
+      document.getElementById('order-name')?.focus();
+      document.getElementById('order-panel')?.classList.add('pulse');
+      window.setTimeout(() => document.getElementById('order-panel')?.classList.remove('pulse'), 1200);
+    }, 380);
   };
 
   const openReview = () => {
@@ -289,11 +329,13 @@ export default function PremiumSite() {
               </button>
             ))}
           </div>
-          <button type="button" className="theme-sun" aria-label="Theme" tabIndex={-1}>
-            <i className="fa-solid fa-sun" />
-          </button>
-          <button type="button" className="btn-signin" onClick={() => openOrder()}>
-            {t.signIn}
+          <button
+            type="button"
+            className="theme-toggle"
+            aria-label={theme === 'light' ? t.themeDark : t.themeLight}
+            onClick={toggleTheme}
+          >
+            <i className={`fa-solid ${theme === 'light' ? 'fa-moon' : 'fa-sun'}`} />
           </button>
           <button type="button" className="btn-primary btn-get-started" onClick={() => openOrder()}>
             {t.getStarted}
@@ -335,16 +377,14 @@ export default function PremiumSite() {
             </div>
             <div className="social-proof">
               <div className="avatars" aria-hidden>
-                <span style={{ background: 'linear-gradient(135deg,#f472b6,#a855f7)' }} />
-                <span style={{ background: 'linear-gradient(135deg,#38bdf8,#6366f1)' }} />
-                <span style={{ background: 'linear-gradient(135deg,#34d399,#22d3ee)' }} />
-                <span style={{ background: 'linear-gradient(135deg,#fbbf24,#f97316)' }} />
-                <span style={{ background: 'linear-gradient(135deg,#c084fc,#e879f9)' }} />
+                {TRUST_AVATARS.map((src) => (
+                  <img key={src} src={src} alt="" width={34} height={34} />
+                ))}
               </div>
               <div className="proof-text">
                 <b>{t.trustedBy}</b>
                 <span className="proof-sep" aria-hidden />
-                <span className="stars" aria-hidden>
+                <span className="stars" aria-label="5 stars">
                   ★★★★★
                 </span>
               </div>
@@ -357,45 +397,45 @@ export default function PremiumSite() {
                   <aside className="dash-side">
                     <div className="side-item on">
                       <i className="fa-solid fa-table-cells" />
-                      <em>Dashboard</em>
+                      <em>{t.dash.dashboard}</em>
                     </div>
                     <div className="side-item">
                       <i className="fa-solid fa-bullhorn" />
-                      <em>Campaigns</em>
+                      <em>{t.dash.campaigns}</em>
                     </div>
                     <div className="side-item">
                       <i className="fa-solid fa-chart-line" />
-                      <em>Analytics</em>
+                      <em>{t.dash.analytics}</em>
                     </div>
                     <div className="side-item">
                       <i className="fa-solid fa-credit-card" />
-                      <em>Billing</em>
+                      <em>{t.dash.billing}</em>
                     </div>
                     <div className="side-item">
                       <i className="fa-solid fa-gear" />
-                      <em>Settings</em>
+                      <em>{t.dash.settings}</em>
                     </div>
                   </aside>
                   <div className="mini-main">
                     <div className="dash-head">
-                      <strong>Dashboard</strong>
+                      <strong>{t.dash.dashboard}</strong>
                       <span className="dash-range">
-                        Last 30 days <i className="fa-solid fa-chevron-down" />
+                        {t.dash.last30} <i className="fa-solid fa-chevron-down" />
                       </span>
                     </div>
                     <div className="metric-row">
                       <div className="metric">
-                        <small>Total Impressions</small>
+                        <small>{t.dash.impressions}</small>
                         <b>4.8M</b>
                         <em className="up">+12.5%</em>
                       </div>
                       <div className="metric">
-                        <small>Total Clicks</small>
+                        <small>{t.dash.clicks}</small>
                         <b>320K</b>
                         <em className="up">+18.2%</em>
                       </div>
                       <div className="metric">
-                        <small>Conversions</small>
+                        <small>{t.dash.conversions}</small>
                         <b>48.7K</b>
                         <em className="up">+24.9%</em>
                       </div>
@@ -429,9 +469,9 @@ export default function PremiumSite() {
                 <div className="float-thumb" />
                 <div className="camp-body">
                   <div className="camp-top">
-                    <strong>Your Campaign</strong>
+                    <strong>{t.dash.yourCampaign}</strong>
                     <span className="status">
-                      <i /> Active
+                      <i /> {t.dash.active}
                     </span>
                   </div>
                   <div className="bar-row">
@@ -441,8 +481,8 @@ export default function PremiumSite() {
                     <small className="pct">78%</small>
                   </div>
                   <div className="camp-foot">
-                    <span>4.8M Impressions</span>
-                    <span>48.7K Conversions</span>
+                    <span>{t.dash.impressShort}</span>
+                    <span>{t.dash.convShort}</span>
                   </div>
                 </div>
               </div>
@@ -620,76 +660,111 @@ export default function PremiumSite() {
 
         <section className="st-section st-contact" id="contact">
           <div className="sec-head reveal">
-            <span className="kicker">{t.formKicker}</span>
+            <span className="kicker">{t.contactsTitle}</span>
             <h2>{t.formTitle}</h2>
-            <p>{t.formLead}</p>
+            <p>{t.contactsLead}</p>
           </div>
-          <form id="order-form" className="order-form reveal" onSubmit={onOrderSubmit}>
-            <label>
-              <span>{t.name}</span>
-              <input
-                id="order-name"
-                name="name"
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-            </label>
-            <label>
-              <span>{t.contact}</span>
-              <input
-                id="order-contact"
-                name="contact"
-                required
-                value={form.contact}
-                onChange={(e) => setForm({ ...form, contact: e.target.value })}
-              />
-            </label>
-            <label>
-              <span>{t.projectType}</span>
-              <select
-                id="order-type"
-                name="type"
-                value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
-              >
-                {t.types.map((x) => (
-                  <option key={x} value={x}>
-                    {x}
-                  </option>
+
+          <div className="contact-clean reveal">
+            <a className="contact-chip" href={`mailto:${t.email}`}>
+              <i className="fa-solid fa-envelope" />
+              <span>
+                <small>Email</small>
+                <b>{t.email}</b>
+              </span>
+            </a>
+            <a className="contact-chip" href="tel:+380995228560">
+              <i className="fa-solid fa-phone" />
+              <span>
+                <small>UA</small>
+                <b>{t.phone}</b>
+              </span>
+            </a>
+            <a className="contact-chip" href="tel:+380950761194">
+              <i className="fa-solid fa-phone" />
+              <span>
+                <small>UA</small>
+                <b>{t.phone2}</b>
+              </span>
+            </a>
+          </div>
+
+          <div id="order-panel" className="order-panel reveal">
+            <aside className="order-benefits">
+              <h3>{t.formBenefitsTitle}</h3>
+              <ul>
+                {t.formBenefits.map((b) => (
+                  <li key={b}>
+                    <i className="fa-solid fa-check" />
+                    {b}
+                  </li>
                 ))}
-              </select>
-            </label>
-            <label>
-              <span>{t.budget}</span>
-              <select value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })}>
-                <option value="">—</option>
-                {t.budgetOpts.map((x) => (
-                  <option key={x} value={x}>
-                    {x}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="full">
-              <span>{t.message}</span>
-              <textarea
-                id="order-message"
-                name="message"
-                rows={4}
-                required
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-              />
-            </label>
-            <button type="submit" className="btn-primary" disabled={orderBusy}>
-              {orderBusy ? t.sending : t.sendRequest}
-            </button>
-          </form>
-          <div className="contact-row reveal">
-            <a href={`mailto:${t.email}`}>{t.email}</a>
-            <a href="tel:+380995228560">{t.phone}</a>
-            <a href="tel:+380950761194">{t.phone2}</a>
+              </ul>
+              <p className="order-note">{t.formLead}</p>
+            </aside>
+            <form id="order-form" className="order-form" onSubmit={onOrderSubmit}>
+              <h3 className="order-form-title">{t.leaveRequest}</h3>
+              <label>
+                <span>{t.name}</span>
+                <input
+                  id="order-name"
+                  name="name"
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </label>
+              <label>
+                <span>{t.contact}</span>
+                <input
+                  id="order-contact"
+                  name="contact"
+                  required
+                  value={form.contact}
+                  onChange={(e) => setForm({ ...form, contact: e.target.value })}
+                />
+              </label>
+              <label>
+                <span>{t.projectType}</span>
+                <select
+                  id="order-type"
+                  name="type"
+                  value={form.type}
+                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                >
+                  {t.types.map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>{t.budget}</span>
+                <select value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })}>
+                  <option value="">—</option>
+                  {t.budgetOpts.map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="full">
+                <span>{t.message}</span>
+                <textarea
+                  id="order-message"
+                  name="message"
+                  rows={4}
+                  required
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                />
+              </label>
+              <button type="submit" className="btn-primary" disabled={orderBusy}>
+                {orderBusy ? t.sending : t.sendRequest}
+              </button>
+            </form>
           </div>
         </section>
       </main>
