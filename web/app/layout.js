@@ -78,12 +78,12 @@ export default function RootLayout({ children }) {
         <link rel="alternate" hrefLang="en" href="https://nexoraads.online/" />
         <link rel="alternate" hrefLang="ru" href="https://nexoraads.online/" />
         <meta name="google-site-verification" content="google56c6b547d4fd3ea7" />
-        <meta name="theme-color" content="#05060d" />
+        <meta name="theme-color" content="#090a0c" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
         <link rel="dns-prefetch" href="https://script.google.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600&family=Sora:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <link
@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
         <link href="/css/premium.css" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-ads">{children}</body>
+      <body className="nx-premium nx-atelier">{children}</body>
     </html>
   );
 }

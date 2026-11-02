@@ -22,10 +22,6 @@ export default function NexoraChat({ t, lang, onOrder }) {
     inputRef.current?.focus();
   }, [messages, open, busy]);
 
-  const pushBot = (text) => {
-    setMessages((m) => [...m, { id: `${Date.now()}-b`, role: 'bot', text }]);
-  };
-
   const send = (raw) => {
     const text = String(raw ?? input).trim();
     if (!text || busy) return;
@@ -33,9 +29,9 @@ export default function NexoraChat({ t, lang, onOrder }) {
     setMessages((m) => [...m, { id: `${Date.now()}-u`, role: 'user', text }]);
     setBusy(true);
     window.setTimeout(() => {
-      pushBot(aiReply(lang, text));
+      setMessages((m) => [...m, { id: `${Date.now()}-b`, role: 'bot', text: aiReply(lang, text) }]);
       setBusy(false);
-    }, 380);
+    }, 320);
   };
 
   return (
@@ -63,7 +59,9 @@ export default function NexoraChat({ t, lang, onOrder }) {
             ))}
             {busy && (
               <div className="nxc-bubble bot nxc-typing" aria-hidden>
-                <i /><i /><i />
+                <i />
+                <i />
+                <i />
               </div>
             )}
           </div>
@@ -101,14 +99,14 @@ export default function NexoraChat({ t, lang, onOrder }) {
               disabled={busy}
             />
             <button type="submit" disabled={busy || !input.trim()} aria-label={t.chatSend}>
-              <i className="fa-solid fa-paper-plane" />
+              ↑
             </button>
           </form>
         </section>
       )}
 
       <button type="button" className="nxc-fab" onClick={() => setOpen((v) => !v)} aria-label={t.chatTitle}>
-        <i className={`fa-solid ${open ? 'fa-xmark' : 'fa-comment-dots'}`} />
+        {open ? '×' : '✦'}
       </button>
     </div>
   );
