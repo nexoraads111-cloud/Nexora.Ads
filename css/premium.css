@@ -55,10 +55,13 @@ img {
   border: 0;
 }
 .hidden-modal {
+  display: none !important;
+}
+#reviewModal {
   display: none;
 }
 #reviewModal.active {
-  display: flex;
+  display: flex !important;
 }
 
 .ads-page {
@@ -329,16 +332,16 @@ main,
 }
 .hero-arrow {
   position: absolute;
-  right: 6%;
-  bottom: 90px;
-  width: 180px;
-  height: 180px;
-  background:
-    conic-gradient(from 210deg, transparent 0 55%, rgba(168, 85, 247, 0.05) 55% 100%),
-    linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(56, 189, 248, 0.55));
-  clip-path: polygon(18% 72%, 42% 38%, 54% 50%, 78% 10%, 92% 22%, 58% 78%, 46% 64%, 28% 88%);
-  filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.75));
+  right: 4%;
+  bottom: 70px;
+  width: 200px;
+  height: 220px;
+  background: linear-gradient(160deg, #c084fc 0%, #7c3aed 45%, #38bdf8 100%);
+  clip-path: polygon(50% 0%, 88% 42%, 66% 42%, 66% 100%, 34% 100%, 34% 42%, 12% 42%);
+  filter: drop-shadow(0 0 34px rgba(168, 85, 247, 0.85));
+  opacity: 0.92;
   animation: arrowPulse 3.2s ease-in-out infinite;
+  z-index: 1;
 }
 @keyframes arrowPulse {
   0%,
@@ -996,8 +999,24 @@ main,
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
-.toast.show {
+.toast.active {
   opacity: 1;
+}
+.stars-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.stars-row .star {
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+}
+.stars-row .star.active {
+  color: #fbbf24;
 }
 
 /* Demo gallery lightbox */
