@@ -18,7 +18,7 @@ function useReviews(fallback) {
     const sync = () => {
       const root = document.getElementById('reviews-container');
       if (!root) return;
-      const cards = [...root.querySelectorAll('.review-card, [data-review], article')];
+      const cards = [...root.querySelectorAll('.review-card, [data-review], article, .nx-review-card')];
       const parsed = cards
         .map((card) => {
           const text =
@@ -26,9 +26,10 @@ function useReviews(fallback) {
             card.textContent?.trim() ||
             '';
           const name =
-            card.querySelector('.review-name, .author, strong, h4, h3')?.textContent?.trim() ||
+            card.querySelector('.review-name, .author, strong, h4, h3, b')?.textContent?.trim() ||
             'Client';
-          const title = card.querySelector('.review-role, .role, small, span')?.textContent?.trim() || '';
+          const title =
+            card.querySelector('.review-role, .role, small, span')?.textContent?.trim() || '';
           return text.length > 20 ? { text: text.slice(0, 280), name, title } : null;
         })
         .filter(Boolean);
@@ -138,7 +139,7 @@ export default function PremiumSite() {
     const el = portfolioRef.current;
     if (!el) return;
     const card = el.querySelector('.pf-card');
-    const step = (card?.offsetWidth || 320) + 18;
+    const step = (card?.offsetWidth || 340) + 20;
     el.scrollBy({ left: dir * step, behavior: 'smooth' });
   };
 
@@ -152,24 +153,23 @@ export default function PremiumSite() {
   };
 
   return (
-    <div className="ads-page">
-      <div className="ads-glow ads-glow-a" aria-hidden />
-      <div className="ads-glow ads-glow-b" aria-hidden />
+    <div className="atelier">
+      <div className="atelier-noise" aria-hidden />
 
-      <header className="ads-header">
-        <a className="ads-logo" href="#home" aria-label={t.brand}>
-          <span className="ads-mark">N</span>
+      <header className="at-header">
+        <a className="at-logo" href="#home">
+          <span className="at-mark" aria-hidden />
           <b>{t.brand}</b>
         </a>
-        <nav className={`ads-nav ${menuOpen ? 'open' : ''}`}>
-          <a href="#home" onClick={() => setMenuOpen(false)}>
-            {t.nav.home}
+        <nav className={`at-nav ${menuOpen ? 'open' : ''}`}>
+          <a href="#work" onClick={() => setMenuOpen(false)}>
+            {t.nav.work}
           </a>
-          <a href="#services" onClick={() => setMenuOpen(false)}>
-            {t.nav.services}
+          <a href="#offer" onClick={() => setMenuOpen(false)}>
+            {t.nav.offer}
           </a>
-          <a href="#portfolio" onClick={() => setMenuOpen(false)}>
-            {t.nav.portfolio}
+          <a href="#demos" onClick={() => setMenuOpen(false)}>
+            {t.nav.demos}
           </a>
           <a href="#reviews" onClick={() => setMenuOpen(false)}>
             {t.nav.reviews}
@@ -178,7 +178,7 @@ export default function PremiumSite() {
             {t.nav.contact}
           </a>
         </nav>
-        <div className="ads-actions">
+        <div className="at-actions">
           <div className="lang-switch" role="group" aria-label="Language">
             {LANGS.map((l) => (
               <button
@@ -194,204 +194,63 @@ export default function PremiumSite() {
           <button type="button" className="btn-ghost" onClick={() => setSupportOpen(true)}>
             {t.supportHeart}
           </button>
-          <button type="button" className="btn-outline" onClick={() => openOrder()}>
-            {t.discussArrow}
+          <button type="button" className="btn-solid" onClick={() => openOrder()}>
+            {t.discuss}
           </button>
-          <button
-            type="button"
-            className="ads-burger"
-            aria-label={t.menu}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            <i className={`fa-solid ${menuOpen ? 'fa-xmark' : 'fa-bars'}`} />
+          <button type="button" className="at-burger" aria-label={t.menu} onClick={() => setMenuOpen((v) => !v)}>
+            <span />
+            <span />
           </button>
         </div>
       </header>
 
       <main>
-        <section className="ads-hero" id="home">
-          <div className="hero-copy">
-            <span className="pill">{t.badge}</span>
-            <h1>
-              {t.heroTitleBefore}
-              <span className="grad">{t.heroTitleAccent}</span>
-            </h1>
-            <p>{t.heroLead}</p>
+        <section className="at-hero" id="home">
+          <div className="hero-media" aria-hidden>
+            <img src="/Public/Image/DospretonStav.jpg" alt="" />
+            <div className="hero-veil" />
+          </div>
+          <div className="hero-content">
+            <p className="brand-hero">{t.brand}</p>
+            <h1>{t.heroLead}</h1>
+            <p className="hero-sub">{t.heroSub}</p>
             <div className="hero-cta">
-              <button type="button" className="btn-primary" onClick={() => openOrder()}>
-                {t.discussArrow}
+              <button type="button" className="btn-solid" onClick={() => openOrder()}>
+                {t.orderNow}
               </button>
-              <a className="btn-play" href="#services">
-                <span className="play">
-                  <i className="fa-solid fa-play" />
-                </span>
-                {t.learnMore}
+              <a className="btn-line" href="#work">
+                {t.scrollWork}
               </a>
             </div>
           </div>
-          <div className="hero-visual" aria-hidden>
-            <div className="hero-terrain" />
-            <div className="hero-arrow" />
-            <div className="phone-frame">
-              <div className="phone-screen">
-                <div className="soc meta">
-                  <i className="fa-brands fa-meta" />
-                </div>
-                <div className="soc ig">
-                  <i className="fa-brands fa-instagram" />
-                </div>
-                <div className="soc tt">
-                  <i className="fa-brands fa-tiktok" />
-                </div>
-              </div>
-            </div>
-            <div className="growth-card">
-              <svg viewBox="0 0 120 48" className="growth-chart" aria-hidden>
-                <path d="M4 40 C28 36, 40 28, 58 22 S92 8, 116 6" fill="none" stroke="url(#g)" strokeWidth="3" />
-                <defs>
-                  <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#a855f7" />
-                    <stop offset="100%" stopColor="#38bdf8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <b>{t.growthCard}</b>
-            </div>
+          <div className="hero-rail" aria-hidden>
+            <span>Landing €150</span>
+            <span>Business €300</span>
+            <span>Store €600</span>
+            <span>Redesign €100</span>
           </div>
         </section>
 
-        <section className="ads-services" id="services">
-          <div className="sec-head">
-            <div>
-              <span className="kicker">{t.servicesKicker}</span>
-              <h2>{t.servicesTitle}</h2>
-              <p>{t.servicesLead}</p>
-            </div>
-            <a className="text-link" href="#contact">
-              {t.workAnyScale}
-            </a>
+        <section className="at-section" id="offer">
+          <div className="sec-intro">
+            <span className="kicker">{t.offerKicker}</span>
+            <h2>{t.offerTitle}</h2>
+            <p>{t.offerLead}</p>
           </div>
-          <div className="offer-grid">
-            {t.offers.map((o) => (
-              <article key={o.title} className="offer-card">
-                <div className="offer-icon">
-                  <i className={`fa-solid ${o.icon}`} />
+          <div className="offer-list">
+            {t.services.map((s, i) => (
+              <article key={s.id} className="offer-row">
+                <span className="idx">0{i + 1}</span>
+                <div className="offer-main">
+                  <h3>{s.title}</h3>
+                  <ul>
+                    {s.items.map((it) => (
+                      <li key={it}>{it}</li>
+                    ))}
+                  </ul>
                 </div>
-                <h3>{o.title}</h3>
-                <p>{o.text}</p>
-                <button type="button" className="text-link" onClick={() => openOrder()}>
-                  {t.learnMoreArrow}
-                </button>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="ads-stats" aria-label="Stats">
-          {t.stats.map((s) => (
-            <div key={s.label} className="stat">
-              <i className={`fa-solid ${s.icon}`} />
-              <div>
-                <b>{s.value}</b>
-                <span>{s.label}</span>
-              </div>
-            </div>
-          ))}
-          <div className="stats-rings" aria-hidden />
-        </section>
-
-        <section className="ads-portfolio" id="portfolio">
-          <div className="sec-head">
-            <div>
-              <span className="kicker">{t.portfolioKicker}</span>
-              <h2>{t.portfolioTitle}</h2>
-            </div>
-          </div>
-          <div className="pf-row">
-            <div className="pf-track" ref={portfolioRef}>
-              {t.projects.map((p, i) => (
-                <article key={p.name} className={`pf-card ${i === 0 ? 'wide' : ''} ${p.name === 'Nexora' ? 'brand' : ''}`}>
-                  <div className="pf-media">
-                    <img src={p.img} alt={p.name} loading="lazy" />
-                  </div>
-                  <div className="pf-meta">
-                    <span>{p.tag}</span>
-                    <h3>{p.name}</h3>
-                    <p>{p.text}</p>
-                    <a href={p.href} target="_blank" rel="noopener noreferrer">
-                      {t.viewProject} →
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <button type="button" className="pf-next" onClick={() => scrollPortfolio(1)} aria-label="Next projects">
-              <i className="fa-solid fa-arrow-right" />
-            </button>
-            <button type="button" className="pf-prev" onClick={() => scrollPortfolio(-1)} aria-label="Previous projects">
-              <i className="fa-solid fa-arrow-left" />
-            </button>
-          </div>
-        </section>
-
-        <section className="ads-demos" id="demos">
-          <div className="sec-head">
-            <div>
-              <span className="kicker">{t.demosKicker}</span>
-              <h2>{t.demosTitle}</h2>
-              <p>{t.demosLead}</p>
-            </div>
-          </div>
-          <div className="demo-grid">
-            {t.demos.map((d) => (
-              <article key={d.id} className="demo-card">
-                <div className="demo-media">
-                  <img src={d.img} alt={d.title} loading="lazy" />
-                </div>
-                <div className="demo-meta">
-                  <h3>{d.title}</h3>
-                  <p>{d.text}</p>
-                  <button type="button" className="btn-primary" onClick={() => setActiveDemo(d.id)}>
-                    {t.openDemo}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="ads-about" id="about">
-          <div className="about-card">
-            <div className="about-avatar">
-              <img src="/Public/Image/about-avatar.jpg" alt={t.aboutTitle} width={160} height={160} />
-            </div>
-            <div>
-              <span className="kicker">{t.aboutKicker}</span>
-              <h2>{t.aboutTitle}</h2>
-              <p>{t.aboutText}</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="ads-pricing" id="pricing">
-          <div className="sec-head">
-            <div>
-              <span className="kicker">{t.pricingKicker}</span>
-              <h2>{t.pricingTitle}</h2>
-              <p>{t.pricingNote}</p>
-            </div>
-          </div>
-          <div className="price-grid">
-            {t.services.map((s) => (
-              <article key={s.id} className="price-card">
-                <h3>{s.title}</h3>
-                <b>{s.price}</b>
-                <ul>
-                  {s.items.map((it) => (
-                    <li key={it}>{it}</li>
-                  ))}
-                </ul>
-                <button type="button" className="btn-outline" onClick={() => openOrder(s.id)}>
+                <b className="price">{s.price}</b>
+                <button type="button" className="btn-line" onClick={() => openOrder(s.id)}>
                   {t.orderService}
                 </button>
               </article>
@@ -399,22 +258,99 @@ export default function PremiumSite() {
           </div>
         </section>
 
-        <section className="ads-reviews" id="reviews">
-          <div className="sec-head row">
+        <section className="at-section" id="work">
+          <div className="sec-intro row">
+            <div>
+              <span className="kicker">{t.workKicker}</span>
+              <h2>{t.workTitle}</h2>
+              <p>{t.workLead}</p>
+            </div>
+            <div className="pf-arrows">
+              <button type="button" onClick={() => scrollPortfolio(-1)} aria-label="Prev">
+                ←
+              </button>
+              <button type="button" onClick={() => scrollPortfolio(1)} aria-label="Next">
+                →
+              </button>
+            </div>
+          </div>
+          <div className="pf-track" ref={portfolioRef}>
+            {t.projects.map((p) => (
+              <article key={p.name} className={`pf-card ${p.name === 'Nexora' ? 'brand' : ''}`}>
+                <div className="pf-media">
+                  <img src={p.img} alt={p.name} loading="lazy" />
+                </div>
+                <div className="pf-meta">
+                  <span>{p.tag}</span>
+                  <h3>{p.name}</h3>
+                  <p>{p.text}</p>
+                  <a href={p.href} target="_blank" rel="noopener noreferrer">
+                    {t.viewProject} →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="at-section" id="demos">
+          <div className="sec-intro">
+            <span className="kicker">{t.demosKicker}</span>
+            <h2>{t.demosTitle}</h2>
+            <p>{t.demosLead}</p>
+          </div>
+          <div className="demo-strip">
+            {t.demos.map((d) => (
+              <article key={d.id} className="demo-tile">
+                <button type="button" className="demo-hit" onClick={() => setActiveDemo(d.id)}>
+                  <img src={d.img} alt={d.title} loading="lazy" />
+                  <span className="demo-label">
+                    <b>{d.title}</b>
+                    <em>{t.openDemo}</em>
+                  </span>
+                </button>
+                <p>{d.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="at-section at-about" id="about">
+          <div className="about-layout">
+            <div className="about-avatar">
+              <img src="/Public/Image/about-avatar.jpg" alt={t.aboutTitle} width={200} height={200} />
+            </div>
+            <div>
+              <span className="kicker">{t.aboutKicker}</span>
+              <h2>{t.aboutTitle}</h2>
+              <p>{t.aboutText}</p>
+              <button type="button" className="btn-solid" onClick={() => openOrder()}>
+                {t.discuss}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="at-section" id="reviews">
+          <div className="sec-intro row">
             <div>
               <span className="kicker">{t.reviewsKicker}</span>
               <h2>{t.reviewsTitle}</h2>
             </div>
-            <div className="rev-controls">
+            <div className="pf-arrows">
               <button
                 type="button"
                 aria-label="Prev"
                 onClick={() => setReviewIdx((i) => (i - 1 + reviews.length) % Math.max(reviews.length, 1))}
               >
-                ‹
+                ←
               </button>
-              <button type="button" aria-label="Next" onClick={() => setReviewIdx((i) => (i + 1) % Math.max(reviews.length, 1))}>
-                ›
+              <button
+                type="button"
+                aria-label="Next"
+                onClick={() => setReviewIdx((i) => (i + 1) % Math.max(reviews.length, 1))}
+              >
+                →
               </button>
               <button type="button" className="btn-ghost" onClick={openReview}>
                 {t.leaveReview}
@@ -423,43 +359,28 @@ export default function PremiumSite() {
           </div>
           <div className="rev-grid">
             {visibleReviews().map((r, i) => (
-              <article key={`${r.name}-${i}`} className="rev-card">
-                <div className="rev-top">
-                  <div className="rev-avatar" aria-hidden>
+              <blockquote key={`${r.name}-${i}`} className="rev-card">
+                <p>“{r.text}”</p>
+                <footer>
+                  <span className="rev-avatar" aria-hidden>
                     {(r.name || 'C').slice(0, 1)}
-                  </div>
+                  </span>
                   <div>
                     <strong>{r.name}</strong>
                     <em>{r.title}</em>
                   </div>
-                  <div className="stars" aria-hidden>
-                    ★★★★★
-                  </div>
-                </div>
-                <p>{r.text}</p>
-              </article>
+                </footer>
+              </blockquote>
             ))}
           </div>
           <div id="reviews-container" className="sr-only" aria-hidden="true" />
         </section>
 
-        <section className="ads-cta-banner">
-          <div className="cta-inner">
-            <div className="cta-ico">
-              <i className="fa-solid fa-paper-plane" />
-            </div>
-            <h2>{t.ctaBanner}</h2>
-            <button type="button" className="btn-primary" onClick={() => openOrder()}>
-              {t.contactUs}
-            </button>
-          </div>
-        </section>
-
-        <section className="ads-contact" id="contact">
-          <div className="sec-head">
-            <div>
-              <h2>{t.formTitle}</h2>
-            </div>
+        <section className="at-section at-contact" id="contact">
+          <div className="sec-intro">
+            <span className="kicker">{t.formKicker}</span>
+            <h2>{t.formTitle}</h2>
+            <p>{t.formLead}</p>
           </div>
           <form id="order-form" className="order-form" onSubmit={onOrderSubmit}>
             <label>
@@ -529,39 +450,18 @@ export default function PremiumSite() {
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
               />
             </label>
-            <button type="submit" className="btn-primary" disabled={orderBusy}>
+            <button type="submit" className="btn-solid" disabled={orderBusy}>
               {orderBusy ? t.sending : t.sendRequest}
             </button>
           </form>
         </section>
       </main>
 
-      <footer className="ads-footer">
-        <a className="ads-logo" href="#home">
-          <span className="ads-mark">N</span>
+      <footer className="at-footer">
+        <a className="at-logo" href="#home">
+          <span className="at-mark" aria-hidden />
           <b>{t.brand}</b>
         </a>
-        <nav>
-          <a href="#home">{t.nav.home}</a>
-          <a href="#services">{t.nav.services}</a>
-          <a href="#portfolio">{t.nav.portfolio}</a>
-          <a href="#reviews">{t.nav.reviews}</a>
-          <a href="#contact">{t.nav.contact}</a>
-        </nav>
-        <div className="soc-row">
-          <a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-            <i className="fa-brands fa-telegram" />
-          </a>
-          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i className="fa-brands fa-instagram" />
-          </a>
-          <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-            <i className="fa-brands fa-tiktok" />
-          </a>
-          <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <i className="fa-brands fa-youtube" />
-          </a>
-        </div>
         <p>
           © {new Date().getFullYear()} {t.brand}. {t.footerCopy}
         </p>
@@ -580,7 +480,7 @@ export default function PremiumSite() {
             <div className="support-grid">
               <div>
                 <h4>{t.monoTitle}</h4>
-                <a className="btn-primary" href={MONO_URL} target="_blank" rel="noopener noreferrer">
+                <a className="btn-solid" href={MONO_URL} target="_blank" rel="noopener noreferrer">
                   {t.monoBtn}
                 </a>
               </div>
@@ -588,7 +488,7 @@ export default function PremiumSite() {
                 <h4>{t.ibanTitle}</h4>
                 <p className="iban">{IBAN}</p>
                 <small>{t.ibanHint}</small>
-                <button type="button" className="btn-outline" onClick={copyIban}>
+                <button type="button" className="btn-line" onClick={copyIban}>
                   {copied ? t.copied : t.copy}
                 </button>
               </div>
@@ -605,9 +505,8 @@ export default function PremiumSite() {
         />
       )}
 
-      {/* Hidden hooks for GAS scripts — do not remove IDs */}
       <div id="orderModal" className="sr-only" aria-hidden="true" />
-      <div id="reviewModal" className="modal-backdrop hidden-modal" aria-hidden="true">
+      <div id="reviewModal" className="modal-backdrop" aria-hidden="true">
         <div className="support-modal review-modal" role="dialog">
           <button
             type="button"
@@ -639,7 +538,7 @@ export default function PremiumSite() {
             <input id="review-name" name="name" required placeholder={t.name} />
             <input id="review-title" name="title" placeholder="Role / project" />
             <textarea id="review-text" name="text" required rows={4} placeholder={t.message} />
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="btn-solid">
               {t.send}
             </button>
           </form>
