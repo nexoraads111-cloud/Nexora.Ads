@@ -227,40 +227,100 @@ export default function PremiumSite() {
 
       <main>
         <section className="st-hero" id="home">
+          <div className="hero-bg" aria-hidden>
+            <span className="wave w1" />
+            <span className="wave w2" />
+            <span className="wave w3" />
+          </div>
           <div className="hero-copy">
-            <h1>{t.heroTitle}</h1>
+            <span className="hero-badge">{t.heroBadge}</span>
+            <h1>
+              <span className="brand-line">{t.brand}</span>
+              <span className="grad-line">{t.heroTitle}</span>
+            </h1>
             <p>{t.heroSub}</p>
             <div className="hero-cta">
-              <a className="btn-outline" href="#services">
+              <button type="button" className="btn-primary" onClick={() => openOrder()}>
+                {t.orderSite} →
+              </button>
+              <a className="btn-outline play" href="#services">
+                <span className="play-ico" aria-hidden>
+                  ▶
+                </span>
                 {t.viewServices}
               </a>
-              <button type="button" className="btn-primary" onClick={() => openOrder()}>
-                {t.orderSite}
-              </button>
             </div>
           </div>
           <div className="hero-visual" aria-hidden>
-            <div className="laptop">
-              <div className="laptop-lid">
-                <div className="laptop-screen">
-                  <div className="fake-site">
-                    <div className="fake-bar">
-                      <i />
-                      <i />
-                      <i />
+            <div className="glass-stack">
+              <div className="glass-panel main-panel">
+                <div className="panel-chrome">
+                  <i />
+                  <i />
+                  <i />
+                  <em>nexoraads.online</em>
+                </div>
+                <div className="panel-body">
+                  <aside className="mini-nav">
+                    <span className="on" />
+                    <span />
+                    <span />
+                    <span />
+                  </aside>
+                  <div className="mini-main">
+                    <div className="metric-row">
+                      <div className="metric">
+                        <small>Sections</small>
+                        <b>08</b>
+                      </div>
+                      <div className="metric">
+                        <small>Speed</small>
+                        <b>98</b>
+                      </div>
+                      <div className="metric">
+                        <small>Mobile</small>
+                        <b>100</b>
+                      </div>
                     </div>
-                    <div className="fake-hero" />
-                    <div className="fake-rows">
-                      <span />
-                      <span />
-                      <span />
+                    <div className="chart-area">
+                      <svg viewBox="0 0 240 90" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="rgba(168,85,247,0.55)" />
+                            <stop offset="100%" stopColor="rgba(168,85,247,0)" />
+                          </linearGradient>
+                        </defs>
+                        <path d="M0 70 C40 60, 60 30, 100 35 S160 10, 200 22 S230 40, 240 28 L240 90 L0 90 Z" fill="url(#cg)" />
+                        <path d="M0 70 C40 60, 60 30, 100 35 S160 10, 200 22 S230 40, 240 28" fill="none" stroke="#c084fc" strokeWidth="2.5" />
+                      </svg>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="laptop-base" />
+              <div className="glass-panel float-card">
+                <div className="float-thumb" />
+                <div>
+                  <strong>Landing live</strong>
+                  <span className="status">Ready</span>
+                  <div className="bar">
+                    <i style={{ width: '82%' }} />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="orb" />
+          </div>
+          <div className="hero-features">
+            {t.why.map((w) => (
+              <div key={w.title} className="hf-item">
+                <div className="hf-ico">
+                  <i className={`fa-solid ${w.icon}`} />
+                </div>
+                <div>
+                  <b>{w.title}</b>
+                  <span>{w.text}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
