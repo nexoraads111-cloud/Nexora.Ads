@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
         <link href="/css/premium.css" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-full">{children}</body>
+      <body className="nx-premium nx-ads">{children}</body>
     </html>
   );
 }
