@@ -1,3 +1,7 @@
+import Script from 'next/script';
+
+const GA_MEASUREMENT_ID = 'G-LGPZQYFVFR';
+
 export const metadata = {
   metadataBase: new URL('https://nexoraads.online'),
   title: {
@@ -99,7 +103,21 @@ export default function RootLayout({ children }) {
         <link href="/css/premium.css" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className="nx-premium nx-studio">{children}</body>
+      <body className="nx-premium nx-studio">
+        {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
